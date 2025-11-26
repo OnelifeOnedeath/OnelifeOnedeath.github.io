@@ -10,24 +10,18 @@
             /* Фиолетовая палитра */
             --p-primary: #8B5CF6;
             --p-primary-hover: #7C3AED;
-            --p-primary-active: #6D28D9;
             --p-primary-light: #A78BFA;
             --p-primary-dark: #5B21B6;
             
             --p-surface: #1F2937;
-            --p-surface-light: #374151;
             --p-background: #111827;
             --p-background-alt: #0F172A;
             
             --p-text: #F9FAFB;
             --p-text-muted: #D1D5DB;
-            --p-text-on-primary: #FFFFFF;
             
             --p-border: #374151;
             --p-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1);
-            --p-shadow-lg: 0 10px 15px -3px rgba(139, 92, 246, 0.2);
-            
-            --p-glow: 0 0 20px rgba(139, 92, 246, 0.3);
         }
 
         * {
@@ -41,57 +35,13 @@
             background: var(--p-background);
             color: var(--p-text);
             line-height: 1.6;
-            overflow-x: hidden;
-            cursor: none; /* Убираем стандартный курсор */
         }
 
-        /* Кастомный курсор */
-        .cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--p-primary);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-        }
-
-        .cursor-follower {
-            width: 8px;
-            height: 8px;
-            background: var(--p-primary);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            transition: all 0.15s ease;
-        }
-
-        /* Анимация градиента */
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Парящие анимации */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes float-slow {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-5px) rotate(2deg); }
-            66% { transform: translateY(3px) rotate(-2deg); }
-        }
-
-        /* Анимация появления */
+        /* Анимации */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -99,19 +49,23 @@
             }
         }
 
-        /* Анимация пульсации */
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
         }
 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(-45deg, #0F172A, #1E1B4B, #5B21B6, #7C3AED);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
+            background: linear-gradient(135deg, var(--p-primary-dark), var(--p-primary));
             position: relative;
             overflow: hidden;
         }
@@ -127,62 +81,62 @@
             background-size: cover;
         }
 
-        /* Парящие частицы */
-        .particle {
-            position: absolute;
-            background: var(--p-primary-light);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .particle:nth-child(1) { width: 4px; height: 4px; top: 20%; left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { width: 6px; height: 6px; top: 60%; left: 80%; animation-delay: 1s; }
-        .particle:nth-child(3) { width: 3px; height: 3px; top: 80%; left: 20%; animation-delay: 2s; }
-        .particle:nth-child(4) { width: 5px; height: 5px; top: 40%; left: 50%; animation-delay: 3s; }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
         .brand-header {
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         .username {
             font-size: 4rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--p-primary-light), var(--p-primary));
+            background: linear-gradient(135deg, var(--p-primary-light), white);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
-            text-shadow: var(--p-glow);
-            animation: fadeInUp 1s ease-out;
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .tagline {
             font-size: 1.5rem;
             margin-bottom: 2rem;
             color: var(--p-text-muted);
-            animation: fadeInUp 1s ease-out 0.2s both;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .language-switcher {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            z-index: 3;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--p-border);
+            color: var(--p-text);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: var(--p-primary);
+            border-color: var(--p-primary);
         }
 
         .universal-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: var(--p-surface);
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid var(--p-border);
             border-radius: 2rem;
             padding: 0.75rem 1.5rem;
             margin-bottom: 3rem;
             color: var(--p-text-muted);
-            animation: fadeInUp 1s ease-out 0.4s both;
-            animation: float-slow 4s ease-in-out infinite;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
         .social-grid {
@@ -202,53 +156,29 @@
             transition: all 0.3s ease;
             text-decoration: none;
             color: var(--p-text);
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 1s ease-out 0.6s both;
-        }
-
-        .social-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .social-card:hover::before {
-            left: 100%;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
         }
 
         .social-card:hover {
             border-color: var(--p-primary);
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: var(--p-shadow-lg);
+            transform: translateY(-5px);
+            box-shadow: var(--p-shadow);
         }
 
         .social-icon {
             font-size: 2rem;
             margin-bottom: 1rem;
             color: var(--p-primary);
-            transition: all 0.3s ease;
-            display: inline-block;
+            transition: transform 0.3s ease;
         }
 
         .social-card:hover .social-icon {
-            transform: scale(1.2) rotate(5deg);
-            color: var(--p-primary-light);
+            transform: scale(1.2);
         }
 
         .social-name {
             font-weight: 600;
             margin-bottom: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .social-card:hover .social-name {
-            color: var(--p-primary-light);
         }
 
         .social-handle {
@@ -267,7 +197,7 @@
             text-align: center;
             margin-bottom: 3rem;
             color: var(--p-text);
-            animation: fadeInUp 1s ease-out;
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .project-grid {
@@ -283,30 +213,13 @@
             padding: 2rem;
             border: 1px solid var(--p-border);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--p-primary), var(--p-primary-light));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .project-card:hover::before {
-            transform: scaleX(1);
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .project-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: var(--p-shadow-lg);
+            transform: translateY(-5px);
+            box-shadow: var(--p-shadow);
+            border-color: var(--p-primary);
         }
 
         .project-title {
@@ -314,11 +227,6 @@
             font-weight: 600;
             color: var(--p-primary-light);
             margin-bottom: 1rem;
-            transition: color 0.3s ease;
-        }
-
-        .project-card:hover .project-title {
-            color: var(--p-primary);
         }
 
         .project-description {
@@ -342,7 +250,6 @@
             font-size: 0.8rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            cursor: default;
         }
 
         .tech-tag:hover {
@@ -360,35 +267,14 @@
             text-decoration: none;
             border-radius: 0.5rem;
             font-weight: 600;
-            transition: all 0.2s ease;
-            border: none;
-            cursor: none; /* Убираем стандартный курсор */
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
             transition: all 0.3s ease;
-            transform: translate(-50%, -50%);
-        }
-
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
+            border: none;
+            cursor: pointer;
         }
 
         .btn:hover {
             background: var(--p-primary-hover);
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: var(--p-shadow);
+            transform: translateY(-2px);
         }
 
         .btn i {
@@ -396,15 +282,14 @@
         }
 
         .btn:hover i {
-            transform: rotate(10deg) scale(1.2);
+            transform: scale(1.2);
         }
 
-        /* Philosophy Section */
+        /* Philosophy */
         .philosophy {
             padding: 4rem 0;
             background: var(--p-background);
             text-align: center;
-            position: relative;
         }
 
         .philosophy-text {
@@ -413,30 +298,12 @@
             font-size: 1.2rem;
             color: var(--p-text-muted);
             line-height: 1.8;
-            animation: fadeInUp 1s ease-out;
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .highlight {
             color: var(--p-primary-light);
             font-weight: 600;
-            position: relative;
-            display: inline-block;
-        }
-
-        .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--p-primary);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .highlight:hover::after {
-            transform: scaleX(1);
         }
 
         footer {
@@ -444,43 +311,55 @@
             padding: 3rem 0;
             text-align: center;
             border-top: 1px solid var(--p-border);
-            position: relative;
         }
 
         .footer-text {
             color: var(--p-text-muted);
             margin-top: 1rem;
-            animation: pulse 2s ease-in-out infinite;
         }
 
-        /* Анимация для иконок при движении мыши */
-        .social-icon, .btn, .tech-tag {
-            transform-style: preserve-3d;
-            perspective: 1000px;
+        /* English version */
+        .english {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Кастомный курсор -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-
-    <!-- Парящие частицы -->
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
 
     <!-- Hero Section -->
     <section class="hero">
+        <div class="language-switcher">
+            <button class="lang-btn" onclick="toggleLanguage()">EN</button>
+        </div>
+
         <div class="container">
             <div class="brand-header">
                 <div class="username">OnelifeOnedeath</div>
-                <div class="tagline">Универсальный инженер • Исследователь систем</div>
                 
-                <div class="universal-badge">
-                    <i class="fas fa-globe"></i>
-                    Один никнейм — все платформы
+                <!-- Russian Version -->
+                <div class="russian">
+                    <div class="tagline">Универсальный инженер • Исследователь систем</div>
+                    <div class="universal-badge">
+                        <i class="fas fa-globe"></i>
+                        Один никнейм — все платформы
+                    </div>
+                </div>
+                
+                <!-- English Version -->
+                <div class="english">
+                    <div class="tagline">Universal Engineer • Systems Researcher</div>
+                    <div class="universal-badge">
+                        <i class="fas fa-globe"></i>
+                        One username — all platforms
+                    </div>
                 </div>
 
                 <div class="social-grid">
@@ -515,60 +394,83 @@
     <!-- Projects Section -->
     <section class="projects">
         <div class="container">
-            <h2 class="section-title">Исследовательские проекты</h2>
+            <!-- Russian -->
+            <h2 class="section-title russian">Исследовательские проекты</h2>
+            <!-- English -->
+            <h2 class="section-title english">Research Projects</h2>
+            
             <div class="project-grid">
                 
                 <!-- Tapeworm -->
                 <div class="project-card">
                     <h3 class="project-title">Tapeworm 🐛</h3>
-                    <p class="project-description">
+                    <p class="project-description russian">
                         Визуализатор Brainfuck с анимированным "ленточным червем". Исследование эзотерических языков 
                         через интерактивное исполнение кода.
+                    </p>
+                    <p class="project-description english">
+                        Brainfuck visualizer with an animated "tape worm". Exploring esoteric languages 
+                        through interactive code execution.
                     </p>
                     <div class="project-tech">
                         <span class="tech-tag">Rust</span>
                         <span class="tech-tag">WASM</span>
-                        <span class="tech-tag">Visualization</span>
+                        <span class="tech-tag russian">Визуализация</span>
+                        <span class="tech-tag english">Visualization</span>
                     </div>
                     <a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank">
                         <i class="fab fa-github"></i>
-                        Исходный код
+                        <span class="russian">Исходный код</span>
+                        <span class="english">Source Code</span>
                     </a>
                 </div>
 
                 <!-- Codex Mortis -->
                 <div class="project-card">
                     <h3 class="project-title">Codex Mortis</h3>
-                    <p class="project-description">
+                    <p class="project-description russian">
                         Мультиязычный кодекс на 10+ языках. Сравнительный анализ парадигм программирования 
                         через призму латинской терминологии.
                     </p>
+                    <p class="project-description english">
+                        Multi-language codex in 10+ languages. Comparative analysis of programming paradigms 
+                        through the lens of Latin terminology.
+                    </p>
                     <div class="project-tech">
-                        <span class="tech-tag">Polyglot</span>
-                        <span class="tech-tag">Research</span>
+                        <span class="tech-tag russian">Полиглот</span>
+                        <span class="tech-tag english">Polyglot</span>
+                        <span class="tech-tag russian">Исследование</span>
+                        <span class="tech-tag english">Research</span>
                         <span class="tech-tag">Latin</span>
                     </div>
                     <a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank">
                         <i class="fab fa-github"></i>
-                        Исследовать
+                        <span class="russian">Исследовать</span>
+                        <span class="english">Explore</span>
                     </a>
                 </div>
 
                 <!-- Ubuntu Design Helper -->
                 <div class="project-card">
                     <h3 class="project-title">Ubuntu Design Helper</h3>
-                    <p class="project-description">
+                    <p class="project-description russian">
                         Инструментарий для дизайнеров в Linux. Автоматизация рабочих процессов 
                         и решение специфических проблем графических работников.
                     </p>
+                    <p class="project-description english">
+                        Toolkit for designers in Linux. Workflow automation and solving specific problems 
+                        of graphics professionals.
+                    </p>
                     <div class="project-tech">
                         <span class="tech-tag">Linux</span>
-                        <span class="tech-tag">Automation</span>
+                        <span class="tech-tag russian">Автоматизация</span>
+                        <span class="tech-tag english">Automation</span>
                         <span class="tech-tag">Bash/Python</span>
                     </div>
                     <a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank">
                         <i class="fab fa-github"></i>
-                        Использовать
+                        <span class="russian">Использовать</span>
+                        <span class="english">Use</span>
                     </a>
                 </div>
 
@@ -579,10 +481,15 @@
     <!-- Philosophy -->
     <section class="philosophy">
         <div class="container">
-            <p class="philosophy-text">
+            <p class="philosophy-text russian">
                 "<span class="highlight">Одна жизнь, одна смерть</span> — философия глубинного понимания систем. 
                 От компиляторов до P2P-сетей, от эзотерических языков до практических инструментов. 
                 Не гонюсь за грейдами, а исследую <span class="highlight">суть технологий</span>."
+            </p>
+            <p class="philosophy-text english">
+                "<span class="highlight">One life, one death</span> — a philosophy of deep system understanding. 
+                From compilers to P2P networks, from esoteric languages to practical tools. 
+                Not chasing grades, but exploring the <span class="highlight">essence of technology</span>."
             </p>
         </div>
     </section>
@@ -591,72 +498,45 @@
     <footer>
         <div class="container">
             <div class="username" style="font-size: 2rem;">OnelifeOnedeath</div>
-            <p class="footer-text">Универсальный инженер • 2025</p>
+            <p class="footer-text russian">Универсальный инженер • 2025</p>
+            <p class="footer-text english">Universal Engineer • 2025</p>
         </div>
     </footer>
 
     <script>
-        // Кастомный курсор
-        const cursor = document.querySelector('.cursor');
-        const cursorFollower = document.querySelector('.cursor-follower');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+        // Переключение языка
+        function toggleLanguage() {
+            const russianElements = document.querySelectorAll('.russian');
+            const englishElements = document.querySelectorAll('.english');
+            const btn = document.querySelector('.lang-btn');
             
-            setTimeout(() => {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
-            }, 100);
-        });
+            if (btn.textContent === 'EN') {
+                russianElements.forEach(el => el.style.display = 'none');
+                englishElements.forEach(el => el.style.display = 'block');
+                btn.textContent = 'RU';
+            } else {
+                russianElements.forEach(el => el.style.display = 'block');
+                englishElements.forEach(el => el.style.display = 'none');
+                btn.textContent = 'EN';
+            }
+        }
 
-        // Анимация при наведении на интерактивные элементы
-        const interactiveElements = document.querySelectorAll('a, button, .tech-tag, .social-card');
-        
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(1.5)';
-                cursor.style.borderColor = 'var(--p-primary-light)';
-                cursorFollower.style.transform = 'scale(2)';
-                cursorFollower.style.background = 'var(--p-primary-light)';
-            });
-            
-            el.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                cursor.style.borderColor = 'var(--p-primary)';
-                cursorFollower.style.transform = 'scale(1)';
-                cursorFollower.style.background = 'var(--p-primary)';
-            });
-        });
-
-        // Параллакс эффект для частиц
-        document.addEventListener('mousemove', (e) => {
-            const particles = document.querySelectorAll('.particle');
-            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
-            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
-            
-            particles.forEach((particle, index) => {
-                particle.style.transform = `translate(${moveX * (index + 1)}px, ${moveY * (index + 1)}px)`;
-            });
-        });
-
-        // Анимация появления при скролле
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
+        // Анимация при скролле
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        // Наблюдаем за всеми карточками и секциями
         document.querySelectorAll('.project-card, .section-title, .philosophy-text').forEach(el => {
             observer.observe(el);
+        });
+
+        // Инициализация английской версии как скрытой
+        document.querySelectorAll('.english').forEach(el => {
+            el.style.display = 'none';
         });
     </script>
 </body>
