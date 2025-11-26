@@ -1,960 +1,1544 @@
-<style>
-:root {
-    /* Фиолетовая палитра */
-    --p-primary: #8B5CF6;
-    --p-primary-hover: #7C3AED;
-    --p-primary-light: #A78BFA;
-    --p-primary-dark: #5B21B6;
-    
-    --p-surface: #1F2937;
-    --p-background: #111827;
-    --p-background-alt: #0F172A;
-    
-    --p-text: #F9FAFB;
-    --p-text-muted: #D1D5DB;
-    
-    --p-border: #374151;
-    --p-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: var(--p-background);
-    color: var(--p-text);
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-/* Анимации */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    33% { transform: translateY(-10px) rotate(2deg); }
-    66% { transform: translateY(5px) rotate(-2deg); }
-}
-
-@keyframes floatReverse {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    33% { transform: translateY(8px) rotate(-1deg); }
-    66% { transform: translateY(-5px) rotate(1deg); }
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-}
-
-/* Hero Section - Мобильная адаптация */
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background: linear-gradient(135deg, var(--p-primary-dark), var(--p-primary));
-    position: relative;
-    overflow: hidden;
-    padding: 1rem;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%238B5CF6" fill-opacity="0.05" points="0,1000 1000,0 1000,1000"/></svg>');
-    background-size: cover;
-}
-
-/* Аниме гифки - улучшенная мобильная версия */
-.anime-gif-left {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    overflow: hidden;
-    opacity: 0.7;
-    animation: float 8s ease-in-out infinite;
-    border: 2px solid var(--p-primary-light);
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
-    z-index: 1;
-}
-
-.anime-gif-right {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    opacity: 0.8;
-    animation: floatReverse 7s ease-in-out infinite;
-    border: 2px solid var(--p-primary);
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
-    z-index: 1;
-}
-
-.anime-gif-left img,
-.anime-gif-right img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Language Switcher - улучшен для мобильных */
-.language-switcher {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.lang-btn, .theme-btn {
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    color: white;
-    padding: 0.6rem 1rem;
-    border-radius: 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    backdrop-filter: blur(15px);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    min-width: 120px;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.lang-btn:hover, .theme-btn:hover {
-    background: var(--p-primary-light);
-    transform: scale(1.05);
-    border-color: white;
-}
-
-.brand-header {
-    text-align: center;
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    padding: 0 1rem;
-}
-
-.username {
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--p-primary-light), white);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 1.5rem;
-    animation: fadeInUp 0.8s ease-out;
-    text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
-    line-height: 1.1;
-    word-break: break-word;
-}
-
-.tagline {
-    font-size: clamp(1.1rem, 4vw, 1.5rem);
-    margin-bottom: 2rem;
-    color: var(--p-text-muted);
-    animation: fadeInUp 0.8s ease-out 0.2s both;
-    line-height: 1.3;
-}
-
-.universal-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--p-border);
-    border-radius: 2rem;
-    padding: 0.75rem 1.5rem;
-    margin-bottom: 2.5rem;
-    color: var(--p-text-muted);
-    animation: fadeInUp 0.8s ease-out 0.4s both;
-    backdrop-filter: blur(10px);
-    font-size: clamp(0.9rem, 3vw, 1rem);
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 90%;
-}
-
-.social-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-    max-width: 800px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.social-card {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid var(--p-border);
-    border-radius: 1rem;
-    padding: 1.25rem;
-    text-align: center;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: var(--p-text);
-    animation: fadeInUp 0.8s ease-out 0.6s both;
-    backdrop-filter: blur(10px);
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.social-card:hover {
-    border-color: var(--p-primary);
-    transform: translateY(-3px);
-    box-shadow: var(--p-shadow);
-}
-
-.social-icon {
-    font-size: 1.75rem;
-    margin-bottom: 0.75rem;
-    color: var(--p-primary);
-    transition: transform 0.3s ease;
-}
-
-.social-card:hover .social-icon {
-    transform: scale(1.15) rotate(5deg);
-}
-
-.social-name {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-}
-
-.social-handle {
-    color: var(--p-text-muted);
-    font-size: 0.85rem;
-    word-break: break-word;
-}
-
-/* Projects Section */
-.projects {
-    padding: 4rem 0;
-    background: var(--p-background-alt);
-}
-
-.section-title {
-    font-size: clamp(2rem, 6vw, 2.5rem);
-    text-align: center;
-    margin-bottom: 3rem;
-    color: var(--p-text);
-    animation: fadeInUp 0.8s ease-out;
-    padding: 0 1rem;
-}
-
-.project-grid {
-    display: grid;
-    gap: 1.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.project-card {
-    background: var(--p-surface);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    border: 1px solid var(--p-border);
-    transition: all 0.3s ease;
-    animation: fadeInUp 0.8s ease-out;
-    position: relative;
-    overflow: hidden;
-}
-
-.project-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
-    transition: left 0.5s ease;
-}
-
-.project-card:hover::before {
-    left: 100%;
-}
-
-.project-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--p-shadow);
-    border-color: var(--p-primary);
-}
-
-.project-title {
-    font-size: 1.35rem;
-    font-weight: 600;
-    color: var(--p-primary-light);
-    margin-bottom: 1rem;
-}
-
-.project-description {
-    color: var(--p-text-muted);
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
-    font-size: 0.95rem;
-}
-
-.project-tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.tech-tag {
-    background: var(--p-primary-dark);
-    color: var(--p-text);
-    padding: 0.4rem 0.8rem;
-    border-radius: 1rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.tech-tag:hover {
-    background: var(--p-primary);
-    transform: translateY(-2px);
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.5rem;
-    background: var(--p-primary);
-    color: white;
-    text-decoration: none;
-    border-radius: 0.7rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    font-size: 0.95rem;
-}
-
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    transform: translate(-50%, -50%);
-}
-
-.btn:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
-.btn:hover {
-    background: var(--p-primary-hover);
-    transform: translateY(-2px);
-}
-
-.btn i {
-    transition: transform 0.3s ease;
-    position: relative;
-    z-index: 2;
-}
-
-.btn:hover i {
-    transform: scale(1.2) rotate(10deg);
-}
-
-/* Tapeworm Demo Section */
-.tapeworm-demo {
-    padding: 4rem 0;
-    background: var(--p-background);
-    border-top: 1px solid var(--p-border);
-    border-bottom: 1px solid var(--p-border);
-}
-
-.demo-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    background: var(--p-surface);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    border: 1px solid var(--p-border);
-}
-
-.demo-description {
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.code-examples {
-    margin-top: 1.5rem;
-}
-
-.example-buttons {
-    display: flex;
-    gap: 0.8rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-}
-
-.example-btn {
-    background: var(--p-primary-dark);
-    color: var(--p-text);
-    border: 1px solid var(--p-border);
-    padding: 0.6rem 1.2rem;
-    border-radius: 0.7rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-}
-
-.example-btn:hover {
-    background: var(--p-primary);
-    transform: translateY(-2px);
-}
-
-.demo-interface {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.code-input-section textarea {
-    width: 100%;
-    background: var(--p-background);
-    border: 1px solid var(--p-border);
-    border-radius: 0.7rem;
-    padding: 1rem;
-    color: var(--p-text);
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-    resize: vertical;
-    margin-bottom: 1rem;
-    min-height: 120px;
-}
-
-.control-buttons {
-    display: flex;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.btn-run { background: var(--p-primary); }
-.btn-reset { background: var(--p-primary-dark); }
-.btn-step { background: var(--p-primary-light); }
-
-.visualization-section {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.output-display, .tape-display, .stats-display {
-    background: var(--p-background);
-    border: 1px solid var(--p-border);
-    border-radius: 0.7rem;
-    padding: 1rem;
-}
-
-.output-text, .stats-text {
-    font-family: 'Courier New', monospace;
-    background: rgba(0,0,0,0.3);
-    padding: 0.8rem;
-    border-radius: 0.4rem;
-    min-height: 2.5rem;
-    font-size: 0.9rem;
-    overflow-x: auto;
-}
-
-.tape-visualization {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    min-height: 4rem;
-    align-items: center;
-    justify-content: center;
-}
-
-.tape-cell {
-    width: 2.8rem;
-    height: 2.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--p-primary-dark);
-    border: 2px solid var(--p-border);
-    border-radius: 0.4rem;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    font-size: 0.85rem;
-}
-
-.tape-cell.active {
-    background: var(--p-primary);
-    border-color: var(--p-primary-light);
-    transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
-}
-
-.demo-footer {
-    text-align: center;
-    margin-top: 2rem;
-}
-
-/* Skills Section */
-.skills {
-    padding: 4rem 0;
-    background: var(--p-background);
-}
-
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.skill-category {
-    background: var(--p-surface);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    border: 1px solid var(--p-border);
-    transition: all 0.3s ease;
-}
-
-.skill-category:hover {
-    transform: translateY(-3px);
-    border-color: var(--p-primary);
-}
-
-.skill-category h3 {
-    color: var(--p-primary-light);
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-}
-
-.skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-/* Contact Section */
-.contact {
-    padding: 4rem 0;
-    background: var(--p-background-alt);
-    text-align: center;
-}
-
-.contact .btn {
-    margin-top: 2rem;
-}
-
-/* Philosophy Section */
-.philosophy {
-    padding: 3rem 0;
-    background: var(--p-background);
-    text-align: center;
-}
-
-.philosophy-main {
-    font-size: clamp(1.2rem, 4vw, 1.4rem);
-    line-height: 1.5;
-    font-style: italic;
-    margin-bottom: 1rem;
-}
-
-.philosophy-details {
-    color: var(--p-text-muted);
-    font-size: clamp(0.9rem, 3vw, 1rem);
-    line-height: 1.5;
-}
-
-footer {
-    background: var(--p-surface);
-    padding: 2.5rem 0;
-    text-align: center;
-    border-top: 1px solid var(--p-border);
-}
-
-.footer-text {
-    color: var(--p-text-muted);
-    margin-top: 1rem;
-}
-
-/* English version */
-.english {
-    display: none;
-}
-
-/* Стили для светлой темы */
-[data-theme="light"] {
-    --p-primary: #7C3AED;
-    --p-primary-hover: #6D28D9;
-    --p-primary-light: #5B21B6;
-    --p-primary-dark: #4C1D95;
-    --p-surface: #FFFFFF;
-    --p-background: #FEF7FF;
-    --p-background-alt: #F3E8FF;
-    --p-text: #1E1B4B;
-    --p-text-muted: #5B21B6;
-    --p-border: #DDD6FE;
-}
-
-[data-theme="light"] .hero {
-    background: linear-gradient(135deg, #C4B5FD, #8B5CF6) !important;
-}
-
-[data-theme="light"] .username {
-    background: linear-gradient(135deg, #4C1D95, #1E1B4B) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-}
-
-[data-theme="light"] .social-card,
-[data-theme="light"] .project-card,
-[data-theme="light"] .skill-category,
-[data-theme="light"] .demo-container {
-    backdrop-filter: none !important;
-    background: rgba(255, 255, 255, 0.95) !important;
-    border: 1px solid var(--p-border) !important;
-}
-
-[data-theme="light"] .universal-badge {
-    background: rgba(255, 255, 255, 0.9) !important;
-    border: 1px solid var(--p-border) !important;
-    color: var(--p-primary-dark) !important;
-}
-
-[data-theme="light"] .lang-btn,
-[data-theme="light"] .theme-btn {
-    background: rgba(255, 255, 255, 0.9) !important;
-    border: 2px solid var(--p-primary) !important;
-    color: var(--p-primary-dark) !important;
-}
-
-[data-theme="light"] .output-text,
-[data-theme="light"] .stats-text {
-    background: rgba(255, 255, 255, 0.8) !important;
-    color: var(--p-text) !important;
-    border: 1px solid var(--p-border) !important;
-}
-
-[data-theme="light"] .code-input-section textarea {
-    background: rgba(255, 255, 255, 0.9) !important;
-    border: 1px solid var(--p-border) !important;
-    color: var(--p-text) !important;
-}
-
-[data-theme="light"] .tape-cell {
-    background: linear-gradient(135deg, #E9D5FF, #C4B5FD) !important;
-    border: 2px solid var(--p-primary-light) !important;
-    color: var(--p-primary-dark) !important;
-}
-
-[data-theme="light"] .tape-cell.active {
-    background: linear-gradient(135deg, #8B5CF6, #7C3AED) !important;
-    color: white !important;
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4) !important;
-}
-
-[data-theme="light"] .tech-tag {
-    background: var(--p-primary-light) !important;
-    color: white !important;
-}
-
-[data-theme="light"] .tech-tag:hover {
-    background: var(--p-primary) !important;
-}
-
-[data-theme="light"] .example-btn {
-    background: var(--p-primary-light) !important;
-    color: white !important;
-}
-
-[data-theme="light"] .example-btn:hover {
-    background: var(--p-primary) !important;
-}
-
-/* Мобильная адаптивность - улучшенная версия */
-@media (max-width: 768px) {
-    .container {
-        padding: 0 1rem;
-    }
-    
-    .hero {
-        padding: 1rem 0.5rem;
-        min-height: 100vh;
-    }
-    
-    .language-switcher {
-        top: 0.5rem;
-        left: 0.5rem;
-        flex-direction: row;
-        gap: 0.5rem;
-    }
-    
-    .lang-btn, .theme-btn {
-        min-width: 100px;
-        padding: 0.5rem 0.8rem;
-        font-size: 0.8rem;
-    }
-    
-    .username {
-        margin-top: 3rem;
-        margin-bottom: 1rem;
-    }
-    
-    .universal-badge {
-        margin-bottom: 2rem;
-        padding: 0.6rem 1.2rem;
-    }
-    
-    .social-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
-    }
-    
-    .social-card {
-        padding: 1rem;
-        min-height: 100px;
-    }
-    
-    .social-icon {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .anime-gif-left,
-    .anime-gif-right {
-        display: none;
-    }
-    
-    .project-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    .project-card {
-        padding: 1.25rem;
-    }
-    
-    .skills-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    .demo-interface {
-        grid-template-columns: 1fr;
-    }
-    
-    .example-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .example-btn {
-        width: 200px;
-    }
-    
-    .control-buttons {
-        justify-content: center;
-    }
-    
-    .tape-cell {
-        width: 2.5rem;
-        height: 2.5rem;
-        font-size: 0.8rem;
-    }
-    
-    .philosophy-main {
-        font-size: 1.1rem;
-    }
-    
-    .philosophy-details {
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero {
-        padding: 0.5rem;
-    }
-    
-    .username {
-        font-size: 2rem;
-        margin-top: 4rem;
-    }
-    
-    .social-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .language-switcher {
-        flex-direction: column;
-        gap: 0.3rem;
-    }
-    
-    .lang-btn, .theme-btn {
-        min-width: 90px;
-        padding: 0.4rem 0.6rem;
-        font-size: 0.75rem;
-    }
-    
-    .universal-badge {
-        max-width: 95%;
-        padding: 0.5rem 1rem;
-    }
-    
-    .project-card {
-        padding: 1rem;
-    }
-    
-    .btn {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-    }
-    
-    .demo-container {
-        padding: 1rem;
-    }
-    
-    .code-input-section textarea {
-        padding: 0.8rem;
-        font-size: 0.85rem;
-    }
-    
-    .tape-visualization {
-        gap: 0.3rem;
-    }
-    
-    .tape-cell {
-        width: 2.2rem;
-        height: 2.2rem;
-        font-size: 0.75rem;
-    }
-}
-
-@media (max-width: 360px) {
-    .username {
-        font-size: 1.8rem;
-    }
-    
-    .social-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .language-switcher {
-        top: 0.3rem;
-        left: 0.3rem;
-    }
-    
-    .lang-btn, .theme-btn {
-        min-width: 80px;
-        padding: 0.3rem 0.5rem;
-        font-size: 0.7rem;
-    }
-}
-
-/* Большие экраны */
-@media (min-width: 1200px) {
-    .anime-gif-left {
-        width: 180px;
-        height: 180px;
-    }
-    
-    .anime-gif-right {
-        width: 160px;
-        height: 160px;
-    }
-}
-
-/* Портретная ориентация на мобильных */
-@media (max-height: 700px) and (max-width: 768px) {
-    .hero {
-        min-height: 100vh;
-        padding-top: 3rem;
-        padding-bottom: 2rem;
-    }
-    
-    .username {
-        margin-top: 2rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .universal-badge {
-        margin-bottom: 1.5rem;
-    }
-    
-    .social-grid {
-        margin-top: 1rem;
-    }
-}
-
-/* Ландшафтная ориентация на мобильных */
-@media (max-width: 768px) and (orientation: landscape) {
-    .hero {
-        min-height: 100vh;
-        padding: 2rem 0.5rem;
-    }
-    
-    .username {
-        margin-top: 2rem;
-        font-size: 2rem;
-    }
-    
-    .social-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.5rem;
-    }
-    
-    .social-card {
-        padding: 0.8rem;
-        min-height: 90px;
-    }
-}
-</style>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnelifeOnedeath - Universal Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Фиолетовая палитра */
+            --p-primary: #8B5CF6;
+            --p-primary-hover: #7C3AED;
+            --p-primary-light: #A78BFA;
+            --p-primary-dark: #5B21B6;
+            
+            --p-surface: #1F2937;
+            --p-background: #111827;
+            --p-background-alt: #0F172A;
+            
+            --p-text: #F9FAFB;
+            --p-text-muted: #D1D5DB;
+            
+            --p-border: #374151;
+            --p-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--p-background);
+            color: var(--p-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(2deg); }
+            66% { transform: translateY(5px) rotate(-2deg); }
+        }
+
+        @keyframes floatReverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(8px) rotate(-1deg); }
+            66% { transform: translateY(-5px) rotate(1deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Hero Section - Мобильная адаптация */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--p-primary-dark), var(--p-primary));
+            position: relative;
+            overflow: hidden;
+            padding: 1rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%238B5CF6" fill-opacity="0.05" points="0,1000 1000,0 1000,1000"/></svg>');
+            background-size: cover;
+        }
+
+        /* Аниме гифки - улучшенная мобильная версия */
+        .anime-gif-left {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            opacity: 0.7;
+            animation: float 8s ease-in-out infinite;
+            border: 2px solid var(--p-primary-light);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+            z-index: 1;
+        }
+
+        .anime-gif-right {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            opacity: 0.8;
+            animation: floatReverse 7s ease-in-out infinite;
+            border: 2px solid var(--p-primary);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+            z-index: 1;
+        }
+
+        .anime-gif-left img,
+        .anime-gif-right img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Language Switcher - улучшен для мобильных */
+        .language-switcher {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .lang-btn, .theme-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            min-width: 120px;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .lang-btn:hover, .theme-btn:hover {
+            background: var(--p-primary-light);
+            transform: scale(1.05);
+            border-color: white;
+        }
+
+        .brand-header {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            padding: 0 1rem;
+            margin-top: 0;
+        }
+
+        .username {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--p-primary-light), white);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out;
+            text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+            line-height: 1.1;
+            word-break: break-word;
+            margin-top: 0;
+            padding-top: 0;
+        }
+
+        .tagline {
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
+            margin-bottom: 2rem;
+            color: var(--p-text-muted);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            line-height: 1.3;
+        }
+
+        .universal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--p-border);
+            border-radius: 2rem;
+            padding: 0.75rem 1.5rem;
+            margin-bottom: 2.5rem;
+            color: var(--p-text-muted);
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+            backdrop-filter: blur(10px);
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 90%;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .social-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--p-border);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--p-text);
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+            backdrop-filter: blur(10px);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .social-card:hover {
+            border-color: var(--p-primary);
+            transform: translateY(-3px);
+            box-shadow: var(--p-shadow);
+        }
+
+        .social-icon {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--p-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .social-card:hover .social-icon {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .social-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .social-handle {
+            color: var(--p-text-muted);
+            font-size: 0.85rem;
+            word-break: break-word;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 4rem 0;
+            background: var(--p-background-alt);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--p-text);
+            animation: fadeInUp 0.8s ease-out;
+            padding: 0 1rem;
+        }
+
+        .project-grid {
+            display: grid;
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .project-card {
+            background: var(--p-surface);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--p-border);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--p-shadow);
+            border-color: var(--p-primary);
+        }
+
+        .project-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--p-primary-light);
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: var(--p-text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: var(--p-primary-dark);
+            color: var(--p-text);
+            padding: 0.4rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            background: var(--p-primary);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--p-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.7rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.95rem;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            background: var(--p-primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn i {
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn:hover i {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        /* Tapeworm Demo Section */
+        .tapeworm-demo {
+            padding: 4rem 0;
+            background: var(--p-background);
+            border-top: 1px solid var(--p-border);
+            border-bottom: 1px solid var(--p-border);
+        }
+
+        .demo-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--p-surface);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--p-border);
+        }
+
+        .demo-description {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .code-examples {
+            margin-top: 1.5rem;
+        }
+
+        .example-buttons {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .example-btn {
+            background: var(--p-primary-dark);
+            color: var(--p-text);
+            border: 1px solid var(--p-border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .example-btn:hover {
+            background: var(--p-primary);
+            transform: translateY(-2px);
+        }
+
+        .demo-interface {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .code-input-section textarea {
+            width: 100%;
+            background: var(--p-background);
+            border: 1px solid var(--p-border);
+            border-radius: 0.7rem;
+            padding: 1rem;
+            color: var(--p-text);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+            margin-bottom: 1rem;
+            min-height: 120px;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-run { background: var(--p-primary); }
+        .btn-reset { background: var(--p-primary-dark); }
+        .btn-step { background: var(--p-primary-light); }
+
+        .visualization-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .output-display, .tape-display, .stats-display {
+            background: var(--p-background);
+            border: 1px solid var(--p-border);
+            border-radius: 0.7rem;
+            padding: 1rem;
+        }
+
+        .output-text, .stats-text {
+            font-family: 'Courier New', monospace;
+            background: rgba(0,0,0,0.3);
+            padding: 0.8rem;
+            border-radius: 0.4rem;
+            min-height: 2.5rem;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .tape-visualization {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            min-height: 4rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tape-cell {
+            width: 2.8rem;
+            height: 2.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--p-primary-dark);
+            border: 2px solid var(--p-border);
+            border-radius: 0.4rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .tape-cell.active {
+            background: var(--p-primary);
+            border-color: var(--p-primary-light);
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+
+        .demo-footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 4rem 0;
+            background: var(--p-background);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .skill-category {
+            background: var(--p-surface);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--p-border);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-3px);
+            border-color: var(--p-primary);
+        }
+
+        .skill-category h3 {
+            color: var(--p-primary-light);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 4rem 0;
+            background: var(--p-background-alt);
+            text-align: center;
+        }
+
+        .contact .btn {
+            margin-top: 2rem;
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            padding: 3rem 0;
+            background: var(--p-background);
+            text-align: center;
+        }
+
+        .philosophy-main {
+            font-size: clamp(1.2rem, 4vw, 1.4rem);
+            line-height: 1.5;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .philosophy-details {
+            color: var(--p-text-muted);
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            line-height: 1.5;
+        }
+
+        footer {
+            background: var(--p-surface);
+            padding: 2.5rem 0;
+            text-align: center;
+            border-top: 1px solid var(--p-border);
+        }
+
+        .footer-text {
+            color: var(--p-text-muted);
+            margin-top: 1rem;
+        }
+
+        /* English version */
+        .english {
+            display: none;
+        }
+
+        /* Стили для светлой темы */
+        [data-theme="light"] {
+            --p-primary: #7C3AED;
+            --p-primary-hover: #6D28D9;
+            --p-primary-light: #5B21B6;
+            --p-primary-dark: #4C1D95;
+            --p-surface: #FFFFFF;
+            --p-background: #FEF7FF;
+            --p-background-alt: #F3E8FF;
+            --p-text: #1E1B4B;
+            --p-text-muted: #5B21B6;
+            --p-border: #DDD6FE;
+        }
+
+        [data-theme="light"] .hero {
+            background: linear-gradient(135deg, #C4B5FD, #8B5CF6) !important;
+        }
+
+        [data-theme="light"] .username {
+            background: linear-gradient(135deg, #4C1D95, #1E1B4B) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        [data-theme="light"] .social-card,
+        [data-theme="light"] .project-card,
+        [data-theme="light"] .skill-category,
+        [data-theme="light"] .demo-container {
+            backdrop-filter: none !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid var(--p-border) !important;
+        }
+
+        [data-theme="light"] .universal-badge {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 1px solid var(--p-border) !important;
+            color: var(--p-primary-dark) !important;
+        }
+
+        [data-theme="light"] .lang-btn,
+        [data-theme="light"] .theme-btn {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 2px solid var(--p-primary) !important;
+            color: var(--p-primary-dark) !important;
+        }
+
+        [data-theme="light"] .output-text,
+        [data-theme="light"] .stats-text {
+            background: rgba(255, 255, 255, 0.8) !important;
+            color: var(--p-text) !important;
+            border: 1px solid var(--p-border) !important;
+        }
+
+        [data-theme="light"] .code-input-section textarea {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 1px solid var(--p-border) !important;
+            color: var(--p-text) !important;
+        }
+
+        [data-theme="light"] .tape-cell {
+            background: linear-gradient(135deg, #E9D5FF, #C4B5FD) !important;
+            border: 2px solid var(--p-primary-light) !important;
+            color: var(--p-primary-dark) !important;
+        }
+
+        [data-theme="light"] .tape-cell.active {
+            background: linear-gradient(135deg, #8B5CF6, #7C3AED) !important;
+            color: white !important;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4) !important;
+        }
+
+        [data-theme="light"] .tech-tag {
+            background: var(--p-primary-light) !important;
+            color: white !important;
+        }
+
+        [data-theme="light"] .tech-tag:hover {
+            background: var(--p-primary) !important;
+        }
+
+        [data-theme="light"] .example-btn {
+            background: var(--p-primary-light) !important;
+            color: white !important;
+        }
+
+        [data-theme="light"] .example-btn:hover {
+            background: var(--p-primary) !important;
+        }
+
+        /* Мобильная адаптивность - улучшенная версия */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .hero {
+                padding: 1rem 0.5rem;
+                min-height: 100vh;
+                padding-top: 80px; /* Добавляем отступ для кнопок */
+            }
+            
+            .language-switcher {
+                top: 0.5rem;
+                left: 0.5rem;
+                flex-direction: row;
+                gap: 0.5rem;
+                z-index: 1000;
+            }
+            
+            .lang-btn, .theme-btn {
+                min-width: 100px;
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .username {
+                margin-top: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .universal-badge {
+                margin-bottom: 2rem;
+                padding: 0.6rem 1.2rem;
+            }
+            
+            .social-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+            
+            .social-card {
+                padding: 1rem;
+                min-height: 100px;
+            }
+            
+            .social-icon {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .anime-gif-left,
+            .anime-gif-right {
+                display: none;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .project-card {
+                padding: 1.25rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .demo-interface {
+                grid-template-columns: 1fr;
+            }
+            
+            .example-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .example-btn {
+                width: 200px;
+            }
+            
+            .control-buttons {
+                justify-content: center;
+            }
+            
+            .tape-cell {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .philosophy-main {
+                font-size: 1.1rem;
+            }
+            
+            .philosophy-details {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 0.5rem;
+                padding-top: 90px;
+            }
+            
+            .username {
+                font-size: 2rem;
+                margin-top: 0;
+            }
+            
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-switcher {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            
+            .lang-btn, .theme-btn {
+                min-width: 90px;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
+            }
+            
+            .universal-badge {
+                max-width: 95%;
+                padding: 0.5rem 1rem;
+            }
+            
+            .project-card {
+                padding: 1rem;
+            }
+            
+            .btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .demo-container {
+                padding: 1rem;
+            }
+            
+            .code-input-section textarea {
+                padding: 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .tape-visualization {
+                gap: 0.3rem;
+            }
+            
+            .tape-cell {
+                width: 2.2rem;
+                height: 2.2rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .username {
+                font-size: 1.8rem;
+            }
+            
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-switcher {
+                top: 0.3rem;
+                left: 0.3rem;
+            }
+            
+            .lang-btn, .theme-btn {
+                min-width: 80px;
+                padding: 0.3rem 0.5rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Большие экраны */
+        @media (min-width: 1200px) {
+            .anime-gif-left {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .anime-gif-right {
+                width: 160px;
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="language-switcher">
+            <button class="lang-btn" onclick="toggleLanguage()">
+                <i class="fas fa-language"></i>
+                <span class="russian">Русский</span>
+                <span class="english">English</span>
+            </button>
+            <button class="theme-btn" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+                <span class="russian">Тёмная</span>
+                <span class="english">Dark</span>
+            </button>
+        </div>
+
+        <!-- Левая аниме-гифка -->
+        <div class="anime-gif-left">
+            <img src="https://99px.ru/sstorage/86/2016/10/image_862910161743391536726.gif" alt="Lain Anime">
+        </div>
+
+        <!-- Правая аниме-гифка -->
+        <div class="anime-gif-right">
+            <img src="https://i.gifer.com/TVPM.gif" alt="Tech Animation">
+        </div>
+
+        <div class="container">
+            <div class="brand-header">
+                <div class="username">OnelifeOnedeath</div>
+                
+                <!-- Russian Version -->
+                <div class="russian">
+                    <div class="tagline">Универсальный инженер • Исследователь систем</div>
+                    <div class="universal-badge">
+                        <i class="fas fa-globe"></i>
+                        Один никнейм — все платформы
+                    </div>
+                </div>
+                
+                <!-- English Version -->
+                <div class="english">
+                    <div class="tagline">Universal Engineer • Systems Researcher</div>
+                    <div class="universal-badge">
+                        <i class="fas fa-globe"></i>
+                        One username — all platforms
+                    </div>
+                </div>
+
+                <div class="social-grid">
+                    <a href="https://github.com/OnelifeOnedeath" class="social-card" target="_blank">
+                        <div class="social-icon"><i class="fab fa-github"></i></div>
+                        <div class="social-name">GitHub</div>
+                        <div class="social-handle">OnelifeOnedeath</div>
+                    </a>
+                    
+                    <a href="https://t.me/OnelifeOnedeath" class="social-card" target="_blank">
+                        <div class="social-icon"><i class="fab fa-telegram"></i></div>
+                        <div class="social-name">Telegram</div>
+                        <div class="social-handle">@OnelifeOnedeath</div>
+                    </a>
+                    
+                    <a href="https://vk.com/onelifeonedeath" class="social-card" target="_blank">
+                        <div class="social-icon"><i class="fab fa-vk"></i></div>
+                        <div class="social-name">VK</div>
+                        <div class="social-handle">onelifeonedeath</div>
+                    </a>
+                    
+                    <a href="https://www.youtube.com/@OnelifeOnedeath" class="social-card" target="_blank">
+                        <div class="social-icon"><i class="fab fa-youtube"></i></div>
+                        <div class="social-name">YouTube</div>
+                        <div class="social-handle">@OnelifeOnedeath</div>
+                    </a>
+
+                    <a href="https://steamcommunity.com/id/OnelifeOnedeath" class="social-card" target="_blank">
+                        <div class="social-icon"><i class="fab fa-steam"></i></div>
+                        <div class="social-name">Steam</div>
+                        <div class="social-handle">OnelifeOnedeath</div>
+                    </a>
+                    
+                    <a href="#" class="social-card">
+                        <div class="social-icon"><i class="fab fa-discord"></i></div>
+                        <div class="social-name">Discord</div>
+                        <div class="social-handle">OnelifeOnedeath</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects">
+        <div class="container">
+            <!-- Russian -->
+            <h2 class="section-title russian">Исследовательские проекты</h2>
+            <!-- English -->
+            <h2 class="section-title english">Research Projects</h2>
+            
+            <div class="project-grid">
+                
+                <!-- Tapeworm -->
+                <div class="project-card">
+                    <h3 class="project-title">Tapeworm 🐛</h3>
+                    <p class="project-description russian">
+                        Визуализатор Brainfuck с анимированным "ленточным червем". Исследование эзотерических языков 
+                        через интерактивное исполнение кода.
+                    </p>
+                    <p class="project-description english">
+                        Brainfuck visualizer with an animated "tape worm". Exploring esoteric languages 
+                        through interactive code execution.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Rust</span>
+                        <span class="tech-tag">WASM</span>
+                        <span class="tech-tag russian">Визуализация</span>
+                        <span class="tech-tag english">Visualization</span>
+                    </div>
+                    <a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank">
+                        <i class="fab fa-github"></i>
+                        <span class="russian">Исходный код</span>
+                        <span class="english">Source Code</span>
+                    </a>
+                </div>
+
+                <!-- Codex Mortis -->
+                <div class="project-card">
+                    <h3 class="project-title">Codex Mortis</h3>
+                    <p class="project-description russian">
+                        Мультиязычный кодекс на 10+ языках. Сравнительный анализ парадигм программирования 
+                        через призму латинской терминологии.
+                    </p>
+                    <p class="project-description english">
+                        Multi-language codex in 10+ languages. Comparative analysis of programming paradigms 
+                        through the lens of Latin terminology.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag russian">Полиглот</span>
+                        <span class="tech-tag english">Polyglot</span>
+                        <span class="tech-tag russian">Исследование</span>
+                        <span class="tech-tag english">Research</span>
+                        <span class="tech-tag">Latin</span>
+                    </div>
+                    <a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank">
+                        <i class="fab fa-github"></i>
+                        <span class="russian">Исследовать</span>
+                        <span class="english">Explore</span>
+                    </a>
+                </div>
+
+                <!-- Ubuntu Design Helper -->
+                <div class="project-card">
+                    <h3 class="project-title">Ubuntu Design Helper</h3>
+                    <p class="project-description russian">
+                        Инструментарий для дизайнеров в Linux. Автоматизация рабочих процессов 
+                        и решение специфических проблем графических работников.
+                    </p>
+                    <p class="project-description english">
+                        Toolkit for designers in Linux. Workflow automation and solving specific problems 
+                        of graphics professionals.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Linux</span>
+                        <span class="tech-tag russian">Автоматизация</span>
+                        <span class="tech-tag english">Automation</span>
+                        <span class="tech-tag">Bash/Python</span>
+                    </div>
+                    <a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank">
+                        <i class="fab fa-github"></i>
+                        <span class="russian">Использовать</span>
+                        <span class="english">Use</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Tapeworm Demo Section -->
+    <section class="tapeworm-demo">
+        <div class="container">
+            <!-- Russian -->
+            <h2 class="section-title russian">Tapeworm 🐛 Демо</h2>
+            <!-- English -->
+            <h2 class="section-title english">Tapeworm 🐛 Demo</h2>
+            
+            <div class="demo-container">
+                <div class="demo-description">
+                    <p class="russian">
+                        <strong>Интерактивный Brainfuck интерпретатор</strong> с визуализацией памяти. 
+                        Смотри как "ленточный червь" ползет по твоему коду!
+                    </p>
+                    <p class="english">
+                        <strong>Interactive Brainfuck interpreter</strong> with memory visualization. 
+                        Watch the "tape worm" crawl through your code!
+                    </p>
+                    
+                    <div class="code-examples">
+                        <h4 class="russian">Примеры кода:</h4>
+                        <h4 class="english">Code examples:</h4>
+                        
+                        <div class="example-buttons">
+                            <button class="example-btn" onclick="loadExample('hello')">
+                                <span class="russian">Hello World</span>
+                                <span class="english">Hello World</span>
+                            </button>
+                            <button class="example-btn" onclick="loadExample('counter')">
+                                <span class="russian">Счетчик</span>
+                                <span class="english">Counter</span>
+                            </button>
+                            <button class="example-btn" onclick="loadExample('calculator')">
+                                <span class="russian">Калькулятор</span>
+                                <span class="english">Calculator</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-interface">
+                    <div class="code-input-section">
+                        <textarea id="bf-code" placeholder="Введите Brainfuck код здесь... / Enter Brainfuck code here..." 
+                                 rows="6">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea>
+                        
+                        <div class="control-buttons">
+                            <button class="btn btn-run" onclick="runBrainfuck()">
+                                <i class="fas fa-play"></i>
+                                <span class="russian">Запустить</span>
+                                <span class="english">Run</span>
+                            </button>
+                            <button class="btn btn-reset" onclick="resetBrainfuck()">
+                                <i class="fas fa-redo"></i>
+                                <span class="russian">Сбросить</span>
+                                <span class="english">Reset</span>
+                            </button>
+                            <button class="btn btn-step" onclick="stepBrainfuck()">
+                                <i class="fas fa-step-forward"></i>
+                                <span class="russian">Шаг</span>
+                                <span class="english">Step</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="visualization-section">
+                        <div class="output-display">
+                            <h4 class="russian">Вывод:</h4>
+                            <h4 class="english">Output:</h4>
+                            <div id="bf-output" class="output-text"></div>
+                        </div>
+                        
+                        <div class="tape-display">
+                            <h4 class="russian">Лента памяти:</h4>
+                            <h4 class="english">Memory Tape:</h4>
+                            <div id="bf-tape" class="tape-visualization"></div>
+                        </div>
+                        
+                        <div class="stats-display">
+                            <h4 class="russian">Статистика:</h4>
+                            <h4 class="english">Statistics:</h4>
+                            <div id="bf-stats" class="stats-text"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-footer">
+                <a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank">
+                    <i class="fab fa-github"></i>
+                    <span class="russian">Полный проект на GitHub</span>
+                    <span class="english">Full project on GitHub</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills">
+        <div class="container">
+            <!-- Russian -->
+            <h2 class="section-title russian">Технологии</h2>
+            <!-- English -->
+            <h2 class="section-title english">Technologies</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Backend</h3>
+                    <div class="skill-tags">
+                        <span class="tech-tag">C# / .NET</span>
+                        <span class="tech-tag">Rust</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Redis</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="russian">Системное программирование</h3>
+                    <h3 class="english">System Programming</h3>
+                    <div class="skill-tags">
+                        <span class="tech-tag">Linux</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Bash</span>
+                        <span class="tech-tag">Networking</span>
+                        <span class="tech-tag">WASM</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="russian">Инструменты</h3>
+                    <h3 class="english">Tools</h3>
+                    <div class="skill-tags">
+                        <span class="tech-tag">Git</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">CI/CD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <!-- Russian -->
+            <h2 class="section-title russian">Контакты</h2>
+            <p class="russian">Открыт к сотрудничеству и интересным проектам</p>
+            <!-- English -->
+            <h2 class="section-title english">Contacts</h2>
+            <p class="english">Open for collaboration and interesting projects</p>
+            
+            <a href="mailto:igorb9475@gmail.com" class="btn">
+                <i class="fas fa-envelope"></i>
+                <span class="russian">Написать письмо</span>
+                <span class="english">Send Email</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy">
+        <div class="container">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p class="philosophy-main russian">
+                    "Одна жизнь, одна смерть — философия глубинного понимания систем."
+                </p>
+                <p class="philosophy-main english" style="display: none;">
+                    "One life, one death — a philosophy of deep system understanding."
+                </p>
+                
+                <div style="margin-top: 2rem;">
+                    <p class="philosophy-details russian">
+                        От компиляторов до P2P-сетей, от эзотерических языков до практических инструментов.<br>
+                        Не гонюсь за грейдами, а исследую суть технологий.
+                    </p>
+                    <p class="philosophy-details english" style="display: none;">
+                        From compilers to P2P networks, from esoteric languages to practical tools.<br>
+                        Not chasing grades, but exploring the essence of technology.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="username" style="font-size: 2rem;">OnelifeOnedeath</div>
+            <p class="footer-text russian" style="color: var(--p-text-muted); margin: 1rem 0;">
+                Универсальный инженер • 2025
+            </p>
+            <p class="footer-text english" style="color: var(--p-text-muted); margin: 1rem 0; display: none;">
+                Universal Engineer • 2025
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Система тем
+        const themes = {
+            dark: {
+                '--p-primary': '#8B5CF6',
+                '--p-primary-hover': '#7C3AED', 
+                '--p-primary-light': '#A78BFA',
+                '--p-primary-dark': '#5B21B6',
+                '--p-surface': '#1F2937',
+                '--p-background': '#111827',
+                '--p-background-alt': '#0F172A',
+                '--p-text': '#F9FAFB',
+                '--p-text-muted': '#D1D5DB',
+                '--p-border': '#374151'
+            },
+            light: {
+                '--p-primary': '#7C3AED',
+                '--p-primary-hover': '#6D28D9',
+                '--p-primary-light': '#5B21B6',
+                '--p-primary-dark': '#4C1D95',
+                '--p-surface': '#FFFFFF',
+                '--p-background': '#FEF7FF',
+                '--p-background-alt': '#F3E8FF',
+                '--p-text': '#1E1B4B',
+                '--p-text-muted': '#5B21B6',
+                '--p-border': '#DDD6FE'
+            }
+        };
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+
+        function setTheme(theme) {
+            const root = document.documentElement;
+            const themeColors = themes[theme];
+            
+            // Плавное переключение
+            root.style.transition = 'all 0.5s ease';
+            
+            // Применяем цвета
+            Object.entries(themeColors).forEach(([property, value]) => {
+                root.style.setProperty(property, value);
+            });
+            
+            root.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            // Обновляем иконку и текст
+            const icon = document.querySelector('.theme-btn i');
+            const themeText = document.querySelectorAll('.theme-btn span');
+            
+            icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            
+            themeText.forEach(span => {
+                if (span.classList.contains('russian')) {
+                    span.textContent = theme === 'dark' ? 'Тёмная' : 'Светлая';
+                } else {
+                    span.textContent = theme === 'dark' ? 'Dark' : 'Light';
+                }
+            });
+        }
+
+        // Переключение языка
+        function toggleLanguage() {
+            const russianElements = document.querySelectorAll('.russian');
+            const englishElements = document.querySelectorAll('.english');
+            const btn = document.querySelector('.lang-btn');
+            
+            if (btn.textContent.includes('English') || btn.textContent.includes('Русский')) {
+                russianElements.forEach(el => el.style.display = 'none');
+                englishElements.forEach(el => el.style.display = 'block');
+                btn.innerHTML = '<i class="fas fa-language"></i><span class="russian">Русский</span><span class="english">English</span>';
+            } else {
+                russianElements.forEach(el => el.style.display = 'block');
+                englishElements.forEach(el => el.style.display = 'none');
+                btn.innerHTML = '<i class="fas fa-language"></i><span class="russian">Русский</span><span class="english">English</span>';
+            }
+        }
+
+        // Анимация при скролле
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.project-card, .section-title, .skill-category').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Инициализация английской версии как скрытой
+        document.querySelectorAll('.english').forEach(el => {
+            el.style.display = 'none';
+        });
+
+        // Brainfuck интерпретатор для демо
+        class SimpleBrainfuck {
+            constructor() {
+                this.tape = new Array(30).fill(0);
+                this.pointer = 0;
+                this.code = '';
+                this.ip = 0;
+                this.output = '';
+                this.stats = { '>':0, '<':0, '+':0, '-':0, '.':0, ',':0, '[':0, ']':0 };
+                this.bracketMap = {};
+            }
+            
+            loadCode(code) {
+                this.code = code;
+                this.output = '';
+                this.pointer = 0;
+                this.ip = 0;
+                this.tape = new Array(30).fill(0);
+                this.stats = { '>':0, '<':0, '+':0, '-':0, '.':0, ',':0, '[':0, ']':0 };
+                this.buildBracketMap();
+            }
+            
+            buildBracketMap() {
+                let stack = [];
+                for (let i = 0; i < this.code.length; i++) {
+                    if (this.code[i] === '[') {
+                        stack.push(i);
+                    } else if (this.code[i] === ']') {
+                        if (stack.length === 0) throw new Error("Unmatched ]");
+                        let start = stack.pop();
+                        this.bracketMap[start] = i;
+                        this.bracketMap[i] = start;
+                    }
+                }
+                if (stack.length > 0) throw new Error("Unmatched [");
+            }
+            
+            step() {
+                if (this.ip >= this.code.length) return null;
+                
+                let cmd = this.code[this.ip];
+                if (cmd in this.stats) this.stats[cmd]++;
+                
+                try {
+                    switch(cmd) {
+                        case '>': this.pointer++; break;
+                        case '<': this.pointer--; break;
+                        case '+': this.tape[this.pointer] = (this.tape[this.pointer] + 1) % 256; break;
+                        case '-': this.tape[this.pointer] = (this.tape[this.pointer] - 1) % 256; break;
+                        case '.': this.output += String.fromCharCode(this.tape[this.pointer]); break;
+                        case '[': if (this.tape[this.pointer] === 0) this.ip = this.bracketMap[this.ip]; break;
+                        case ']': if (this.tape[this.pointer] !== 0) this.ip = this.bracketMap[this.ip]; break;
+                    }
+                } catch(e) {
+                    console.error('Error:', e);
+                    return null;
+                }
+                
+                this.ip++;
+                return { tape: [...this.tape], pointer: this.pointer, output: this.output };
+            }
+            
+            getStats() {
+                let total = Object.values(this.stats).reduce((a, b) => a + b, 0);
+                let statsStr = Object.entries(this.stats)
+                    .filter(([_, count]) => count > 0)
+                    .map(([cmd, count]) => `${cmd}:${count}`)
+                    .join(' | ');
+                return `Total: ${total} | ${statsStr}`;
+            }
+        }
+
+        let bf = new SimpleBrainfuck();
+
+        function loadExample(type) {
+            const examples = {
+                hello: '++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.',
+                counter: '+++[>+++<-]>.',
+                calculator: '++>+++[<+>-]<.'
+            };
+            
+            document.getElementById('bf-code').value = examples[type];
+            resetBrainfuck();
+        }
+
+        function runBrainfuck() {
+            resetBrainfuck();
+            executeSteps();
+        }
+
+        function resetBrainfuck() {
+            const code = document.getElementById('bf-code').value;
+            bf.loadCode(code);
+            updateDisplay();
+        }
+
+        function stepBrainfuck() {
+            const result = bf.step();
+            if (result) {
+                updateDisplay();
+            }
+        }
+
+        function executeSteps() {
+            const result = bf.step();
+            if (result) {
+                updateDisplay();
+                setTimeout(executeSteps, 100);
+            }
+        }
+
+        function updateDisplay() {
+            // Обновляем вывод
+            document.getElementById('bf-output').textContent = bf.output;
+            
+            // Обновляем ленту
+            const tapeElement = document.getElementById('bf-tape');
+            tapeElement.innerHTML = '';
+            
+            for (let i = 0; i < Math.min(15, bf.tape.length); i++) {
+                const cell = document.createElement('div');
+                cell.className = `tape-cell ${i === bf.pointer ? 'active' : ''}`;
+                cell.textContent = bf.tape[i];
+                cell.title = `Cell ${i}: ${bf.tape[i]} ('${String.fromCharCode(bf.tape[i])}')`;
+                tapeElement.appendChild(cell);
+            }
+            
+            // Обновляем статистику
+            document.getElementById('bf-stats').textContent = bf.getStats();
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            resetBrainfuck();
+            // Загружаем сохраненную тему
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
+        });
+    </script>
+</body>
+</html>
