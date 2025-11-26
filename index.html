@@ -49,11 +49,6 @@
             }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -112,18 +107,19 @@
         }
 
         .lang-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--p-border);
-            color: var(--p-text);
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: 600;
         }
 
         .lang-btn:hover {
-            background: var(--p-primary);
-            border-color: var(--p-primary);
+            background: var(--p-primary-light);
+            transform: scale(1.1);
         }
 
         .universal-badge {
@@ -325,15 +321,6 @@
     </style>
 </head>
 <body>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
-
     <!-- Hero Section -->
     <section class="hero">
         <div class="language-switcher">
@@ -498,6 +485,10 @@
     <footer>
         <div class="container">
             <div class="username" style="font-size: 2rem;">OnelifeOnedeath</div>
+            <p class="philosophy-text" style="font-size: 0.9rem; margin: 1rem 0; opacity: 0.8; max-width: 800px;">
+                <span class="russian">"Одна жизнь, одна смерть — философия глубинного понимания систем. От компиляторов до P2P-сетей, от эзотерических языков до практических инструментов. Не гонюсь за грейдами, а исследую суть технологий."</span>
+                <span class="english">"One life, one death — a philosophy of deep system understanding. From compilers to P2P networks, from esoteric languages to practical tools. Not chasing grades, but exploring the essence of technology."</span>
+            </p>
             <p class="footer-text russian">Универсальный инженер • 2025</p>
             <p class="footer-text english">Universal Engineer • 2025</p>
         </div>
