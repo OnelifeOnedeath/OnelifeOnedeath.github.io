@@ -29,3 +29,12 @@ Interactive "tape worm" showing memory state in real-time. Exploring esoteric la
 ```rust
 // Пример Brainfuck кода / Brainfuck code example
 ++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.
+📚 Codex Mortis
+Multi-language codex in 10+ languages / Мультиязычный кодекс на 10+ языках
+Comparative analysis of programming paradigms through Latin terminology.
+Сравнительный анализ парадигм программирования через латинскую терминологию.
+
+🎨 Ubuntu Design Helper
+Toolkit for designers in Linux / Инструментарий для дизайнеров в Linux
+Solving specific problems of graphics professionals in Ubuntu environment.
+Решение специфических проблем графических работников в Ubuntu-окружении.
