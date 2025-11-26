@@ -3,7 +3,7 @@
 # 🎯 OnelifeOnedeath
 
 **Universal Engineer • Systems Researcher • Polyglot Developer**
-      
+         
 `One username — all platforms • Один никнейм — все платформы`
       
 [![GitHub](https://img.shields.io/badge/GitHub-OnelifeOnedeath-8B5CF6?style=for-the-badge&logo=github)](https://github.com/OnelifeOnedeath)
