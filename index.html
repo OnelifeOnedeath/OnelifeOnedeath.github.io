@@ -372,6 +372,141 @@
             transform: scale(1.2) rotate(10deg);
         }
 
+        /* Tapeworm Demo Section */
+        .tapeworm-demo {
+            padding: 5rem 0;
+            background: var(--p-background);
+            border-top: 1px solid var(--p-border);
+            border-bottom: 1px solid var(--p-border);
+        }
+
+        .demo-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--p-surface);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--p-border);
+        }
+
+        .demo-description {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .code-examples {
+            margin-top: 1.5rem;
+        }
+
+        .example-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .example-btn {
+            background: var(--p-primary-dark);
+            color: var(--p-text);
+            border: 1px solid var(--p-border);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .example-btn:hover {
+            background: var(--p-primary);
+            transform: translateY(-2px);
+        }
+
+        .demo-interface {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .code-input-section textarea {
+            width: 100%;
+            background: var(--p-background);
+            border: 1px solid var(--p-border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            color: var(--p-text);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-run { background: var(--p-primary); }
+        .btn-reset { background: var(--p-primary-dark); }
+        .btn-step { background: var(--p-primary-light); }
+
+        .visualization-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .output-display, .tape-display, .stats-display {
+            background: var(--p-background);
+            border: 1px solid var(--p-border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        .output-text, .stats-text {
+            font-family: 'Courier New', monospace;
+            background: rgba(0,0,0,0.3);
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            min-height: 2rem;
+        }
+
+        .tape-visualization {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            min-height: 4rem;
+            align-items: center;
+        }
+
+        .tape-cell {
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--p-primary-dark);
+            border: 2px solid var(--p-border);
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .tape-cell.active {
+            background: var(--p-primary);
+            border-color: var(--p-primary-light);
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+
+        .demo-footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
         /* Skills Section */
         .skills {
             padding: 5rem 0;
@@ -515,6 +650,23 @@
             .universal-badge {
                 padding: 0.5rem 1rem;
                 font-size: 0.9rem;
+            }
+            
+            .demo-interface {
+                grid-template-columns: 1fr;
+            }
+            
+            .example-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .example-btn {
+                width: 200px;
+            }
+            
+            .control-buttons {
+                justify-content: center;
             }
         }
 
@@ -731,6 +883,102 @@
         </div>
     </section>
 
+    <!-- Tapeworm Demo Section -->
+    <section class="tapeworm-demo">
+        <div class="container">
+            <!-- Russian -->
+            <h2 class="section-title russian">Tapeworm 🐛 Демо</h2>
+            <!-- English -->
+            <h2 class="section-title english">Tapeworm 🐛 Demo</h2>
+            
+            <div class="demo-container">
+                <div class="demo-description">
+                    <p class="russian">
+                        <strong>Интерактивный Brainfuck интерпретатор</strong> с визуализацией памяти. 
+                        Смотри как "ленточный червь" ползет по твоему коду!
+                    </p>
+                    <p class="english">
+                        <strong>Interactive Brainfuck interpreter</strong> with memory visualization. 
+                        Watch the "tape worm" crawl through your code!
+                    </p>
+                    
+                    <div class="code-examples">
+                        <h4 class="russian">Примеры кода:</h4>
+                        <h4 class="english">Code examples:</h4>
+                        
+                        <div class="example-buttons">
+                            <button class="example-btn" onclick="loadExample('hello')">
+                                <span class="russian">Hello World</span>
+                                <span class="english">Hello World</span>
+                            </button>
+                            <button class="example-btn" onclick="loadExample('counter')">
+                                <span class="russian">Счетчик</span>
+                                <span class="english">Counter</span>
+                            </button>
+                            <button class="example-btn" onclick="loadExample('calculator')">
+                                <span class="russian">Калькулятор</span>
+                                <span class="english">Calculator</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-interface">
+                    <div class="code-input-section">
+                        <textarea id="bf-code" placeholder="Введите Brainfuck код здесь... / Enter Brainfuck code here..." 
+                                 rows="6">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea>
+                        
+                        <div class="control-buttons">
+                            <button class="btn btn-run" onclick="runBrainfuck()">
+                                <i class="fas fa-play"></i>
+                                <span class="russian">Запустить</span>
+                                <span class="english">Run</span>
+                            </button>
+                            <button class="btn btn-reset" onclick="resetBrainfuck()">
+                                <i class="fas fa-redo"></i>
+                                <span class="russian">Сбросить</span>
+                                <span class="english">Reset</span>
+                            </button>
+                            <button class="btn btn-step" onclick="stepBrainfuck()">
+                                <i class="fas fa-step-forward"></i>
+                                <span class="russian">Шаг</span>
+                                <span class="english">Step</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="visualization-section">
+                        <div class="output-display">
+                            <h4 class="russian">Вывод:</h4>
+                            <h4 class="english">Output:</h4>
+                            <div id="bf-output" class="output-text"></div>
+                        </div>
+                        
+                        <div class="tape-display">
+                            <h4 class="russian">Лента памяти:</h4>
+                            <h4 class="english">Memory Tape:</h4>
+                            <div id="bf-tape" class="tape-visualization"></div>
+                        </div>
+                        
+                        <div class="stats-display">
+                            <h4 class="russian">Статистика:</h4>
+                            <h4 class="english">Statistics:</h4>
+                            <div id="bf-stats" class="stats-text"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-footer">
+                <a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank">
+                    <i class="fab fa-github"></i>
+                    <span class="russian">Полный проект на GitHub</span>
+                    <span class="english">Full project on GitHub</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Skills Section -->
     <section class="skills">
         <div class="container">
@@ -867,6 +1115,142 @@
         // Инициализация английской версии как скрытой
         document.querySelectorAll('.english').forEach(el => {
             el.style.display = 'none';
+        });
+
+        // Brainfuck интерпретатор для демо
+        class SimpleBrainfuck {
+            constructor() {
+                this.tape = new Array(30).fill(0);
+                this.pointer = 0;
+                this.code = '';
+                this.ip = 0;
+                this.output = '';
+                this.stats = { '>':0, '<':0, '+':0, '-':0, '.':0, ',':0, '[':0, ']':0 };
+                this.bracketMap = {};
+            }
+            
+            loadCode(code) {
+                this.code = code;
+                this.output = '';
+                this.pointer = 0;
+                this.ip = 0;
+                this.tape = new Array(30).fill(0);
+                this.stats = { '>':0, '<':0, '+':0, '-':0, '.':0, ',':0, '[':0, ']':0 };
+                this.buildBracketMap();
+            }
+            
+            buildBracketMap() {
+                let stack = [];
+                for (let i = 0; i < this.code.length; i++) {
+                    if (this.code[i] === '[') {
+                        stack.push(i);
+                    } else if (this.code[i] === ']') {
+                        if (stack.length === 0) throw new Error("Unmatched ]");
+                        let start = stack.pop();
+                        this.bracketMap[start] = i;
+                        this.bracketMap[i] = start;
+                    }
+                }
+                if (stack.length > 0) throw new Error("Unmatched [");
+            }
+            
+            step() {
+                if (this.ip >= this.code.length) return null;
+                
+                let cmd = this.code[this.ip];
+                if (cmd in this.stats) this.stats[cmd]++;
+                
+                try {
+                    switch(cmd) {
+                        case '>': this.pointer++; break;
+                        case '<': this.pointer--; break;
+                        case '+': this.tape[this.pointer] = (this.tape[this.pointer] + 1) % 256; break;
+                        case '-': this.tape[this.pointer] = (this.tape[this.pointer] - 1) % 256; break;
+                        case '.': this.output += String.fromCharCode(this.tape[this.pointer]); break;
+                        case '[': if (this.tape[this.pointer] === 0) this.ip = this.bracketMap[this.ip]; break;
+                        case ']': if (this.tape[this.pointer] !== 0) this.ip = this.bracketMap[this.ip]; break;
+                    }
+                } catch(e) {
+                    console.error('Error:', e);
+                    return null;
+                }
+                
+                this.ip++;
+                return { tape: [...this.tape], pointer: this.pointer, output: this.output };
+            }
+            
+            getStats() {
+                let total = Object.values(this.stats).reduce((a, b) => a + b, 0);
+                let statsStr = Object.entries(this.stats)
+                    .filter(([_, count]) => count > 0)
+                    .map(([cmd, count]) => `${cmd}:${count}`)
+                    .join(' | ');
+                return `Total: ${total} | ${statsStr}`;
+            }
+        }
+
+        let bf = new SimpleBrainfuck();
+
+        function loadExample(type) {
+            const examples = {
+                hello: '++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.',
+                counter: '+++[>+++<-]>.',
+                calculator: '++>+++[<+>-]<.'
+            };
+            
+            document.getElementById('bf-code').value = examples[type];
+            resetBrainfuck();
+        }
+
+        function runBrainfuck() {
+            resetBrainfuck();
+            executeSteps();
+        }
+
+        function resetBrainfuck() {
+            const code = document.getElementById('bf-code').value;
+            bf.loadCode(code);
+            updateDisplay();
+        }
+
+        function stepBrainfuck() {
+            const result = bf.step();
+            if (result) {
+                updateDisplay();
+            }
+        }
+
+        function executeSteps() {
+            const result = bf.step();
+            if (result) {
+                updateDisplay();
+                setTimeout(executeSteps, 100);
+            }
+        }
+
+        function updateDisplay() {
+            // Обновляем вывод
+            document.getElementById('bf-output').textContent = bf.output;
+            
+            // Обновляем ленту
+            const tapeElement = document.getElementById('bf-tape');
+            tapeElement.innerHTML = '';
+            
+            for (let i = 0; i < Math.min(15, bf.tape.length); i++) {
+                const cell = document.createElement('div');
+                cell.className = `tape-cell ${i === bf.pointer ? 'active' : ''}`;
+                cell.textContent = bf.tape[i];
+                cell.title = `Cell ${i}: ${bf.tape[i]} ('${String.fromCharCode(bf.tape[i])}')`;
+                tapeElement.appendChild(cell);
+            }
+            
+            // Обновляем статистику
+            document.getElementById('bf-stats').textContent = bf.getStats();
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            resetBrainfuck();
         });
     </script>
 </body>
