@@ -139,7 +139,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
@@ -281,6 +281,50 @@
             transform: scale(1.2);
         }
 
+        /* Skills Section */
+        .skills {
+            padding: 5rem 0;
+            background: var(--p-background);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .skill-category {
+            background: var(--p-surface);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--p-border);
+        }
+
+        .skill-category h3 {
+            color: var(--p-primary-light);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+            background: var(--p-background-alt);
+            text-align: center;
+        }
+
+        .contact .btn {
+            margin-top: 2rem;
+        }
+
         /* Philosophy */
         .philosophy {
             padding: 4rem 0;
@@ -362,6 +406,18 @@
                         <div class="social-handle">@OnelifeOnedeath</div>
                     </a>
                     
+                    <a href="https://vk.com/onelifeonedeath" class="social-card" target="_blank">
+                        <div class="social-icon"><i class="fab fa-vk"></i></div>
+                        <div class="social-name">VK</div>
+                        <div class="social-handle">onelifeonedeath</div>
+                    </a>
+                    
+                    <a href="https://www.youtube.com/@OnelifeOnedeath" class="social-card" target="_blank">
+                        <div class="social-icon"><i class="fab fa-youtube"></i></div>
+                        <div class="social-name">YouTube</div>
+                        <div class="social-handle">@OnelifeOnedeath</div>
+                    </a>
+
                     <a href="https://steamcommunity.com/id/OnelifeOnedeath" class="social-card" target="_blank">
                         <div class="social-icon"><i class="fab fa-steam"></i></div>
                         <div class="social-name">Steam</div>
@@ -465,6 +521,70 @@
         </div>
     </section>
 
+    <!-- Skills Section -->
+    <section class="skills">
+        <div class="container">
+            <!-- Russian -->
+            <h2 class="section-title russian">Технологии</h2>
+            <!-- English -->
+            <h2 class="section-title english">Technologies</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Backend</h3>
+                    <div class="skill-tags">
+                        <span class="tech-tag">C# / .NET</span>
+                        <span class="tech-tag">Rust</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Redis</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="russian">Системное программирование</h3>
+                    <h3 class="english">System Programming</h3>
+                    <div class="skill-tags">
+                        <span class="tech-tag">Linux</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Bash</span>
+                        <span class="tech-tag">Networking</span>
+                        <span class="tech-tag">WASM</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="russian">Инструменты</h3>
+                    <h3 class="english">Tools</h3>
+                    <div class="skill-tags">
+                        <span class="tech-tag">Git</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">CI/CD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <!-- Russian -->
+            <h2 class="section-title russian">Контакты</h2>
+            <p class="russian">Открыт к сотрудничеству и интересным проектам</p>
+            <!-- English -->
+            <h2 class="section-title english">Contacts</h2>
+            <p class="english">Open for collaboration and interesting projects</p>
+            
+            <a href="mailto:igorb9475@gmail.com" class="btn">
+                <i class="fas fa-envelope"></i>
+                <span class="russian">Написать письмо</span>
+                <span class="english">Send Email</span>
+            </a>
+        </div>
+    </section>
+
     <!-- Philosophy -->
     <section class="philosophy">
         <div class="container">
@@ -521,7 +641,7 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.project-card, .section-title, .philosophy-text').forEach(el => {
+        document.querySelectorAll('.project-card, .section-title, .philosophy-text, .skill-category').forEach(el => {
             observer.observe(el);
         });
 
