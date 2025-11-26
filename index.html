@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnelifeOnedeath - Universal Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Фиолетовая палитра - твой бренд */
+            --p-primary: #8B5CF6;
+            --p-primary-hover: #7C3AED;
+            --p-primary-active: #6D28D9;
+            --p-primary-light: #A78BFA;
+            --p-primary-dark: #5B21B6;
+            
+            --p-surface: #1F2937;
+            --p-surface-light: #374151;
+            --p-background: #111827;
+            --p-background-alt: #0F172A;
+            
+            --p-text: #F9FAFB;
+            --p-text-muted: #D1D5DB;
+            --p-text-on-primary: #FFFFFF;
+            
+            --p-border: #374151;
+            --p-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1);
+            --p-shadow-lg: 0 10px 15px -3px rgba(139, 92, 246, 0.2);
+            
+            --p-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--p-background);
+            color: var(--p-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Анимация градиента */
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(-45deg, #0F172A, #1E1B4B, #5B21B6, #7C3AED);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%238B5CF6" fill-opacity="0.05" points="0,1000 1000,0 1000,1000"/></svg>');
+            background-size: cover;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand-header {
+            text-align: center;
+        }
+
+        .username {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--p-primary-light), var(--p-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            text-shadow: var(--p-glow);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--p-text-muted);
+        }
+
+        .universal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--p-surface);
+            border: 1px solid var(--p-border);
+            border-radius: 2rem;
+            padding: 0.75rem 1.5rem;
+            margin-bottom: 3rem;
+            color: var(--p-text-muted);
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .social-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--p-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--p-text);
+        }
+
+        .social-card:hover {
+            border-color: var(--p-primary);
+            transform: translateY(-5px);
+            box-shadow: var(--p-shadow-lg);
+        }
+
+        .social-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--p-primary);
+        }
+
+        .social-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .social-handle {
+            color: var(--p-text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 5rem 0;
+            background: var(--p-background-alt);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--p-text);
+        }
+
+        .project-grid {
+            display: grid;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: var(--p-surface);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--p-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--p-primary), var(--p-primary-light));
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--p-shadow-lg);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--p-primary-light);
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: var(--p-text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: var(--p-primary-dark);
+            color: var(--p-text);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--p-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--p-primary-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--p-shadow);
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            padding: 4rem 0;
+            background: var(--p-background);
+            text-align: center;
+        }
+
+        .philosophy-text {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            color: var(--p-text-muted);
+            line-height: 1.8;
+        }
+
+        .highlight {
+            color: var(--p-primary-light);
+            font-weight: 600;
+        }
+
+        footer {
+            background: var(--p-surface);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--p-border);
+        }
+
+        .footer-text {
+            color: var(--p-text-muted);
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="brand-header">
+                <div class="username">OnelifeOnedeath</div>
+                <div class="tagline">Универсальный инженер • Исследователь систем</div>
+                
+                <div class="universal-badge">
+                    <i class="fas fa-globe"></i>
+                    Один никнейм — все платформы
+                </div>
+
+                <div class="social-grid">
+                    <a href="https://github.com/OnelifeOnedeath" class="social-card" target="_blank">
+                        <div class="social-icon"><i class="fab fa-github"></i></div>
+                        <div class="social-name">GitHub</div>
+                        <div class="social-handle">OnelifeOnedeath</div>
+                    </a>
+                    
+                    <a href="https://t.me/OnelifeOnedeath" class="social-card" target="_blank">
+                        <div class="social-icon"><i class="fab fa-telegram"></i></div>
+                        <div class="social-name">Telegram</div>
+                        <div class="social-handle">@OnelifeOnedeath</div>
+                    </a>
+                    
+                    <a href="https://steamcommunity.com/id/OnelifeOnedeath" class="social-card" target="_blank">
+                        <div class="social-icon"><i class="fab fa-steam"></i></div>
+                        <div class="social-name">Steam</div>
+                        <div class="social-handle">OnelifeOnedeath</div>
+                    </a>
+                    
+                    <a href="#" class="social-card">
+                        <div class="social-icon"><i class="fab fa-discord"></i></div>
+                        <div class="social-name">Discord</div>
+                        <div class="social-handle">OnelifeOnedeath</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects">
+        <div class="container">
+            <h2 class="section-title">Исследовательские проекты</h2>
+            <div class="project-grid">
+                
+                <!-- Tapeworm -->
+                <div class="project-card">
+                    <h3 class="project-title">Tapeworm 🐛</h3>
+                    <p class="project-description">
+                        Визуализатор Brainfuck с анимированным "ленточным червем". Исследование эзотерических языков 
+                        через интерактивное исполнение кода.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Rust</span>
+                        <span class="tech-tag">WASM</span>
+                        <span class="tech-tag">Visualization</span>
+                    </div>
+                    <a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank">
+                        <i class="fab fa-github"></i>
+                        Исходный код
+                    </a>
+                </div>
+
+                <!-- Codex Mortis -->
+                <div class="project-card">
+                    <h3 class="project-title">Codex Mortis</h3>
+                    <p class="project-description">
+                        Мультиязычный кодекс на 10+ языках. Сравнительный анализ парадигм программирования 
+                        через призму латинской терминологии.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Polyglot</span>
+                        <span class="tech-tag">Research</span>
+                        <span class="tech-tag">Latin</span>
+                    </div>
+                    <a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank">
+                        <i class="fab fa-github"></i>
+                        Исследовать
+                    </a>
+                </div>
+
+                <!-- Ubuntu Design Helper -->
+                <div class="project-card">
+                    <h3 class="project-title">Ubuntu Design Helper</h3>
+                    <p class="project-description">
+                        Инструментарий для дизайнеров в Linux. Автоматизация рабочих процессов 
+                        и решение специфических проблем графических работников.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Linux</span>
+                        <span class="tech-tag">Automation</span>
+                        <span class="tech-tag">Bash/Python</span>
+                    </div>
+                    <a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank">
+                        <i class="fab fa-github"></i>
+                        Использовать
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="philosophy">
+        <div class="container">
+            <p class="philosophy-text">
+                "<span class="highlight">Одна жизнь, одна смерть</span> — философия глубинного понимания систем. 
+                От компиляторов до P2P-сетей, от эзотерических языков до практических инструментов. 
+                Не гонюсь за грейдами, а исследую <span class="highlight">суть технологий</span>."
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="username" style="font-size: 2rem;">OnelifeOnedeath</div>
+            <p class="footer-text">Универсальный инженер • 2024</p>
+        </div>
+    </footer>
+</body>
+</html>
