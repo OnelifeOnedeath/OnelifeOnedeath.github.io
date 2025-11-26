@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* Фиолетовая палитра - твой бренд */
+            /* Фиолетовая палитра */
             --p-primary: #8B5CF6;
             --p-primary-hover: #7C3AED;
             --p-primary-active: #6D28D9;
@@ -42,6 +42,30 @@
             color: var(--p-text);
             line-height: 1.6;
             overflow-x: hidden;
+            cursor: none; /* Убираем стандартный курсор */
+        }
+
+        /* Кастомный курсор */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--p-primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+
+        .cursor-follower {
+            width: 8px;
+            height: 8px;
+            background: var(--p-primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.15s ease;
         }
 
         /* Анимация градиента */
@@ -49,6 +73,36 @@
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        /* Парящие анимации */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-5px) rotate(2deg); }
+            66% { transform: translateY(3px) rotate(-2deg); }
+        }
+
+        /* Анимация появления */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Анимация пульсации */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .hero {
@@ -73,6 +127,20 @@
             background-size: cover;
         }
 
+        /* Парящие частицы */
+        .particle {
+            position: absolute;
+            background: var(--p-primary-light);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { width: 4px; height: 4px; top: 20%; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 6px; height: 6px; top: 60%; left: 80%; animation-delay: 1s; }
+        .particle:nth-child(3) { width: 3px; height: 3px; top: 80%; left: 20%; animation-delay: 2s; }
+        .particle:nth-child(4) { width: 5px; height: 5px; top: 40%; left: 50%; animation-delay: 3s; }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -93,12 +161,14 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
             text-shadow: var(--p-glow);
+            animation: fadeInUp 1s ease-out;
         }
 
         .tagline {
             font-size: 1.5rem;
             margin-bottom: 2rem;
             color: var(--p-text-muted);
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
 
         .universal-badge {
@@ -111,6 +181,8 @@
             padding: 0.75rem 1.5rem;
             margin-bottom: 3rem;
             color: var(--p-text-muted);
+            animation: fadeInUp 1s ease-out 0.4s both;
+            animation: float-slow 4s ease-in-out infinite;
         }
 
         .social-grid {
@@ -130,11 +202,29 @@
             transition: all 0.3s ease;
             text-decoration: none;
             color: var(--p-text);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .social-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .social-card:hover::before {
+            left: 100%;
         }
 
         .social-card:hover {
             border-color: var(--p-primary);
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.02);
             box-shadow: var(--p-shadow-lg);
         }
 
@@ -142,11 +232,23 @@
             font-size: 2rem;
             margin-bottom: 1rem;
             color: var(--p-primary);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-card:hover .social-icon {
+            transform: scale(1.2) rotate(5deg);
+            color: var(--p-primary-light);
         }
 
         .social-name {
             font-weight: 600;
             margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-card:hover .social-name {
+            color: var(--p-primary-light);
         }
 
         .social-handle {
@@ -165,6 +267,7 @@
             text-align: center;
             margin-bottom: 3rem;
             color: var(--p-text);
+            animation: fadeInUp 1s ease-out;
         }
 
         .project-grid {
@@ -182,6 +285,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            animation: fadeInUp 1s ease-out;
         }
 
         .project-card::before {
@@ -192,10 +296,16 @@
             right: 0;
             height: 3px;
             background: linear-gradient(90deg, var(--p-primary), var(--p-primary-light));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.02);
             box-shadow: var(--p-shadow-lg);
         }
 
@@ -204,6 +314,11 @@
             font-weight: 600;
             color: var(--p-primary-light);
             margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover .project-title {
+            color: var(--p-primary);
         }
 
         .project-description {
@@ -226,6 +341,13 @@
             border-radius: 1rem;
             font-size: 0.8rem;
             font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .tech-tag:hover {
+            background: var(--p-primary);
+            transform: translateY(-2px);
         }
 
         .btn {
@@ -240,13 +362,41 @@
             font-weight: 600;
             transition: all 0.2s ease;
             border: none;
-            cursor: pointer;
+            cursor: none; /* Убираем стандартный курсор */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn:hover {
             background: var(--p-primary-hover);
-            transform: translateY(-1px);
+            transform: translateY(-2px) scale(1.05);
             box-shadow: var(--p-shadow);
+        }
+
+        .btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover i {
+            transform: rotate(10deg) scale(1.2);
         }
 
         /* Philosophy Section */
@@ -254,6 +404,7 @@
             padding: 4rem 0;
             background: var(--p-background);
             text-align: center;
+            position: relative;
         }
 
         .philosophy-text {
@@ -262,11 +413,30 @@
             font-size: 1.2rem;
             color: var(--p-text-muted);
             line-height: 1.8;
+            animation: fadeInUp 1s ease-out;
         }
 
         .highlight {
             color: var(--p-primary-light);
             font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--p-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .highlight:hover::after {
+            transform: scaleX(1);
         }
 
         footer {
@@ -274,15 +444,33 @@
             padding: 3rem 0;
             text-align: center;
             border-top: 1px solid var(--p-border);
+            position: relative;
         }
 
         .footer-text {
             color: var(--p-text-muted);
             margin-top: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Анимация для иконок при движении мыши */
+        .social-icon, .btn, .tech-tag {
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
     </style>
 </head>
 <body>
+    <!-- Кастомный курсор -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Парящие частицы -->
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
@@ -403,8 +591,73 @@
     <footer>
         <div class="container">
             <div class="username" style="font-size: 2rem;">OnelifeOnedeath</div>
-            <p class="footer-text">Универсальный инженер • 2024</p>
+            <p class="footer-text">Универсальный инженер • 2025</p>
         </div>
     </footer>
+
+    <script>
+        // Кастомный курсор
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        // Анимация при наведении на интерактивные элементы
+        const interactiveElements = document.querySelectorAll('a, button, .tech-tag, .social-card');
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                cursor.style.borderColor = 'var(--p-primary-light)';
+                cursorFollower.style.transform = 'scale(2)';
+                cursorFollower.style.background = 'var(--p-primary-light)';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.borderColor = 'var(--p-primary)';
+                cursorFollower.style.transform = 'scale(1)';
+                cursorFollower.style.background = 'var(--p-primary)';
+            });
+        });
+
+        // Параллакс эффект для частиц
+        document.addEventListener('mousemove', (e) => {
+            const particles = document.querySelectorAll('.particle');
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+            
+            particles.forEach((particle, index) => {
+                particle.style.transform = `translate(${moveX * (index + 1)}px, ${moveY * (index + 1)}px)`;
+            });
+        });
+
+        // Анимация появления при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Наблюдаем за всеми карточками и секциями
+        document.querySelectorAll('.project-card, .section-title, .philosophy-text').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
