@@ -690,15 +690,10 @@
             background: var(--p-primary) !important;
         }
 
-        /* Мобильная адаптивность - ФИКСЫ ДЛЯ НАЛОЖЕНИЙ */
+        /* Мобильная адаптивность */
         @media (max-width: 768px) {
-            .hero {
-                padding-top: 80px; /* Добавляем отступ сверху для кнопок */
-            }
-            
             .username {
                 font-size: 2.5rem;
-                margin-top: 0;
             }
             
             .tagline {
@@ -739,14 +734,13 @@
             }
             
             .anime-gif-right {
-                top: 5rem; /* Подвигаем ниже кнопок */
+                top: 1rem;
                 right: 1rem;
             }
             
             .language-switcher {
                 top: 1rem;
                 left: 1rem;
-                z-index: 1000; /* Повышаем z-index */
             }
             
             .universal-badge {
