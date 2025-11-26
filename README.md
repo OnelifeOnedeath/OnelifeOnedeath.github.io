@@ -12,7 +12,7 @@
 [![Email](https://img.shields.io/badge/Email-igorb9475@gmail.com-8B5CF6?style=for-the-badge&logo=gmail)](mailto:igorb9475@gmail.com)
 
 </div>
-
+        
 ## 🧠 Philosophy / Философия
 
 > **"One life, one death"** — a philosophy of deep system understanding. From compilers to P2P networks, from esoteric languages to practical tools. Not chasing grades, but exploring the essence of technology.
