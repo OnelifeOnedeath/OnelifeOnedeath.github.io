@@ -9,7 +9,7 @@
 [![GitHub](https://img.shields.io/badge/GitHub-OnelifeOnedeath-8B5CF6?style=for-the-badge&logo=github)](https://github.com/OnelifeOnedeath)
 [![Telegram](https://img.shields.io/badge/Telegram-@OnelifeOnedeath-8B5CF6?style=for-the-badge&logo=telegram)](https://t.me/OnelifeOnedeath)
 [![Email](https://img.shields.io/badge/Email-igorb9475@gmail.com-8B5CF6?style=for-the-badge&logo=gmail)](mailto:igorb9475@gmail.com)
-         
+             
 </div>
         
 ## 🧠 Philosophy / Философия
