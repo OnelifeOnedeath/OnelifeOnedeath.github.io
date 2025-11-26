@@ -28,6 +28,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         body {
@@ -124,6 +125,36 @@
             object-fit: cover;
         }
 
+        .language-switcher {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .lang-btn, .theme-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lang-btn:hover, .theme-btn:hover {
+            background: var(--p-primary-light);
+            transform: scale(1.1);
+        }
+
         .brand-header {
             text-align: center;
             position: relative;
@@ -146,30 +177,6 @@
             margin-bottom: 2rem;
             color: var(--p-text-muted);
             animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
-        .language-switcher {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            z-index: 3;
-        }
-
-        .lang-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-        }
-
-        .lang-btn:hover {
-            background: var(--p-primary-light);
-            transform: scale(1.1);
         }
 
         .universal-badge {
@@ -594,6 +601,95 @@
             display: none;
         }
 
+        /* Стили для светлой темы */
+        [data-theme="light"] {
+            --p-primary: #7C3AED;
+            --p-primary-hover: #6D28D9;
+            --p-primary-light: #5B21B6;
+            --p-primary-dark: #4C1D95;
+            --p-surface: #FFFFFF;
+            --p-background: #FEF7FF;
+            --p-background-alt: #F3E8FF;
+            --p-text: #1E1B4B;
+            --p-text-muted: #5B21B6;
+            --p-border: #DDD6FE;
+        }
+
+        [data-theme="light"] .hero {
+            background: linear-gradient(135deg, #C4B5FD, #8B5CF6) !important;
+        }
+
+        [data-theme="light"] .username {
+            background: linear-gradient(135deg, #4C1D95, #1E1B4B) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        [data-theme="light"] .social-card,
+        [data-theme="light"] .project-card,
+        [data-theme="light"] .skill-category,
+        [data-theme="light"] .demo-container {
+            backdrop-filter: none !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid var(--p-border) !important;
+        }
+
+        [data-theme="light"] .universal-badge {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 1px solid var(--p-border) !important;
+            color: var(--p-primary-dark) !important;
+        }
+
+        [data-theme="light"] .lang-btn,
+        [data-theme="light"] .theme-btn {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 2px solid var(--p-primary) !important;
+            color: var(--p-primary-dark) !important;
+        }
+
+        [data-theme="light"] .output-text,
+        [data-theme="light"] .stats-text {
+            background: rgba(255, 255, 255, 0.8) !important;
+            color: var(--p-text) !important;
+            border: 1px solid var(--p-border) !important;
+        }
+
+        [data-theme="light"] .code-input-section textarea {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 1px solid var(--p-border) !important;
+            color: var(--p-text) !important;
+        }
+
+        [data-theme="light"] .tape-cell {
+            background: linear-gradient(135deg, #E9D5FF, #C4B5FD) !important;
+            border: 2px solid var(--p-primary-light) !important;
+            color: var(--p-primary-dark) !important;
+        }
+
+        [data-theme="light"] .tape-cell.active {
+            background: linear-gradient(135deg, #8B5CF6, #7C3AED) !important;
+            color: white !important;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4) !important;
+        }
+
+        [data-theme="light"] .tech-tag {
+            background: var(--p-primary-light) !important;
+            color: white !important;
+        }
+
+        [data-theme="light"] .tech-tag:hover {
+            background: var(--p-primary) !important;
+        }
+
+        [data-theme="light"] .example-btn {
+            background: var(--p-primary-light) !important;
+            color: white !important;
+        }
+
+        [data-theme="light"] .example-btn:hover {
+            background: var(--p-primary) !important;
+        }
+
         /* Мобильная адаптивность */
         @media (max-width: 768px) {
             .username {
@@ -668,6 +764,11 @@
             .control-buttons {
                 justify-content: center;
             }
+            
+            .lang-btn, .theme-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -677,11 +778,6 @@
             
             .social-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .lang-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.9rem;
             }
             
             .project-card {
@@ -720,7 +816,16 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="language-switcher">
-            <button class="lang-btn" onclick="toggleLanguage()">EN</button>
+            <button class="lang-btn" onclick="toggleLanguage()">
+                <i class="fas fa-language"></i>
+                <span class="russian">Русский</span>
+                <span class="english">English</span>
+            </button>
+            <button class="theme-btn" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+                <span class="russian">Тёмная</span>
+                <span class="english">Dark</span>
+            </button>
         </div>
 
         <!-- Левая аниме-гифка -->
@@ -1082,20 +1187,84 @@
     </footer>
 
     <script>
+        // Система тем
+        const themes = {
+            dark: {
+                '--p-primary': '#8B5CF6',
+                '--p-primary-hover': '#7C3AED', 
+                '--p-primary-light': '#A78BFA',
+                '--p-primary-dark': '#5B21B6',
+                '--p-surface': '#1F2937',
+                '--p-background': '#111827',
+                '--p-background-alt': '#0F172A',
+                '--p-text': '#F9FAFB',
+                '--p-text-muted': '#D1D5DB',
+                '--p-border': '#374151'
+            },
+            light: {
+                '--p-primary': '#7C3AED',
+                '--p-primary-hover': '#6D28D9',
+                '--p-primary-light': '#5B21B6',
+                '--p-primary-dark': '#4C1D95',
+                '--p-surface': '#FFFFFF',
+                '--p-background': '#FEF7FF',
+                '--p-background-alt': '#F3E8FF',
+                '--p-text': '#1E1B4B',
+                '--p-text-muted': '#5B21B6',
+                '--p-border': '#DDD6FE'
+            }
+        };
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+
+        function setTheme(theme) {
+            const root = document.documentElement;
+            const themeColors = themes[theme];
+            
+            // Плавное переключение
+            root.style.transition = 'all 0.5s ease';
+            
+            // Применяем цвета
+            Object.entries(themeColors).forEach(([property, value]) => {
+                root.style.setProperty(property, value);
+            });
+            
+            root.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            // Обновляем иконку и текст
+            const icon = document.querySelector('.theme-btn i');
+            const themeText = document.querySelectorAll('.theme-btn span');
+            
+            icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            
+            themeText.forEach(span => {
+                if (span.classList.contains('russian')) {
+                    span.textContent = theme === 'dark' ? 'Тёмная' : 'Светлая';
+                } else {
+                    span.textContent = theme === 'dark' ? 'Dark' : 'Light';
+                }
+            });
+        }
+
         // Переключение языка
         function toggleLanguage() {
             const russianElements = document.querySelectorAll('.russian');
             const englishElements = document.querySelectorAll('.english');
             const btn = document.querySelector('.lang-btn');
             
-            if (btn.textContent === 'EN') {
+            if (btn.textContent.includes('English') || btn.textContent.includes('Русский')) {
                 russianElements.forEach(el => el.style.display = 'none');
                 englishElements.forEach(el => el.style.display = 'block');
-                btn.textContent = 'RU';
+                btn.innerHTML = '<i class="fas fa-language"></i><span class="russian">Русский</span><span class="english">English</span>';
             } else {
                 russianElements.forEach(el => el.style.display = 'block');
                 englishElements.forEach(el => el.style.display = 'none');
-                btn.textContent = 'EN';
+                btn.innerHTML = '<i class="fas fa-language"></i><span class="russian">Русский</span><span class="english">English</span>';
             }
         }
 
@@ -1251,6 +1420,9 @@
         // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
             resetBrainfuck();
+            // Загружаем сохраненную тему
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
         });
     </script>
 </body>
