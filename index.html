@@ -102,6 +102,7 @@
             animation: float 8s ease-in-out infinite;
             border: 3px solid var(--p-primary-light);
             box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+            z-index: 1;
         }
 
         .anime-gif-right {
@@ -116,6 +117,7 @@
             animation: floatReverse 7s ease-in-out infinite;
             border: 3px solid var(--p-primary);
             box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
+            z-index: 1;
         }
 
         .anime-gif-left img,
@@ -765,9 +767,10 @@
             
             .anime-gif-left,
             .anime-gif-right {
-                width: 80px;
-                height: 80px;
+                width: 100px;
+                height: 100px;
                 opacity: 0.6;
+                z-index: 1;
             }
             
             .anime-gif-left {
@@ -776,7 +779,7 @@
             }
             
             .anime-gif-right {
-                top: 5rem;
+                top: 6rem;
                 right: 1rem;
             }
             
@@ -805,6 +808,70 @@
             .lang-btn, .theme-btn {
                 padding: 0.4rem 0.8rem;
                 font-size: 0.8rem;
+            }
+        }
+
+        /* Специальные стили для поворота телефона */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero {
+                min-height: auto;
+                padding: 4rem 0;
+            }
+            
+            .brand-header {
+                margin-top: 2rem;
+            }
+            
+            .anime-gif-left,
+            .anime-gif-right {
+                display: block !important;
+                position: absolute;
+                width: 70px;
+                height: 70px;
+                opacity: 0.4;
+            }
+            
+            .anime-gif-left {
+                bottom: 0.5rem;
+                left: 0.5rem;
+            }
+            
+            .anime-gif-right {
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+            
+            .username {
+                font-size: 1.8rem;
+                margin-top: 0.5rem;
+            }
+            
+            .tagline {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+            
+            .social-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.3rem;
+                max-width: 90%;
+            }
+            
+            .social-card {
+                padding: 0.6rem;
+            }
+            
+            .social-icon {
+                font-size: 1.2rem;
+                margin-bottom: 0.3rem;
+            }
+            
+            .social-name {
+                font-size: 0.8rem;
+            }
+            
+            .social-handle {
+                font-size: 0.7rem;
             }
         }
 
@@ -838,7 +905,9 @@
             
             .anime-gif-left,
             .anime-gif-right {
-                display: none;
+                display: block;
+                width: 80px;
+                height: 80px;
             }
             
             .philosophy-main {
@@ -847,6 +916,14 @@
             
             .philosophy-details {
                 font-size: 0.9rem;
+            }
+        }
+
+        /* Для очень маленьких экранов */
+        @media (max-width: 320px) {
+            .anime-gif-left,
+            .anime-gif-right {
+                display: none !important;
             }
         }
 
@@ -880,12 +957,15 @@
 
         <!-- Левая аниме-гифка -->
         <div class="anime-gif-left">
-            <img src="https://99px.ru/sstorage/86/2016/10/image_862910161743391536726.gif" alt="Lain Anime">
+            <img src="https://99px.ru/sstorage/86/2016/10/image_862910161743391536726.gif" alt="Lain Anime" loading="lazy">
         </div>
 
-        <!-- Правая аниме-гифка -->
+        <!-- Правая аниме-гифка - ИСПРАВЛЕНО: Рабочая гифка с 99px.ru -->
         <div class="anime-gif-right">
-            <img src="https://i.gifer.com/TVPM.gif" alt="Tech Animation">
+            <img src="https://99px.ru/sstorage/86/2020/04/10804200835411467.gif" 
+                 alt="Lain takes off glasses" 
+                 loading="lazy"
+                 title="Serial Experiments Lain - Lain takes off glasses">
         </div>
 
         <div class="container">
@@ -1277,10 +1357,8 @@
             const root = document.documentElement;
             const themeColors = themes[theme];
             
-            // Плавное переключение
             root.style.transition = 'all 0.5s ease';
             
-            // Применяем цвета
             Object.entries(themeColors).forEach(([property, value]) => {
                 root.style.setProperty(property, value);
             });
@@ -1288,7 +1366,6 @@
             root.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
             
-            // Обновляем иконку и текст
             const icon = document.querySelector('.theme-btn i');
             const themeText = document.querySelector('.theme-text');
             
@@ -1309,23 +1386,19 @@
             const themeText = document.querySelector('.theme-text');
             
             if (currentLanguage === 'russian') {
-                // Переключаем на английский
                 russianElements.forEach(el => el.style.display = 'none');
                 englishElements.forEach(el => el.style.display = 'block');
                 langText.textContent = 'Русский';
                 currentLanguage = 'english';
                 
-                // Обновляем текст темы
                 const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
                 themeText.textContent = currentTheme === 'dark' ? 'Dark' : 'Light';
             } else {
-                // Переключаем на русский
                 russianElements.forEach(el => el.style.display = 'block');
                 englishElements.forEach(el => el.style.display = 'none');
                 langText.textContent = 'English';
                 currentLanguage = 'russian';
                 
-                // Обновляем текст темы
                 const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
                 themeText.textContent = currentTheme === 'dark' ? 'Тёмная' : 'Светлая';
             }
@@ -1423,7 +1496,7 @@
         function loadExample(type) {
             const examples = {
                 hello: '++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.',
-                counter: '+++[>+++<-]>.',
+                counter: '++>+++[<+>-]<.',
                 calculator: '++>+++[<+>-]<.'
             };
             
@@ -1458,10 +1531,8 @@
         }
 
         function updateDisplay() {
-            // Обновляем вывод
             document.getElementById('bf-output').textContent = bf.output;
             
-            // Обновляем ленту
             const tapeElement = document.getElementById('bf-tape');
             tapeElement.innerHTML = '';
             
@@ -1473,7 +1544,6 @@
                 tapeElement.appendChild(cell);
             }
             
-            // Обновляем статистику
             document.getElementById('bf-stats').textContent = bf.getStats();
         }
 
@@ -1481,16 +1551,88 @@
         document.addEventListener('DOMContentLoaded', function() {
             resetBrainfuck();
             
-            // Загружаем сохраненную тему
             const savedTheme = localStorage.getItem('theme') || 'dark';
             setTheme(savedTheme);
             
-            // Загружаем сохраненный язык
             const savedLanguage = localStorage.getItem('language') || 'russian';
             if (savedLanguage === 'english') {
                 toggleLanguage();
             }
+            
+            // Проверка устройства и ориентации
+            checkDeviceAndOrientation();
+            window.addEventListener('resize', checkDeviceAndOrientation);
+            window.addEventListener('orientationchange', checkDeviceAndOrientation);
         });
+        
+        // Функция проверки устройства и ориентации
+        function checkDeviceAndOrientation() {
+            const isMobile = window.innerWidth <= 768;
+            const isLandscape = window.innerWidth > window.innerHeight && isMobile;
+            const gifLeft = document.querySelector('.anime-gif-left');
+            const gifRight = document.querySelector('.anime-gif-right');
+            
+            if (!isMobile) {
+                if (gifLeft) {
+                    gifLeft.style.display = 'block';
+                    gifLeft.style.width = '180px';
+                    gifLeft.style.height = '180px';
+                    gifLeft.style.opacity = '0.8';
+                }
+                if (gifRight) {
+                    gifRight.style.display = 'block';
+                    gifRight.style.width = '160px';
+                    gifRight.style.height = '160px';
+                    gifRight.style.opacity = '0.9';
+                }
+            } else {
+                if (isLandscape) {
+                    if (gifLeft) {
+                        gifLeft.style.display = 'block';
+                        gifLeft.style.width = '70px';
+                        gifLeft.style.height = '70px';
+                        gifLeft.style.opacity = '0.4';
+                    }
+                    if (gifRight) {
+                        gifRight.style.display = 'block';
+                        gifRight.style.width = '70px';
+                        gifRight.style.height = '70px';
+                        gifRight.style.opacity = '0.4';
+                    }
+                } else {
+                    if (window.innerWidth <= 320) {
+                        if (gifLeft) gifLeft.style.display = 'none';
+                        if (gifRight) gifRight.style.display = 'none';
+                    } else if (window.innerWidth <= 480) {
+                        if (gifLeft) {
+                            gifLeft.style.display = 'block';
+                            gifLeft.style.width = '80px';
+                            gifLeft.style.height = '80px';
+                            gifLeft.style.opacity = '0.6';
+                        }
+                        if (gifRight) {
+                            gifRight.style.display = 'block';
+                            gifRight.style.width = '80px';
+                            gifRight.style.height = '80px';
+                            gifRight.style.opacity = '0.6';
+                        }
+                    } else {
+                        if (gifLeft) {
+                            gifLeft.style.display = 'block';
+                            gifLeft.style.width = '100px';
+                            gifLeft.style.height = '100px';
+                            gifLeft.style.opacity = '0.6';
+                        }
+                        if (gifRight) {
+                            gifRight.style.display = 'block';
+                            gifRight.style.width = '100px';
+                            gifRight.style.height = '100px';
+                            gifRight.style.opacity = '0.6';
+                        }
+                    }
+                }
+            }
+        }
     </script>
 </body>
 </html>
