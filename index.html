@@ -67,24 +67,13 @@
 
         .p3r-menu { display: none; }
         [data-theme="p3"] .p3r-menu { display: flex; position: absolute; right: 8%; top: 50%; transform: translateY(-50%); flex-direction: column; gap: clamp(0.25rem, 1vh, 0.8rem); z-index: 3; width: clamp(190px, 28vw, 420px); }
-        .p3r-menu-item { display: none; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(1rem, 3vw, 2.8rem); color: rgba(74,144,217,0.7); cursor: pointer; letter-spacing: 2px; text-transform: uppercase; transform: skewX(-5deg); transition: all 0.25s ease; text-shadow: 0 0 12px rgba(74,144,217,0.2); animation: menu-item-appear 0.4s ease forwards; opacity: 0; position: relative; }
+        .p3r-menu-item { display: none; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(1rem, 3vw, 2.8rem); color: rgba(74,144,217,0.7); cursor: pointer; letter-spacing: 2px; text-transform: uppercase; transform: skewX(-5deg); transition: all 0.25s ease; text-shadow: 0 0 12px rgba(74,144,217,0.2); animation: menu-item-appear 0.4s ease forwards; opacity: 0; }
         [data-theme="p3"] .p3r-menu-item { display: block; }
         .p3r-menu-item:nth-child(1){animation-delay:0.03s}.p3r-menu-item:nth-child(2){animation-delay:0.07s}.p3r-menu-item:nth-child(3){animation-delay:0.11s}.p3r-menu-item:nth-child(4){animation-delay:0.15s}.p3r-menu-item:nth-child(5){animation-delay:0.19s}.p3r-menu-item:nth-child(6){animation-delay:0.23s}.p3r-menu-item:nth-child(7){animation-delay:0.27s}.p3r-menu-item:nth-child(8){animation-delay:0.31s}.p3r-menu-item:nth-child(9){animation-delay:0.35s}
         .p3r-menu-item:hover,.p3r-menu-item.selected{color:#FFF!important;text-shadow:0 0 30px rgba(74,144,217,0.8),0 0 60px rgba(107,181,255,0.4)!important;transform:skewX(-5deg) scale(1.07)!important}
 
-        /* CURSOR - ПОЛНОСТЬЮ ПЕРЕПИСАН */
         .p3r-cursor { display: none; }
-        [data-theme="p3"] .p3r-cursor { 
-            display: block; position: absolute; 
-            right: calc(8% + clamp(190px, 28vw, 420px) + 30px); 
-            width: 0; height: 0; 
-            border-left: 18px solid #E60012; 
-            border-top: 10px solid transparent; 
-            border-bottom: 10px solid transparent; 
-            z-index: 4; pointer-events: none; 
-            animation: cursor-twitch 1.2s ease-in-out infinite; 
-            transition: top 0.15s ease; 
-        }
+        [data-theme="p3"] .p3r-cursor { display: block; position: absolute; right: calc(8% + clamp(190px, 28vw, 420px) + 30px); width: 0; height: 0; border-left: 18px solid #E60012; border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 4; pointer-events: none; animation: cursor-twitch 1.2s ease-in-out infinite; transition: top 0.15s ease; }
         .p3r-cursor::after { content: ''; position: absolute; left: -26px; top: -13px; width: 0; height: 0; border-left: 22px solid rgba(230,0,18,0.25); border-top: 13px solid transparent; border-bottom: 13px solid transparent; }
 
         .p3r-info { display: none; }
@@ -120,89 +109,185 @@
         .anime-gif-right { top: 2rem; right: 2rem; width: 160px; height: 160px; opacity: 0.9; animation: float 7s ease-in-out infinite reverse; }
         .anime-gif-left img, .anime-gif-right img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* P5 CHAT - ЕЩЁ БОЛЬШЕ */
+        /* ==================== FULL HD CHAT ==================== */
         .p5-chat-fab { position: fixed; top: 5rem; left: 1rem; z-index: 999; width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, #E60012, #B8000F); border: 3px solid #FF4444; color: white; font-size: 1.3rem; cursor: pointer; box-shadow: 0 0 30px rgba(230,0,18,0.5); display: flex; align-items: center; justify-content: center; }
         .p5-chat-fab:hover { transform: scale(1.15); }
         .p5-chat-fab .badge { position: absolute; top: -5px; right: -5px; background: #FFD700; color: #000; border-radius: 50%; min-width: 22px; height: 22px; font-size: 0.7rem; font-weight: 900; display: none; align-items: center; justify-content: center; }
         .p5-chat-fab .badge.show { display: flex; }
 
-        .p5-chat-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; display: none; align-items: center; justify-content: center; }
+        /* FULLSCREEN CHAT OVERLAY */
+        .p5-chat-overlay { position: fixed; inset: 0; background: #000; z-index: 2000; display: none; flex-direction: row; }
         .p5-chat-overlay.open { display: flex; }
 
-        .p5-phone { width: 420px; height: 650px; position: relative; overflow: visible; }
-        .p5-phone-svg { position: absolute; width: 100%; height: 100%; }
-        .p5-phone-svg polygon { fill: #1a1a1a; stroke: #333; stroke-width: 2; }
-        .p5-screen-border-svg { position: absolute; width: 100%; height: 100%; }
-        .p5-screen-border-svg polygon { fill: none; stroke: #E60012; stroke-width: 3; }
-        .p5-screen-svg { position: absolute; width: 100%; height: 100%; }
-        .p5-screen-svg polygon { fill: #0a0a0a; stroke: #222; stroke-width: 1; }
+        /* SIDEBAR - контакты */
+        .p5-sidebar {
+            width: 350px; min-width: 280px; background: #0A0A0A;
+            border-right: 3px solid #E60012; display: flex; flex-direction: column;
+            overflow: hidden;
+        }
+        .p5-sidebar-header {
+            padding: 1rem; background: #111; border-bottom: 2px solid #E60012;
+            text-align: center; flex-shrink: 0;
+        }
+        .p5-sidebar-title {
+            font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: #FFF;
+            letter-spacing: 3px; text-shadow: 0 0 15px rgba(230,0,18,0.5);
+        }
+        .p5-sidebar-title span { color: #E60012; }
+        .p5-sidebar-subtitle {
+            font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: #666;
+            margin-top: 0.25rem;
+        }
+        .p5-sidebar-search {
+            padding: 0.5rem 1rem; background: #0A0A0A; border-bottom: 1px solid #222;
+        }
+        .p5-sidebar-search input {
+            width: 100%; background: #1A1A1A; border: 1px solid #333; color: #DDD;
+            padding: 0.5rem 0.75rem; font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem; outline: none; border-radius: 4px;
+        }
+        .p5-sidebar-search input:focus { border-color: #E60012; }
 
-        .p5-screen { position: absolute; top: 26px; left: 42px; right: 44px; bottom: 22px; background: #0a0a0a; overflow-y: auto; overflow-x: hidden; padding: 14px 10px; display: flex; flex-direction: column; }
-        .p5-screen::-webkit-scrollbar { width: 2px; }
-        .p5-screen::-webkit-scrollbar-thumb { background: #E60012; }
+        .p5-contacts { flex: 1; overflow-y: auto; padding: 0.5rem; }
+        .p5-contacts::-webkit-scrollbar { width: 3px; }
+        .p5-contacts::-webkit-scrollbar-thumb { background: #E60012; }
 
-        .p5-sns { text-align: center; padding: 5px 0 12px; position: relative; flex-shrink: 0; }
-        .p5-sns-under { font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: #333; position: absolute; left: 50%; transform: translateX(-50%); top: 3px; }
-        .p5-sns-main { font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: white; position: relative; z-index: 1; }
+        .p5-contact-card {
+            display: flex; align-items: center; gap: 12px; padding: 12px;
+            margin: 2px 0; cursor: pointer; border-radius: 4px;
+            border: 1px solid transparent; background: rgba(20,20,20,0.6);
+            transition: all 0.2s; transform: skewX(-3deg);
+        }
+        .p5-contact-card:hover, .p5-contact-card.active {
+            border-color: #E60012; background: rgba(230,0,18,0.1);
+        }
+        .p5-contact-card.active { background: rgba(230,0,18,0.2); }
+        .p5-contact-avatar {
+            width: 50px; height: 50px; object-fit: cover; border: 2px solid #333;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); flex-shrink: 0;
+        }
+        .p5-contact-info { flex: 1; min-width: 0; }
+        .p5-contact-name {
+            font-family: 'Share Tech Mono', monospace; font-size: 0.85rem;
+            color: #E60012; font-weight: bold; letter-spacing: 1px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .p5-contact-last {
+            font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+            color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .p5-contact-badge {
+            background: #E60012; color: #FFF; border-radius: 50%;
+            min-width: 24px; height: 24px; display: flex; align-items: center;
+            justify-content: center; font-size: 0.7rem; font-weight: 900; flex-shrink: 0;
+        }
 
-        .p5-zig-shadow, .p5-zig { position: absolute; width: 100%; height: 90px; top: 55px; left: 0; pointer-events: none; }
-        .p5-zig-shadow polygon { fill: rgba(230,0,18,0.2); }
-        .p5-zig polygon { fill: none; stroke: #E60012; stroke-width: 2; }
+        .p5-sidebar-footer {
+            padding: 0.75rem; background: #0A0A0A; border-top: 2px solid #222; flex-shrink: 0;
+        }
+        .p5-add-btn {
+            width: 100%; background: none; border: 2px dashed #E60012; color: #E60012;
+            padding: 0.6rem; cursor: pointer; font-family: 'Luckiest Guy', cursive;
+            font-size: 0.8rem; letter-spacing: 2px; transform: skewX(-5deg);
+        }
+        .p5-add-btn:hover { background: rgba(230,0,18,0.1); }
+        .p5-my-info {
+            display: flex; align-items: center; gap: 8px; padding: 0.5rem;
+            margin-top: 0.5rem; font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+            color: #666;
+        }
 
-        .p5-contacts { display: flex; flex-direction: column; gap: 8px; flex: 1; overflow-y: auto; position: relative; z-index: 2; margin-top: 40px; }
-        .p5-contact-item { position: relative; height: 70px; cursor: pointer; }
-        .p5-contact-item:hover { transform: translateX(3px); }
-        .p5-contact-border, .p5-contact-outline, .p5-contact-panel { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
-        .p5-contact-border polygon { fill: #E60012; }
-        .p5-contact-outline polygon { fill: #0a0a0a; }
-        .p5-contact-panel polygon { fill: #1a1a1a; stroke: #333; stroke-width: 1; }
-        .p5-contact-panel.active polygon { fill: #E60012; }
-        .p5-contact-avatar { position: absolute; width: 48px; height: 48px; left: 22px; top: 11px; object-fit: cover; clip-path: polygon(0 5%, 100% 0, 95% 100%, 5% 95%); }
-        .p5-contact-text { position: absolute; left: 82px; top: 17px; right: 22px; color: #ccc; font-size: 0.85rem; font-family: 'Share Tech Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transform: skewX(-10deg); }
+        /* MAIN CHAT AREA */
+        .p5-main { flex: 1; display: flex; flex-direction: column; background: #0D0D0D; min-width: 0; }
+        .p5-main-header {
+            display: flex; align-items: center; gap: 12px; padding: 1rem 1.5rem;
+            background: #111; border-bottom: 2px solid #E60012; flex-shrink: 0;
+        }
+        .p5-main-avatar {
+            width: 44px; height: 44px; object-fit: cover; border: 2px solid #E60012;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+        .p5-main-name {
+            font-family: 'Luckiest Guy', cursive; font-size: 1.2rem; color: #E60012;
+            letter-spacing: 2px;
+        }
+        .p5-main-close {
+            margin-left: auto; background: none; border: 2px solid #E60012; color: #E60012;
+            width: 36px; height: 36px; cursor: pointer; font-size: 1.2rem;
+            display: flex; align-items: center; justify-content: center; border-radius: 50%;
+        }
+        .p5-main-close:hover { background: rgba(230,0,18,0.2); }
 
-        .p5-chat-view { display: none; flex-direction: column; height: 100%; flex: 1; }
-        .p5-chat-view.active { display: flex; }
-        .p5-chat-header { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-bottom: 2px solid #E60012; flex-shrink: 0; }
-        .p5-chat-back { background: none; border: 2px solid #E60012; color: #E60012; padding: 4px 10px; cursor: pointer; font-weight: bold; font-family: 'Luckiest Guy', cursive; font-size: 0.75rem; }
-        .p5-chat-messages { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
-        
-        .p5-msg { display: flex; gap: 10px; animation: msg-pop 0.3s ease; align-items: flex-start; }
+        .p5-msg-area { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 12px; }
+        .p5-msg-area::-webkit-scrollbar { width: 4px; }
+        .p5-msg-area::-webkit-scrollbar-thumb { background: #E60012; }
+
+        .p5-msg { display: flex; gap: 12px; animation: msg-pop 0.3s ease; align-items: flex-start; }
         .p5-msg.own { flex-direction: row-reverse; }
-        .p5-msg-avatar { width: 36px; height: 36px; flex-shrink: 0; object-fit: cover; clip-path: polygon(5% 0, 100% 5%, 95% 100%, 0% 95%); }
-        .p5-msg-bubble-wrap { position: relative; max-width: 78%; }
-        .p5-msg-bubble { padding: 12px 16px; font-size: 0.85rem; line-height: 1.5; font-family: 'Share Tech Mono', monospace; word-break: break-word; clip-path: polygon(0% 8%, 8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%); }
-        .p5-msg-bubble img, .p5-msg-bubble video { max-width: 260px; border-radius: 6px; margin: 4px 0; }
-        .p5-msg-bubble audio { max-width: 260px; margin: 4px 0; }
-        .p5-msg.received .p5-msg-bubble { background: #1a1a1a; color: #ddd; border: 1px solid #333; }
-        .p5-msg.own .p5-msg-bubble { background: #E60012; color: #fff; border: 1px solid #FF4444; }
-        .p5-msg-zigzag { position: absolute; top: -7px; width: 18px; height: 11px; clip-path: polygon(0% 100%, 25% 0%, 50% 100%, 75% 0%, 100% 100%); }
-        .p5-msg.received .p5-msg-zigzag { left: 14px; background: #333; }
-        .p5-msg.own .p5-msg-zigzag { right: 14px; background: #E60012; }
+        .p5-msg-avatar {
+            width: 40px; height: 40px; flex-shrink: 0; object-fit: cover;
+            clip-path: polygon(5% 0, 100% 5%, 95% 100%, 0% 95%); border: 2px solid #333;
+        }
+        .p5-msg-content { max-width: 60%; }
+        .p5-msg-bubble {
+            padding: 12px 18px; font-size: 0.9rem; line-height: 1.5;
+            font-family: 'Share Tech Mono', monospace; word-break: break-word;
+            clip-path: polygon(0% 8%, 8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%);
+        }
+        .p5-msg-bubble img, .p5-msg-bubble video { max-width: 400px; max-height: 300px; border-radius: 6px; margin: 4px 0; }
+        .p5-msg-bubble audio { max-width: 350px; margin: 4px 0; }
+        .p5-msg.received .p5-msg-bubble { background: #1A1A1A; color: #DDD; border: 1px solid #333; }
+        .p5-msg.own .p5-msg-bubble { background: #E60012; color: #FFF; border: 1px solid #FF4444; }
 
-        .p5-chat-toolbar { display: flex; gap: 4px; padding: 6px 10px; background: #0A0A0A; border-top: 1px solid #222; }
-        .p5-toolbar-btn { background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 7px 12px; cursor: pointer; font-size: 1rem; border-radius: 4px; }
-        .p5-toolbar-btn:hover { background: #333; border-color: #E60012; color: #E60012; }
+        .p5-msg-toolbar {
+            display: flex; gap: 6px; padding: 8px 1.5rem; background: #0A0A0A;
+            border-top: 1px solid #222; flex-shrink: 0;
+        }
+        .p5-tool-btn {
+            background: #1A1A1A; border: 1px solid #333; color: #DDD;
+            padding: 8px 14px; cursor: pointer; font-size: 1rem; border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .p5-tool-btn:hover { background: #333; border-color: #E60012; color: #E60012; }
 
-        .p5-chat-input-area { display: flex; gap: 5px; padding: 8px; background: #0A0A0A; border-top: 2px solid #222; flex-shrink: 0; }
-        .p5-chat-input { flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 10px 14px; font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; outline: none; clip-path: polygon(2% 0, 100% 0, 98% 100%, 0 100%); }
+        .p5-input-area {
+            display: flex; gap: 8px; padding: 1rem 1.5rem; background: #0A0A0A;
+            border-top: 2px solid #222; flex-shrink: 0;
+        }
+        .p5-chat-input {
+            flex: 1; background: #1A1A1A; border: 1px solid #333; color: #DDD;
+            padding: 12px 18px; font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem; outline: none; border-radius: 4px;
+        }
         .p5-chat-input:focus { border-color: #E60012; }
-        .p5-chat-send { background: #E60012; border: 2px solid #FF4444; color: white; padding: 10px 16px; cursor: pointer; font-weight: bold; font-family: 'Luckiest Guy', cursive; font-size: 0.8rem; letter-spacing: 1px; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
-        .p5-chat-send:hover { background: #FF2222; }
+        .p5-send-btn {
+            background: #E60012; border: 2px solid #FF4444; color: white;
+            padding: 12px 24px; cursor: pointer; font-weight: bold;
+            font-family: 'Luckiest Guy', cursive; font-size: 0.9rem; letter-spacing: 2px;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+        }
+        .p5-send-btn:hover { background: #FF2222; }
 
-        .p5-close-btn { position: absolute; top: -38px; right: 5px; background: none; border: 2px solid #E60012; color: #E60012; width: 30px; height: 30px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; z-index: 10; }
+        .emoji-panel {
+            position: absolute; bottom: 120px; left: 1.5rem; right: 1.5rem;
+            background: #1A1A1A; border: 2px solid #E60012; border-radius: 8px;
+            padding: 12px; z-index: 100; display: none; flex-wrap: wrap; gap: 6px;
+            max-height: 200px; overflow-y: auto;
+        }
+        .emoji-item {
+            background: none; border: 1px solid #333; color: #FFF;
+            padding: 8px 10px; cursor: pointer; font-size: 1.4rem; border-radius: 4px;
+        }
+        .emoji-item:hover { background: #333; border-color: #E60012; }
 
-        .emoji-panel { position: absolute; bottom: 95px; left: 0; right: 0; background: #1a1a1a; border: 2px solid #E60012; border-radius: 8px; padding: 12px; z-index: 100; display: none; flex-wrap: wrap; gap: 6px; max-height: 220px; overflow-y: auto; }
-        .emoji-btn-item { background: none; border: 1px solid #333; color: #fff; padding: 7px 9px; cursor: pointer; font-size: 1.4rem; border-radius: 4px; }
-        .emoji-btn-item:hover { background: #333; border-color: #E60012; }
+        /* NO CHAT SELECTED */
+        .p5-no-chat {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            flex-direction: column; color: #444; font-family: 'Share Tech Mono', monospace;
+        }
+        .p5-no-chat-icon { font-size: 5rem; margin-bottom: 1rem; }
+        .p5-no-chat-text { font-size: 1.2rem; letter-spacing: 2px; }
 
-        .top-bars { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
-        .theme-btn, .lang-btn { background: var(--btn-bg); border: 2px solid var(--btn-border); color: var(--btn-text); padding: 0.35rem 0.7rem; border-radius: 0.75rem; cursor: pointer; font-weight: 700; font-size: 0.75rem; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
-        .theme-btn.active { background: var(--p-primary); border-color: var(--p-primary-light); animation: pulse-glow 2s infinite; }
-
-        .brand-header { text-align: center; position: relative; z-index: 2; width: 100%; }
-        .username { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; background: linear-gradient(135deg, var(--p-primary-light), var(--p-text)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
-        .tagline { font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
-        .universal-badge { display: inline-flex; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--p-border-light); border-radius: 2rem; padding: 0.75rem 1.5rem; margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
         .social-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.75rem; max-width: 800px; margin: 0 auto; }
         .social-card { background: var(--card-bg); border: 1px solid var(--p-border); border-radius: 1rem; padding: 1.25rem; text-align: center; text-decoration: none; color: var(--p-text); }
         .social-card:hover { border-color: var(--p-primary-light); transform: translateY(-4px); }
@@ -233,20 +318,19 @@
         .admin-modal.open { display: block; }
         footer { background: var(--p-surface); padding: 2rem 0; text-align: center; }
         .english { display: none; }
+        .brand-header { text-align: center; position: relative; z-index: 2; width: 100%; }
+        .username { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; background: linear-gradient(135deg, var(--p-primary-light), var(--p-text)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .tagline { font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
+        .universal-badge { display: inline-flex; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--p-border-light); border-radius: 2rem; padding: 0.75rem 1.5rem; margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
+        .top-bars { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
+        .theme-btn, .lang-btn { background: var(--btn-bg); border: 2px solid var(--btn-border); color: var(--btn-text); padding: 0.35rem 0.7rem; border-radius: 0.75rem; cursor: pointer; font-weight: 700; font-size: 0.75rem; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
+        .theme-btn.active { background: var(--p-primary); border-color: var(--p-primary-light); animation: pulse-glow 2s infinite; }
 
-        @media (max-width: 1024px) { .social-grid { grid-template-columns: repeat(3, 1fr); } [data-theme="p3"] .makoto-container { width: 45%; } }
         @media (max-width: 768px) {
-            .social-grid { grid-template-columns: repeat(2, 1fr); } .demo-interface { grid-template-columns: 1fr; }
-            [data-theme="p3"] .makoto-container { width: 38%; left: -6%; } [data-theme="p3"] .p3r-menu { right: 3%; width: 50%; }
-            [data-theme="p3"] .p3r-menu-item { font-size: clamp(0.6rem, 2vw, 1.1rem); }
-            [data-theme="p3"] .p3r-cursor { border-left-width: 12px; right: calc(3% + 50% + 22px); }
-            .p5-phone { width: 90vw; height: 80vh; max-width: 420px; max-height: 650px; }
-        }
-        @media (max-width: 480px) { 
-            .social-grid { grid-template-columns: repeat(2, 1fr); } [data-theme="p3"] .makoto-container { width: 32%; left: -10%; opacity: 0.5; } 
-            [data-theme="p3"] .p3r-cursor { display: none; }
-            .p5-phone { width: 95vw; height: 85vh; }
-            .p5-msg-bubble img, .p5-msg-bubble video { max-width: 180px; }
+            .p5-sidebar { width: 100%; min-width: 0; position: absolute; inset: 0; z-index: 10; }
+            .p5-main { position: absolute; inset: 0; z-index: 20; }
+            .social-grid { grid-template-columns: repeat(2, 1fr); }
+            .demo-interface { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -341,46 +425,52 @@
 
     <footer><div class="container"><div style="font-weight:900;color:var(--p-primary-light);font-size:1.3rem;">OnelifeOnedeath</div><p style="color:var(--p-text-dim);">Универсальный инженер • 2025</p></div></footer>
 
+    <!-- P5 CHAT FAB -->
     <button class="p5-chat-fab" onclick="openP5Chat()" id="p5-fab">💬<span class="badge" id="p5-badge">0</span></button>
 
+    <!-- FULL HD CHAT -->
     <div class="p5-chat-overlay" id="p5-overlay">
-        <div style="position:relative;">
-            <button class="p5-close-btn" onclick="closeP5Chat()">✕</button>
-            <div class="p5-phone">
-                <svg class="p5-phone-svg"><polygon points="18,0 402,0 385,450 385,650 0,650"/></svg>
-                <svg class="p5-screen-border-svg"><polygon points="28,16 392,16 375,435 375,635 16,635"/></svg>
-                <svg class="p5-screen-svg"><polygon points="36,20 380,24 368,425 368,625 24,622"/></svg>
-                <div class="p5-screen" id="p5-screen">
-                    <div id="p5-contacts-view" style="display:flex;flex-direction:column;height:100%;">
-                        <div class="p5-sns"><span class="p5-sns-under">SNS</span><span class="p5-sns-main"><span style="color:#E60012;">S</span>NS</span></div>
-                        <svg class="p5-zig-shadow"><polygon points="80,80 90,80 70,170 120,240 90,300 60,300 80,235 40,170"/></svg>
-                        <svg class="p5-zig"><polygon points="80,70 90,70 70,160 120,230 90,290 60,290 80,225 40,160"/></svg>
-                        <div class="p5-contacts" id="p5-contacts-list"></div>
-                        <div style="padding:6px;text-align:center;flex-shrink:0;border-top:1px solid #222;">
-                            <button class="p5-chat-send" onclick="findUser()" style="font-size:0.65rem;padding:5px 12px;clip-path:none;border-radius:4px;">+ FIND USER</button>
-                            <div id="p5-my-nick" style="color:#666;font-size:0.6rem;margin-top:4px;font-family:'Share Tech Mono',monospace;"></div>
-                        </div>
-                    </div>
-                    <div class="p5-chat-view" id="p5-chat-view">
-                        <div class="p5-chat-header">
-                            <button class="p5-chat-back" onclick="backToContacts()">← BACK</button>
-                            <img id="p5-chat-avatar" src="" style="width:32px;height:32px;object-fit:cover;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);display:none;">
-                        </div>
-                        <div class="p5-chat-messages" id="p5-chat-messages"></div>
-                        <div class="p5-chat-toolbar" id="p5-chat-toolbar">
-                            <button class="p5-toolbar-btn" onclick="toggleEmojiPanel()" title="Emoji">😊</button>
-                            <button class="p5-toolbar-btn" onclick="sendImage()" title="Send Image">🖼️</button>
-                            <button class="p5-toolbar-btn" onclick="sendVideo()" title="Send Video">🎬</button>
-                            <button class="p5-toolbar-btn" onclick="sendAudio()" title="Send Audio">🎵</button>
-                            <button class="p5-toolbar-btn" onclick="sendFile()" title="Send File">📎</button>
-                            <button class="p5-toolbar-btn" onclick="sendGif()" title="Send GIF">✨</button>
-                        </div>
-                        <div class="emoji-panel" id="emoji-panel"></div>
-                        <div class="p5-chat-input-area">
-                            <input type="text" class="p5-chat-input" id="p5-chat-input" placeholder="Message..." onkeypress="if(event.key==='Enter')sendMsg()">
-                            <button class="p5-chat-send" onclick="sendMsg()">SEND</button>
-                        </div>
-                    </div>
+        <!-- SIDEBAR -->
+        <div class="p5-sidebar" id="p5-sidebar">
+            <div class="p5-sidebar-header">
+                <div class="p5-sidebar-title"><span>S</span>NS</div>
+                <div class="p5-sidebar-subtitle">PERSONA 5 MESSENGER</div>
+            </div>
+            <div class="p5-sidebar-search">
+                <input type="text" id="p5-search" placeholder="Search contacts..." oninput="filterContacts()">
+            </div>
+            <div class="p5-contacts" id="p5-contacts-list"></div>
+            <div class="p5-sidebar-footer">
+                <button class="p5-add-btn" onclick="findUser()">+ ADD FRIEND</button>
+                <div class="p5-my-info" id="p5-my-nick"></div>
+            </div>
+        </div>
+
+        <!-- MAIN CHAT -->
+        <div class="p5-main" id="p5-main">
+            <div id="p5-no-chat-view" class="p5-no-chat">
+                <div class="p5-no-chat-icon">💬</div>
+                <div class="p5-no-chat-text">SELECT A CHAT</div>
+            </div>
+            <div id="p5-chat-view" style="display:none; flex-direction:column; flex:1;">
+                <div class="p5-main-header">
+                    <img class="p5-main-avatar" id="p5-main-avatar" src="" style="display:none;">
+                    <div class="p5-main-name" id="p5-main-name">CHAT</div>
+                    <button class="p5-main-close" onclick="closeCurrentChat()">✕</button>
+                </div>
+                <div class="p5-msg-area" id="p5-msg-area"></div>
+                <div class="p5-msg-toolbar">
+                    <button class="p5-tool-btn" onclick="toggleEmojiPanel()">😊</button>
+                    <button class="p5-tool-btn" onclick="sendImage()">🖼️</button>
+                    <button class="p5-tool-btn" onclick="sendVideo()">🎬</button>
+                    <button class="p5-tool-btn" onclick="sendAudio()">🎵</button>
+                    <button class="p5-tool-btn" onclick="sendFile()">📎</button>
+                    <button class="p5-tool-btn" onclick="sendGif()">✨</button>
+                </div>
+                <div class="emoji-panel" id="emoji-panel"></div>
+                <div class="p5-input-area">
+                    <input type="text" class="p5-chat-input" id="p5-chat-input" placeholder="Type your message..." onkeypress="if(event.key==='Enter')sendMsg()">
+                    <button class="p5-send-btn" onclick="sendMsg()">▶ SEND</button>
                 </div>
             </div>
         </div>
@@ -424,7 +514,7 @@
         }
         function genConfetti() { const c = document.getElementById('p3r-confetti'); if (!c) return; c.innerHTML = ''; for (let i = 0; i < 12; i++) { const p = document.createElement('div'); p.className = 'confetti-piece'; p.style.cssText = `left:${Math.random()*90}%;top:${Math.random()*90}%;animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*4}s;`; c.appendChild(p); } }
 
-        // P3R MENU - КУРСОР ПОЛНОСТЬЮ ПЕРЕПИСАН
+        // P3R MENU
         const p3rData = [
             { n:'SKILL', t:'Use a Skill', s:'Command', a: ()=>openModal('SKILL','Combat menu') }, { n:'ITEM', t:'View Items', s:'Inventory', a: ()=>openModal('ITEMS','Inventory') },
             { n:'EQUIP', t:'Change Equipment', s:'Equipment', a: ()=>openModal('EQUIP','Equipment') }, { n:'PERSONA', t:'View Personas', s:'Persona', a: showPersona },
@@ -434,38 +524,16 @@
         ];
         let p3rIdx = 0;
         function initP3RMenu() {
-            document.querySelectorAll('.p3r-menu-item').forEach((item, i) => {
-                item.onclick = () => { selectP3R(i); playSfx('select'); if (p3rData[i].a) p3rData[i].a(); };
-                item.onmouseenter = () => { if (p3rIdx !== i) { selectP3R(i); playSfx('move'); } };
-            });
-            document.onkeydown = (e) => {
-                if (document.documentElement.getAttribute('data-theme') !== 'p3') return;
-                if (e.key === 'ArrowDown') { e.preventDefault(); selectP3R((p3rIdx + 1) % 9); playSfx('move'); }
-                if (e.key === 'ArrowUp') { e.preventDefault(); selectP3R((p3rIdx - 1 + 9) % 9); playSfx('move'); }
-                if (e.key === 'Enter') { e.preventDefault(); playSfx('select'); if (p3rData[p3rIdx].a) p3rData[p3rIdx].a(); }
-            };
+            document.querySelectorAll('.p3r-menu-item').forEach((item, i) => { item.onclick = () => { selectP3R(i); playSfx('select'); if (p3rData[i].a) p3rData[i].a(); }; item.onmouseenter = () => { if (p3rIdx !== i) { selectP3R(i); playSfx('move'); } }; });
+            document.onkeydown = (e) => { if (document.documentElement.getAttribute('data-theme') !== 'p3') return; if (e.key === 'ArrowDown') { e.preventDefault(); selectP3R((p3rIdx + 1) % 9); playSfx('move'); } if (e.key === 'ArrowUp') { e.preventDefault(); selectP3R((p3rIdx - 1 + 9) % 9); playSfx('move'); } if (e.key === 'Enter') { e.preventDefault(); playSfx('select'); if (p3rData[p3rIdx].a) p3rData[p3rIdx].a(); } };
             selectP3R(0);
         }
         function selectP3R(i) {
-            p3rIdx = i;
-            document.querySelectorAll('.p3r-menu-item').forEach((el, j) => el.classList.toggle('selected', j === i));
-            const items = document.querySelectorAll('.p3r-menu-item');
-            const menu = document.getElementById('p3r-menu');
-            const cursor = document.getElementById('p3r-cursor');
-            
-            if (items[i] && menu && cursor) {
-                const menuRect = menu.getBoundingClientRect();
-                const itemRect = items[i].getBoundingClientRect();
-                // ТОЧНОЕ ПОЗИЦИОНИРОВАНИЕ: центр элемента минус верх меню минус половина высоты курсора
-                const cursorHeight = 20; // 10px top + 10px bottom
-                const itemCenter = itemRect.top - menuRect.top + (itemRect.height / 2);
-                cursor.style.top = (itemCenter - cursorHeight/2) + 'px';
-            }
-            
-            document.getElementById('p3r-num').textContent = i + 1;
-            document.getElementById('p3r-name').textContent = p3rData[i].n;
-            document.getElementById('p3r-tt-title').textContent = p3rData[i].t;
-            document.getElementById('p3r-tt-sub').textContent = p3rData[i].s;
+            p3rIdx = i; document.querySelectorAll('.p3r-menu-item').forEach((el, j) => el.classList.toggle('selected', j === i));
+            const items = document.querySelectorAll('.p3r-menu-item'), menu = document.getElementById('p3r-menu'), cursor = document.getElementById('p3r-cursor');
+            if (items[i] && menu && cursor) { const mr = menu.getBoundingClientRect(), ir = items[i].getBoundingClientRect(); cursor.style.top = (ir.top - mr.top + ir.height/2 - 10) + 'px'; }
+            document.getElementById('p3r-num').textContent = i + 1; document.getElementById('p3r-name').textContent = p3rData[i].n;
+            document.getElementById('p3r-tt-title').textContent = p3rData[i].t; document.getElementById('p3r-tt-sub').textContent = p3rData[i].s;
         }
         function openModal(title, content) { const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);margin-bottom:1rem;">${title}</h2><p>${content}</p>`; m.classList.add('open'); }
         function closeP3RModal() { document.getElementById('p3r-modal').classList.remove('open'); playSfx('cancel'); }
@@ -485,7 +553,7 @@
         let cl='russian';
         function toggleLang(){document.querySelectorAll('.russian').forEach(e=>e.style.display=cl==='russian'?'none':'block');document.querySelectorAll('.english').forEach(e=>e.style.display=cl==='russian'?'block':'none');document.querySelector('.lang-text').textContent=cl==='russian'?'Русский':'English';cl=cl==='russian'?'english':'russian';localStorage.setItem('lang',cl)}
 
-        // CHAT
+        // FULL HD CHAT
         const MY_ID = localStorage.getItem('p5_uid') || (() => { const id = 'u_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7); localStorage.setItem('p5_uid', id); return id; })();
         let myNick = localStorage.getItem('p5_nick') || '';
         let myAvatar = localStorage.getItem('p5_av') || '';
@@ -494,14 +562,13 @@
 
         function saveProfile() { db.ref('users/' + MY_ID).set({ nick: myNick || 'Anonymous', avatar: myAvatar || '', lastSeen: firebase.database.ServerValue.TIMESTAMP }); }
         function ensureNick() { if (!myNick) { myNick = prompt('Your messenger nickname:') || 'User_' + Math.random().toString(36).slice(2, 6); localStorage.setItem('p5_nick', myNick); saveProfile(); } updateMyInfo(); }
-        function updateMyInfo() { const el = document.getElementById('p5-my-nick'); if (el) el.innerHTML = `You: <span style="color:#E60012;">${esc(myNick)}</span> <button onclick="changeNick()" style="background:none;border:none;color:#888;cursor:pointer;font-size:0.5rem;">[nick]</button> <button onclick="changeAvatar()" style="background:none;border:none;color:#888;cursor:pointer;font-size:0.5rem;">[ava]</button>`; }
+        function updateMyInfo() { const el = document.getElementById('p5-my-nick'); if (el) el.innerHTML = `<span style="color:#E60012;">${esc(myNick)}</span> <button onclick="changeNick()" style="background:none;border:none;color:#888;cursor:pointer;">[nick]</button> <button onclick="changeAvatar()" style="background:none;border:none;color:#888;cursor:pointer;">[ava]</button>`; }
         function changeNick() { const n = prompt('New nickname:', myNick); if (n && n.trim()) { myNick = n.trim(); localStorage.setItem('p5_nick', myNick); saveProfile(); updateMyInfo(); renderContacts(); } }
         function changeAvatar() { const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*'; inp.onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = (ev) => { myAvatar = ev.target.result; localStorage.setItem('p5_av', myAvatar); saveProfile(); renderContacts(); }; r.readAsDataURL(f); }; inp.click(); }
 
-        function openP5Chat() { ensureNick(); saveProfile(); document.getElementById('p5-overlay').classList.add('open'); showContacts(); loadUsers(); buildEmojiPanel(); }
+        function openP5Chat() { ensureNick(); saveProfile(); document.getElementById('p5-overlay').classList.add('open'); loadUsers(); renderContacts(); buildEmojiPanel(); }
         function closeP5Chat() { document.getElementById('p5-overlay').classList.remove('open'); }
-        function showContacts() { document.getElementById('p5-contacts-view').style.display = 'flex'; document.getElementById('p5-chat-view').classList.remove('active'); currentChatId = null; renderContacts(); updateMyInfo(); }
-        function backToContacts() { showContacts(); }
+        function closeCurrentChat() { currentChatId = null; document.getElementById('p5-no-chat-view').style.display = 'flex'; document.getElementById('p5-chat-view').style.display = 'none'; renderContacts(); }
         function loadUsers() { db.ref('users').on('value', (snap) => { knownUsers = snap.val() || {}; renderContacts(); }); }
         function getContacts() { return JSON.parse(localStorage.getItem('p5_contacts') || '[]'); }
         function addContact(uid) { let c = getContacts(); if (!c.includes(uid)) { c.push(uid); localStorage.setItem('p5_contacts', JSON.stringify(c)); } }
@@ -509,35 +576,42 @@
         function renderContacts() {
             const container = document.getElementById('p5-contacts-list'), contacts = getContacts(); let html = '';
             contacts.forEach(uid => { const user = knownUsers[uid]; if (!user) return;
-                html += `<div class="p5-contact-item" onclick="openChat('${uid}')"><svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg><svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg><svg class="p5-contact-panel active"><polygon points="12,11 56,5 64,26 20,42"/></svg><img class="p5-contact-avatar" src="${user.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-contact-text">${esc(user.nick || 'Unknown')}</div></div>`;
+                html += `<div class="p5-contact-card${currentChatId === uid ? ' active' : ''}" onclick="openChat('${uid}')"><img class="p5-contact-avatar" src="${user.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-contact-info"><div class="p5-contact-name">${esc(user.nick || 'Unknown')}</div><div class="p5-contact-last">Click to chat</div></div></div>`;
             });
-            html += `<div class="p5-contact-item" onclick="findUser()" style="opacity:0.5;"><svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg><svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg><svg class="p5-contact-panel"><polygon points="12,11 56,5 64,26 20,42"/></svg><img class="p5-contact-avatar" src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23E60012%22 font-size=%2250%22>+</text></svg>"><div class="p5-contact-text">Find User by Nickname</div></div>`;
+            if (contacts.length === 0) html = '<div style="text-align:center;color:#444;padding:2rem;font-family:\'Share Tech Mono\',monospace;">No contacts yet.<br>Click "+ ADD FRIEND"</div>';
             container.innerHTML = html;
         }
+
+        function filterContacts() { const s = document.getElementById('p5-search').value.toLowerCase(); document.querySelectorAll('.p5-contact-card').forEach(c => { const name = c.querySelector('.p5-contact-name')?.textContent.toLowerCase() || ''; c.style.display = name.includes(s) ? 'flex' : 'none'; }); }
 
         function findUser() { const search = prompt('Enter nickname to find:'); if (!search || !search.trim()) return; let found = false; Object.entries(knownUsers).forEach(([uid, data]) => { if (data.nick && data.nick.toLowerCase() === search.trim().toLowerCase()) { if (uid === MY_ID) { alert('This is you!'); found = true; return; } addContact(uid); renderContacts(); openChat(uid); found = true; } }); if (!found) alert('User not found.'); }
         function getChatId(a, b) { return [a, b].sort().join('___'); }
 
         function openChat(uid) {
-            currentChatId = uid; document.getElementById('p5-contacts-view').style.display = 'none'; document.getElementById('p5-chat-view').classList.add('active');
-            const user = knownUsers[uid], av = document.getElementById('p5-chat-avatar');
-            if (user && user.avatar) { av.src = user.avatar; av.style.display = 'block'; } else { av.style.display = 'none'; }
-            const chatId = getChatId(MY_ID, uid), msgContainer = document.getElementById('p5-chat-messages'); msgContainer.innerHTML = '';
+            currentChatId = uid; const user = knownUsers[uid];
+            document.getElementById('p5-no-chat-view').style.display = 'none';
+            document.getElementById('p5-chat-view').style.display = 'flex';
+            const avEl = document.getElementById('p5-main-avatar');
+            if (user?.avatar) { avEl.src = user.avatar; avEl.style.display = 'block'; } else { avEl.style.display = 'none'; }
+            document.getElementById('p5-main-name').textContent = user?.nick || 'Unknown';
+            const chatId = getChatId(MY_ID, uid), msgArea = document.getElementById('p5-msg-area'); msgArea.innerHTML = '';
             db.ref('messages/' + chatId).off();
             db.ref('messages/' + chatId).on('child_added', (snap) => { const msg = snap.val(); renderMessage(msg, user); });
+            renderContacts();
         }
 
         function renderMessage(msg, user) {
-            const msgContainer = document.getElementById('p5-chat-messages'), isOwn = msg.from === MY_ID, avSrc = isOwn ? (myAvatar || '') : (user?.avatar || '');
+            const msgArea = document.getElementById('p5-msg-area'), isOwn = msg.from === MY_ID;
+            const avSrc = isOwn ? (myAvatar || '') : (user?.avatar || '');
             const div = document.createElement('div'); div.className = `p5-msg ${isOwn ? 'own' : 'received'}`;
             let content = '';
-            if (msg.type === 'image' || msg.type === 'gif') content = `<img src="${msg.text}" style="max-width:260px;border-radius:6px;cursor:pointer;" loading="lazy">`;
-            else if (msg.type === 'video') content = `<video controls style="max-width:260px;border-radius:6px;"><source src="${msg.text}"></video>`;
-            else if (msg.type === 'audio') content = `<audio controls style="max-width:260px;"><source src="${msg.text}"></audio>`;
+            if (msg.type === 'image' || msg.type === 'gif') content = `<img src="${msg.text}" style="max-width:400px;max-height:300px;border-radius:6px;cursor:pointer;" loading="lazy">`;
+            else if (msg.type === 'video') content = `<video controls style="max-width:400px;max-height:300px;border-radius:6px;"><source src="${msg.text}"></video>`;
+            else if (msg.type === 'audio') content = `<audio controls style="max-width:350px;"><source src="${msg.text}"></audio>`;
             else if (msg.type === 'file') content = `<a href="${msg.text}" download="${msg.fileName||'file'}" style="color:#6BB5FF;">📎 ${msg.fileName||'Download'}</a>`;
             else content = esc(msg.text);
-            div.innerHTML = `<img class="p5-msg-avatar" src="${avSrc || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-msg-bubble-wrap"><div class="p5-msg-zigzag"></div><div class="p5-msg-bubble">${content}</div></div>`;
-            msgContainer.appendChild(div); msgContainer.scrollTop = msgContainer.scrollHeight;
+            div.innerHTML = `<img class="p5-msg-avatar" src="${avSrc || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-msg-content"><div class="p5-msg-bubble">${content}</div></div>`;
+            msgArea.appendChild(div); msgArea.scrollTop = msgArea.scrollHeight;
         }
 
         function sendMsg() { const text = document.getElementById('p5-chat-input').value.trim(); if (text) sendToFirebase(null, 'text', text); }
@@ -549,7 +623,7 @@
         function sendGif() { pickAndSend('gif', 'image/gif'); }
         function sendFile() { pickAndSend('file', '*/*'); }
 
-        function buildEmojiPanel() { const panel = document.getElementById('emoji-panel'); if (!panel) return; const emojis = ['😀','😂','😍','😎','🤔','😢','😡','👍','👎','🔥','❤️','💔','🎮','⚡','🌟','💀','🎵','📷','🎬','💬','🕒','💰','🔑','🌙','☀️','🎉','👻','🤖','🐱','🐶']; panel.innerHTML = emojis.map(e => `<button class="emoji-btn-item" onclick="insertEmoji('${e}')">${e}</button>`).join(''); }
+        function buildEmojiPanel() { const panel = document.getElementById('emoji-panel'); if (!panel) return; const emojis = ['😀','😂','😍','😎','🤔','😢','😡','👍','👎','🔥','❤️','💔','🎮','⚡','🌟','💀','🎵','📷','🎬','💬','🕒','💰','🔑','🌙','☀️','🎉','👻','🤖','🐱','🐶']; panel.innerHTML = emojis.map(e => `<button class="emoji-item" onclick="insertEmoji('${e}')">${e}</button>`).join(''); }
         function insertEmoji(emoji) { const inp = document.getElementById('p5-chat-input'); inp.value += emoji; inp.focus(); }
         function toggleEmojiPanel() { const panel = document.getElementById('emoji-panel'); panel.style.display = panel.style.display === 'flex' ? 'none' : 'flex'; }
 
@@ -565,8 +639,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             resetBF(); setTheme(localStorage.getItem('theme') || 'default');
-            if (localStorage.getItem('lang') === 'english') toggleLang();
-            chk();
+            if (localStorage.getItem('lang') === 'english') toggleLang(); chk();
         });
     </script>
 </body>
