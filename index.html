@@ -11,6 +11,7 @@
     <!-- FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
     
     <style>
         :root {
@@ -170,11 +171,19 @@
         .p5-msg-avatar { width: 28px; height: 28px; flex-shrink: 0; object-fit: cover; clip-path: polygon(5% 0, 100% 5%, 95% 100%, 0% 95%); }
         .p5-msg-bubble-wrap { position: relative; max-width: 70%; }
         .p5-msg-bubble { padding: 8px 12px; font-size: 0.72rem; line-height: 1.4; font-family: 'Share Tech Mono', monospace; word-break: break-word; position: relative; clip-path: polygon(0% 8%, 8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%); }
+        .p5-msg-bubble img, .p5-msg-bubble video { max-width: 180px; border-radius: 4px; margin: 4px 0; }
+        .p5-msg-bubble audio { max-width: 180px; margin: 4px 0; }
         .p5-msg.received .p5-msg-bubble { background: #1a1a1a; color: #ddd; border: 1px solid #333; }
         .p5-msg.own .p5-msg-bubble { background: #E60012; color: #fff; border: 1px solid #FF4444; }
         .p5-msg-zigzag { position: absolute; top: -6px; width: 14px; height: 8px; clip-path: polygon(0% 100%, 25% 0%, 50% 100%, 75% 0%, 100% 100%); }
         .p5-msg.received .p5-msg-zigzag { left: 10px; background: #333; }
         .p5-msg.own .p5-msg-zigzag { right: 10px; left: auto; background: #E60012; }
+
+        /* CHAT TOOLBAR */
+        .p5-chat-toolbar { display: flex; gap: 2px; padding: 4px 6px; background: #0A0A0A; border-top: 1px solid #222; }
+        .p5-toolbar-btn { background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 4px 7px; cursor: pointer; font-size: 0.8rem; border-radius: 3px; transition: all 0.2s; }
+        .p5-toolbar-btn:hover { background: #333; border-color: #E60012; color: #E60012; }
+        .p5-toolbar-btn.active { background: #E60012; border-color: #FF4444; color: #fff; }
 
         .p5-chat-input-area { display: flex; gap: 4px; padding: 6px; background: #0A0A0A; border-top: 2px solid #222; flex-shrink: 0; }
         .p5-chat-input { flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 6px 10px; font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; outline: none; clip-path: polygon(2% 0, 100% 0, 98% 100%, 0 100%); }
@@ -183,6 +192,11 @@
         .p5-chat-send:hover { background: #FF2222; }
 
         .p5-close-btn { position: absolute; top: -35px; right: 5px; background: none; border: 2px solid #E60012; color: #E60012; width: 28px; height: 28px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; z-index: 10; }
+
+        /* Emoji Panel */
+        .emoji-panel { position: absolute; bottom: 80px; left: 0; right: 0; background: #1a1a1a; border: 2px solid #E60012; border-radius: 8px; padding: 8px; z-index: 100; display: flex; flex-wrap: wrap; gap: 4px; max-height: 150px; overflow-y: auto; }
+        .emoji-btn-item { background: none; border: 1px solid #333; color: #fff; padding: 4px 6px; cursor: pointer; font-size: 1.1rem; border-radius: 4px; }
+        .emoji-btn-item:hover { background: #333; border-color: #E60012; }
 
         .top-bars { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
         .theme-btn, .lang-btn { background: var(--btn-bg); border: 2px solid var(--btn-border); color: var(--btn-text); padding: 0.35rem 0.7rem; border-radius: 0.75rem; cursor: pointer; font-weight: 700; font-size: 0.75rem; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
@@ -360,6 +374,18 @@
                             <img id="p5-chat-avatar" src="" style="width:28px;height:28px;object-fit:cover;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);display:none;">
                         </div>
                         <div class="p5-chat-messages" id="p5-chat-messages"></div>
+                        <!-- ТУЛБАР С КНОПКАМИ -->
+                        <div class="p5-chat-toolbar" id="p5-chat-toolbar">
+                            <button class="p5-toolbar-btn" onclick="toggleEmojiPanel()" title="Emoji">😊</button>
+                            <button class="p5-toolbar-btn" onclick="sendImage()" title="Send Image">🖼️</button>
+                            <button class="p5-toolbar-btn" onclick="sendVideo()" title="Send Video">🎬</button>
+                            <button class="p5-toolbar-btn" onclick="sendAudio()" title="Send Audio">🎵</button>
+                            <button class="p5-toolbar-btn" onclick="sendFile()" title="Send File">📎</button>
+                            <button class="p5-toolbar-btn" onclick="sendGif()" title="Send GIF">✨</button>
+                        </div>
+                        <!-- ЭМОДЗИ ПАНЕЛЬ -->
+                        <div class="emoji-panel" id="emoji-panel" style="display:none;"></div>
+                        <!-- ПОЛЕ ВВОДА -->
                         <div class="p5-chat-input-area">
                             <input type="text" class="p5-chat-input" id="p5-chat-input" placeholder="Message..." onkeypress="if(event.key==='Enter')sendMsg()">
                             <button class="p5-chat-send" onclick="sendMsg()">SEND</button>
@@ -383,6 +409,7 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
+        const storage = firebase.storage();
 
         // ==================== SOUNDS ====================
         function playSfx(id) { const el = document.getElementById('sfx-' + id); if (el) { el.currentTime = 0; el.play().catch(() => {}); } }
@@ -451,17 +478,17 @@
         function closeP3RModal() { document.getElementById('p3r-modal').classList.remove('open'); playSfx('cancel'); }
 
         const personas = [
-            { name:'Arsène', img:'https://megatenwiki.com/images/0/0e/P5X_Ars%C3%A8ne_Artwork.png', desc:'The gentleman thief' },
+            { name:'Arsène', img:'https://megatenwiki.com/images/thumb/0/0e/P5X_Ars%C3%A8ne_Artwork.png/450px-P5X_Ars%C3%A8ne_Artwork.png', desc:'The gentleman thief' },
             { name:'Izanagi', img:'https://preview.redd.it/i-hope-they-keep-izanagi-relevant-throughout-the-game-in-v0-l0zll2z0qnif1.jpeg?width=640&crop=smart&auto=webp&s=44601bd0c2bf9410fc851f36cd1a2a8506f7bdde', desc:'God who created Japan' },
-            { name:'Messiah', img:'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest', desc:'The ultimate Persona' },
-            { name:'Orpheus', img:'https://static.wikia.nocookie.net/megamitensei/images/3/3a/Orpheus_P3R.png', desc:'Poet of Greek myth' },
+            { name:'Messiah', img:'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest/scale-to-width-down/400', desc:'The ultimate Persona' },
+            { name:'Orpheus', img:'https://static.wikia.nocookie.net/megamitensei/images/thumb/3/3a/Orpheus_P3R.png/400px-Orpheus_P3R.png', desc:'Poet of Greek myth' },
         ];
         function getPersona() {
-            if (isAdmin) return { name:'Messiah', img:'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest', desc:'Creator\'s ultimate Persona' };
+            if (isAdmin) return { name:'Messiah', img:personas[2].img, desc:'Creator\'s ultimate Persona' };
             const s = localStorage.getItem('up'); if (s) try { return JSON.parse(s); } catch(e) {}
             const p = personas[Math.floor(Math.random()*personas.length)]; localStorage.setItem('up', JSON.stringify(p)); return p;
         }
-        function showPersona() { const p = getPersona(), m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><div class="persona-card"><img src="${p.img}" alt="${p.name}" onerror="this.style.display='none'"><h3 style="color:var(--p-primary-light);">${p.name}</h3><p>${p.desc}</p>${isAdmin?'<p style="color:#E60012;">⚡ Creator</p>':''}</div>`; m.classList.add('open'); }
+        function showPersona() { const p = getPersona(), m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><div class="persona-card"><img src="${p.img}" alt="${p.name}" onerror="this.src='https://placehold.co/400x400/1B3A5C/6BB5FF?text=${encodeURIComponent(p.name)}'"><h3 style="color:var(--p-primary-light);">${p.name}</h3><p>${p.desc}</p>${isAdmin?'<p style="color:#E60012;">⚡ Creator Persona</p>':''}</div>`; m.classList.add('open'); }
         function showSocialLinks() { const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">SOCIAL LINKS</h2><div class="social-links-grid">${['github','telegram','vk','youtube','steam','discord'].map(n=>`<a href="#" class="social-link-card"><i class="fab fa-${n}"></i><div>${n}</div></a>`).join('')}</div>`; m.classList.add('open'); }
         function showCalendar() { const n = new Date(), tz = Intl.DateTimeFormat().resolvedOptions().timeZone, m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">CALENDAR</h2><div class="calendar-display"><div class="date">${n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})}</div><div class="time" id="cal-time">${n.toLocaleTimeString()}</div><div>${tz}</div></div>`; m.classList.add('open'); const tmr=setInterval(()=>{if(!m.classList.contains('open')){clearInterval(tmr);return}const t=document.getElementById('cal-time');if(t)t.textContent=new Date().toLocaleTimeString()},1000); }
         function showSystem() { const m=document.getElementById('p3r-modal'),c=document.getElementById('p3r-modal-content'); c.innerHTML=`<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">SYSTEM</h2><p>Browser: ${navigator.userAgent.includes('Chrome')?'Chrome':'Other'}</p><p>Screen: ${screen.width}×${screen.height}</p>${isAdmin?`<p style="color:#E60012;">Key: ${SK}</p>`:''}`; m.classList.add('open'); }
@@ -469,7 +496,7 @@
         let cl='russian';
         function toggleLang(){document.querySelectorAll('.russian').forEach(e=>e.style.display=cl==='russian'?'none':'block');document.querySelectorAll('.english').forEach(e=>e.style.display=cl==='russian'?'block':'none');document.querySelector('.lang-text').textContent=cl==='russian'?'Русский':'English';cl=cl==='russian'?'english':'russian';localStorage.setItem('lang',cl)}
 
-        // ==================== FIREBASE CHAT ====================
+        // ==================== FIREBASE CHAT (С КНОПКАМИ) ====================
         const MY_ID = localStorage.getItem('p5_uid') || (() => { const id = 'u_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7); localStorage.setItem('p5_uid', id); return id; })();
         let myNick = localStorage.getItem('p5_nick') || '';
         let myAvatar = localStorage.getItem('p5_av') || '';
@@ -477,86 +504,84 @@
         let knownUsers = {};
 
         function saveProfile() { db.ref('users/' + MY_ID).set({ nick: myNick || 'Anonymous', avatar: myAvatar || '', lastSeen: firebase.database.ServerValue.TIMESTAMP }); }
-
-        function ensureNick() {
-            if (!myNick) { myNick = prompt('Your messenger nickname:') || 'User_' + Math.random().toString(36).slice(2, 6); localStorage.setItem('p5_nick', myNick); saveProfile(); }
-            updateMyInfo();
-        }
-        function updateMyInfo() {
-            const el = document.getElementById('p5-my-nick');
-            if (el) el.innerHTML = `You: <span style="color:#E60012;">${esc(myNick)}</span> <button onclick="changeNick()" style="background:none;border:none;color:#888;cursor:pointer;font-size:0.5rem;">[nick]</button> <button onclick="changeAvatar()" style="background:none;border:none;color:#888;cursor:pointer;font-size:0.5rem;">[ava]</button>`;
-        }
+        function ensureNick() { if (!myNick) { myNick = prompt('Your messenger nickname:') || 'User_' + Math.random().toString(36).slice(2, 6); localStorage.setItem('p5_nick', myNick); saveProfile(); } updateMyInfo(); }
+        function updateMyInfo() { const el = document.getElementById('p5-my-nick'); if (el) el.innerHTML = `You: <span style="color:#E60012;">${esc(myNick)}</span> <button onclick="changeNick()" style="background:none;border:none;color:#888;cursor:pointer;font-size:0.5rem;">[nick]</button> <button onclick="changeAvatar()" style="background:none;border:none;color:#888;cursor:pointer;font-size:0.5rem;">[ava]</button>`; }
         function changeNick() { const n = prompt('New nickname:', myNick); if (n && n.trim()) { myNick = n.trim(); localStorage.setItem('p5_nick', myNick); saveProfile(); updateMyInfo(); renderContacts(); } }
         function changeAvatar() { const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*'; inp.onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = (ev) => { myAvatar = ev.target.result; localStorage.setItem('p5_av', myAvatar); saveProfile(); renderContacts(); }; r.readAsDataURL(f); }; inp.click(); }
 
-        function openP5Chat() { ensureNick(); saveProfile(); document.getElementById('p5-overlay').classList.add('open'); showContacts(); loadUsers(); }
+        function openP5Chat() { ensureNick(); saveProfile(); document.getElementById('p5-overlay').classList.add('open'); showContacts(); loadUsers(); buildEmojiPanel(); }
         function closeP5Chat() { document.getElementById('p5-overlay').classList.remove('open'); }
         function showContacts() { document.getElementById('p5-contacts-view').style.display = 'flex'; document.getElementById('p5-chat-view').classList.remove('active'); currentChatId = null; renderContacts(); updateMyInfo(); }
         function backToContacts() { showContacts(); }
-
         function loadUsers() { db.ref('users').on('value', (snap) => { knownUsers = snap.val() || {}; renderContacts(); }); }
         function getContacts() { return JSON.parse(localStorage.getItem('p5_contacts') || '[]'); }
         function addContact(uid) { let c = getContacts(); if (!c.includes(uid)) { c.push(uid); localStorage.setItem('p5_contacts', JSON.stringify(c)); } }
 
         function renderContacts() {
-            const container = document.getElementById('p5-contacts-list');
-            const contacts = getContacts();
-            let html = '';
-            contacts.forEach(uid => {
-                const user = knownUsers[uid];
-                if (!user) return;
+            const container = document.getElementById('p5-contacts-list'), contacts = getContacts(); let html = '';
+            contacts.forEach(uid => { const user = knownUsers[uid]; if (!user) return;
                 html += `<div class="p5-contact-item" onclick="openChat('${uid}')"><svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg><svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg><svg class="p5-contact-panel active"><polygon points="12,11 56,5 64,26 20,42"/></svg><img class="p5-contact-avatar" src="${user.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-contact-text">${esc(user.nick || 'Unknown')}</div></div>`;
             });
             html += `<div class="p5-contact-item" onclick="findUser()" style="opacity:0.5;"><svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg><svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg><svg class="p5-contact-panel"><polygon points="12,11 56,5 64,26 20,42"/></svg><img class="p5-contact-avatar" src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23E60012%22 font-size=%2250%22>+</text></svg>"><div class="p5-contact-text">Find User by Nickname</div></div>`;
             container.innerHTML = html;
         }
 
-        function findUser() {
-            const search = prompt('Enter nickname to find:');
-            if (!search || !search.trim()) return;
-            let found = false;
-            Object.entries(knownUsers).forEach(([uid, data]) => {
-                if (data.nick && data.nick.toLowerCase() === search.trim().toLowerCase()) {
-                    if (uid === MY_ID) { alert('This is you!'); found = true; return; }
-                    addContact(uid); renderContacts(); openChat(uid); found = true;
-                }
-            });
-            if (!found) alert('User not found. They need to set their nickname first.');
-        }
-
+        function findUser() { const search = prompt('Enter nickname to find:'); if (!search || !search.trim()) return; let found = false; Object.entries(knownUsers).forEach(([uid, data]) => { if (data.nick && data.nick.toLowerCase() === search.trim().toLowerCase()) { if (uid === MY_ID) { alert('This is you!'); found = true; return; } addContact(uid); renderContacts(); openChat(uid); found = true; } }); if (!found) alert('User not found.'); }
         function getChatId(a, b) { return [a, b].sort().join('___'); }
 
         function openChat(uid) {
-            currentChatId = uid;
-            document.getElementById('p5-contacts-view').style.display = 'none';
-            document.getElementById('p5-chat-view').classList.add('active');
-            const user = knownUsers[uid];
-            const av = document.getElementById('p5-chat-avatar');
+            currentChatId = uid; document.getElementById('p5-contacts-view').style.display = 'none'; document.getElementById('p5-chat-view').classList.add('active');
+            const user = knownUsers[uid], av = document.getElementById('p5-chat-avatar');
             if (user && user.avatar) { av.src = user.avatar; av.style.display = 'block'; } else { av.style.display = 'none'; }
-            const chatId = getChatId(MY_ID, uid);
-            const msgContainer = document.getElementById('p5-chat-messages');
-            msgContainer.innerHTML = '';
+            const chatId = getChatId(MY_ID, uid), msgContainer = document.getElementById('p5-chat-messages'); msgContainer.innerHTML = '';
             db.ref('messages/' + chatId).off();
-            db.ref('messages/' + chatId).on('child_added', (snap) => {
-                const msg = snap.val();
-                const isOwn = msg.from === MY_ID;
-                const avSrc = isOwn ? (myAvatar || '') : (user?.avatar || '');
-                const div = document.createElement('div');
-                div.className = `p5-msg ${isOwn ? 'own' : 'received'}`;
-                div.innerHTML = `<img class="p5-msg-avatar" src="${avSrc || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-msg-bubble-wrap"><div class="p5-msg-zigzag"></div><div class="p5-msg-bubble">${esc(msg.text)}</div></div>`;
-                msgContainer.appendChild(div);
-                msgContainer.scrollTop = msgContainer.scrollHeight;
-            });
+            db.ref('messages/' + chatId).on('child_added', (snap) => { const msg = snap.val(); renderMessage(msg, user); });
         }
 
-        function sendMsg() {
-            const inp = document.getElementById('p5-chat-input');
-            const text = inp.value.trim();
-            if (!text || !currentChatId) return;
-            const chatId = getChatId(MY_ID, currentChatId);
-            db.ref('messages/' + chatId).push({ from: MY_ID, text, timestamp: firebase.database.ServerValue.TIMESTAMP });
-            inp.value = '';
+        function renderMessage(msg, user) {
+            const msgContainer = document.getElementById('p5-chat-messages'), isOwn = msg.from === MY_ID, avSrc = isOwn ? (myAvatar || '') : (user?.avatar || '');
+            const div = document.createElement('div'); div.className = `p5-msg ${isOwn ? 'own' : 'received'}`;
+            let content = '';
+            if (msg.type === 'image' || msg.type === 'gif') { content = `<img src="${msg.text}" style="max-width:200px;border-radius:4px;cursor:pointer;" onclick="window.open('${msg.text}')" loading="lazy">`; }
+            else if (msg.type === 'video') { content = `<video controls style="max-width:200px;border-radius:4px;"><source src="${msg.text}"></video>`; }
+            else if (msg.type === 'audio') { content = `<audio controls style="max-width:180px;"><source src="${msg.text}"></audio>`; }
+            else if (msg.type === 'file') { content = `<a href="${msg.text}" target="_blank" style="color:#6BB5FF;text-decoration:underline;">📎 ${msg.fileName || 'Download File'}</a>`; }
+            else { content = esc(msg.text); }
+            div.innerHTML = `<img class="p5-msg-avatar" src="${avSrc || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-msg-bubble-wrap"><div class="p5-msg-zigzag"></div><div class="p5-msg-bubble">${content}</div></div>`;
+            msgContainer.appendChild(div); msgContainer.scrollTop = msgContainer.scrollHeight;
         }
+
+        // ОТПРАВКА
+        async function uploadAndSend(file, type, textMsg) {
+            if (!currentChatId) return;
+            const chatId = getChatId(MY_ID, currentChatId);
+            if (file) {
+                const storageRef = storage.ref('chat_files/' + chatId + '/' + Date.now() + '_' + file.name);
+                try { const snapshot = await storageRef.put(file); const url = await snapshot.ref.getDownloadURL();
+                    db.ref('messages/' + chatId).push({ from: MY_ID, text: url, type, fileName: file.name, timestamp: firebase.database.ServerValue.TIMESTAMP }); } catch (e) { alert('Upload failed!'); }
+            }
+            if (textMsg) { db.ref('messages/' + chatId).push({ from: MY_ID, text: textMsg, type: 'text', timestamp: firebase.database.ServerValue.TIMESTAMP }); }
+            document.getElementById('p5-chat-input').value = '';
+        }
+
+        function sendMsg() { const text = document.getElementById('p5-chat-input').value.trim(); if (text) uploadAndSend(null, 'text', text); }
+
+        // КНОПКИ ТУЛБАРА
+        function pickAndSend(type, accept) { const inp = document.createElement('input'); inp.type = 'file'; inp.accept = accept; inp.onchange = (e) => { const f = e.target.files[0]; if (f) uploadAndSend(f, type); }; inp.click(); }
+        function sendImage() { pickAndSend('image', 'image/*'); }
+        function sendVideo() { pickAndSend('video', 'video/*'); }
+        function sendAudio() { pickAndSend('audio', 'audio/*'); }
+        function sendGif() { pickAndSend('gif', 'image/gif'); }
+        function sendFile() { pickAndSend('file', '*/*'); }
+
+        // ЭМОДЗИ
+        function buildEmojiPanel() {
+            const panel = document.getElementById('emoji-panel'); if (!panel) return;
+            const emojis = ['😀','😂','😍','😎','🤔','😢','😡','👍','👎','🔥','❤️','💔','🎮','⚡','🌟','💀','🎵','📷','🎬','💬','🕒','💰','🔑','🌙','☀️','🎉','👻','🤖','🐱','🐶','🦊','🐼','🐨','🍕','🍔','🎂','⚽','🏀','🎯'];
+            panel.innerHTML = emojis.map(e => `<button class="emoji-btn-item" onclick="insertEmoji('${e}')">${e}</button>`).join('');
+        }
+        function insertEmoji(emoji) { const inp = document.getElementById('p5-chat-input'); inp.value += emoji; inp.focus(); }
+        function toggleEmojiPanel() { const panel = document.getElementById('emoji-panel'); panel.style.display = panel.style.display === 'none' ? 'flex' : 'none'; }
 
         function esc(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
@@ -571,8 +596,7 @@
 
         // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
-            resetBF();
-            setTheme(localStorage.getItem('theme') || 'default');
+            resetBF(); setTheme(localStorage.getItem('theme') || 'default');
             if (localStorage.getItem('lang') === 'english') toggleLang();
             chk();
         });
