@@ -7,16 +7,16 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Share+Tech+Mono&family=Luckiest+Guy&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-    <style>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js">
+    </script><script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js">
+    </script><style>
         :root { --p-primary:#8B5CF6;--p-primary-hover:#7C3AED;--p-primary-light:#A78BFA;--p-primary-dark:#5B21B6;--p-highlight:#C4B5FD;--p-surface:#1F2937;--p-background:#111827;--p-background-alt:#0F172A;--p-text:#F9FAFB;--p-text-dim:#9CA3AF;--p-border:#374151;--btn-bg:rgba(139,92,246,0.25);--btn-border:rgba(139,92,246,0.6);--btn-text:#FFFFFF;--card-bg:rgba(255,255,255,0.07);--chat-bg:#0D0D0D;--chat-sidebar:#0A0A0A;--chat-header:#111;--chat-bubble-other:#1A1A1A;--chat-bubble-mine:#E60012;--chat-text:#DDD;--chat-accent:#E60012; }
         [data-theme="p3"] { --p-primary:#0D1B2A;--p-primary-hover:#1B3A5C;--p-primary-light:#4A90D9;--p-primary-dark:#060F18;--p-highlight:#6BB5FF;--p-surface:#0F1F33;--p-background:#0A1628;--p-background-alt:#060F18;--p-text:#E8F0F8;--p-text-dim:#5A8AB5;--p-border:#1B3A5C;--btn-bg:rgba(74,144,217,0.2);--btn-border:rgba(74,144,217,0.5);--btn-text:#E8F0F8;--card-bg:rgba(15,31,51,0.7); }
         [data-theme="light"] { --p-primary:#8B5CF6;--p-primary-hover:#7C3AED;--p-primary-light:#6D28D9;--p-primary-dark:#5B21B6;--p-highlight:#A78BFA;--p-surface:#FFFFFF;--p-background:#FEF7FF;--p-background-alt:#F3E8FF;--p-text:#1E1B4B;--p-text-dim:#7C3AED;--p-border:#DDD6FE;--btn-bg:rgba(139,92,246,0.12);--btn-border:rgba(139,92,246,0.4);--btn-text:#1E1B4B;--card-bg:rgba(255,255,255,0.9); }
         * { margin:0;padding:0;box-sizing:border-box; } body { font-family:'Montserrat',sans-serif;background:var(--p-background);color:var(--p-text);line-height:1.6;min-height:100vh; }
         @keyframes float { 0%,100%{transform:translateY(0px);} 50%{transform:translateY(-10px);} }
         @keyframes caustic { 0%{background-position:0% 0%;} 100%{background-position:100% 100%;} }
-        @keyframes cursor-twitch { 0%,100%{transform:translateY(0px);} 50%{transform:translateY(-6px);} }
+        @keyframes cursor-twitch { 0%,100%{transform:translateY(0px);} 50%{transform:translateY(-5px);} }
         .container { max-width:1200px;margin:0 auto;padding:0 1.5rem; }
         .hero { min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--p-primary-dark),var(--p-primary));position:relative;overflow:hidden; }
         [data-theme="p3"] .hero { background:radial-gradient(ellipse at 25% 65%,rgba(74,144,217,0.25) 0%,transparent 55%),radial-gradient(ellipse at 75% 25%,rgba(107,181,255,0.15) 0%,transparent 45%),linear-gradient(180deg,#060F18 0%,#0A1628 30%,#0D1B2A 60%,#060F18 100%); }
@@ -28,7 +28,7 @@
         .anime-gif-left { bottom:2rem;left:2rem;width:180px;height:180px;opacity:0.8; } .anime-gif-right { top:2rem;right:2rem;width:160px;height:160px;opacity:0.9;animation-direction:reverse; }
         .anime-gif-left img,.anime-gif-right img { width:100%;height:100%;object-fit:cover; }
         .p3r-menu { display:none; } [data-theme="p3"] .p3r-menu { display:flex;position:absolute;right:8%;top:50%;transform:translateY(-50%);flex-direction:column;gap:0.5rem;z-index:3;width:clamp(190px,28vw,400px); }
-        .p3r-menu-item { display:none;font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(1rem,3vw,2.5rem);color:rgba(74,144,217,0.7);cursor:pointer;letter-spacing:2px;text-transform:uppercase;transform:skewX(-5deg); } [data-theme="p3"] .p3r-menu-item { display:block; }
+        .p3r-menu-item { display:none;font-weight:800;font-size:clamp(1rem,3vw,2.5rem);color:rgba(74,144,217,0.7);cursor:pointer;letter-spacing:2px;text-transform:uppercase;transform:skewX(-5deg); } [data-theme="p3"] .p3r-menu-item { display:block; }
         .p3r-menu-item:hover,.p3r-menu-item.selected { color:#FFF!important;text-shadow:0 0 30px rgba(74,144,217,0.8)!important; }
         .p3r-cursor { display:none; } [data-theme="p3"] .p3r-cursor { display:block;position:absolute;right:calc(8% + clamp(190px,28vw,400px) + 25px);width:0;height:0;border-left:16px solid #E60012;border-top:9px solid transparent;border-bottom:9px solid transparent;z-index:4;pointer-events:none;transition:top 0.15s ease;animation:cursor-twitch 1s infinite; }
         .p3r-info { display:none; } [data-theme="p3"] .p3r-info { display:flex;position:absolute;left:5%;bottom:12%;z-index:3;flex-direction:column;pointer-events:none; }
@@ -56,8 +56,8 @@
         .skills-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;max-width:800px;margin:0 auto; }
         .skill-category { background:var(--p-surface);border-radius:1rem;padding:1.5rem;border:1px solid var(--p-border); } .skill-category h3 { color:var(--p-primary-light); }
         .tech-tag { background:var(--btn-bg);color:var(--btn-text);padding:0.25rem 0.7rem;border-radius:1rem;font-size:0.8rem;border:1px solid var(--btn-border);margin:0.2rem;display:inline-block; }
-        
-        /* CHAT */
+
+        /* ==================== FULL HD CHAT (GRID LAYOUT - INPUT NEVER HIDDEN) ==================== */
         .p5-chat-fab { position:fixed;top:5rem;left:1rem;z-index:999;width:55px;height:55px;border-radius:50%;background:#E60012;border:3px solid #FF4444;color:white;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center; }
         .p5-chat-overlay { position:fixed;inset:0;background:#000;z-index:2000;display:none;flex-direction:row; } .p5-chat-overlay.open { display:flex; }
         .p5-sidebar { width:320px;background:var(--chat-sidebar);border-right:3px solid var(--chat-accent);display:flex;flex-direction:column; }
@@ -68,22 +68,27 @@
         .p5-contact-avatar { width:44px;height:44px;object-fit:cover;border:2px solid #333; } .p5-contact-name { font-family:'Share Tech Mono',monospace;font-size:0.85rem;color:var(--chat-accent);font-weight:bold; }
         .p5-sidebar-footer { padding:0.75rem;border-top:2px solid #222; } .p5-add-btn { width:100%;background:none;border:2px dashed var(--chat-accent);color:var(--chat-accent);padding:0.5rem;cursor:pointer;font-family:'Luckiest Guy',cursive;transform:skewX(-5deg); }
         .p5-theme-switch { display:flex;gap:4px;margin-bottom:0.5rem;justify-content:center; } .p5-theme-dot { width:18px;height:18px;border-radius:50%;cursor:pointer;border:2px solid #333; } .p5-theme-dot.active { border-color:#FFF; }
-        .p5-main { flex:1;display:flex;flex-direction:column;background:var(--chat-bg); }
-        .p5-main-header { display:flex;align-items:center;gap:10px;padding:0.75rem 1rem;background:var(--chat-header);border-bottom:2px solid var(--chat-accent);flex-shrink:0; }
+
+        /* MAIN CHAT - GRID */
+        .p5-main { flex:1;display:grid;grid-template-rows:auto 1fr auto auto;grid-template-columns:1fr;background:var(--chat-bg);min-height:0; }
+        .p5-main-header { padding:0.75rem 1rem;background:var(--chat-header);border-bottom:2px solid var(--chat-accent);display:flex;align-items:center;gap:10px; }
         .p5-main-avatar { width:40px;height:40px;object-fit:cover;border:2px solid var(--chat-accent); }
         .p5-main-name { font-family:'Luckiest Guy',cursive;color:var(--chat-accent); }
         .p5-main-close { margin-left:auto;background:none;border:2px solid var(--chat-accent);color:var(--chat-accent);width:32px;height:32px;cursor:pointer;border-radius:50%; }
-        .p5-msg-area { flex:1;overflow-y:auto;padding:1rem; }
+
+        .p5-msg-area { overflow-y:auto;padding:1rem;min-height:0; }
         .p5-msg { display:flex;gap:10px;margin-bottom:8px; } .p5-msg.own { flex-direction:row-reverse; }
         .p5-msg-content { max-width:65%; } .p5-msg-bubble { padding:10px 14px;font-size:0.85rem;font-family:'Share Tech Mono',monospace;word-break:break-word; }
         .p5-msg-bubble img,.p5-msg-bubble video { max-width:280px;max-height:250px;border-radius:6px;margin:4px 0; } .p5-msg-bubble audio { max-width:260px;margin:4px 0;display:block; }
         .p5-msg.received .p5-msg-bubble { background:var(--chat-bubble-other);color:var(--chat-text); } .p5-msg.own .p5-msg-bubble { background:var(--chat-bubble-mine);color:#FFF; }
-        .p5-msg-toolbar { display:flex!important;gap:4px;padding:6px 1rem;background:var(--chat-header);border-top:1px solid #222;flex-shrink:0; }
+
+        .p5-msg-toolbar { padding:6px 1rem;background:var(--chat-header);border-top:1px solid #222;display:flex!important;gap:4px; }
         .p5-tool-btn { background:#1A1A1A;border:1px solid #333;color:#DDD;padding:6px 10px;cursor:pointer;font-size:0.9rem;border-radius:4px; }
-        .p5-input-area { display:flex!important;gap:6px;padding:0.75rem 1rem;background:var(--chat-header);border-top:2px solid #222;flex-shrink:0; }
+        .p5-input-area { padding:0.75rem 1rem;background:var(--chat-header);border-top:2px solid #222;display:flex!important;gap:6px; }
         .p5-chat-input { flex:1;background:#1A1A1A;border:1px solid #333;color:#DDD;padding:10px 14px;font-family:'Share Tech Mono',monospace;font-size:0.85rem;outline:none;border-radius:4px; }
         .p5-send-btn { background:var(--chat-accent);color:white;padding:10px 20px;cursor:pointer;font-weight:bold;font-family:'Luckiest Guy',cursive;border:none; }
-        .p5-no-chat { flex:1;display:flex;align-items:center;justify-content:center;color:#444;font-size:1.2rem; }
+        .p5-no-chat { display:flex;align-items:center;justify-content:center;color:#444;font-size:1.2rem; }
+
         .top-bars { position:fixed;top:1rem;left:50%;transform:translateX(-50%);z-index:1000;display:flex;gap:0.4rem; }
         .theme-btn,.lang-btn { background:var(--btn-bg);border:2px solid var(--btn-border);color:var(--btn-text);padding:0.35rem 0.7rem;border-radius:0.75rem;cursor:pointer;font-weight:700;font-size:0.75rem; } .theme-btn.active { background:var(--p-primary); }
         footer { background:var(--p-surface);padding:2rem 0;text-align:center;margin-top:2rem; }
@@ -93,14 +98,12 @@
     </style>
 </head>
 <body>
-    <!-- ЗВУКИ -->
     <audio id="sfx-select" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/splash.wav"></audio>
     <audio id="sfx-move" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/menu1.wav"></audio>
     <audio id="sfx-cancel" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/plum_softening.wav"></audio>
     <audio id="sfx-open" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/bubbles.wav"></audio>
 
     <div class="makoto-container"><div class="makoto-figure"><div class="makoto-silhouette"></div></div></div>
-
     <div class="p3r-menu" id="p3r-menu">
         <div class="p3r-menu-item selected" data-idx="0">SKILL</div><div class="p3r-menu-item" data-idx="1">ITEM</div>
         <div class="p3r-menu-item" data-idx="2">EQUIP</div><div class="p3r-menu-item" data-idx="3">PERSONA</div>
@@ -142,9 +145,9 @@
     <section class="section-content"><div class="container">
         <h2 class="section-title russian">Проекты</h2><h2 class="section-title english">Projects</h2>
         <div class="project-grid">
-            <div class="project-card"><h3>Tapeworm 🐛</h3><p>Визуализатор Brainfuck</p><span class="tech-tag">Rust</span><span class="tech-tag">WASM</span><br><a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank">GitHub</a></div>
-            <div class="project-card"><h3>Codex Mortis</h3><p>Мультиязычный кодекс</p><span class="tech-tag">Polyglot</span><span class="tech-tag">Latin</span><br><a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank">GitHub</a></div>
-            <div class="project-card"><h3>Ubuntu Design Helper</h3><p>Инструментарий для Linux</p><span class="tech-tag">Linux</span><span class="tech-tag">Bash</span><br><a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank">GitHub</a></div>
+            <div class="project-card"><h3>Tapeworm 🐛</h3><p class="russian">Визуализатор Brainfuck</p><p class="english">Brainfuck visualizer</p><a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank">GitHub</a></div>
+            <div class="project-card"><h3>Codex Mortis</h3><p class="russian">Мультиязычный кодекс</p><p class="english">Multi-language codex</p><a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank">GitHub</a></div>
+            <div class="project-card"><h3>Ubuntu Design Helper</h3><p class="russian">Инструментарий для Linux</p><p class="english">Toolkit for Linux</p><a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank">GitHub</a></div>
         </div>
     </div></section>
 
@@ -185,24 +188,21 @@
             </div>
         </div>
         <div class="p5-main">
-            <div id="p5-no-chat-view" class="p5-no-chat">💬 SELECT A CHAT</div>
-            <div id="p5-chat-view" style="display:none;flex-direction:column;flex:1;">
-                <div class="p5-main-header">
-                    <img class="p5-main-avatar" id="p5-main-avatar" src="">
-                    <div class="p5-main-name" id="p5-main-name">CHAT</div>
-                    <button class="p5-main-close" onclick="closeCurrentChat()">✕</button>
-                </div>
-                <div class="p5-msg-area" id="p5-msg-area"></div>
-                <div class="p5-msg-toolbar">
-                    <button class="p5-tool-btn" onclick="sendImage()">🖼️</button>
-                    <button class="p5-tool-btn" onclick="sendVideo()">🎬</button>
-                    <button class="p5-tool-btn" onclick="sendAudio()">🎵</button>
-                    <button class="p5-tool-btn" onclick="sendFile()">📎</button>
-                </div>
-                <div class="p5-input-area">
-                    <input type="text" class="p5-chat-input" id="p5-chat-input" placeholder="Message..." onkeypress="if(event.key==='Enter')sendMsg()">
-                    <button class="p5-send-btn" onclick="sendMsg()">SEND</button>
-                </div>
+            <div class="p5-main-header" id="p5-main-header">
+                <img class="p5-main-avatar" id="p5-main-avatar" src="">
+                <div class="p5-main-name" id="p5-main-name">CHAT</div>
+                <button class="p5-main-close" onclick="closeCurrentChat()">✕</button>
+            </div>
+            <div class="p5-msg-area" id="p5-msg-area"></div>
+            <div class="p5-msg-toolbar">
+                <button class="p5-tool-btn" onclick="sendImage()">🖼️</button>
+                <button class="p5-tool-btn" onclick="sendVideo()">🎬</button>
+                <button class="p5-tool-btn" onclick="sendAudio()">🎵</button>
+                <button class="p5-tool-btn" onclick="sendFile()">📎</button>
+            </div>
+            <div class="p5-input-area">
+                <input type="text" class="p5-chat-input" id="p5-chat-input" placeholder="Message..." onkeypress="if(event.key==='Enter')sendMsg()">
+                <button class="p5-send-btn" onclick="sendMsg()">SEND</button>
             </div>
         </div>
     </div>
@@ -221,274 +221,143 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // SOUND EFFECTS
-        function playSfx(id) { 
-            const el = document.getElementById('sfx-' + id); 
-            if (el) { el.currentTime = 0; el.play().catch(() => {}); } 
-        }
+        function playSfx(id) { const el = document.getElementById('sfx-'+id); if(el){el.currentTime=0;el.play().catch(()=>{});} }
 
-        // ADMIN
         const SK = 'NyxsAvatarsP3R!';
         let isAdmin = false;
-        (function chk() {
-            const kh = localStorage.getItem('kh');
-            const f = (() => { const d = navigator.userAgent + screen.width; let h = 0; for (let i = 0; i < d.length; i++) { h = ((h << 5) - h) + d.charCodeAt(i); h |= 0; } return Math.abs(h).toString(36); })();
-            if (kh && localStorage.getItem('kf') === f) { isAdmin = (kh === btoa(SK + f)); if (!isAdmin) { localStorage.removeItem('kh'); localStorage.removeItem('kf'); } }
-        })();
+        (function chk(){const kh=localStorage.getItem('kh'),f=(()=>{const d=navigator.userAgent+screen.width;let h=0;for(let i=0;i<d.length;i++){h=((h<<5)-h)+d.charCodeAt(i);h|=0;}return Math.abs(h).toString(36);})();if(kh&&localStorage.getItem('kf')===f){isAdmin=(kh===btoa(SK+f));if(!isAdmin){localStorage.removeItem('kh');localStorage.removeItem('kf');}}})();
 
-        // THEMES
         const themes = {
-            default: { '--p-primary': '#8B5CF6', '--p-primary-hover': '#7C3AED', '--p-primary-light': '#A78BFA', '--p-primary-dark': '#5B21B6', '--p-highlight': '#C4B5FD', '--p-surface': '#1F2937', '--p-background': '#111827', '--p-background-alt': '#0F172A', '--p-text': '#F9FAFB', '--p-text-dim': '#9CA3AF', '--p-border': '#374151', '--btn-bg': 'rgba(139,92,246,0.25)', '--btn-border': 'rgba(139,92,246,0.6)', '--btn-text': '#FFFFFF', '--card-bg': 'rgba(255,255,255,0.07)' },
-            light: { '--p-primary': '#8B5CF6', '--p-primary-hover': '#7C3AED', '--p-primary-light': '#6D28D9', '--p-primary-dark': '#5B21B6', '--p-highlight': '#A78BFA', '--p-surface': '#FFFFFF', '--p-background': '#FEF7FF', '--p-background-alt': '#F3E8FF', '--p-text': '#1E1B4B', '--p-text-dim': '#7C3AED', '--p-border': '#DDD6FE', '--btn-bg': 'rgba(139,92,246,0.12)', '--btn-border': 'rgba(139,92,246,0.4)', '--btn-text': '#1E1B4B', '--card-bg': 'rgba(255,255,255,0.9)' },
-            p3: { '--p-primary': '#0D1B2A', '--p-primary-hover': '#1B3A5C', '--p-primary-light': '#4A90D9', '--p-primary-dark': '#060F18', '--p-highlight': '#6BB5FF', '--p-surface': '#0F1F33', '--p-background': '#0A1628', '--p-background-alt': '#060F18', '--p-text': '#E8F0F8', '--p-text-dim': '#5A8AB5', '--p-border': '#1B3A5C', '--btn-bg': 'rgba(74,144,217,0.2)', '--btn-border': 'rgba(74,144,217,0.5)', '--btn-text': '#E8F0F8', '--card-bg': 'rgba(15,31,51,0.7)' }
+            default:{'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#A78BFA','--p-primary-dark':'#5B21B6','--p-highlight':'#C4B5FD','--p-surface':'#1F2937','--p-background':'#111827','--p-background-alt':'#0F172A','--p-text':'#F9FAFB','--p-text-dim':'#9CA3AF','--p-border':'#374151','--btn-bg':'rgba(139,92,246,0.25)','--btn-border':'rgba(139,92,246,0.6)','--btn-text':'#FFFFFF','--card-bg':'rgba(255,255,255,0.07)'},
+            light:{'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#6D28D9','--p-primary-dark':'#5B21B6','--p-highlight':'#A78BFA','--p-surface':'#FFFFFF','--p-background':'#FEF7FF','--p-background-alt':'#F3E8FF','--p-text':'#1E1B4B','--p-text-dim':'#7C3AED','--p-border':'#DDD6FE','--btn-bg':'rgba(139,92,246,0.12)','--btn-border':'rgba(139,92,246,0.4)','--btn-text':'#1E1B4B','--card-bg':'rgba(255,255,255,0.9)'},
+            p3:{'--p-primary':'#0D1B2A','--p-primary-hover':'#1B3A5C','--p-primary-light':'#4A90D9','--p-primary-dark':'#060F18','--p-highlight':'#6BB5FF','--p-surface':'#0F1F33','--p-background':'#0A1628','--p-background-alt':'#060F18','--p-text':'#E8F0F8','--p-text-dim':'#5A8AB5','--p-border':'#1B3A5C','--btn-bg':'rgba(74,144,217,0.2)','--btn-border':'rgba(74,144,217,0.5)','--btn-text':'#E8F0F8','--card-bg':'rgba(15,31,51,0.7)'}
         };
-        function setTheme(t) {
-            Object.entries(themes[t]).forEach(([k, v]) => document.documentElement.style.setProperty(k, v));
-            document.documentElement.setAttribute('data-theme', t);
-            localStorage.setItem('theme', t);
-            ['dt', 'p3t', 'lt'].forEach(id => { const b = document.getElementById(id); if (b) b.classList.remove('active'); });
-            const bid = t === 'default' ? 'dt' : t === 'p3' ? 'p3t' : 'lt';
-            const b = document.getElementById(bid); if (b) b.classList.add('active');
-            if (t === 'p3') { initP3RMenu(); playSfx('open'); }
+        function setTheme(t){
+            Object.entries(themes[t]).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
+            document.documentElement.setAttribute('data-theme',t);localStorage.setItem('theme',t);
+            ['dt','p3t','lt'].forEach(id=>{const b=document.getElementById(id);if(b)b.classList.remove('active')});
+            const bid=t==='default'?'dt':t==='p3'?'p3t':'lt';const b=document.getElementById(bid);if(b)b.classList.add('active');
+            if(t==='p3'){initP3RMenu();playSfx('open');}
         }
 
-        // P3R MENU
         const p3rData = [
-            { n: 'SKILL', t: 'Use a Skill', s: 'Command' }, { n: 'ITEM', t: 'View Items', s: 'Inventory' },
-            { n: 'EQUIP', t: 'Change Equipment', s: 'Equipment' }, { n: 'PERSONA', t: 'View Personas', s: 'Persona' },
-            { n: 'STATS', t: 'View Stats', s: 'Status' }, { n: 'QUEST', t: 'View Requests', s: 'Requests' },
-            { n: 'SOCIAL LINK', t: 'Social Links', s: 'Community' }, { n: 'CALENDAR', t: 'Calendar', s: 'Schedule' },
-            { n: 'SYSTEM', t: 'Settings', s: 'Config' }
+            {n:'SKILL',t:'Use a Skill',s:'Command'},{n:'ITEM',t:'View Items',s:'Inventory'},
+            {n:'EQUIP',t:'Change Equipment',s:'Equipment'},{n:'PERSONA',t:'View Personas',s:'Persona'},
+            {n:'STATS',t:'View Stats',s:'Status'},{n:'QUEST',t:'View Requests',s:'Requests'},
+            {n:'SOCIAL LINK',t:'Social Links',s:'Community'},{n:'CALENDAR',t:'Calendar',s:'Schedule'},{n:'SYSTEM',t:'Settings',s:'Config'}
         ];
-        let p3rIdx = 0;
-        function initP3RMenu() {
-            document.querySelectorAll('.p3r-menu-item').forEach((item, i) => {
-                item.onclick = () => {
-                    selectP3R(i); playSfx('select');
-                    const a = p3rData[i];
-                    if (a.n === 'PERSONA') showPersonaModal();
-                    else if (a.n === 'CALENDAR') showCalendarModal();
-                    else if (a.n === 'SYSTEM') showSystemModal();
-                    else openP3RModal(a.n, a.t + ' - ' + a.s);
-                };
-                item.onmouseenter = () => { if (p3rIdx !== i) { selectP3R(i); playSfx('move'); } };
+        let p3rIdx=0;
+        function initP3RMenu(){
+            document.querySelectorAll('.p3r-menu-item').forEach((item,i)=>{
+                item.onclick=()=>{selectP3R(i);playSfx('select');const a=p3rData[i];if(a.n==='PERSONA')showPersonaModal();else if(a.n==='CALENDAR')showCalendarModal();else if(a.n==='SYSTEM')showSystemModal();else openP3RModal(a.n,a.t+' - '+a.s);};
+                item.onmouseenter=()=>{if(p3rIdx!==i){selectP3R(i);playSfx('move');}};
             });
-            document.onkeydown = (e) => {
-                if (document.documentElement.getAttribute('data-theme') !== 'p3') return;
-                if (e.key === 'ArrowDown') { e.preventDefault(); selectP3R((p3rIdx + 1) % 9); playSfx('move'); }
-                if (e.key === 'ArrowUp') { e.preventDefault(); selectP3R((p3rIdx - 1 + 9) % 9); playSfx('move'); }
-                if (e.key === 'Enter') { e.preventDefault(); playSfx('select'); const a = p3rData[p3rIdx]; if (a.n === 'PERSONA') showPersonaModal(); else if (a.n === 'CALENDAR') showCalendarModal(); else if (a.n === 'SYSTEM') showSystemModal(); else openP3RModal(a.n, a.t); }
+            document.onkeydown=(e)=>{
+                if(document.documentElement.getAttribute('data-theme')!=='p3')return;
+                if(e.key==='ArrowDown'){e.preventDefault();selectP3R((p3rIdx+1)%9);playSfx('move');}
+                if(e.key==='ArrowUp'){e.preventDefault();selectP3R((p3rIdx-1+9)%9);playSfx('move');}
+                if(e.key==='Enter'){e.preventDefault();playSfx('select');const a=p3rData[p3rIdx];if(a.n==='PERSONA')showPersonaModal();else if(a.n==='CALENDAR')showCalendarModal();else if(a.n==='SYSTEM')showSystemModal();else openP3RModal(a.n,a.t);}
             };
             selectP3R(0);
         }
-        function selectP3R(i) {
-            p3rIdx = i;
-            document.querySelectorAll('.p3r-menu-item').forEach((el, j) => el.classList.toggle('selected', j === i));
-            const items = document.querySelectorAll('.p3r-menu-item');
-            const cursor = document.getElementById('p3r-cursor');
-            const menu = document.getElementById('p3r-menu');
-            if (items[i] && cursor && menu) {
-                const mr = menu.getBoundingClientRect();
-                const ir = items[i].getBoundingClientRect();
-                const offset = ir.top - mr.top + ir.height / 2;
-                cursor.style.top = offset + 'px';
-            }
-            document.getElementById('p3r-num').textContent = i + 1;
-            document.getElementById('p3r-name').textContent = p3rData[i].n;
-            document.getElementById('p3r-tt-title').textContent = p3rData[i].t;
-            document.getElementById('p3r-tt-sub').textContent = p3rData[i].s;
+        function selectP3R(i){
+            p3rIdx=i;document.querySelectorAll('.p3r-menu-item').forEach((el,j)=>el.classList.toggle('selected',j===i));
+            const items=document.querySelectorAll('.p3r-menu-item'),cursor=document.getElementById('p3r-cursor'),menu=document.getElementById('p3r-menu');
+            if(items[i]&&cursor&&menu){const mr=menu.getBoundingClientRect(),ir=items[i].getBoundingClientRect();cursor.style.top=(ir.top-mr.top+ir.height/2-9)+'px';}
+            document.getElementById('p3r-num').textContent=i+1;document.getElementById('p3r-name').textContent=p3rData[i].n;
+            document.getElementById('p3r-tt-title').textContent=p3rData[i].t;document.getElementById('p3r-tt-sub').textContent=p3rData[i].s;
         }
-        function openP3RModal(title, desc) {
-            const c = document.getElementById('p3r-modal-content');
-            c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);margin-bottom:1rem;">${title}</h2><p>${desc}</p>`;
-            document.getElementById('p3r-modal').classList.add('open');
-        }
-        function closeP3RModal() { document.getElementById('p3r-modal').classList.remove('open'); playSfx('cancel'); }
-        const personas = ['Arsène', 'Izanagi', 'Messiah', 'Orpheus'];
-        function showPersonaModal() {
-            const p = isAdmin ? 'Messiah (Creator)' : personas[Math.floor(Math.random() * personas.length)];
-            openP3RModal('PERSONA', `Your Persona: <strong>${p}</strong>`);
-        }
-        function showCalendarModal() {
-            const n = new Date();
-            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            openP3RModal('CALENDAR', `${n.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}<br>${n.toLocaleTimeString()}<br>${tz}`);
-        }
-        function showSystemModal() {
-            openP3RModal('SYSTEM', `Browser: ${navigator.userAgent.includes('Chrome') ? 'Chrome' : 'Other'}<br>Screen: ${screen.width}x${screen.height}${isAdmin ? '<br><br>Key: ' + SK : ''}`);
-        }
+        function openP3RModal(title,desc){const c=document.getElementById('p3r-modal-content');c.innerHTML=`<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);margin-bottom:1rem;">${title}</h2><p>${desc}</p>`;document.getElementById('p3r-modal').classList.add('open');}
+        function closeP3RModal(){document.getElementById('p3r-modal').classList.remove('open');playSfx('cancel');}
+        const personas=['Arsène','Izanagi','Messiah','Orpheus'];
+        function showPersonaModal(){const p=isAdmin?'Messiah (Creator)':personas[Math.floor(Math.random()*personas.length)];openP3RModal('PERSONA','Your Persona: <strong>'+p+'</strong>');}
+        function showCalendarModal(){const n=new Date(),tz=Intl.DateTimeFormat().resolvedOptions().timeZone;openP3RModal('CALENDAR',n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})+'<br>'+n.toLocaleTimeString()+'<br>'+tz);}
+        function showSystemModal(){openP3RModal('SYSTEM','Browser: '+(navigator.userAgent.includes('Chrome')?'Chrome':'Other')+'<br>Screen: '+screen.width+'x'+screen.height+(isAdmin?'<br><br>Key: '+SK:''));}
 
-        // LANGUAGE
-        let cl = 'russian';
-        function toggleLang() {
-            document.querySelectorAll('.russian').forEach(e => e.style.display = cl === 'russian' ? 'none' : 'block');
-            document.querySelectorAll('.english').forEach(e => e.style.display = cl === 'russian' ? 'block' : 'none');
-            document.querySelector('.lang-text').textContent = cl === 'russian' ? 'Русский' : 'English';
-            cl = cl === 'russian' ? 'english' : 'russian';
-            localStorage.setItem('lang', cl);
-        }
+        let cl='russian';
+        function toggleLang(){document.querySelectorAll('.russian').forEach(e=>e.style.display=cl==='russian'?'none':'block');document.querySelectorAll('.english').forEach(e=>e.style.display=cl==='russian'?'block':'none');document.querySelector('.lang-text').textContent=cl==='russian'?'Русский':'English';cl=cl==='russian'?'english':'russian';localStorage.setItem('lang',cl);}
 
-        // ==================== FULL HD CHAT (FIXED) ====================
-        const MY_ID = localStorage.getItem('p5_uid') || (() => { const id = 'u_' + Date.now(); localStorage.setItem('p5_uid', id); return id; })();
+        // ==================== CHAT (GRID - INPUT NEVER HIDES) ====================
+        const MY_ID = localStorage.getItem('p5_uid') || (()=>{const id='u_'+Date.now();localStorage.setItem('p5_uid',id);return id;})();
         let myNick = localStorage.getItem('p5_nick') || '';
         let currentChatId = null;
         let knownUsers = {};
 
-        function ensureNick() { if (!myNick) { myNick = prompt('Your nickname:') || 'User_' + Math.random().toString(36).slice(2, 6); localStorage.setItem('p5_nick', myNick); } updateMyInfo(); }
-        function updateMyInfo() { const el = document.getElementById('p5-my-nick'); if (el) el.innerHTML = `<span style="color:var(--chat-accent);">${esc(myNick)}</span> <button onclick="changeNick()" style="background:none;border:none;color:#888;cursor:pointer;">[nick]</button>`; }
-        function changeNick() { const n = prompt('New nickname:', myNick); if (n && n.trim()) { myNick = n.trim(); localStorage.setItem('p5_nick', myNick); updateMyInfo(); renderContacts(); } }
-        function esc(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+        function ensureNick(){if(!myNick){myNick=prompt('Your nickname:')||'User_'+Math.random().toString(36).slice(2,6);localStorage.setItem('p5_nick',myNick);}updateMyInfo();}
+        function updateMyInfo(){const el=document.getElementById('p5-my-nick');if(el)el.innerHTML=`<span style="color:var(--chat-accent);">${esc(myNick)}</span> <button onclick="changeNick()" style="background:none;border:none;color:#888;cursor:pointer;">[nick]</button>`;}
+        function changeNick(){const n=prompt('New nickname:',myNick);if(n&&n.trim()){myNick=n.trim();localStorage.setItem('p5_nick',myNick);updateMyInfo();renderContacts();}}
+        function esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML;}
 
-        function openP5Chat() { ensureNick(); document.getElementById('p5-overlay').classList.add('open'); loadUsers(); renderContacts(); }
-        function closeP5Chat() { document.getElementById('p5-overlay').classList.remove('open'); }
-        function closeCurrentChat() { currentChatId = null; document.getElementById('p5-no-chat-view').style.display = 'flex'; document.getElementById('p5-chat-view').style.display = 'none'; renderContacts(); }
-        function loadUsers() { db.ref('users').on('value', (snap) => { knownUsers = snap.val() || {}; renderContacts(); }); }
-        function getContacts() { return JSON.parse(localStorage.getItem('p5_contacts') || '[]'); }
+        function openP5Chat(){ensureNick();document.getElementById('p5-overlay').classList.add('open');loadUsers();renderContacts();}
+        function closeP5Chat(){document.getElementById('p5-overlay').classList.remove('open');}
+        function closeCurrentChat(){currentChatId=null;document.getElementById('p5-main-header').style.display='none';document.getElementById('p5-msg-area').innerHTML='';renderContacts();}
+        function loadUsers(){db.ref('users').on('value',(snap)=>{knownUsers=snap.val()||{};renderContacts();});}
+        function getContacts(){return JSON.parse(localStorage.getItem('p5_contacts')||'[]');}
 
-        function renderContacts() {
-            const c = document.getElementById('p5-contacts-list');
-            const contacts = getContacts();
-            let h = '';
-            contacts.forEach(uid => {
-                const u = knownUsers[uid]; if (!u) return;
-                h += `<div class="p5-contact-card${currentChatId === uid ? ' active' : ''}" onclick="openChat('${uid}')"><img class="p5-contact-avatar" src="${u.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div style="flex:1;"><div class="p5-contact-name">${esc(u.nick || 'Unknown')}</div></div></div>`;
+        function renderContacts(){
+            const c=document.getElementById('p5-contacts-list'),contacts=getContacts();let h='';
+            contacts.forEach(uid=>{const u=knownUsers[uid];if(!u)return;
+                h+=`<div class="p5-contact-card${currentChatId===uid?' active':''}" onclick="openChat('${uid}')"><img class="p5-contact-avatar" src="${u.avatar||'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div style="flex:1;"><div class="p5-contact-name">${esc(u.nick||'Unknown')}</div></div></div>`;
             });
-            if (!contacts.length) h = '<div style="text-align:center;color:#444;padding:2rem;">No contacts yet</div>';
-            c.innerHTML = h;
+            if(!contacts.length)h='<div style="text-align:center;color:#444;padding:2rem;">No contacts yet</div>';
+            c.innerHTML=h;
         }
 
-        function findUser() {
-            const s = prompt('Enter nickname to find:');
-            if (!s || !s.trim()) return;
-            let found = false;
-            Object.entries(knownUsers).forEach(([uid, data]) => {
-                if (data.nick && data.nick.toLowerCase() === s.trim().toLowerCase()) {
-                    if (uid === MY_ID) { alert('This is you!'); found = true; return; }
-                    let c = getContacts(); if (!c.includes(uid)) { c.push(uid); localStorage.setItem('p5_contacts', JSON.stringify(c)); }
-                    renderContacts(); openChat(uid); found = true;
-                }
-            });
-            if (!found) alert('User not found.');
-        }
-        function getChatId(a, b) { return [a, b].sort().join('___'); }
+        function findUser(){const s=prompt('Enter nickname to find:');if(!s||!s.trim())return;let found=false;Object.entries(knownUsers).forEach(([uid,data])=>{if(data.nick&&data.nick.toLowerCase()===s.trim().toLowerCase()){if(uid===MY_ID){alert('This is you!');found=true;return;}let c=getContacts();if(!c.includes(uid)){c.push(uid);localStorage.setItem('p5_contacts',JSON.stringify(c));}renderContacts();openChat(uid);found=true;}});if(!found)alert('User not found.');}
+        function getChatId(a,b){return [a,b].sort().join('___');}
 
-        function openChat(uid) {
-            currentChatId = uid;
-            const user = knownUsers[uid];
-            if (window.innerWidth <= 768) document.getElementById('p5-sidebar').classList.add('collapsed');
+        function openChat(uid){
+            currentChatId=uid;const user=knownUsers[uid];
+            document.getElementById('p5-main-header').style.display='flex';
+            document.getElementById('p5-main-avatar').src=user?.avatar||'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg';
+            document.getElementById('p5-main-name').textContent=user?.nick||'Unknown';
             
-            document.getElementById('p5-no-chat-view').style.display = 'none';
-            const chatView = document.getElementById('p5-chat-view');
-            chatView.style.display = 'flex';
+            const inputEl=document.getElementById('p5-chat-input');
+            inputEl.disabled=false;inputEl.value='';inputEl.focus();
             
-            // ПРИНУДИТЕЛЬНО ПОКАЗЫВАЕМ ТУЛБАР И ИНПУТ
-            const toolbar = chatView.querySelector('.p5-msg-toolbar');
-            const inputArea = chatView.querySelector('.p5-input-area');
-            const inputEl = document.getElementById('p5-chat-input');
-            
-            toolbar.style.cssText = 'display:flex!important;gap:4px;padding:6px 1rem;background:var(--chat-header);border-top:1px solid #222;flex-shrink:0;';
-            inputArea.style.cssText = 'display:flex!important;gap:6px;padding:0.75rem 1rem;background:var(--chat-header);border-top:2px solid #222;flex-shrink:0;';
-            inputEl.style.cssText = 'flex:1;background:#1A1A1A;border:1px solid #333;color:#DDD;padding:10px 14px;font-family:"Share Tech Mono",monospace;font-size:0.85rem;outline:none;border-radius:4px;display:block!important;';
-            inputEl.disabled = false;
-            inputEl.value = '';
-            setTimeout(() => {
-                inputEl.focus();
-                inputEl.click();
-            }, 200);
-            
-            document.getElementById('p5-main-avatar').src = user?.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg';
-            document.getElementById('p5-main-name').textContent = user?.nick || 'Unknown';
-            
-            const chatId = getChatId(MY_ID, uid);
-            const msgArea = document.getElementById('p5-msg-area');
-            msgArea.innerHTML = '';
-            
-            db.ref('messages/' + chatId).off();
-            db.ref('messages/' + chatId).once('value', (snap) => {
-                msgArea.innerHTML = '';
-                const msgs = snap.val();
-                if (msgs) {
-                    const arr = Object.values(msgs);
-                    arr.forEach(msg => {
-                        addMessageToChat(msg, user);
-                    });
-                }
-                msgArea.scrollTop = msgArea.scrollHeight;
+            const chatId=getChatId(MY_ID,uid);const msgArea=document.getElementById('p5-msg-area');msgArea.innerHTML='';
+            db.ref('messages/'+chatId).off();
+            db.ref('messages/'+chatId).once('value',(snap)=>{
+                const msgs=snap.val();if(msgs)Object.values(msgs).forEach(msg=>addMsg(msg));
+                msgArea.scrollTop=msgArea.scrollHeight;
             });
-            
-            db.ref('messages/' + chatId).on('child_added', (snap) => {
-                addMessageToChat(snap.val(), user);
-                msgArea.scrollTop = msgArea.scrollHeight;
-            });
-            
+            db.ref('messages/'+chatId).on('child_added',(snap)=>{addMsg(snap.val());msgArea.scrollTop=msgArea.scrollHeight;});
             renderContacts();
         }
 
-        function addMessageToChat(msg, user) {
-            const msgArea = document.getElementById('p5-msg-area');
-            const div = document.createElement('div');
-            div.className = `p5-msg ${msg.from === MY_ID ? 'own' : 'received'}`;
-            let content = '';
-            if (msg.type === 'image' || msg.type === 'gif') content = `<img src="${msg.text}" style="max-width:260px;border-radius:6px;">`;
-            else if (msg.type === 'video') content = `<video controls style="max-width:260px;"><source src="${msg.text}"></video>`;
-            else if (msg.type === 'audio') content = `<audio controls style="max-width:240px;"><source src="${msg.text}"></audio>`;
-            else content = esc(msg.text);
-            div.innerHTML = `<div class="p5-msg-content"><div class="p5-msg-bubble">${content}</div></div>`;
-            msgArea.appendChild(div);
+        function addMsg(msg){
+            const msgArea=document.getElementById('p5-msg-area'),div=document.createElement('div');
+            div.className=`p5-msg ${msg.from===MY_ID?'own':'received'}`;
+            let c='';if(msg.type==='image'||msg.type==='gif')c=`<img src="${msg.text}" style="max-width:260px;border-radius:6px;">`;
+            else if(msg.type==='video')c=`<video controls style="max-width:260px;"><source src="${msg.text}"></video>`;
+            else if(msg.type==='audio')c=`<audio controls style="max-width:240px;"><source src="${msg.text}"></audio>`;
+            else c=esc(msg.text);
+            div.innerHTML=`<div class="p5-msg-content"><div class="p5-msg-bubble">${c}</div></div>`;msgArea.appendChild(div);
         }
 
-        function sendMsg() {
-            const inp = document.getElementById('p5-chat-input');
-            const text = inp.value.trim();
-            if (!text || !currentChatId) return;
-            const chatId = getChatId(MY_ID, currentChatId);
-            db.ref('messages/' + chatId).push({ from: MY_ID, text: text, type: 'text', timestamp: firebase.database.ServerValue.TIMESTAMP });
-            inp.value = '';
-            inp.focus();
-            setTimeout(() => { document.getElementById('p5-msg-area').scrollTop = document.getElementById('p5-msg-area').scrollHeight; }, 100);
+        function sendMsg(){
+            const inp=document.getElementById('p5-chat-input'),text=inp.value.trim();
+            if(!text||!currentChatId)return;
+            const chatId=getChatId(MY_ID,currentChatId);
+            db.ref('messages/'+chatId).push({from:MY_ID,text:text,type:'text',timestamp:firebase.database.ServerValue.TIMESTAMP});
+            inp.value='';inp.focus();setTimeout(()=>{document.getElementById('p5-msg-area').scrollTop=document.getElementById('p5-msg-area').scrollHeight;},100);
         }
 
-        function pickAndSend(type, accept) {
-            const inp = document.createElement('input'); inp.type = 'file'; inp.accept = accept;
-            inp.onchange = (e) => {
-                const f = e.target.files[0]; if (!f) return;
-                const r = new FileReader();
-                r.onload = (ev) => {
-                    const chatId = getChatId(MY_ID, currentChatId);
-                    db.ref('messages/' + chatId).push({ from: MY_ID, text: ev.target.result, type: type, fileName: f.name, timestamp: firebase.database.ServerValue.TIMESTAMP });
-                };
-                r.readAsDataURL(f);
-            };
-            inp.click();
-        }
-        function sendImage() { pickAndSend('image', 'image/*'); }
-        function sendVideo() { pickAndSend('video', 'video/*'); }
-        function sendAudio() { pickAndSend('audio', 'audio/*'); }
-        function sendFile() { pickAndSend('file', '*/*'); }
+        function pickAndSend(type,accept){const inp=document.createElement('input');inp.type='file';inp.accept=accept;inp.onchange=(e)=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=(ev)=>{const chatId=getChatId(MY_ID,currentChatId);db.ref('messages/'+chatId).push({from:MY_ID,text:ev.target.result,type:type,fileName:f.name,timestamp:firebase.database.ServerValue.TIMESTAMP});};r.readAsDataURL(f);};inp.click();}
+        function sendImage(){pickAndSend('image','image/*');}
+        function sendVideo(){pickAndSend('video','video/*');}
+        function sendAudio(){pickAndSend('audio','audio/*');}
+        function sendFile(){pickAndSend('file','*/*');}
 
-        function setChatTheme(theme) {
-            const overlay = document.getElementById('p5-overlay');
-            overlay.classList.remove('chat-theme-p5', 'chat-theme-p3', 'chat-theme-noir');
-            overlay.classList.add('chat-theme-' + theme);
-            document.querySelectorAll('.p5-theme-dot').forEach(d => d.classList.remove('active'));
-            document.querySelectorAll('.p5-theme-dot')[theme === 'p5' ? 0 : theme === 'p3' ? 1 : 2].classList.add('active');
-            localStorage.setItem('chat_theme', theme);
-        }
+        function setChatTheme(theme){const overlay=document.getElementById('p5-overlay');overlay.classList.remove('chat-theme-p5','chat-theme-p3','chat-theme-noir');overlay.classList.add('chat-theme-'+theme);document.querySelectorAll('.p5-theme-dot').forEach(d=>d.classList.remove('active'));document.querySelectorAll('.p5-theme-dot')[theme==='p5'?0:theme==='p3'?1:2].classList.add('active');localStorage.setItem('chat_theme',theme);}
 
-        // BRAINFUCK
-        class BF { constructor() { this.t = new Array(30).fill(0); this.p = 0; this.c = ''; this.i = 0; this.o = ''; this.b = {}; } load(c) { this.c = c; this.o = ''; this.p = 0; this.i = 0; this.t = new Array(30).fill(0); this._b(); } _b() { let s = []; this.b = {}; for (let i = 0; i < this.c.length; i++) { if (this.c[i] === '[') s.push(i); else if (this.c[i] === ']') { let st = s.pop(); this.b[st] = i; this.b[i] = st; } } } step() { if (this.i >= this.c.length) return null; let c = this.c[this.i]; switch (c) { case '>': this.p++; break; case '<': this.p--; break; case '+': this.t[this.p] = (this.t[this.p] + 1) % 256; break; case '-': this.t[this.p] = (this.t[this.p] - 1 + 256) % 256; break; case '.': this.o += String.fromCharCode(this.t[this.p]); break; case '[': if (this.t[this.p] === 0) this.i = this.b[this.i]; break; case ']': if (this.t[this.p] !== 0) this.i = this.b[this.i]; break; } this.i++; return true; } }
-        let bf = new BF();
-        function resetBF() { bf.load(document.getElementById('bf-code').value); updBF(); }
-        function runBF() { resetBF(); execBF(); }
-        function stepBF() { if (bf.step()) updBF(); }
-        function execBF() { if (bf.step()) { updBF(); setTimeout(execBF, 50); } }
-        function updBF() { document.getElementById('bf-out').textContent = bf.o; const tape = document.getElementById('bf-tape'); tape.innerHTML = ''; for (let i = 0; i < 12; i++) { const cell = document.createElement('div'); cell.className = 'tape-cell' + (i === bf.p ? ' active' : ''); cell.textContent = bf.t[i]; tape.appendChild(cell); } }
+        class BF{constructor(){this.t=new Array(30).fill(0);this.p=0;this.c='';this.i=0;this.o='';this.b={};}load(c){this.c=c;this.o='';this.p=0;this.i=0;this.t=new Array(30).fill(0);this._b();}_b(){let s=[];this.b={};for(let i=0;i<this.c.length;i++){if(this.c[i]==='[')s.push(i);else if(this.c[i]===']'){let st=s.pop();this.b[st]=i;this.b[i]=st;}}}step(){if(this.i>=this.c.length)return null;let c=this.c[this.i];switch(c){case'>':this.p++;break;case'<':this.p--;break;case'+':this.t[this.p]=(this.t[this.p]+1)%256;break;case'-':this.t[this.p]=(this.t[this.p]-1+256)%256;break;case'.':this.o+=String.fromCharCode(this.t[this.p]);break;case'[':if(this.t[this.p]===0)this.i=this.b[this.i];break;case']':if(this.t[this.p]!==0)this.i=this.b[this.i];break}this.i++;return true;}}
+        let bf=new BF();function resetBF(){bf.load(document.getElementById('bf-code').value);updBF();}function runBF(){resetBF();execBF();}function stepBF(){if(bf.step())updBF();}function execBF(){if(bf.step()){updBF();setTimeout(execBF,50);}}function updBF(){document.getElementById('bf-out').textContent=bf.o;const tape=document.getElementById('bf-tape');tape.innerHTML='';for(let i=0;i<12;i++){const cell=document.createElement('div');cell.className='tape-cell'+(i===bf.p?' active':'');cell.textContent=bf.t[i];tape.appendChild(cell);}}
 
-        document.addEventListener('DOMContentLoaded', () => {
-            resetBF();
-            setTheme(localStorage.getItem('theme') || 'default');
-            if (localStorage.getItem('lang') === 'english') toggleLang();
-            setChatTheme(localStorage.getItem('chat_theme') || 'p5');
+        document.addEventListener('DOMContentLoaded',()=>{
+            resetBF();setTheme(localStorage.getItem('theme')||'default');
+            if(localStorage.getItem('lang')==='english')toggleLang();
+            setChatTheme(localStorage.getItem('chat_theme')||'p5');
         });
     </script>
 </body>
