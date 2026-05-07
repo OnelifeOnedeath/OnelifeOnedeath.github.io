@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* Фиолетовая палитра */
+            /* Фиолетовая палитра (дефолт) */
             --p-primary: #8B5CF6;
             --p-primary-hover: #7C3AED;
             --p-primary-light: #A78BFA;
@@ -16,22 +16,27 @@
             
             --p-surface: #1F2937;
             --p-surface-hover: #374151;
+            --p-surface-light: #2D3748;
             --p-background: #111827;
             --p-background-alt: #0F172A;
             
             --p-text: #F9FAFB;
             --p-text-muted: #D1D5DB;
             --p-text-dim: #9CA3AF;
+            --p-text-on-primary: #FFFFFF;
             
             --p-border: #374151;
             --p-border-light: #4B5563;
+            --p-border-hover: #6B7280;
             --p-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1);
             --p-glow: 0 0 15px rgba(139, 92, 246, 0.3);
             
-            --btn-bg: rgba(139, 92, 246, 0.2);
-            --btn-border: rgba(139, 92, 246, 0.5);
-            --btn-hover-bg: rgba(139, 92, 246, 0.4);
-            --card-bg: rgba(255, 255, 255, 0.05);
+            --btn-bg: rgba(139, 92, 246, 0.25);
+            --btn-border: rgba(139, 92, 246, 0.6);
+            --btn-hover-bg: rgba(139, 92, 246, 0.45);
+            --btn-text: #FFFFFF;
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --card-bg-hover: rgba(255, 255, 255, 0.12);
         }
 
         /* Тема Persona 3 Reload */
@@ -44,22 +49,60 @@
             
             --p-surface: #152230;
             --p-surface-hover: #1E3348;
+            --p-surface-light: #1A2D42;
             --p-background: #0D1520;
             --p-background-alt: #0A1018;
             
             --p-text: #E8F0F8;
             --p-text-muted: #8CB4D8;
             --p-text-dim: #5A8AB5;
+            --p-text-on-primary: #FFFFFF;
             
             --p-border: #1E3348;
             --p-border-light: #2D4A6E;
+            --p-border-hover: #4A90D9;
             --p-shadow: 0 4px 6px -1px rgba(74, 144, 217, 0.2);
             --p-glow: 0 0 20px rgba(74, 144, 217, 0.3);
             
-            --btn-bg: rgba(74, 144, 217, 0.15);
-            --btn-border: rgba(74, 144, 217, 0.4);
-            --btn-hover-bg: rgba(74, 144, 217, 0.3);
-            --card-bg: rgba(30, 51, 72, 0.3);
+            --btn-bg: rgba(74, 144, 217, 0.2);
+            --btn-border: rgba(74, 144, 217, 0.5);
+            --btn-hover-bg: rgba(74, 144, 217, 0.4);
+            --btn-text: #FFFFFF;
+            --card-bg: rgba(30, 51, 72, 0.4);
+            --card-bg-hover: rgba(30, 51, 72, 0.6);
+        }
+
+        /* Светлая тема */
+        [data-theme="light"] {
+            --p-primary: #8B5CF6;
+            --p-primary-hover: #7C3AED;
+            --p-primary-light: #6D28D9;
+            --p-primary-dark: #5B21B6;
+            --p-highlight: #A78BFA;
+            
+            --p-surface: #FFFFFF;
+            --p-surface-hover: #F5F3FF;
+            --p-surface-light: #EDE9FE;
+            --p-background: #FEF7FF;
+            --p-background-alt: #F3E8FF;
+            
+            --p-text: #1E1B4B;
+            --p-text-muted: #4C1D95;
+            --p-text-dim: #7C3AED;
+            --p-text-on-primary: #FFFFFF;
+            
+            --p-border: #DDD6FE;
+            --p-border-light: #C4B5FD;
+            --p-border-hover: #A78BFA;
+            --p-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.15);
+            --p-glow: 0 0 15px rgba(139, 92, 246, 0.25);
+            
+            --btn-bg: rgba(139, 92, 246, 0.12);
+            --btn-border: rgba(139, 92, 246, 0.4);
+            --btn-hover-bg: rgba(139, 92, 246, 0.25);
+            --btn-text: #1E1B4B;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg-hover: rgba(255, 255, 255, 1);
         }
 
         * {
@@ -112,6 +155,18 @@
         @keyframes messagePop {
             from { transform: scale(0.9); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes messageSend {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes lightningStrike {
+            0% { opacity: 0; transform: translateY(-10px); }
+            50% { opacity: 1; filter: brightness(1.5); }
+            100% { opacity: 1; transform: translateY(0); filter: brightness(1); }
         }
 
         .container {
@@ -213,7 +268,7 @@
         .theme-btn, .lang-btn {
             background: var(--btn-bg);
             border: 2px solid var(--btn-border);
-            color: var(--p-text);
+            color: var(--btn-text);
             padding: 0.5rem 1rem;
             border-radius: 0.75rem;
             cursor: pointer;
@@ -221,6 +276,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            backdrop-filter: blur(5px);
         }
 
         .theme-btn:hover, .lang-btn:hover {
@@ -253,13 +309,26 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
             animation: fadeInUp 0.8s ease-out;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        [data-theme="light"] .username {
+            background: linear-gradient(135deg, #5B21B6, #1E1B4B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
         .tagline {
             font-size: 1.5rem;
             margin-bottom: 2rem;
-            color: var(--p-text-muted);
             animation: fadeInUp 0.8s ease-out 0.2s both;
+            color: var(--p-text);
+        }
+
+        [data-theme="light"] .tagline {
+            color: #1E1B4B;
+            font-weight: 500;
         }
 
         .universal-badge {
@@ -271,9 +340,15 @@
             border-radius: 2rem;
             padding: 0.75rem 1.5rem;
             margin-bottom: 3rem;
-            color: var(--p-text-muted);
             animation: fadeInUp 0.8s ease-out 0.4s both;
             backdrop-filter: blur(10px);
+            color: var(--p-text);
+        }
+
+        [data-theme="light"] .universal-badge {
+            color: #1E1B4B;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #C4B5FD;
         }
 
         .social-grid {
@@ -298,26 +373,22 @@
             overflow: hidden;
         }
 
-        .social-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--social-color, transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
         .social-card:hover {
+            background: var(--card-bg-hover);
+            border-color: var(--p-border-hover);
             transform: translateY(-5px);
             box-shadow: var(--p-glow);
-            border-color: var(--p-primary-light);
         }
 
-        .social-card:hover::before {
-            opacity: 0.1;
+        [data-theme="light"] .social-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #DDD6FE;
+            color: #1E1B4B;
+        }
+
+        [data-theme="light"] .social-card:hover {
+            border-color: #8B5CF6;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
         }
 
         .social-icon {
@@ -331,27 +402,21 @@
         /* Цвета для каждой соцсети */
         .social-card.github .social-icon { color: #6e5494; }
         .social-card.github:hover { border-color: #6e5494; box-shadow: 0 0 20px rgba(110, 84, 148, 0.3); }
-        .social-card.github::before { --social-color: #6e5494; }
 
         .social-card.telegram .social-icon { color: #0088cc; }
         .social-card.telegram:hover { border-color: #0088cc; box-shadow: 0 0 20px rgba(0, 136, 204, 0.3); }
-        .social-card.telegram::before { --social-color: #0088cc; }
 
         .social-card.vk .social-icon { color: #0077FF; }
         .social-card.vk:hover { border-color: #0077FF; box-shadow: 0 0 20px rgba(0, 119, 255, 0.3); }
-        .social-card.vk::before { --social-color: #0077FF; }
 
         .social-card.youtube .social-icon { color: #FF0000; }
         .social-card.youtube:hover { border-color: #FF0000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); }
-        .social-card.youtube::before { --social-color: #FF0000; }
 
         .social-card.steam .social-icon { color: #00adee; }
         .social-card.steam:hover { border-color: #00adee; box-shadow: 0 0 20px rgba(0, 173, 238, 0.3); }
-        .social-card.steam::before { --social-color: #00adee; }
 
         .social-card.discord .social-icon { color: #5865F2; }
         .social-card.discord:hover { border-color: #5865F2; box-shadow: 0 0 20px rgba(88, 101, 242, 0.3); }
-        .social-card.discord::before { --social-color: #5865F2; }
 
         .social-name {
             font-weight: 600;
@@ -361,10 +426,14 @@
         }
 
         .social-handle {
-            color: var(--p-text-muted);
             font-size: 0.9rem;
             position: relative;
             z-index: 1;
+            color: var(--p-text-dim);
+        }
+
+        [data-theme="light"] .social-handle {
+            color: #6D28D9;
         }
 
         /* Sections */
@@ -390,6 +459,10 @@
             animation: fadeInUp 0.8s ease-out;
         }
 
+        [data-theme="light"] .section-title {
+            color: #1E1B4B;
+        }
+
         .project-grid {
             display: grid;
             gap: 2rem;
@@ -408,10 +481,17 @@
             overflow: hidden;
         }
 
+        [data-theme="light"] .project-card {
+            background: #FFFFFF;
+            border: 2px solid #DDD6FE;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--p-glow);
             border-color: var(--p-primary-light);
+            background: var(--p-surface-hover);
         }
 
         .project-title {
@@ -436,12 +516,17 @@
 
         .tech-tag {
             background: var(--btn-bg);
-            color: var(--p-text);
+            color: var(--btn-text);
             padding: 0.25rem 0.75rem;
             border-radius: 1rem;
             font-size: 0.8rem;
             font-weight: 500;
             border: 1px solid var(--btn-border);
+        }
+
+        [data-theme="light"] .tech-tag {
+            color: #1E1B4B;
+            background: rgba(139, 92, 246, 0.1);
         }
 
         .btn {
@@ -479,6 +564,11 @@
             border: 1px solid var(--p-border);
         }
 
+        [data-theme="light"] .skill-category {
+            background: #FFFFFF;
+            border: 2px solid #DDD6FE;
+        }
+
         .skill-category:hover {
             transform: translateY(-5px);
             border-color: var(--p-primary-light);
@@ -497,7 +587,7 @@
             gap: 0.5rem;
         }
 
-        /* Persona 5 Style Chat */
+        /* Persona 5 Style Chat Button */
         .p5-chat-button {
             position: fixed;
             bottom: 2rem;
@@ -506,12 +596,12 @@
             width: 65px;
             height: 65px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #E60012, #CC0000);
-            border: 3px solid #FF3333;
+            background: linear-gradient(135deg, #E60012, #B8000F);
+            border: 3px solid #FF4444;
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(230, 0, 18, 0.5), 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 0 25px rgba(230, 0, 18, 0.5), 0 5px 15px rgba(0,0,0,0.3);
             animation: pulse-glow 2s infinite;
             display: flex;
             align-items: center;
@@ -524,32 +614,33 @@
             width: 75px;
             height: 75px;
             border-radius: 50%;
-            border: 2px dashed #FF3333;
+            border: 2px dashed rgba(255, 68, 68, 0.5);
             animation: float 3s ease-in-out infinite;
         }
 
         .p5-chat-button:hover {
             transform: scale(1.1);
-            background: linear-gradient(135deg, #FF1A1A, #E60012);
-            box-shadow: 0 0 30px rgba(230, 0, 18, 0.7);
+            background: linear-gradient(135deg, #FF2222, #E60012);
+            box-shadow: 0 0 40px rgba(230, 0, 18, 0.7);
         }
 
-        /* P5 Chat Modal */
+        /* P5 Chat Modal - Стиль как в игре */
         .p5-chat-modal {
             position: fixed;
             bottom: 5rem;
             right: 2rem;
-            width: 400px;
-            max-height: 550px;
-            background: #1A1A2E;
-            border: 2px solid #FF3333;
-            border-radius: 1rem;
+            width: 420px;
+            max-height: 600px;
+            background: #0A0A0A;
+            border: 3px solid #E60012;
+            border-radius: 0.5rem;
             z-index: 1000;
             display: none;
             flex-direction: column;
-            box-shadow: 0 0 30px rgba(230, 0, 18, 0.3), 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 0 40px rgba(230, 0, 18, 0.4), 0 15px 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(230, 0, 18, 0.05);
             animation: chatSlideIn 0.3s ease;
             overflow: hidden;
+            font-family: 'Courier New', monospace;
         }
 
         .p5-chat-modal.open {
@@ -557,12 +648,24 @@
         }
 
         .p5-chat-header {
-            background: #111;
-            padding: 1rem;
-            border-bottom: 2px solid #FF3333;
+            background: #111111;
+            padding: 0.75rem 1rem;
+            border-bottom: 2px solid #E60012;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: relative;
+        }
+
+        .p5-chat-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #FF4444, transparent);
+            animation: lightningStrike 1.5s infinite;
         }
 
         .p5-chat-title {
@@ -572,34 +675,76 @@
         }
 
         .p5-chat-title-icon {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             background: #E60012;
-            border-radius: 50%;
+            border-radius: 0.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 0.9rem;
+            border: 1px solid #FF4444;
+            transform: skewX(-5deg);
         }
 
         .p5-chat-title-text {
             color: #E60012;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(230, 0, 18, 0.5);
         }
 
         .p5-chat-close {
             background: none;
-            border: none;
-            color: #FF3333;
+            border: 1px solid #333;
+            color: #888;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 0.9rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            transition: all 0.3s ease;
         }
 
         .p5-chat-close:hover {
-            color: #FF6666;
+            color: #FF4444;
+            border-color: #E60012;
+            box-shadow: 0 0 10px rgba(230, 0, 18, 0.3);
+        }
+
+        .p5-chat-info {
+            padding: 0.5rem 1rem;
+            background: #111111;
+            border-bottom: 1px solid #222;
+            text-align: center;
+        }
+
+        .p5-chat-nickname-input {
+            background: #1A1A1A;
+            border: 2px solid #333;
+            color: #E60012;
+            padding: 0.4rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            width: 140px;
+            text-align: center;
+            outline: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .p5-chat-nickname-input:focus {
+            border-color: #E60012;
+            box-shadow: 0 0 15px rgba(230, 0, 18, 0.2);
+        }
+
+        .p5-chat-nickname-input::placeholder {
+            color: #444;
+            letter-spacing: 2px;
         }
 
         .p5-chat-messages {
@@ -610,13 +755,15 @@
             flex-direction: column;
             gap: 1rem;
             max-height: 350px;
-            background: #0D0D1A;
+            background: #050505;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(230, 0, 18, 0.02) 2px, rgba(230, 0, 18, 0.02) 4px);
         }
 
         .p5-message {
             display: flex;
             gap: 0.75rem;
-            animation: messagePop 0.3s ease;
+            animation: messageSend 0.4s ease;
             align-items: flex-start;
         }
 
@@ -625,17 +772,20 @@
         }
 
         .p5-message-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            border-radius: 0.25rem;
             overflow: hidden;
-            border: 2px solid #FF3333;
+            border: 2px solid #E60012;
             flex-shrink: 0;
-            background: #1A1A2E;
+            background: #1A1A1A;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #E60012;
+            font-weight: bold;
+            font-size: 0.8rem;
+            transform: skewX(-5deg);
         }
 
         .p5-message-avatar img {
@@ -648,103 +798,118 @@
             max-width: 70%;
         }
 
-        .p5-message-bubble {
-            background: #1E1E3A;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid #333;
-            color: #E0E0E0;
-            position: relative;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .p5-message.own .p5-message-bubble {
-            background: #E60012;
-            border-color: #FF3333;
-            color: white;
-        }
-
         .p5-message-nickname {
-            font-size: 0.8rem;
-            color: #FF3333;
+            font-size: 0.7rem;
+            color: #E60012;
             font-weight: bold;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.3rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px rgba(230, 0, 18, 0.4);
         }
 
         .p5-message.own .p5-message-nickname {
-            color: #FF9999;
+            color: #FF6666;
+            text-align: right;
+        }
+
+        .p5-message-bubble {
+            background: #1A1A1A;
+            padding: 0.75rem 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid #333;
+            color: #D0D0D0;
+            position: relative;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            font-family: 'Courier New', monospace;
+            transform: skewX(-3deg);
+        }
+
+        .p5-message.own .p5-message-bubble {
+            background: linear-gradient(135deg, #E60012, #B8000F);
+            border-color: #FF4444;
+            color: #FFFFFF;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .p5-message-bubble::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -2px;
+            right: -2px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(230, 0, 18, 0.3), transparent);
+        }
+
+        .p5-message.own .p5-message-bubble::after {
+            content: '⚡';
+            position: absolute;
+            top: -12px;
+            right: 10px;
+            color: #FFD700;
+            font-size: 0.7rem;
+            animation: lightningStrike 1s ease-out;
         }
 
         .p5-chat-input-area {
             padding: 1rem;
-            background: #111;
-            border-top: 2px solid #FF3333;
+            background: #111111;
+            border-top: 2px solid #E60012;
             display: flex;
             gap: 0.5rem;
         }
 
         .p5-chat-input {
             flex: 1;
-            background: #0D0D1A;
-            border: 1px solid #333;
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
+            background: #1A1A1A;
+            border: 2px solid #333;
+            border-radius: 0.25rem;
+            padding: 0.6rem 0.75rem;
             color: #E0E0E0;
             outline: none;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+            transform: skewX(-3deg);
         }
 
         .p5-chat-input:focus {
-            border-color: #FF3333;
+            border-color: #E60012;
+            box-shadow: 0 0 15px rgba(230, 0, 18, 0.2);
         }
 
         .p5-chat-input::placeholder {
-            color: #666;
+            color: #555;
         }
 
         .p5-chat-send {
-            background: #E60012;
-            border: none;
-            border-radius: 0.5rem;
+            background: linear-gradient(135deg, #E60012, #B8000F);
+            border: 2px solid #FF4444;
+            border-radius: 0.25rem;
             padding: 0.5rem 1.5rem;
             cursor: pointer;
-            color: white;
+            color: #FFFFFF;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            transform: skewX(-5deg);
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         }
 
         .p5-chat-send:hover {
-            background: #FF1A1A;
+            background: linear-gradient(135deg, #FF2222, #E60012);
+            box-shadow: 0 0 20px rgba(230, 0, 18, 0.5);
+            transform: skewX(-5deg) translateY(-2px);
         }
 
-        .p5-chat-info {
-            padding: 0.5rem 1rem;
-            background: #111;
-            text-align: center;
-        }
-
-        .p5-chat-nickname-input {
-            background: transparent;
-            border: 1px solid #333;
-            color: #FF3333;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.9rem;
-            width: 120px;
-            text-align: center;
-            outline: none;
-        }
-
-        .p5-chat-nickname-input:focus {
-            border-color: #FF3333;
-        }
-
-        .p5-chat-nickname-input::placeholder {
-            color: #666;
+        .p5-chat-send:active {
+            transform: skewX(-5deg) scale(0.95);
+            box-shadow: 0 0 30px rgba(230, 0, 18, 0.7);
         }
 
         /* Admin Login */
@@ -756,18 +921,48 @@
         }
 
         .admin-btn {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--p-border);
+            background: var(--card-bg);
+            border: 1px solid var(--p-border-light);
             color: var(--p-text-dim);
-            padding: 0.3rem 0.7rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 0.5rem;
             cursor: pointer;
             font-size: 0.8rem;
+            backdrop-filter: blur(5px);
         }
 
         .admin-btn:hover {
             color: var(--p-text);
             border-color: var(--p-primary-light);
+        }
+
+        .admin-indicator {
+            position: fixed;
+            top: 3.5rem;
+            left: 1rem;
+            z-index: 1001;
+            background: var(--p-surface);
+            border: 1px solid var(--p-border-light);
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            display: none;
+            backdrop-filter: blur(5px);
+            color: var(--p-text);
+        }
+
+        .admin-indicator.visible {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-indicator .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00FF00;
+            animation: pulse-glow 1s infinite;
         }
 
         .admin-modal {
@@ -782,6 +977,7 @@
             z-index: 2000;
             display: none;
             box-shadow: var(--p-glow);
+            min-width: 300px;
         }
 
         .admin-modal.open {
@@ -806,6 +1002,11 @@
             border-radius: 1rem;
             padding: 2rem;
             border: 1px solid var(--p-border-light);
+        }
+
+        [data-theme="light"] .demo-container {
+            background: #FFFFFF;
+            border: 2px solid #DDD6FE;
         }
 
         .demo-interface {
@@ -840,6 +1041,7 @@
             padding: 0.5rem;
             border-radius: 0.25rem;
             min-height: 2rem;
+            color: var(--p-text);
         }
 
         .tape-visualization {
@@ -861,6 +1063,7 @@
             border-radius: 0.25rem;
             font-family: 'Courier New', monospace;
             font-weight: bold;
+            color: var(--btn-text);
         }
 
         .tape-cell.active {
@@ -868,11 +1071,12 @@
             border-color: var(--p-primary-light);
             transform: scale(1.1);
             box-shadow: var(--p-glow);
+            color: white;
         }
 
         .example-btn {
             background: var(--btn-bg);
-            color: var(--p-text);
+            color: var(--btn-text);
             border: 1px solid var(--p-border-light);
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
@@ -910,6 +1114,13 @@
     </style>
 </head>
 <body>
+    <!-- Admin Indicator -->
+    <div class="admin-indicator" id="admin-indicator">
+        <span class="status-dot"></span>
+        <span>ADMIN MODE</span>
+        <button onclick="adminLogout()" style="background:none; border:none; color:var(--p-text-dim); cursor:pointer; margin-left:0.5rem;">✕</button>
+    </div>
+
     <!-- Admin Login Button -->
     <div class="admin-login">
         <button class="admin-btn" onclick="toggleAdminModal()">
@@ -927,7 +1138,7 @@
         <button class="btn" onclick="toggleAdminModal()" style="width: 100%; margin-top: 0.5rem; background: var(--p-surface-hover);">
             Cancel
         </button>
-        <div id="admin-status" style="margin-top: 0.5rem; font-size: 0.8rem;"></div>
+        <div id="admin-status" style="margin-top: 0.5rem; font-size: 0.8rem; color: #FF3333;"></div>
     </div>
 
     <!-- Language Switcher -->
@@ -1153,29 +1364,28 @@
 
     <!-- Persona 5 Style Chat Button -->
     <button class="p5-chat-button" onclick="toggleP5Chat()" title="Chat">
-        <i class="fas fa-comment-dots"></i>
+        <i class="fas fa-bolt"></i>
     </button>
 
     <!-- Persona 5 Style Chat Modal -->
     <div class="p5-chat-modal" id="p5-chat-modal">
         <div class="p5-chat-header">
             <div class="p5-chat-title">
-                <div class="p5-chat-title-icon">💬</div>
-                <div class="p5-chat-title-text">CHAT</div>
+                <div class="p5-chat-title-icon">⚡</div>
+                <div class="p5-chat-title-text">C H A T</div>
             </div>
             <button class="p5-chat-close" onclick="toggleP5Chat()">✕</button>
         </div>
         <div class="p5-chat-info">
             <input type="text" class="p5-chat-nickname-input" id="p5-nickname-input" 
-                   placeholder="YOUR NAME" maxlength="15" onchange="saveP5Nickname()">
+                   placeholder="CODENAME" maxlength="12" onchange="saveP5Nickname()">
         </div>
         <div class="p5-chat-messages" id="p5-chat-messages">
-            <!-- Messages appear here -->
         </div>
         <div class="p5-chat-input-area">
             <input type="text" class="p5-chat-input" id="p5-chat-input" 
                    placeholder="Type message..." onkeypress="handleP5ChatKey(event)">
-            <button class="p5-chat-send" onclick="sendP5Message()">SEND</button>
+            <button class="p5-chat-send" onclick="sendP5Message()">▶ SEND</button>
         </div>
     </div>
 
@@ -1186,34 +1396,43 @@
                 '--p-primary': '#8B5CF6', '--p-primary-hover': '#7C3AED',
                 '--p-primary-light': '#A78BFA', '--p-primary-dark': '#5B21B6',
                 '--p-highlight': '#C4B5FD', '--p-surface': '#1F2937',
-                '--p-surface-hover': '#374151', '--p-background': '#111827',
-                '--p-background-alt': '#0F172A', '--p-text': '#F9FAFB',
-                '--p-text-muted': '#D1D5DB', '--p-text-dim': '#9CA3AF',
+                '--p-surface-hover': '#374151', '--p-surface-light': '#2D3748',
+                '--p-background': '#111827', '--p-background-alt': '#0F172A',
+                '--p-text': '#F9FAFB', '--p-text-muted': '#D1D5DB',
+                '--p-text-dim': '#9CA3AF', '--p-text-on-primary': '#FFFFFF',
                 '--p-border': '#374151', '--p-border-light': '#4B5563',
-                '--btn-bg': 'rgba(139, 92, 246, 0.2)', '--btn-border': 'rgba(139, 92, 246, 0.5)',
-                '--btn-hover-bg': 'rgba(139, 92, 246, 0.4)', '--card-bg': 'rgba(255, 255, 255, 0.05)'
+                '--p-border-hover': '#6B7280',
+                '--btn-bg': 'rgba(139, 92, 246, 0.25)', '--btn-border': 'rgba(139, 92, 246, 0.6)',
+                '--btn-hover-bg': 'rgba(139, 92, 246, 0.45)', '--btn-text': '#FFFFFF',
+                '--card-bg': 'rgba(255, 255, 255, 0.07)', '--card-bg-hover': 'rgba(255, 255, 255, 0.12)'
             },
             light: {
-                '--p-primary': '#7C3AED', '--p-primary-hover': '#6D28D9',
-                '--p-primary-light': '#5B21B6', '--p-primary-dark': '#4C1D95',
+                '--p-primary': '#8B5CF6', '--p-primary-hover': '#7C3AED',
+                '--p-primary-light': '#6D28D9', '--p-primary-dark': '#5B21B6',
                 '--p-highlight': '#A78BFA', '--p-surface': '#FFFFFF',
-                '--p-surface-hover': '#F3E8FF', '--p-background': '#FEF7FF',
-                '--p-background-alt': '#F3E8FF', '--p-text': '#1E1B4B',
-                '--p-text-muted': '#5B21B6', '--p-text-dim': '#7C3AED',
+                '--p-surface-hover': '#F5F3FF', '--p-surface-light': '#EDE9FE',
+                '--p-background': '#FEF7FF', '--p-background-alt': '#F3E8FF',
+                '--p-text': '#1E1B4B', '--p-text-muted': '#4C1D95',
+                '--p-text-dim': '#7C3AED', '--p-text-on-primary': '#FFFFFF',
                 '--p-border': '#DDD6FE', '--p-border-light': '#C4B5FD',
-                '--btn-bg': 'rgba(124, 58, 237, 0.1)', '--btn-border': 'rgba(124, 58, 237, 0.3)',
-                '--btn-hover-bg': 'rgba(124, 58, 237, 0.2)', '--card-bg': 'rgba(255, 255, 255, 0.8)'
+                '--p-border-hover': '#A78BFA',
+                '--btn-bg': 'rgba(139, 92, 246, 0.12)', '--btn-border': 'rgba(139, 92, 246, 0.4)',
+                '--btn-hover-bg': 'rgba(139, 92, 246, 0.25)', '--btn-text': '#1E1B4B',
+                '--card-bg': 'rgba(255, 255, 255, 0.9)', '--card-bg-hover': 'rgba(255, 255, 255, 1)'
             },
             p3: {
                 '--p-primary': '#1B2838', '--p-primary-hover': '#2D4A6E',
                 '--p-primary-light': '#4A90D9', '--p-primary-dark': '#0F1923',
                 '--p-highlight': '#6BB5FF', '--p-surface': '#152230',
-                '--p-surface-hover': '#1E3348', '--p-background': '#0D1520',
-                '--p-background-alt': '#0A1018', '--p-text': '#E8F0F8',
-                '--p-text-muted': '#8CB4D8', '--p-text-dim': '#5A8AB5',
+                '--p-surface-hover': '#1E3348', '--p-surface-light': '#1A2D42',
+                '--p-background': '#0D1520', '--p-background-alt': '#0A1018',
+                '--p-text': '#E8F0F8', '--p-text-muted': '#8CB4D8',
+                '--p-text-dim': '#5A8AB5', '--p-text-on-primary': '#FFFFFF',
                 '--p-border': '#1E3348', '--p-border-light': '#2D4A6E',
-                '--btn-bg': 'rgba(74, 144, 217, 0.15)', '--btn-border': 'rgba(74, 144, 217, 0.4)',
-                '--btn-hover-bg': 'rgba(74, 144, 217, 0.3)', '--card-bg': 'rgba(30, 51, 72, 0.3)'
+                '--p-border-hover': '#4A90D9',
+                '--btn-bg': 'rgba(74, 144, 217, 0.2)', '--btn-border': 'rgba(74, 144, 217, 0.5)',
+                '--btn-hover-bg': 'rgba(74, 144, 217, 0.4)', '--btn-text': '#FFFFFF',
+                '--card-bg': 'rgba(30, 51, 72, 0.4)', '--card-bg-hover': 'rgba(30, 51, 72, 0.6)'
             }
         };
 
@@ -1246,11 +1465,27 @@
         }
 
         // ==================== ADMIN SYSTEM ====================
-        let isAdmin = localStorage.getItem('isAdmin') === 'true';
-        const ADMIN_PASSWORD = 'persona3reload'; 
+        let isAdmin = false;
+        const ADMIN_PASSWORD = 'persona3reload';
+
+        function updateAdminUI() {
+            const indicator = document.getElementById('admin-indicator');
+            const adminBtn = document.querySelector('.admin-btn');
+            
+            if (isAdmin) {
+                indicator.classList.add('visible');
+                adminBtn.innerHTML = '<i class="fas fa-lock-open"></i> Admin ON';
+                adminBtn.style.color = '#00FF00';
+            } else {
+                indicator.classList.remove('visible');
+                adminBtn.innerHTML = '<i class="fas fa-lock"></i> Admin';
+                adminBtn.style.color = '';
+            }
+        }
 
         function toggleAdminModal() {
-            document.getElementById('admin-modal').classList.toggle('open');
+            const modal = document.getElementById('admin-modal');
+            modal.classList.toggle('open');
             document.getElementById('admin-password').value = '';
             document.getElementById('admin-status').textContent = '';
         }
@@ -1260,11 +1495,12 @@
             if (password === ADMIN_PASSWORD) {
                 isAdmin = true;
                 localStorage.setItem('isAdmin', 'true');
-                document.getElementById('admin-status').textContent = '✅ Admin mode ON';
-                document.getElementById('admin-status').style.color = 'lightgreen';
-                setTimeout(() => toggleAdminModal(), 1000);
+                document.getElementById('admin-status').textContent = '✅ ACCESS GRANTED';
+                document.getElementById('admin-status').style.color = '#00FF00';
+                updateAdminUI();
+                setTimeout(() => toggleAdminModal(), 800);
             } else {
-                document.getElementById('admin-status').textContent = '❌ Wrong password';
+                document.getElementById('admin-status').textContent = '❌ ACCESS DENIED';
                 document.getElementById('admin-status').style.color = '#FF3333';
             }
         }
@@ -1272,6 +1508,7 @@
         function adminLogout() {
             isAdmin = false;
             localStorage.setItem('isAdmin', 'false');
+            updateAdminUI();
         }
 
         // ==================== P5 CHAT ====================
@@ -1285,7 +1522,6 @@
             if (p5ChatOpen) {
                 document.getElementById('p5-nickname-input').value = p5Nickname;
                 renderP5Messages();
-                checkNewMessages();
             }
         }
 
@@ -1307,38 +1543,11 @@
             
             const msgObj = {
                 id: Date.now(),
-                nickname: p5Nickname,
+                nickname: isAdmin ? 'ONELIFEONEDEATH' : p5Nickname,
                 message: message,
                 timestamp: new Date().toISOString(),
-                isOwner: true,
-                read: isAdmin
-            };
-            
-            p5Messages.push(msgObj);
-            localStorage.setItem('p5_messages', JSON.stringify(p5Messages));
-            input.value = '';
-            renderP5Messages();
-            
-            // Notify admin
-            if (!isAdmin) {
-                notifyOwner();
-            }
-        }
-
-        function sendP5Reply() {
-            if (!isAdmin) return;
-            
-            const input = document.getElementById('p5-chat-input');
-            const message = input.value.trim();
-            if (!message) return;
-            
-            const msgObj = {
-                id: Date.now(),
-                nickname: 'ONELIFEONEDEATH',
-                message: message,
-                timestamp: new Date().toISOString(),
-                isOwner: false,
-                isReply: true
+                isOwner: !isAdmin,
+                isReply: isAdmin
             };
             
             p5Messages.push(msgObj);
@@ -1349,33 +1558,21 @@
 
         function renderP5Messages() {
             const container = document.getElementById('p5-chat-messages');
-            container.innerHTML = p5Messages.map(msg => `
-                <div class="p5-message ${msg.isOwner ? 'own' : ''}">
+            container.innerHTML = p5Messages.map(msg => {
+                const isOwn = (isAdmin && msg.isReply) || (!isAdmin && msg.isOwner);
+                return `
+                <div class="p5-message ${isOwn ? 'own' : ''}">
                     <div class="p5-message-avatar">
-                        ${msg.isOwner ? (p5Nickname.charAt(0).toUpperCase()) : '👤'}
+                        ${msg.isReply ? '👑' : (msg.nickname.charAt(0).toUpperCase())}
                     </div>
                     <div class="p5-message-content">
                         <div class="p5-message-nickname">${escapeHtml(msg.nickname)}</div>
                         <div class="p5-message-bubble">${escapeHtml(msg.message)}</div>
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
             container.scrollTop = container.scrollHeight;
-        }
-
-        function checkNewMessages() {
-            const unread = p5Messages.filter(m => !m.isOwner && !m.read).length;
-            if (unread > 0 && isAdmin) {
-                // Visual notification
-                document.querySelector('.p5-chat-button').style.animation = 'pulse-glow 0.5s infinite';
-            } else {
-                document.querySelector('.p5-chat-button').style.animation = 'pulse-glow 2s infinite';
-            }
-        }
-
-        function notifyOwner() {
-            // In real implementation, this would send a notification
-            console.log('New message! Owner needs to check.');
         }
 
         function escapeHtml(text) {
@@ -1464,6 +1661,10 @@
             setTheme(localStorage.getItem('theme') || 'default');
             if (localStorage.getItem('language') === 'english') toggleLanguage();
             if (p5Nickname) document.getElementById('p5-nickname-input').value = p5Nickname;
+            
+            // Check admin status
+            isAdmin = localStorage.getItem('isAdmin') === 'true';
+            updateAdminUI();
         });
     </script>
 </body>
