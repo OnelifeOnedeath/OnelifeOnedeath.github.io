@@ -183,7 +183,6 @@
         .p5-chat-toolbar { display: flex; gap: 2px; padding: 4px 6px; background: #0A0A0A; border-top: 1px solid #222; }
         .p5-toolbar-btn { background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 4px 7px; cursor: pointer; font-size: 0.8rem; border-radius: 3px; transition: all 0.2s; }
         .p5-toolbar-btn:hover { background: #333; border-color: #E60012; color: #E60012; }
-        .p5-toolbar-btn.active { background: #E60012; border-color: #FF4444; color: #fff; }
 
         .p5-chat-input-area { display: flex; gap: 4px; padding: 6px; background: #0A0A0A; border-top: 2px solid #222; flex-shrink: 0; }
         .p5-chat-input { flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 6px 10px; font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; outline: none; clip-path: polygon(2% 0, 100% 0, 98% 100%, 0 100%); }
@@ -194,7 +193,7 @@
         .p5-close-btn { position: absolute; top: -35px; right: 5px; background: none; border: 2px solid #E60012; color: #E60012; width: 28px; height: 28px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; z-index: 10; }
 
         /* Emoji Panel */
-        .emoji-panel { position: absolute; bottom: 80px; left: 0; right: 0; background: #1a1a1a; border: 2px solid #E60012; border-radius: 8px; padding: 8px; z-index: 100; display: flex; flex-wrap: wrap; gap: 4px; max-height: 150px; overflow-y: auto; }
+        .emoji-panel { position: absolute; bottom: 80px; left: 0; right: 0; background: #1a1a1a; border: 2px solid #E60012; border-radius: 8px; padding: 8px; z-index: 100; display: none; flex-wrap: wrap; gap: 4px; max-height: 150px; overflow-y: auto; }
         .emoji-btn-item { background: none; border: 1px solid #333; color: #fff; padding: 4px 6px; cursor: pointer; font-size: 1.1rem; border-radius: 4px; }
         .emoji-btn-item:hover { background: #333; border-color: #E60012; }
 
@@ -374,7 +373,7 @@
                             <img id="p5-chat-avatar" src="" style="width:28px;height:28px;object-fit:cover;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);display:none;">
                         </div>
                         <div class="p5-chat-messages" id="p5-chat-messages"></div>
-                        <!-- ТУЛБАР С КНОПКАМИ -->
+                        <!-- ТУЛБАР -->
                         <div class="p5-chat-toolbar" id="p5-chat-toolbar">
                             <button class="p5-toolbar-btn" onclick="toggleEmojiPanel()" title="Emoji">😊</button>
                             <button class="p5-toolbar-btn" onclick="sendImage()" title="Send Image">🖼️</button>
@@ -384,8 +383,8 @@
                             <button class="p5-toolbar-btn" onclick="sendGif()" title="Send GIF">✨</button>
                         </div>
                         <!-- ЭМОДЗИ ПАНЕЛЬ -->
-                        <div class="emoji-panel" id="emoji-panel" style="display:none;"></div>
-                        <!-- ПОЛЕ ВВОДА -->
+                        <div class="emoji-panel" id="emoji-panel"></div>
+                        <!-- ВВОД -->
                         <div class="p5-chat-input-area">
                             <input type="text" class="p5-chat-input" id="p5-chat-input" placeholder="Message..." onkeypress="if(event.key==='Enter')sendMsg()">
                             <button class="p5-chat-send" onclick="sendMsg()">SEND</button>
@@ -434,13 +433,12 @@
             Object.entries(themes[t]).forEach(([k,v]) => document.documentElement.style.setProperty(k,v));
             document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t);
             ['dt','p3t','lt'].forEach(id => document.getElementById(id)?.classList.remove('active'));
-            const bid = t === 'default' ? 'dt' : t === 'p3' ? 'p3t' : 'lt';
-            document.getElementById(bid)?.classList.add('active');
+            const bid = t === 'default' ? 'dt' : t === 'p3' ? 'p3t' : 'lt'; document.getElementById(bid)?.classList.add('active');
             if (t === 'p3') { genConfetti(); initP3RMenu(); playSfx('open'); }
         }
         function genConfetti() { const c = document.getElementById('p3r-confetti'); if (!c) return; c.innerHTML = ''; for (let i = 0; i < 12; i++) { const p = document.createElement('div'); p.className = 'confetti-piece'; p.style.cssText = `left:${Math.random()*90}%;top:${Math.random()*90}%;animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*4}s;`; c.appendChild(p); } }
 
-        // ==================== P3R MENU ====================
+        // ==================== P3R MENU (СТРЕЛКА ИСПРАВЛЕНА) ====================
         const p3rData = [
             { n:'SKILL', t:'Use a Skill', s:'Command', a: ()=>openModal('SKILL','Combat menu') },
             { n:'ITEM', t:'View Items', s:'Inventory', a: ()=>openModal('ITEMS','Inventory') },
@@ -464,15 +462,28 @@
                 if (e.key === 'ArrowUp') { e.preventDefault(); selectP3R((p3rIdx - 1 + 9) % 9); playSfx('move'); }
                 if (e.key === 'Enter') { e.preventDefault(); playSfx('select'); if (p3rData[p3rIdx].a) p3rData[p3rIdx].a(); }
             };
-            selectP3R(0);
+            // ИНИЦИАЛИЗАЦИЯ ПОЗИЦИИ КУРСОРА
+            setTimeout(() => selectP3R(0), 100);
         }
         function selectP3R(i) {
             p3rIdx = i;
             document.querySelectorAll('.p3r-menu-item').forEach((el, j) => el.classList.toggle('selected', j === i));
-            const item = document.querySelectorAll('.p3r-menu-item')[i], menu = document.getElementById('p3r-menu'), cursor = document.getElementById('p3r-cursor');
-            if (item && menu && cursor) { const mr = menu.getBoundingClientRect(), ir = item.getBoundingClientRect(); cursor.style.top = (ir.top - mr.top + ir.height / 2 - 9) + 'px'; }
-            document.getElementById('p3r-num').textContent = i + 1; document.getElementById('p3r-name').textContent = p3rData[i].n;
-            document.getElementById('p3r-tt-title').textContent = p3rData[i].t; document.getElementById('p3r-tt-sub').textContent = p3rData[i].s;
+            const item = document.querySelectorAll('.p3r-menu-item')[i];
+            const menu = document.getElementById('p3r-menu');
+            const cursor = document.getElementById('p3r-cursor');
+            
+            if (item && menu && cursor) {
+                const menuRect = menu.getBoundingClientRect();
+                const itemRect = item.getBoundingClientRect();
+                // ТОЧНОЕ ПОЗИЦИОНИРОВАНИЕ: центр элемента минус верх меню минус половина высоты курсора
+                const itemCenter = itemRect.top - menuRect.top + (itemRect.height / 2);
+                cursor.style.top = (itemCenter - 9) + 'px';
+            }
+            
+            document.getElementById('p3r-num').textContent = i + 1;
+            document.getElementById('p3r-name').textContent = p3rData[i].n;
+            document.getElementById('p3r-tt-title').textContent = p3rData[i].t;
+            document.getElementById('p3r-tt-sub').textContent = p3rData[i].s;
         }
         function openModal(title, content) { const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);margin-bottom:1rem;">${title}</h2><p>${content}</p>`; m.classList.add('open'); }
         function closeP3RModal() { document.getElementById('p3r-modal').classList.remove('open'); playSfx('cancel'); }
@@ -483,11 +494,7 @@
             { name:'Messiah', img:'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest/scale-to-width-down/400', desc:'The ultimate Persona' },
             { name:'Orpheus', img:'https://static.wikia.nocookie.net/megamitensei/images/thumb/3/3a/Orpheus_P3R.png/400px-Orpheus_P3R.png', desc:'Poet of Greek myth' },
         ];
-        function getPersona() {
-            if (isAdmin) return { name:'Messiah', img:personas[2].img, desc:'Creator\'s ultimate Persona' };
-            const s = localStorage.getItem('up'); if (s) try { return JSON.parse(s); } catch(e) {}
-            const p = personas[Math.floor(Math.random()*personas.length)]; localStorage.setItem('up', JSON.stringify(p)); return p;
-        }
+        function getPersona() { if (isAdmin) return { name:'Messiah', img:personas[2].img, desc:'Creator\'s ultimate Persona' }; const s = localStorage.getItem('up'); if (s) try { return JSON.parse(s); } catch(e) {} const p = personas[Math.floor(Math.random()*personas.length)]; localStorage.setItem('up', JSON.stringify(p)); return p; }
         function showPersona() { const p = getPersona(), m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><div class="persona-card"><img src="${p.img}" alt="${p.name}" onerror="this.src='https://placehold.co/400x400/1B3A5C/6BB5FF?text=${encodeURIComponent(p.name)}'"><h3 style="color:var(--p-primary-light);">${p.name}</h3><p>${p.desc}</p>${isAdmin?'<p style="color:#E60012;">⚡ Creator Persona</p>':''}</div>`; m.classList.add('open'); }
         function showSocialLinks() { const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">SOCIAL LINKS</h2><div class="social-links-grid">${['github','telegram','vk','youtube','steam','discord'].map(n=>`<a href="#" class="social-link-card"><i class="fab fa-${n}"></i><div>${n}</div></a>`).join('')}</div>`; m.classList.add('open'); }
         function showCalendar() { const n = new Date(), tz = Intl.DateTimeFormat().resolvedOptions().timeZone, m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">CALENDAR</h2><div class="calendar-display"><div class="date">${n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})}</div><div class="time" id="cal-time">${n.toLocaleTimeString()}</div><div>${tz}</div></div>`; m.classList.add('open'); const tmr=setInterval(()=>{if(!m.classList.contains('open')){clearInterval(tmr);return}const t=document.getElementById('cal-time');if(t)t.textContent=new Date().toLocaleTimeString()},1000); }
@@ -496,7 +503,7 @@
         let cl='russian';
         function toggleLang(){document.querySelectorAll('.russian').forEach(e=>e.style.display=cl==='russian'?'none':'block');document.querySelectorAll('.english').forEach(e=>e.style.display=cl==='russian'?'block':'none');document.querySelector('.lang-text').textContent=cl==='russian'?'Русский':'English';cl=cl==='russian'?'english':'russian';localStorage.setItem('lang',cl)}
 
-        // ==================== FIREBASE CHAT (С КНОПКАМИ) ====================
+        // ==================== FIREBASE CHAT (БЕЗ CORS - ИСПОЛЬЗУЕМ BASE64 ДЛЯ ФАЙЛОВ) ====================
         const MY_ID = localStorage.getItem('p5_uid') || (() => { const id = 'u_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7); localStorage.setItem('p5_uid', id); return id; })();
         let myNick = localStorage.getItem('p5_nick') || '';
         let myAvatar = localStorage.getItem('p5_av') || '';
@@ -542,32 +549,51 @@
             const msgContainer = document.getElementById('p5-chat-messages'), isOwn = msg.from === MY_ID, avSrc = isOwn ? (myAvatar || '') : (user?.avatar || '');
             const div = document.createElement('div'); div.className = `p5-msg ${isOwn ? 'own' : 'received'}`;
             let content = '';
-            if (msg.type === 'image' || msg.type === 'gif') { content = `<img src="${msg.text}" style="max-width:200px;border-radius:4px;cursor:pointer;" onclick="window.open('${msg.text}')" loading="lazy">`; }
-            else if (msg.type === 'video') { content = `<video controls style="max-width:200px;border-radius:4px;"><source src="${msg.text}"></video>`; }
-            else if (msg.type === 'audio') { content = `<audio controls style="max-width:180px;"><source src="${msg.text}"></audio>`; }
-            else if (msg.type === 'file') { content = `<a href="${msg.text}" target="_blank" style="color:#6BB5FF;text-decoration:underline;">📎 ${msg.fileName || 'Download File'}</a>`; }
-            else { content = esc(msg.text); }
+            if (msg.type === 'image' || msg.type === 'gif' || msg.type === 'video' || msg.type === 'audio') {
+                // Файлы хранятся как base64 в Firebase (без CORS проблем)
+                if (msg.type === 'image' || msg.type === 'gif') content = `<img src="${msg.text}" style="max-width:200px;border-radius:4px;cursor:pointer;" onclick="window.open('${msg.text}')" loading="lazy">`;
+                else if (msg.type === 'video') content = `<video controls style="max-width:200px;border-radius:4px;"><source src="${msg.text}"></video>`;
+                else if (msg.type === 'audio') content = `<audio controls style="max-width:180px;"><source src="${msg.text}"></audio>`;
+            } else if (msg.type === 'file') {
+                content = `<a href="${msg.text}" download="${msg.fileName || 'file'}" style="color:#6BB5FF;text-decoration:underline;">📎 ${msg.fileName || 'Download'}</a>`;
+            } else {
+                content = esc(msg.text);
+            }
             div.innerHTML = `<img class="p5-msg-avatar" src="${avSrc || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-msg-bubble-wrap"><div class="p5-msg-zigzag"></div><div class="p5-msg-bubble">${content}</div></div>`;
             msgContainer.appendChild(div); msgContainer.scrollTop = msgContainer.scrollHeight;
         }
 
-        // ОТПРАВКА
-        async function uploadAndSend(file, type, textMsg) {
+        // ОТПРАВКА ФАЙЛОВ ЧЕРЕЗ BASE64 (БЕЗ CORS)
+        function sendMsg() {
+            const text = document.getElementById('p5-chat-input').value.trim();
+            if (text) sendToFirebase(null, 'text', text);
+        }
+
+        function pickAndSend(type, accept) {
+            const inp = document.createElement('input'); inp.type = 'file'; inp.accept = accept;
+            inp.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    // Отправляем как base64 строку
+                    sendToFirebase(ev.target.result, type, null, file.name);
+                };
+                reader.readAsDataURL(file);
+            };
+            inp.click();
+        }
+
+        function sendToFirebase(dataUrl, type, textMsg, fileName) {
             if (!currentChatId) return;
             const chatId = getChatId(MY_ID, currentChatId);
-            if (file) {
-                const storageRef = storage.ref('chat_files/' + chatId + '/' + Date.now() + '_' + file.name);
-                try { const snapshot = await storageRef.put(file); const url = await snapshot.ref.getDownloadURL();
-                    db.ref('messages/' + chatId).push({ from: MY_ID, text: url, type, fileName: file.name, timestamp: firebase.database.ServerValue.TIMESTAMP }); } catch (e) { alert('Upload failed!'); }
-            }
-            if (textMsg) { db.ref('messages/' + chatId).push({ from: MY_ID, text: textMsg, type: 'text', timestamp: firebase.database.ServerValue.TIMESTAMP }); }
+            const msgObj = { from: MY_ID, type, timestamp: firebase.database.ServerValue.TIMESTAMP };
+            if (dataUrl) { msgObj.text = dataUrl; if (fileName) msgObj.fileName = fileName; }
+            if (textMsg) msgObj.text = textMsg;
+            db.ref('messages/' + chatId).push(msgObj);
             document.getElementById('p5-chat-input').value = '';
         }
 
-        function sendMsg() { const text = document.getElementById('p5-chat-input').value.trim(); if (text) uploadAndSend(null, 'text', text); }
-
-        // КНОПКИ ТУЛБАРА
-        function pickAndSend(type, accept) { const inp = document.createElement('input'); inp.type = 'file'; inp.accept = accept; inp.onchange = (e) => { const f = e.target.files[0]; if (f) uploadAndSend(f, type); }; inp.click(); }
         function sendImage() { pickAndSend('image', 'image/*'); }
         function sendVideo() { pickAndSend('video', 'video/*'); }
         function sendAudio() { pickAndSend('audio', 'audio/*'); }
@@ -577,11 +603,11 @@
         // ЭМОДЗИ
         function buildEmojiPanel() {
             const panel = document.getElementById('emoji-panel'); if (!panel) return;
-            const emojis = ['😀','😂','😍','😎','🤔','😢','😡','👍','👎','🔥','❤️','💔','🎮','⚡','🌟','💀','🎵','📷','🎬','💬','🕒','💰','🔑','🌙','☀️','🎉','👻','🤖','🐱','🐶','🦊','🐼','🐨','🍕','🍔','🎂','⚽','🏀','🎯'];
+            const emojis = ['😀','😂','😍','😎','🤔','😢','😡','👍','👎','🔥','❤️','💔','🎮','⚡','🌟','💀','🎵','📷','🎬','💬','🕒','💰','🔑','🌙','☀️','🎉','👻','🤖','🐱','🐶'];
             panel.innerHTML = emojis.map(e => `<button class="emoji-btn-item" onclick="insertEmoji('${e}')">${e}</button>`).join('');
         }
         function insertEmoji(emoji) { const inp = document.getElementById('p5-chat-input'); inp.value += emoji; inp.focus(); }
-        function toggleEmojiPanel() { const panel = document.getElementById('emoji-panel'); panel.style.display = panel.style.display === 'none' ? 'flex' : 'none'; }
+        function toggleEmojiPanel() { const panel = document.getElementById('emoji-panel'); panel.style.display = panel.style.display === 'flex' ? 'none' : 'flex'; }
 
         function esc(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
