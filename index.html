@@ -48,14 +48,34 @@
         body { font-family: 'Montserrat', sans-serif; background: var(--p-background); color: var(--p-text); line-height: 1.6; min-height: 100vh; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--p-primary-dark) 0%, var(--p-primary) 50%, var(--p-primary-light) 100%); position: relative; overflow: hidden; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--p-primary-dark), var(--p-primary)); position: relative; overflow: hidden; }
         [data-theme="p3"] .hero { background: radial-gradient(ellipse at 25% 65%, rgba(74,144,217,0.25) 0%, transparent 55%), radial-gradient(ellipse at 75% 25%, rgba(107,181,255,0.15) 0%, transparent 45%), linear-gradient(180deg, #060F18 0%, #0A1628 30%, #0D1B2A 60%, #060F18 100%); }
+        [data-theme="p3"] .hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(74,144,217,0.04) 2px, rgba(74,144,217,0.04) 4px); animation: caustic 20s infinite; pointer-events: none; z-index: 1; }
+
         .makoto-container { display: none; position: absolute; left: -3%; top: 0; bottom: 0; width: 55%; z-index: 2; pointer-events: none; }
         [data-theme="p3"] .makoto-container { display: block; }
         .makoto-figure { position: absolute; left: 0; top: 50%; transform: translateY(-50%) rotate(180deg); width: 100%; height: 100%; animation: float 8s infinite; }
         .makoto-silhouette { position: absolute; inset: 0; background: url('https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/textures/makoto_ui_texture.png') no-repeat center; background-size: contain; opacity: 0.4; filter: brightness(0.4) saturate(0.2) contrast(1.5); }
 
         @keyframes float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes caustic { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+
+        /* P3R MENU */
+        .p3r-menu { display: none; }
+        [data-theme="p3"] .p3r-menu { display: flex; position: absolute; right: 8%; top: 50%; transform: translateY(-50%); flex-direction: column; gap: 0.5rem; z-index: 3; width: clamp(190px, 28vw, 400px); }
+        .p3r-menu-item { display: none; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(1rem, 3vw, 2.5rem); color: rgba(74,144,217,0.7); cursor: pointer; letter-spacing: 2px; text-transform: uppercase; transform: skewX(-5deg); }
+        [data-theme="p3"] .p3r-menu-item { display: block; }
+        .p3r-menu-item:hover, .p3r-menu-item.selected { color: #FFF !important; text-shadow: 0 0 30px rgba(74,144,217,0.8) !important; }
+        .p3r-cursor { display: none; }
+        [data-theme="p3"] .p3r-cursor { display: block; position: absolute; right: calc(8% + clamp(190px, 28vw, 400px) + 20px); width: 0; height: 0; border-left: 16px solid #E60012; border-top: 8px solid transparent; border-bottom: 8px solid transparent; z-index: 4; pointer-events: none; transition: top 0.15s; }
+        .p3r-info { display: none; }
+        [data-theme="p3"] .p3r-info { display: flex; position: absolute; left: 5%; bottom: 12%; z-index: 3; flex-direction: column; }
+        .p3r-info-number { font-size: clamp(3rem, 10vw, 12rem); font-weight: 900; color: rgba(255,255,255,0.05); line-height: 0.8; }
+        .p3r-info-name { font-size: clamp(1.2rem, 3.5vw, 3.5rem); font-weight: 900; color: #FFF; text-transform: uppercase; }
+        .p3r-wallet { display: none; }
+        [data-theme="p3"] .p3r-wallet { display: flex; position: absolute; left: 5%; top: 7%; z-index: 3; background: rgba(255,255,255,0.9); padding: 0.5rem 1rem; transform: skewX(-3deg); color: #000; }
+
+        [data-theme="p3"] .brand-header { display: none; }
 
         .brand-header { text-align: center; position: relative; z-index: 2; }
         .username { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; background: linear-gradient(135deg, var(--p-primary-light), var(--p-text)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
@@ -116,22 +136,24 @@
         .p5-msg-content { max-width: 65%; }
         .p5-msg-bubble { padding: 10px 14px; font-size: 0.85rem; font-family: 'Share Tech Mono', monospace; word-break: break-word; }
         .p5-msg-bubble img, .p5-msg-bubble video { max-width: 300px; max-height: 250px; border-radius: 6px; margin: 4px 0; }
+        .p5-msg-bubble audio { max-width: 280px; margin: 4px 0; display: block; }
         .p5-msg.received .p5-msg-bubble { background: var(--chat-bubble-other); color: var(--chat-text); border: 1px solid #333; }
         .p5-msg.own .p5-msg-bubble { background: var(--chat-bubble-mine); color: #FFF; }
 
         .p5-msg-toolbar { display: flex; gap: 4px; padding: 6px 1rem; background: var(--chat-header); border-top: 1px solid #222; }
         .p5-tool-btn { background: #1A1A1A; border: 1px solid #333; color: #DDD; padding: 6px 10px; cursor: pointer; font-size: 0.9rem; border-radius: 4px; }
+        .p5-tool-btn:hover { background: #333; border-color: var(--chat-accent); }
 
         .p5-input-area { display: flex !important; gap: 6px; padding: 0.75rem 1rem; background: var(--chat-header); border-top: 2px solid #222; }
         .p5-chat-input { flex: 1; background: #1A1A1A; border: 1px solid #333; color: #DDD; padding: 10px 14px; font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; outline: none; border-radius: 4px; display: block !important; }
-        .p5-chat-input:focus { border-color: var(--chat-accent); }
         .p5-send-btn { background: var(--chat-accent); color: white; padding: 10px 20px; cursor: pointer; font-weight: bold; font-family: 'Luckiest Guy', cursive; border: none; }
 
         .p5-no-chat { flex: 1; display: flex; align-items: center; justify-content: center; color: #444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; }
 
         .top-bars { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; gap: 0.4rem; }
         .theme-btn, .lang-btn { background: var(--btn-bg); border: 2px solid var(--btn-border); color: var(--btn-text); padding: 0.35rem 0.7rem; border-radius: 0.75rem; cursor: pointer; font-weight: 700; font-size: 0.75rem; }
-        .admin-area { position: fixed; top: 1rem; right: 1rem; z-index: 1001; }
+        .theme-btn.active { background: var(--p-primary); }
+        .admin-btn-small { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); padding: 0.2rem 0.4rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.6rem; position: fixed; top: 1rem; right: 1rem; z-index: 1001; }
 
         footer { background: var(--p-surface); padding: 2rem 0; text-align: center; margin-top: 2rem; }
         .english { display: none; }
@@ -141,6 +163,8 @@
             .demo-interface { grid-template-columns: 1fr; }
             .p5-sidebar { width: 100%; }
             .p5-sidebar.collapsed { display: none; }
+            [data-theme="p3"] .p3r-menu { right: 3%; width: 50%; }
+            [data-theme="p3"] .p3r-menu-item { font-size: clamp(0.6rem, 2vw, 1.1rem); }
         }
         @media (max-width: 480px) {
             .social-grid { grid-template-columns: repeat(2, 1fr); }
@@ -148,8 +172,24 @@
     </style>
 </head>
 <body>
-
     <div class="makoto-container"><div class="makoto-figure"><div class="makoto-silhouette"></div></div></div>
+
+    <div class="p3r-menu" id="p3r-menu">
+        <div class="p3r-menu-item selected" data-idx="0">SKILL</div>
+        <div class="p3r-menu-item" data-idx="1">ITEM</div>
+        <div class="p3r-menu-item" data-idx="2">EQUIP</div>
+        <div class="p3r-menu-item" data-idx="3">PERSONA</div>
+        <div class="p3r-menu-item" data-idx="4">STATS</div>
+        <div class="p3r-menu-item" data-idx="5">QUEST</div>
+        <div class="p3r-menu-item" data-idx="6">SOCIAL LINK</div>
+        <div class="p3r-menu-item" data-idx="7">CALENDAR</div>
+        <div class="p3r-menu-item" data-idx="8">SYSTEM</div>
+    </div>
+    <div class="p3r-cursor" id="p3r-cursor"></div>
+    <div class="p3r-info"><div class="p3r-info-number" id="p3r-num">1</div><div class="p3r-info-name" id="p3r-name">SKILL</div></div>
+    <div class="p3r-wallet"><div>¥ 999,999</div></div>
+
+    <button class="admin-btn-small" onclick="toggleAdminModal()">🔒</button>
 
     <div class="top-bars">
         <button class="lang-btn" onclick="toggleLang()"><i class="fas fa-language"></i> <span class="lang-text">English</span></button>
@@ -284,12 +324,40 @@
         };
         function setTheme(t) {
             Object.entries(themes[t]).forEach(([k,v]) => document.documentElement.style.setProperty(k,v));
-            document.documentElement.setAttribute('data-theme', t);
-            localStorage.setItem('theme', t);
+            document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t);
             ['dt','p3t','lt'].forEach(id => document.getElementById(id)?.classList.remove('active'));
             const bid = t === 'default' ? 'dt' : t === 'p3' ? 'p3t' : 'lt';
             if (document.getElementById(bid)) document.getElementById(bid).classList.add('active');
+            if (t === 'p3') { genConfetti(); initP3RMenu(); }
         }
+        function genConfetti() { const c = document.getElementById('p3r-confetti'); if (!c) return; c.innerHTML = ''; for (let i = 0; i < 12; i++) { const p = document.createElement('div'); p.className = 'confetti-piece'; p.style.cssText = `left:${Math.random()*90}%;top:${Math.random()*90}%;animation-duration:${4+Math.random()*5}s;`; c.appendChild(p); } }
+
+        // P3R MENU
+        const p3rData = [
+            { n:'SKILL', a: ()=>alert('SKILL - Combat menu') }, { n:'ITEM', a: ()=>alert('ITEM - Inventory') },
+            { n:'EQUIP', a: ()=>alert('EQUIP - Equipment') }, { n:'PERSONA', a: showPersona },
+            { n:'STATS', a: ()=>alert('STATS - Statistics') }, { n:'QUEST', a: ()=>alert('QUEST - Requests') },
+            { n:'SOCIAL LINK', a: ()=>alert('SOCIAL LINK - Community') }, { n:'CALENDAR', a: showCalendar }, { n:'SYSTEM', a: showSystem }
+        ];
+        let p3rIdx = 0;
+        function initP3RMenu() {
+            document.querySelectorAll('.p3r-menu-item').forEach((item, i) => { item.onclick = () => { selectP3R(i); if (p3rData[i].a) p3rData[i].a(); }; });
+            selectP3R(0);
+        }
+        function selectP3R(i) {
+            p3rIdx = i;
+            document.querySelectorAll('.p3r-menu-item').forEach((el, j) => el.classList.toggle('selected', j === i));
+            const items = document.querySelectorAll('.p3r-menu-item'), cursor = document.getElementById('p3r-cursor');
+            if (items[i] && cursor) { const mr = document.getElementById('p3r-menu').getBoundingClientRect(), ir = items[i].getBoundingClientRect(); cursor.style.top = (ir.top - mr.top + ir.height/2 - 8) + 'px'; }
+            document.getElementById('p3r-num').textContent = i + 1; document.getElementById('p3r-name').textContent = p3rData[i].n;
+        }
+        function showPersona() {
+            const personas = ['Arsène','Izanagi','Messiah','Orpheus'];
+            const p = isAdmin ? 'Messiah' : personas[Math.floor(Math.random()*personas.length)];
+            alert(`🎭 Persona: ${p}${isAdmin ? ' (Creator)' : ''}`);
+        }
+        function showCalendar() { const n = new Date(); alert(`📅 ${n.toLocaleDateString('en-US', {weekday:'short',month:'short',day:'numeric',year:'numeric'})}\n🕐 ${n.toLocaleTimeString()}\n🌍 ${Intl.DateTimeFormat().resolvedOptions().timeZone}`); }
+        function showSystem() { alert(`🖥 Browser: ${navigator.userAgent.includes('Chrome')?'Chrome':'Other'}\n📱 Screen: ${screen.width}×${screen.height}\n${isAdmin ? '🔑 Key: '+SK : ''}`); }
 
         let cl='russian';
         function toggleLang() {
@@ -303,7 +371,6 @@
         // CHAT
         const MY_ID = localStorage.getItem('p5_uid') || (() => { const id = 'u_' + Date.now(); localStorage.setItem('p5_uid', id); return id; })();
         let myNick = localStorage.getItem('p5_nick') || '';
-        let myAvatar = localStorage.getItem('p5_av') || '';
         let currentChatId = null;
         let knownUsers = {};
 
@@ -352,28 +419,22 @@
             currentChatId = uid; const user = knownUsers[uid];
             if (window.innerWidth <= 768) document.getElementById('p5-sidebar').classList.add('collapsed');
             
-            // ПОКАЗЫВАЕМ ЧАТ
             document.getElementById('p5-no-chat-view').style.display = 'none';
             const chatView = document.getElementById('p5-chat-view');
             chatView.style.display = 'flex';
             
-            // ФИКСИРУЕМ ВСЕ ЭЛЕМЕНТЫ
-            const inputArea = chatView.querySelector('.p5-input-area');
-            inputArea.style.setProperty('display', 'flex', 'important');
-            const toolbar = chatView.querySelector('.p5-msg-toolbar');
-            toolbar.style.setProperty('display', 'flex', 'important');
-            
+            // ФИКС: принудительно показываем инпут и тулбар
+            document.querySelector('.p5-input-area').style.setProperty('display', 'flex', 'important');
+            document.querySelector('.p5-msg-toolbar').style.setProperty('display', 'flex', 'important');
             const inputEl = document.getElementById('p5-chat-input');
             inputEl.style.setProperty('display', 'block', 'important');
             inputEl.disabled = false;
             inputEl.value = '';
             inputEl.focus();
             
-            // АВАТАР
             document.getElementById('p5-main-avatar').src = user?.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg';
             document.getElementById('p5-main-name').textContent = user?.nick || 'Unknown';
             
-            // СООБЩЕНИЯ
             const chatId = getChatId(MY_ID, uid);
             const msgArea = document.getElementById('p5-msg-area');
             msgArea.innerHTML = '';
@@ -386,8 +447,20 @@
                     Object.values(msgs).forEach(msg => {
                         const div = document.createElement('div');
                         div.className = `p5-msg ${msg.from === MY_ID ? 'own' : 'received'}`;
-                        let content = msg.text;
-                        if (msg.type === 'image' || msg.type === 'gif') content = `<img src="${msg.text}" style="max-width:250px;border-radius:6px;">`;
+                        
+                        let content = '';
+                        if (msg.type === 'image' || msg.type === 'gif') {
+                            content = `<img src="${msg.text}" style="max-width:280px;border-radius:6px;" loading="lazy">`;
+                        } else if (msg.type === 'video') {
+                            content = `<video controls style="max-width:280px;border-radius:6px;"><source src="${msg.text}"></video>`;
+                        } else if (msg.type === 'audio') {
+                            content = `<audio controls style="max-width:260px;display:block;"><source src="${msg.text}"></audio>`;
+                        } else if (msg.type === 'file') {
+                            content = `<a href="${msg.text}" download="${msg.fileName||'file'}" style="color:var(--chat-accent);">📎 ${msg.fileName||'Download'}</a>`;
+                        } else {
+                            content = msg.text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        }
+                        
                         div.innerHTML = `<div class="p5-msg-content"><div class="p5-msg-bubble">${content}</div></div>`;
                         msgArea.appendChild(div);
                     });
@@ -405,18 +478,13 @@
             
             const chatId = getChatId(MY_ID, currentChatId);
             db.ref('messages/' + chatId).push({
-                from: MY_ID,
-                text: text,
-                type: 'text',
+                from: MY_ID, text: text, type: 'text',
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             });
             
             inputEl.value = '';
             inputEl.focus();
-            setTimeout(() => {
-                const msgArea = document.getElementById('p5-msg-area');
-                msgArea.scrollTop = msgArea.scrollHeight;
-            }, 100);
+            setTimeout(() => { document.getElementById('p5-msg-area').scrollTop = document.getElementById('p5-msg-area').scrollHeight; }, 100);
         }
 
         function pickAndSend(type, accept) {
@@ -430,11 +498,8 @@
                 r.onload = (ev) => {
                     const chatId = getChatId(MY_ID, currentChatId);
                     db.ref('messages/' + chatId).push({
-                        from: MY_ID,
-                        text: ev.target.result,
-                        type: type,
-                        fileName: f.name,
-                        timestamp: firebase.database.ServerValue.TIMESTAMP
+                        from: MY_ID, text: ev.target.result, type: type,
+                        fileName: f.name, timestamp: firebase.database.ServerValue.TIMESTAMP
                     });
                 };
                 r.readAsDataURL(f);
@@ -468,11 +533,7 @@
         function runBF() { resetBF(); execBF(); }
         function stepBF() { if (bf.step()) updBF(); }
         function execBF() { if (bf.step()) { updBF(); setTimeout(execBF, 50); } }
-        function updBF() {
-            document.getElementById('bf-out').textContent = bf.o;
-            const tape = document.getElementById('bf-tape'); tape.innerHTML = '';
-            for (let i = 0; i < 12; i++) { const cell = document.createElement('div'); cell.className = `tape-cell ${i === bf.p ? 'active' : ''}`; cell.textContent = bf.t[i]; tape.appendChild(cell); }
-        }
+        function updBF() { document.getElementById('bf-out').textContent = bf.o; const tape = document.getElementById('bf-tape'); tape.innerHTML = ''; for (let i = 0; i < 12; i++) { const cell = document.createElement('div'); cell.className = `tape-cell ${i === bf.p ? 'active' : ''}`; cell.textContent = bf.t[i]; tape.appendChild(cell); } }
 
         document.addEventListener('DOMContentLoaded', () => {
             resetBF();
