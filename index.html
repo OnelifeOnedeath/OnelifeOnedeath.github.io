@@ -5,32 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OnelifeOnedeath - Universal Engineer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
     <style>
         :root {
-            /* Фиолетовая палитра (дефолт) */
             --p-primary: #8B5CF6;
             --p-primary-hover: #7C3AED;
             --p-primary-light: #A78BFA;
             --p-primary-dark: #5B21B6;
             --p-highlight: #C4B5FD;
-            
             --p-surface: #1F2937;
             --p-surface-hover: #374151;
             --p-surface-light: #2D3748;
             --p-background: #111827;
             --p-background-alt: #0F172A;
-            
             --p-text: #F9FAFB;
             --p-text-muted: #D1D5DB;
             --p-text-dim: #9CA3AF;
             --p-text-on-primary: #FFFFFF;
-            
             --p-border: #374151;
             --p-border-light: #4B5563;
             --p-border-hover: #6B7280;
             --p-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1);
             --p-glow: 0 0 15px rgba(139, 92, 246, 0.3);
-            
             --btn-bg: rgba(139, 92, 246, 0.25);
             --btn-border: rgba(139, 92, 246, 0.6);
             --btn-hover-bg: rgba(139, 92, 246, 0.45);
@@ -39,31 +35,24 @@
             --card-bg-hover: rgba(255, 255, 255, 0.12);
         }
 
-        /* Тема Persona 3 Reload */
         [data-theme="p3"] {
             --p-primary: #1B2838;
             --p-primary-hover: #2D4A6E;
             --p-primary-light: #4A90D9;
             --p-primary-dark: #0F1923;
             --p-highlight: #6BB5FF;
-            
             --p-surface: #152230;
             --p-surface-hover: #1E3348;
             --p-surface-light: #1A2D42;
             --p-background: #0D1520;
             --p-background-alt: #0A1018;
-            
             --p-text: #E8F0F8;
             --p-text-muted: #8CB4D8;
             --p-text-dim: #5A8AB5;
             --p-text-on-primary: #FFFFFF;
-            
             --p-border: #1E3348;
             --p-border-light: #2D4A6E;
             --p-border-hover: #4A90D9;
-            --p-shadow: 0 4px 6px -1px rgba(74, 144, 217, 0.2);
-            --p-glow: 0 0 20px rgba(74, 144, 217, 0.3);
-            
             --btn-bg: rgba(74, 144, 217, 0.2);
             --btn-border: rgba(74, 144, 217, 0.5);
             --btn-hover-bg: rgba(74, 144, 217, 0.4);
@@ -72,31 +61,24 @@
             --card-bg-hover: rgba(30, 51, 72, 0.6);
         }
 
-        /* Светлая тема */
         [data-theme="light"] {
             --p-primary: #8B5CF6;
             --p-primary-hover: #7C3AED;
             --p-primary-light: #6D28D9;
             --p-primary-dark: #5B21B6;
             --p-highlight: #A78BFA;
-            
             --p-surface: #FFFFFF;
             --p-surface-hover: #F5F3FF;
             --p-surface-light: #EDE9FE;
             --p-background: #FEF7FF;
             --p-background-alt: #F3E8FF;
-            
             --p-text: #1E1B4B;
             --p-text-muted: #4C1D95;
             --p-text-dim: #7C3AED;
             --p-text-on-primary: #FFFFFF;
-            
             --p-border: #DDD6FE;
             --p-border-light: #C4B5FD;
             --p-border-hover: #A78BFA;
-            --p-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.15);
-            --p-glow: 0 0 15px rgba(139, 92, 246, 0.25);
-            
             --btn-bg: rgba(139, 92, 246, 0.12);
             --btn-border: rgba(139, 92, 246, 0.4);
             --btn-hover-bg: rgba(139, 92, 246, 0.25);
@@ -119,7 +101,6 @@
             line-height: 1.6;
         }
 
-        /* Анимации */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -131,42 +112,9 @@
             66% { transform: translateY(5px) rotate(-2deg); }
         }
 
-        @keyframes floatReverse {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(8px) rotate(-1deg); }
-            66% { transform: translateY(-5px) rotate(1deg); }
-        }
-
         @keyframes pulse-glow {
             0%, 100% { box-shadow: 0 0 10px var(--p-highlight); }
             50% { box-shadow: 0 0 25px var(--p-highlight), 0 0 50px var(--p-primary-light); }
-        }
-
-        @keyframes chatSlideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes personaSlide {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes messagePop {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes messageSend {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes lightningStrike {
-            0% { opacity: 0; transform: translateY(-10px); }
-            50% { opacity: 1; filter: brightness(1.5); }
-            100% { opacity: 1; transform: translateY(0); filter: brightness(1); }
         }
 
         .container {
@@ -188,16 +136,9 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%238B5CF6" fill-opacity="0.05" points="0,1000 1000,0 1000,1000"/></svg>');
             background-size: cover;
-        }
-
-        [data-theme="p3"] .hero::before {
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%236BB5FF" fill-opacity="0.08" points="0,1000 1000,0 1000,1000"/></svg>');
         }
 
         .anime-gif-left, .anime-gif-right {
@@ -210,51 +151,38 @@
         }
 
         .anime-gif-left {
-            bottom: 2rem;
-            left: 2rem;
-            width: 180px;
-            height: 180px;
+            bottom: 2rem; left: 2rem;
+            width: 180px; height: 180px;
             opacity: 0.8;
             animation: float 8s ease-in-out infinite;
         }
 
         .anime-gif-right {
-            top: 2rem;
-            right: 2rem;
-            width: 160px;
-            height: 160px;
+            top: 2rem; right: 2rem;
+            width: 160px; height: 160px;
             opacity: 0.9;
-            animation: floatReverse 7s ease-in-out infinite;
+            animation: float 7s ease-in-out infinite reverse;
         }
 
         .anime-gif-left img, .anime-gif-right img {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
         }
 
-        /* Theme Switcher Bar */
-        .theme-switcher-bar {
+        /* Theme & Language Bars */
+        .top-bars {
             position: fixed;
             top: 1rem;
-            right: 1rem;
+            left: 0;
+            right: 0;
             z-index: 1000;
             display: flex;
-            gap: 0.5rem;
-            background: var(--p-surface);
-            padding: 0.5rem;
-            border-radius: 1rem;
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--p-border);
-            box-shadow: var(--p-shadow);
+            justify-content: center;
+            gap: 1rem;
+            pointer-events: none;
         }
 
-        .lang-switcher-bar {
-            position: fixed;
-            top: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
+        .theme-switcher-bar, .lang-switcher-bar {
             display: flex;
             gap: 0.5rem;
             background: var(--p-surface);
@@ -263,6 +191,7 @@
             backdrop-filter: blur(10px);
             border: 2px solid var(--p-border);
             box-shadow: var(--p-shadow);
+            pointer-events: all;
         }
 
         .theme-btn, .lang-btn {
@@ -276,7 +205,6 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            backdrop-filter: blur(5px);
         }
 
         .theme-btn:hover, .lang-btn:hover {
@@ -316,7 +244,6 @@
             background: linear-gradient(135deg, #5B21B6, #1E1B4B);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
         .tagline {
@@ -324,11 +251,6 @@
             margin-bottom: 2rem;
             animation: fadeInUp 0.8s ease-out 0.2s both;
             color: var(--p-text);
-        }
-
-        [data-theme="light"] .tagline {
-            color: #1E1B4B;
-            font-weight: 500;
         }
 
         .universal-badge {
@@ -345,15 +267,9 @@
             color: var(--p-text);
         }
 
-        [data-theme="light"] .universal-badge {
-            color: #1E1B4B;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #C4B5FD;
-        }
-
         .social-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
             max-width: 800px;
             margin: 0 auto;
@@ -369,8 +285,6 @@
             color: var(--p-text);
             animation: fadeInUp 0.8s ease-out 0.6s both;
             backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
         }
 
         .social-card:hover {
@@ -380,73 +294,20 @@
             box-shadow: var(--p-glow);
         }
 
-        [data-theme="light"] .social-card {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #DDD6FE;
-            color: #1E1B4B;
-        }
-
-        [data-theme="light"] .social-card:hover {
-            border-color: #8B5CF6;
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
-        }
-
-        .social-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Цвета для каждой соцсети */
+        .social-icon { font-size: 2rem; margin-bottom: 1rem; }
         .social-card.github .social-icon { color: #6e5494; }
-        .social-card.github:hover { border-color: #6e5494; box-shadow: 0 0 20px rgba(110, 84, 148, 0.3); }
-
         .social-card.telegram .social-icon { color: #0088cc; }
-        .social-card.telegram:hover { border-color: #0088cc; box-shadow: 0 0 20px rgba(0, 136, 204, 0.3); }
-
         .social-card.vk .social-icon { color: #0077FF; }
-        .social-card.vk:hover { border-color: #0077FF; box-shadow: 0 0 20px rgba(0, 119, 255, 0.3); }
-
         .social-card.youtube .social-icon { color: #FF0000; }
-        .social-card.youtube:hover { border-color: #FF0000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); }
-
         .social-card.steam .social-icon { color: #00adee; }
-        .social-card.steam:hover { border-color: #00adee; box-shadow: 0 0 20px rgba(0, 173, 238, 0.3); }
-
         .social-card.discord .social-icon { color: #5865F2; }
-        .social-card.discord:hover { border-color: #5865F2; box-shadow: 0 0 20px rgba(88, 101, 242, 0.3); }
-
-        .social-name {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .social-handle {
-            font-size: 0.9rem;
-            position: relative;
-            z-index: 1;
-            color: var(--p-text-dim);
-        }
-
-        [data-theme="light"] .social-handle {
-            color: #6D28D9;
-        }
+        .social-name { font-weight: 600; margin-bottom: 0.5rem; }
+        .social-handle { font-size: 0.9rem; color: var(--p-text-dim); }
 
         /* Sections */
-        .projects, .skills, .contact, .philosophy, .tapeworm-demo {
-            padding: 5rem 0;
-        }
-
+        .projects, .skills, .contact, .philosophy, .tapeworm-demo { padding: 5rem 0; }
         .projects { background: var(--p-background-alt); }
-        .tapeworm-demo { 
-            background: var(--p-background);
-            border-top: 1px solid var(--p-border-light);
-            border-bottom: 1px solid var(--p-border-light);
-        }
+        .tapeworm-demo { background: var(--p-background); border-top: 1px solid var(--p-border-light); border-bottom: 1px solid var(--p-border-light); }
         .skills { background: var(--p-background); }
         .contact { background: var(--p-background-alt); text-align: center; }
         .philosophy { background: var(--p-background); text-align: center; }
@@ -459,60 +320,25 @@
             animation: fadeInUp 0.8s ease-out;
         }
 
-        [data-theme="light"] .section-title {
-            color: #1E1B4B;
-        }
-
-        .project-grid {
-            display: grid;
-            gap: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        .project-grid { display: grid; gap: 2rem; max-width: 800px; margin: 0 auto; }
 
         .project-card {
             background: var(--p-surface);
             border-radius: 1rem;
             padding: 2rem;
             border: 1px solid var(--p-border);
-            transition: all 0.3s ease;
             animation: fadeInUp 0.8s ease-out;
-            position: relative;
-            overflow: hidden;
-        }
-
-        [data-theme="light"] .project-card {
-            background: #FFFFFF;
-            border: 2px solid #DDD6FE;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--p-glow);
             border-color: var(--p-primary-light);
-            background: var(--p-surface-hover);
         }
 
-        .project-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--p-primary-light);
-            margin-bottom: 1rem;
-        }
-
-        .project-description {
-            color: var(--p-text-muted);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
+        .project-title { font-size: 1.5rem; font-weight: 600; color: var(--p-primary-light); margin-bottom: 1rem; }
+        .project-description { color: var(--p-text-muted); margin-bottom: 1.5rem; }
+        .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
 
         .tech-tag {
             background: var(--btn-bg);
@@ -522,11 +348,6 @@
             font-size: 0.8rem;
             font-weight: 500;
             border: 1px solid var(--btn-border);
-        }
-
-        [data-theme="light"] .tech-tag {
-            color: #1E1B4B;
-            background: rgba(139, 92, 246, 0.1);
         }
 
         .btn {
@@ -549,13 +370,7 @@
             box-shadow: var(--p-glow);
         }
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 800px; margin: 0 auto; }
 
         .skill-category {
             background: var(--p-surface);
@@ -564,31 +379,12 @@
             border: 1px solid var(--p-border);
         }
 
-        [data-theme="light"] .skill-category {
-            background: #FFFFFF;
-            border: 2px solid #DDD6FE;
-        }
+        .skill-category:hover { transform: translateY(-5px); border-color: var(--p-primary-light); box-shadow: var(--p-glow); }
+        .skill-category h3 { color: var(--p-primary-light); margin-bottom: 1rem; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
-        .skill-category:hover {
-            transform: translateY(-5px);
-            border-color: var(--p-primary-light);
-            box-shadow: var(--p-glow);
-        }
-
-        .skill-category h3 {
-            color: var(--p-primary-light);
-            margin-bottom: 1rem;
-            font-size: 1.25rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        /* Persona 5 Style Chat Button */
-        .p5-chat-button {
+        /* ==================== PERSONA 5 CHAT ==================== */
+        .p5-chat-fab {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
@@ -601,318 +397,363 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: 0 0 25px rgba(230, 0, 18, 0.5), 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 0 25px rgba(230, 0, 18, 0.5);
             animation: pulse-glow 2s infinite;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .p5-chat-button::after {
-            content: '';
-            position: absolute;
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            border: 2px dashed rgba(255, 68, 68, 0.5);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .p5-chat-button:hover {
+        .p5-chat-fab:hover {
             transform: scale(1.1);
-            background: linear-gradient(135deg, #FF2222, #E60012);
             box-shadow: 0 0 40px rgba(230, 0, 18, 0.7);
         }
 
-        /* P5 Chat Modal - Стиль как в игре */
-        .p5-chat-modal {
+        .p5-chat-overlay {
             position: fixed;
-            bottom: 5rem;
-            right: 2rem;
-            width: 420px;
-            max-height: 600px;
-            background: #0A0A0A;
-            border: 3px solid #E60012;
-            border-radius: 0.5rem;
-            z-index: 1000;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
             display: none;
-            flex-direction: column;
-            box-shadow: 0 0 40px rgba(230, 0, 18, 0.4), 0 15px 40px rgba(0,0,0,0.6), inset 0 0 30px rgba(230, 0, 18, 0.05);
-            animation: chatSlideIn 0.3s ease;
-            overflow: hidden;
-            font-family: 'Courier New', monospace;
-        }
-
-        .p5-chat-modal.open {
-            display: flex;
-        }
-
-        .p5-chat-header {
-            background: #111111;
-            padding: 0.75rem 1rem;
-            border-bottom: 2px solid #E60012;
-            display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+        }
+
+        .p5-chat-overlay.open { display: flex; }
+
+        /* Phone Container - точно как в Persona 5 */
+        .phone-container {
             position: relative;
+            width: 300px;
+            height: 450px;
+            transform: scale(1);
+            filter: drop-shadow(0 0 20px rgba(230, 0, 18, 0.3));
         }
 
-        .p5-chat-header::after {
-            content: '';
+        .phone-svg {
             position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #FF4444, transparent);
-            animation: lightningStrike 1.5s infinite;
-        }
-
-        .p5-chat-title {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .p5-chat-title-icon {
-            width: 32px;
-            height: 32px;
-            background: #E60012;
-            border-radius: 0.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            border: 1px solid #FF4444;
-            transform: skewX(-5deg);
-        }
-
-        .p5-chat-title-text {
-            color: #E60012;
-            font-weight: bold;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px rgba(230, 0, 18, 0.5);
-        }
-
-        .p5-chat-close {
-            background: none;
-            border: 1px solid #333;
-            color: #888;
-            cursor: pointer;
-            font-size: 0.9rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            transition: all 0.3s ease;
-        }
-
-        .p5-chat-close:hover {
-            color: #FF4444;
-            border-color: #E60012;
-            box-shadow: 0 0 10px rgba(230, 0, 18, 0.3);
-        }
-
-        .p5-chat-info {
-            padding: 0.5rem 1rem;
-            background: #111111;
-            border-bottom: 1px solid #222;
-            text-align: center;
-        }
-
-        .p5-chat-nickname-input {
-            background: #1A1A1A;
-            border: 2px solid #333;
-            color: #E60012;
-            padding: 0.4rem 0.75rem;
-            border-radius: 0.25rem;
-            font-size: 0.8rem;
-            font-weight: bold;
-            width: 140px;
-            text-align: center;
-            outline: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: 'Courier New', monospace;
-            transition: all 0.3s ease;
-        }
-
-        .p5-chat-nickname-input:focus {
-            border-color: #E60012;
-            box-shadow: 0 0 15px rgba(230, 0, 18, 0.2);
-        }
-
-        .p5-chat-nickname-input::placeholder {
-            color: #444;
-            letter-spacing: 2px;
-        }
-
-        .p5-chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            max-height: 350px;
-            background: #050505;
-            background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(230, 0, 18, 0.02) 2px, rgba(230, 0, 18, 0.02) 4px);
-        }
-
-        .p5-message {
-            display: flex;
-            gap: 0.75rem;
-            animation: messageSend 0.4s ease;
-            align-items: flex-start;
-        }
-
-        .p5-message.own {
-            flex-direction: row-reverse;
-        }
-
-        .p5-message-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 0.25rem;
-            overflow: hidden;
-            border: 2px solid #E60012;
-            flex-shrink: 0;
-            background: #1A1A1A;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #E60012;
-            font-weight: bold;
-            font-size: 0.8rem;
-            transform: skewX(-5deg);
-        }
-
-        .p5-message-avatar img {
             width: 100%;
             height: 100%;
+        }
+
+        .phone-svg polygon {
+            fill: #1a1a1a;
+            stroke: #333;
+            stroke-width: 2;
+        }
+
+        .screen-border-svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .screen-border-svg polygon {
+            fill: none;
+            stroke: #E60012;
+            stroke-width: 3;
+        }
+
+        .screen-svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .screen-svg polygon {
+            fill: #0a0a0a;
+            stroke: #222;
+            stroke-width: 1;
+        }
+
+        .screen {
+            position: absolute;
+            top: 18px;
+            left: 28px;
+            right: 30px;
+            bottom: 15px;
+            background: #0a0a0a;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 10px 5px;
+            border-radius: 2px;
+        }
+
+        .screen::-webkit-scrollbar { width: 3px; }
+        .screen::-webkit-scrollbar-track { background: #111; }
+        .screen::-webkit-scrollbar-thumb { background: #E60012; border-radius: 3px; }
+
+        .sns {
+            text-align: center;
+            padding: 5px 0 15px;
+            position: relative;
+        }
+
+        .lettering-under {
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 2rem;
+            color: #333;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 3px;
+        }
+
+        .lettering {
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 2rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .zig-shadow, .zig {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            top: 60px;
+            left: 0;
+        }
+
+        .zig-shadow polygon { fill: rgba(230, 0, 18, 0.2); }
+        .zig polygon { fill: none; stroke: #E60012; stroke-width: 2; }
+
+        .messages {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact {
+            position: relative;
+            height: 60px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .contact:hover { transform: translateX(5px); }
+
+        .contact .border, .contact .outline, .contact .panel, .contact .panel-b {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .contact .border polygon { fill: #E60012; }
+        .contact .outline polygon { fill: #0a0a0a; }
+        .contact .panel polygon { fill: #1a1a1a; stroke: #333; stroke-width: 1; }
+        .contact .panel-b polygon { fill: #E60012; }
+
+        .contact img {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            left: 20px;
+            top: 10px;
+            border-radius: 0;
             object-fit: cover;
+            clip-path: polygon(0 5%, 100% 0, 95% 100%, 5% 95%);
+            filter: grayscale(30%);
         }
 
-        .p5-message-content {
-            max-width: 70%;
+        .text-container {
+            position: absolute;
+            left: 70px;
+            top: 8px;
+            right: 20px;
         }
 
-        .p5-message-nickname {
+        .text-outline-1 polygon { fill: rgba(230, 0, 18, 0.3); }
+        .text-outline-2 polygon { fill: #0a0a0a; }
+        .accent-outline-1 polygon { fill: rgba(230, 0, 18, 0.2); }
+        .accent-outline-2 polygon { fill: #E60012; }
+
+        .text-skew {
+            position: absolute;
+            left: 85px;
+            top: 8px;
+            transform: skewX(-10deg);
+            color: #ccc;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            max-width: 130px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .text-skew label {
+            color: #ccc;
             font-size: 0.7rem;
+            display: block;
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: normal;
+            margin-top: 2px;
+        }
+
+        .message-type {
+            position: absolute;
+            right: 10px;
+            top: 12px;
+        }
+
+        .message-type .lettering-outline polygon { fill: rgba(230, 0, 18, 0.3); }
+        .message-type .lettering {
+            position: absolute;
+            top: 2px;
+            left: 4px;
+            font-family: 'Luckiest Guy', cursive;
+            color: #E60012;
+            font-size: 1.2rem;
+        }
+
+        .ellipse {
+            text-align: center;
+            padding: 10px;
+            color: #E60012;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+        }
+
+        .ellipse svg { display: none; }
+
+        /* Chat message view */
+        .chat-view {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-view.active { display: flex; }
+
+        .chat-view-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-bottom: 2px solid #E60012;
+            margin-bottom: 10px;
+        }
+
+        .chat-view-back {
+            background: none;
+            border: 2px solid #E60012;
+            color: #E60012;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transform: skewX(-10deg);
+        }
+
+        .chat-view-name {
             color: #E60012;
             font-weight: bold;
-            margin-bottom: 0.3rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            text-shadow: 0 0 8px rgba(230, 0, 18, 0.4);
+            font-size: 0.9rem;
         }
 
-        .p5-message.own .p5-message-nickname {
-            color: #FF6666;
-            text-align: right;
-        }
-
-        .p5-message-bubble {
-            background: #1A1A1A;
-            padding: 0.75rem 1rem;
-            border-radius: 0.25rem;
-            border: 1px solid #333;
-            color: #D0D0D0;
-            position: relative;
-            font-size: 0.85rem;
-            line-height: 1.6;
-            font-family: 'Courier New', monospace;
-            transform: skewX(-3deg);
-        }
-
-        .p5-message.own .p5-message-bubble {
-            background: linear-gradient(135deg, #E60012, #B8000F);
-            border-color: #FF4444;
-            color: #FFFFFF;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-        }
-
-        .p5-message-bubble::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -2px;
-            right: -2px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(230, 0, 18, 0.3), transparent);
-        }
-
-        .p5-message.own .p5-message-bubble::after {
-            content: '⚡';
-            position: absolute;
-            top: -12px;
-            right: 10px;
-            color: #FFD700;
-            font-size: 0.7rem;
-            animation: lightningStrike 1s ease-out;
-        }
-
-        .p5-chat-input-area {
-            padding: 1rem;
-            background: #111111;
-            border-top: 2px solid #E60012;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .p5-chat-input {
+        .chat-messages-p5 {
             flex: 1;
-            background: #1A1A1A;
-            border: 2px solid #333;
-            border-radius: 0.25rem;
-            padding: 0.6rem 0.75rem;
-            color: #E0E0E0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 5px;
+        }
+
+        .chat-msg {
+            display: flex;
+            gap: 8px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .chat-msg.own { flex-direction: row-reverse; }
+
+        .chat-msg-avatar {
+            width: 30px;
+            height: 30px;
+            clip-path: polygon(0 10%, 100% 0, 90% 100%, 10% 90%);
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .chat-msg-bubble {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 8px 12px;
+            transform: skewX(-5deg);
+            max-width: 70%;
+            color: #ccc;
+            font-size: 0.8rem;
+        }
+
+        .chat-msg.own .chat-msg-bubble {
+            background: #E60012;
+            border-color: #FF4444;
+            color: white;
+        }
+
+        .chat-input-bar {
+            display: flex;
+            gap: 5px;
+            padding: 8px 0 0;
+            border-top: 2px solid #222;
+            margin-top: 10px;
+        }
+
+        .chat-input-bar input {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #ccc;
+            padding: 6px 10px;
+            transform: skewX(-5deg);
+            font-size: 0.8rem;
             outline: none;
-            font-size: 0.85rem;
-            font-family: 'Courier New', monospace;
-            transition: all 0.3s ease;
-            transform: skewX(-3deg);
         }
 
-        .p5-chat-input:focus {
-            border-color: #E60012;
-            box-shadow: 0 0 15px rgba(230, 0, 18, 0.2);
-        }
+        .chat-input-bar input:focus { border-color: #E60012; }
 
-        .p5-chat-input::placeholder {
-            color: #555;
-        }
-
-        .p5-chat-send {
-            background: linear-gradient(135deg, #E60012, #B8000F);
+        .chat-input-bar button {
+            background: #E60012;
             border: 2px solid #FF4444;
-            border-radius: 0.25rem;
-            padding: 0.5rem 1.5rem;
+            color: white;
+            padding: 6px 12px;
             cursor: pointer;
-            color: #FFFFFF;
+            transform: skewX(-10deg);
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-            transform: skewX(-5deg);
-            transition: all 0.3s ease;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            font-size: 0.7rem;
         }
 
-        .p5-chat-send:hover {
-            background: linear-gradient(135deg, #FF2222, #E60012);
-            box-shadow: 0 0 20px rgba(230, 0, 18, 0.5);
-            transform: skewX(-5deg) translateY(-2px);
+        .chat-input-bar button:hover { background: #FF2222; }
+
+        /* Admin & close buttons */
+        .p5-chat-close-btn {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: #E60012;
+            border: 2px solid #FF4444;
+            color: white;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .p5-chat-send:active {
-            transform: skewX(-5deg) scale(0.95);
-            box-shadow: 0 0 30px rgba(230, 0, 18, 0.7);
-        }
-
-        /* Admin Login */
         .admin-login {
             position: fixed;
             top: 1rem;
@@ -928,12 +769,6 @@
             border-radius: 0.5rem;
             cursor: pointer;
             font-size: 0.8rem;
-            backdrop-filter: blur(5px);
-        }
-
-        .admin-btn:hover {
-            color: var(--p-text);
-            border-color: var(--p-primary-light);
         }
 
         .admin-indicator {
@@ -947,43 +782,27 @@
             border-radius: 0.5rem;
             font-size: 0.75rem;
             display: none;
-            backdrop-filter: blur(5px);
             color: var(--p-text);
-        }
-
-        .admin-indicator.visible {
-            display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .admin-indicator .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #00FF00;
-            animation: pulse-glow 1s infinite;
-        }
+        .admin-indicator.visible { display: flex; }
+        .admin-indicator .dot { width: 8px; height: 8px; border-radius: 50%; background: #00FF00; animation: pulse-glow 1s infinite; }
 
         .admin-modal {
             position: fixed;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             background: var(--p-surface);
             border: 2px solid var(--p-border-light);
             border-radius: 1rem;
             padding: 2rem;
-            z-index: 2000;
+            z-index: 3000;
             display: none;
-            box-shadow: var(--p-glow);
             min-width: 300px;
         }
-
-        .admin-modal.open {
-            display: block;
-        }
-
+        .admin-modal.open { display: block; }
         .admin-input {
             width: 100%;
             background: var(--p-background);
@@ -995,664 +814,374 @@
         }
 
         /* Tapeworm Demo */
-        .demo-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: var(--p-surface);
-            border-radius: 1rem;
-            padding: 2rem;
-            border: 1px solid var(--p-border-light);
-        }
+        .demo-container { max-width: 1000px; margin: 0 auto; background: var(--p-surface); border-radius: 1rem; padding: 2rem; border: 1px solid var(--p-border-light); }
+        .demo-interface { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        .code-input-section textarea { width: 100%; background: var(--p-background); border: 1px solid var(--p-border); border-radius: 0.5rem; padding: 1rem; color: var(--p-text); font-family: 'Courier New', monospace; resize: vertical; margin-bottom: 1rem; }
+        .output-display, .tape-display, .stats-display { background: var(--p-background); border: 1px solid var(--p-border); border-radius: 0.5rem; padding: 1rem; margin-bottom: 1rem; }
+        .output-text, .stats-text { font-family: 'Courier New', monospace; padding: 0.5rem; min-height: 2rem; }
+        .tape-visualization { display: flex; flex-wrap: wrap; gap: 0.5rem; min-height: 4rem; }
+        .tape-cell { width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; background: var(--btn-bg); border: 2px solid var(--p-border); border-radius: 0.25rem; font-family: 'Courier New', monospace; font-weight: bold; color: var(--btn-text); }
+        .tape-cell.active { background: var(--p-primary); border-color: var(--p-primary-light); transform: scale(1.1); box-shadow: var(--p-glow); color: white; }
+        .example-btn { background: var(--btn-bg); color: var(--btn-text); border: 1px solid var(--p-border-light); padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; }
 
-        [data-theme="light"] .demo-container {
-            background: #FFFFFF;
-            border: 2px solid #DDD6FE;
-        }
-
-        .demo-interface {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .code-input-section textarea {
-            width: 100%;
-            background: var(--p-background);
-            border: 1px solid var(--p-border);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            color: var(--p-text);
-            font-family: 'Courier New', monospace;
-            resize: vertical;
-            margin-bottom: 1rem;
-        }
-
-        .output-display, .tape-display, .stats-display {
-            background: var(--p-background);
-            border: 1px solid var(--p-border);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .output-text, .stats-text {
-            font-family: 'Courier New', monospace;
-            padding: 0.5rem;
-            border-radius: 0.25rem;
-            min-height: 2rem;
-            color: var(--p-text);
-        }
-
-        .tape-visualization {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            min-height: 4rem;
-            align-items: center;
-        }
-
-        .tape-cell {
-            width: 3rem;
-            height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--btn-bg);
-            border: 2px solid var(--p-border);
-            border-radius: 0.25rem;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            color: var(--btn-text);
-        }
-
-        .tape-cell.active {
-            background: var(--p-primary);
-            border-color: var(--p-primary-light);
-            transform: scale(1.1);
-            box-shadow: var(--p-glow);
-            color: white;
-        }
-
-        .example-btn {
-            background: var(--btn-bg);
-            color: var(--btn-text);
-            border: 1px solid var(--p-border-light);
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-        }
-
-        .example-btn:hover {
-            background: var(--btn-hover-bg);
-        }
-
-        footer {
-            background: var(--p-surface);
-            padding: 3rem 0;
-            text-align: center;
-            border-top: 1px solid var(--p-border-light);
-        }
-
-        .footer-text {
-            color: var(--p-text-muted);
-            margin-top: 1rem;
-        }
-
+        footer { background: var(--p-surface); padding: 3rem 0; text-align: center; border-top: 1px solid var(--p-border-light); }
+        .footer-text { color: var(--p-text-muted); margin-top: 1rem; }
         .english { display: none; }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .hero { padding-top: 100px; }
             .username { font-size: 2.5rem; }
             .social-grid { grid-template-columns: repeat(2, 1fr); }
             .demo-interface { grid-template-columns: 1fr; }
-            .p5-chat-modal { width: 90vw; right: 5vw; }
+            .phone-container { transform: scale(0.85); }
             .anime-gif-left, .anime-gif-right { width: 80px; height: 80px; }
-            .theme-switcher-bar, .lang-switcher-bar { position: relative; margin: 0.5rem; }
         }
     </style>
 </head>
 <body>
     <!-- Admin Indicator -->
     <div class="admin-indicator" id="admin-indicator">
-        <span class="status-dot"></span>
-        <span>ADMIN MODE</span>
-        <button onclick="adminLogout()" style="background:none; border:none; color:var(--p-text-dim); cursor:pointer; margin-left:0.5rem;">✕</button>
+        <span class="dot"></span> ADMIN MODE <button onclick="adminLogout()" style="background:none; border:none; color:var(--p-text-dim); cursor:pointer; margin-left:0.5rem;">✕</button>
     </div>
 
-    <!-- Admin Login Button -->
+    <!-- Admin Login -->
     <div class="admin-login">
-        <button class="admin-btn" onclick="toggleAdminModal()">
-            <i class="fas fa-lock"></i> Admin
-        </button>
+        <button class="admin-btn" onclick="toggleAdminModal()"><i class="fas fa-lock"></i> Admin</button>
     </div>
 
     <!-- Admin Modal -->
     <div class="admin-modal" id="admin-modal">
         <h3 style="color: var(--p-primary-light); margin-bottom: 1rem;">Admin Login</h3>
         <input type="password" class="admin-input" id="admin-password" placeholder="Enter password">
-        <button class="btn" onclick="adminLogin()" style="width: 100%; margin-top: 0.5rem;">
-            <i class="fas fa-sign-in-alt"></i> Login
-        </button>
-        <button class="btn" onclick="toggleAdminModal()" style="width: 100%; margin-top: 0.5rem; background: var(--p-surface-hover);">
-            Cancel
-        </button>
-        <div id="admin-status" style="margin-top: 0.5rem; font-size: 0.8rem; color: #FF3333;"></div>
+        <button class="btn" onclick="adminLogin()" style="width:100%; margin-top:0.5rem;">Login</button>
+        <button class="btn" onclick="toggleAdminModal()" style="width:100%; margin-top:0.5rem; background:var(--p-surface-hover);">Cancel</button>
+        <div id="admin-status" style="margin-top:0.5rem; font-size:0.8rem; color:#FF3333;"></div>
     </div>
 
-    <!-- Language Switcher -->
-    <div class="lang-switcher-bar">
-        <button class="lang-btn" onclick="toggleLanguage()">
-            <i class="fas fa-language"></i>
-            <span class="lang-text">English</span>
-        </button>
-    </div>
-
-    <!-- Theme Switcher -->
-    <div class="theme-switcher-bar">
-        <button class="theme-btn active" onclick="setTheme('default')" id="default-theme-btn">
-            <i class="fas fa-moon"></i> Default
-        </button>
-        <button class="theme-btn" onclick="setTheme('p3')" id="p3-theme-btn">
-            <i class="fas fa-clock"></i> P3R
-        </button>
-        <button class="theme-btn" onclick="setTheme('light')" id="light-theme-btn">
-            <i class="fas fa-sun"></i> Light
-        </button>
+    <!-- Top Bars -->
+    <div class="top-bars">
+        <div class="lang-switcher-bar">
+            <button class="lang-btn" onclick="toggleLanguage()"><i class="fas fa-language"></i> <span class="lang-text">English</span></button>
+        </div>
+        <div class="theme-switcher-bar">
+            <button class="theme-btn active" onclick="setTheme('default')" id="default-theme-btn"><i class="fas fa-moon"></i> Default</button>
+            <button class="theme-btn" onclick="setTheme('p3')" id="p3-theme-btn"><i class="fas fa-clock"></i> P3R</button>
+            <button class="theme-btn" onclick="setTheme('light')" id="light-theme-btn"><i class="fas fa-sun"></i> Light</button>
+        </div>
     </div>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="anime-gif-left">
-            <img src="https://99px.ru/sstorage/86/2016/10/image_862910161743391536726.gif" alt="Lain Anime" loading="lazy">
-        </div>
-        <div class="anime-gif-right">
-            <img src="https://99px.ru/sstorage/86/2020/04/10804200835411467.gif" alt="Lain takes off glasses" loading="lazy">
-        </div>
-
+        <div class="anime-gif-left"><img src="https://99px.ru/sstorage/86/2016/10/image_862910161743391536726.gif" alt="Lain" loading="lazy"></div>
+        <div class="anime-gif-right"><img src="https://99px.ru/sstorage/86/2020/04/10804200835411467.gif" alt="Lain" loading="lazy"></div>
         <div class="container">
             <div class="brand-header">
                 <div class="username">OnelifeOnedeath</div>
                 <div class="russian">
                     <div class="tagline">Универсальный инженер • Исследователь систем</div>
-                    <div class="universal-badge">
-                        <i class="fas fa-globe"></i> Один никнейм — все платформы
-                    </div>
+                    <div class="universal-badge"><i class="fas fa-globe"></i> Один никнейм — все платформы</div>
                 </div>
                 <div class="english">
                     <div class="tagline">Universal Engineer • Systems Researcher</div>
-                    <div class="universal-badge">
-                        <i class="fas fa-globe"></i> One username — all platforms
-                    </div>
+                    <div class="universal-badge"><i class="fas fa-globe"></i> One username — all platforms</div>
                 </div>
-
                 <div class="social-grid">
-                    <a href="https://github.com/OnelifeOnedeath" class="social-card github" target="_blank">
-                        <div class="social-icon"><i class="fab fa-github"></i></div>
-                        <div class="social-name">GitHub</div>
-                        <div class="social-handle">OnelifeOnedeath</div>
-                    </a>
-                    <a href="https://t.me/OnelifeOnedeath" class="social-card telegram" target="_blank">
-                        <div class="social-icon"><i class="fab fa-telegram"></i></div>
-                        <div class="social-name">Telegram</div>
-                        <div class="social-handle">@OnelifeOnedeath</div>
-                    </a>
-                    <a href="https://vk.com/onelifeonedeath" class="social-card vk" target="_blank">
-                        <div class="social-icon"><i class="fab fa-vk"></i></div>
-                        <div class="social-name">VK</div>
-                        <div class="social-handle">onelifeonedeath</div>
-                    </a>
-                    <a href="https://www.youtube.com/@OnelifeOnedeath" class="social-card youtube" target="_blank">
-                        <div class="social-icon"><i class="fab fa-youtube"></i></div>
-                        <div class="social-name">YouTube</div>
-                        <div class="social-handle">@OnelifeOnedeath</div>
-                    </a>
-                    <a href="https://steamcommunity.com/id/OnelifeOnedeath" class="social-card steam" target="_blank">
-                        <div class="social-icon"><i class="fab fa-steam"></i></div>
-                        <div class="social-name">Steam</div>
-                        <div class="social-handle">OnelifeOnedeath</div>
-                    </a>
-                    <a href="#" class="social-card discord">
-                        <div class="social-icon"><i class="fab fa-discord"></i></div>
-                        <div class="social-name">Discord</div>
-                        <div class="social-handle">OnelifeOnedeath</div>
-                    </a>
+                    <a href="https://github.com/OnelifeOnedeath" class="social-card github" target="_blank"><div class="social-icon"><i class="fab fa-github"></i></div><div class="social-name">GitHub</div><div class="social-handle">OnelifeOnedeath</div></a>
+                    <a href="https://t.me/OnelifeOnedeath" class="social-card telegram" target="_blank"><div class="social-icon"><i class="fab fa-telegram"></i></div><div class="social-name">Telegram</div><div class="social-handle">@OnelifeOnedeath</div></a>
+                    <a href="https://vk.com/onelifeonedeath" class="social-card vk" target="_blank"><div class="social-icon"><i class="fab fa-vk"></i></div><div class="social-name">VK</div><div class="social-handle">onelifeonedeath</div></a>
+                    <a href="https://www.youtube.com/@OnelifeOnedeath" class="social-card youtube" target="_blank"><div class="social-icon"><i class="fab fa-youtube"></i></div><div class="social-name">YouTube</div><div class="social-handle">@OnelifeOnedeath</div></a>
+                    <a href="https://steamcommunity.com/id/OnelifeOnedeath" class="social-card steam" target="_blank"><div class="social-icon"><i class="fab fa-steam"></i></div><div class="social-name">Steam</div><div class="social-handle">OnelifeOnedeath</div></a>
+                    <a href="#" class="social-card discord"><div class="social-icon"><i class="fab fa-discord"></i></div><div class="social-name">Discord</div><div class="social-handle">OnelifeOnedeath</div></a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section class="projects">
-        <div class="container">
-            <h2 class="section-title russian">Исследовательские проекты</h2>
-            <h2 class="section-title english">Research Projects</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <h3 class="project-title">Tapeworm 🐛</h3>
-                    <p class="project-description russian">Визуализатор Brainfuck с анимированным "ленточным червем".</p>
-                    <p class="project-description english">Brainfuck visualizer with an animated "tape worm".</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Rust</span>
-                        <span class="tech-tag">WASM</span>
-                    </div>
-                    <a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                </div>
-                <div class="project-card">
-                    <h3 class="project-title">Codex Mortis</h3>
-                    <p class="project-description russian">Мультиязычный кодекс на 10+ языках.</p>
-                    <p class="project-description english">Multi-language codex in 10+ languages.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Polyglot</span>
-                        <span class="tech-tag">Latin</span>
-                    </div>
-                    <a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                </div>
-                <div class="project-card">
-                    <h3 class="project-title">Ubuntu Design Helper</h3>
-                    <p class="project-description russian">Инструментарий для дизайнеров в Linux.</p>
-                    <p class="project-description english">Toolkit for designers in Linux.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Linux</span>
-                        <span class="tech-tag">Bash/Python</span>
-                    </div>
-                    <a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                </div>
-            </div>
+    <!-- Projects -->
+    <section class="projects"><div class="container">
+        <h2 class="section-title russian">Исследовательские проекты</h2><h2 class="section-title english">Research Projects</h2>
+        <div class="project-grid">
+            <div class="project-card"><h3 class="project-title">Tapeworm 🐛</h3><p class="project-description russian">Визуализатор Brainfuck.</p><p class="project-description english">Brainfuck visualizer.</p><div class="project-tech"><span class="tech-tag">Rust</span><span class="tech-tag">WASM</span></div><a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+            <div class="project-card"><h3 class="project-title">Codex Mortis</h3><p class="project-description russian">Мультиязычный кодекс.</p><p class="project-description english">Multi-language codex.</p><div class="project-tech"><span class="tech-tag">Polyglot</span><span class="tech-tag">Latin</span></div><a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+            <div class="project-card"><h3 class="project-title">Ubuntu Design Helper</h3><p class="project-description russian">Инструментарий для Linux.</p><p class="project-description english">Toolkit for Linux.</p><div class="project-tech"><span class="tech-tag">Linux</span><span class="tech-tag">Bash/Python</span></div><a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
         </div>
-    </section>
+    </div></section>
 
     <!-- Tapeworm Demo -->
-    <section class="tapeworm-demo">
-        <div class="container">
-            <h2 class="section-title">Tapeworm 🐛 Demo</h2>
-            <div class="demo-container">
-                <div class="demo-interface">
-                    <div class="code-input-section">
-                        <textarea id="bf-code" rows="6">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea>
-                        <div class="control-buttons" style="display:flex; gap:1rem;">
-                            <button class="btn" onclick="runBrainfuck()"><i class="fas fa-play"></i> Run</button>
-                            <button class="btn" onclick="resetBrainfuck()"><i class="fas fa-redo"></i> Reset</button>
-                            <button class="btn" onclick="stepBrainfuck()"><i class="fas fa-step-forward"></i> Step</button>
-                        </div>
-                    </div>
-                    <div class="visualization-section">
-                        <div class="output-display"><h4>Output:</h4><div id="bf-output" class="output-text"></div></div>
-                        <div class="tape-display"><h4>Memory Tape:</h4><div id="bf-tape" class="tape-visualization"></div></div>
-                        <div class="stats-display"><h4>Statistics:</h4><div id="bf-stats" class="stats-text"></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section class="tapeworm-demo"><div class="container">
+        <h2 class="section-title">Tapeworm 🐛 Demo</h2>
+        <div class="demo-container"><div class="demo-interface">
+            <div class="code-input-section"><textarea id="bf-code" rows="6">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea><div style="display:flex; gap:1rem;"><button class="btn" onclick="runBrainfuck()"><i class="fas fa-play"></i> Run</button><button class="btn" onclick="resetBrainfuck()"><i class="fas fa-redo"></i> Reset</button><button class="btn" onclick="stepBrainfuck()"><i class="fas fa-step-forward"></i> Step</button></div></div>
+            <div class="visualization-section"><div class="output-display"><h4>Output:</h4><div id="bf-output" class="output-text"></div></div><div class="tape-display"><h4>Memory Tape:</h4><div id="bf-tape" class="tape-visualization"></div></div><div class="stats-display"><h4>Statistics:</h4><div id="bf-stats" class="stats-text"></div></div></div>
+        </div></div>
+    </div></section>
 
     <!-- Skills -->
-    <section class="skills">
-        <div class="container">
-            <h2 class="section-title russian">Технологии</h2>
-            <h2 class="section-title english">Technologies</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Backend</h3>
-                    <div class="skill-tags">
-                        <span class="tech-tag">C# / .NET</span>
-                        <span class="tech-tag">Rust</span>
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">PostgreSQL</span>
-                        <span class="tech-tag">Redis</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>System Programming</h3>
-                    <div class="skill-tags">
-                        <span class="tech-tag">Linux</span>
-                        <span class="tech-tag">Docker</span>
-                        <span class="tech-tag">Bash</span>
-                        <span class="tech-tag">Networking</span>
-                        <span class="tech-tag">WASM</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Tools</h3>
-                    <div class="skill-tags">
-                        <span class="tech-tag">Git</span>
-                        <span class="tech-tag">Docker</span>
-                        <span class="tech-tag">AWS</span>
-                        <span class="tech-tag">CI/CD</span>
-                    </div>
-                </div>
-            </div>
+    <section class="skills"><div class="container">
+        <h2 class="section-title russian">Технологии</h2><h2 class="section-title english">Technologies</h2>
+        <div class="skills-grid">
+            <div class="skill-category"><h3>Backend</h3><div class="skill-tags"><span class="tech-tag">C# / .NET</span><span class="tech-tag">Rust</span><span class="tech-tag">Python</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Redis</span></div></div>
+            <div class="skill-category"><h3>System Programming</h3><div class="skill-tags"><span class="tech-tag">Linux</span><span class="tech-tag">Docker</span><span class="tech-tag">Bash</span><span class="tech-tag">Networking</span><span class="tech-tag">WASM</span></div></div>
+            <div class="skill-category"><h3>Tools</h3><div class="skill-tags"><span class="tech-tag">Git</span><span class="tech-tag">Docker</span><span class="tech-tag">AWS</span><span class="tech-tag">CI/CD</span></div></div>
         </div>
-    </section>
+    </div></section>
 
     <!-- Contact -->
-    <section class="contact">
-        <div class="container">
-            <h2 class="section-title russian">Контакты</h2>
-            <h2 class="section-title english">Contacts</h2>
-            <a href="mailto:igorb9475@gmail.com" class="btn">
-                <i class="fas fa-envelope"></i>
-                <span class="russian">Написать письмо</span>
-                <span class="english">Send Email</span>
-            </a>
-        </div>
-    </section>
+    <section class="contact"><div class="container">
+        <h2 class="section-title russian">Контакты</h2><h2 class="section-title english">Contacts</h2>
+        <a href="mailto:igorb9475@gmail.com" class="btn"><i class="fas fa-envelope"></i> <span class="russian">Написать письмо</span><span class="english">Send Email</span></a>
+    </div></section>
 
     <!-- Philosophy -->
-    <section class="philosophy">
-        <div class="container">
-            <p class="philosophy-main russian" style="font-size:1.4rem; font-style:italic;">"Одна жизнь, одна смерть — философия глубинного понимания систем."</p>
-            <p class="philosophy-main english" style="font-size:1.4rem; font-style:italic;">"One life, one death — a philosophy of deep system understanding."</p>
-        </div>
-    </section>
+    <section class="philosophy"><div class="container">
+        <p class="russian" style="font-size:1.4rem; font-style:italic;">"Одна жизнь, одна смерть — философия глубинного понимания систем."</p>
+        <p class="english" style="font-size:1.4rem; font-style:italic;">"One life, one death — a philosophy of deep system understanding."</p>
+    </div></section>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div style="font-size: 2rem; font-weight: 800; color: var(--p-primary-light);">OnelifeOnedeath</div>
-            <p class="footer-text russian">Универсальный инженер • 2025</p>
-            <p class="footer-text english">Universal Engineer • 2025</p>
-        </div>
-    </footer>
+    <footer><div class="container"><div style="font-size:2rem; font-weight:800; color:var(--p-primary-light);">OnelifeOnedeath</div><p class="footer-text russian">Универсальный инженер • 2025</p><p class="footer-text english">Universal Engineer • 2025</p></div></footer>
 
-    <!-- Persona 5 Style Chat Button -->
-    <button class="p5-chat-button" onclick="toggleP5Chat()" title="Chat">
-        <i class="fas fa-bolt"></i>
-    </button>
+    <!-- Persona 5 Chat FAB -->
+    <button class="p5-chat-fab" onclick="openP5Chat()" title="Chat"><i class="fas fa-bolt"></i></button>
 
-    <!-- Persona 5 Style Chat Modal -->
-    <div class="p5-chat-modal" id="p5-chat-modal">
-        <div class="p5-chat-header">
-            <div class="p5-chat-title">
-                <div class="p5-chat-title-icon">⚡</div>
-                <div class="p5-chat-title-text">C H A T</div>
+    <!-- Persona 5 Chat Overlay -->
+    <div class="p5-chat-overlay" id="p5-chat-overlay">
+        <div style="position: relative;">
+            <button class="p5-chat-close-btn" onclick="closeP5Chat()">✕</button>
+            <div class="phone-container">
+                <svg class="phone-svg"><polygon points="10,0 290,0 280,300 280,450 0,450"/></svg>
+                <svg class="screen-border-svg"><polygon points="20,10 280,10 270,300 270,440 10,440"/></svg>
+                <svg class="screen-svg"><polygon points="25,14 270,18 265,437 18,432"/></svg>
+                <div class="screen" id="p5-screen">
+                    <!-- Main SNS View -->
+                    <div class="sns-view" id="sns-view">
+                        <div class="sns">
+                            <span class="lettering-under">SNS</span>
+                            <span class="lettering"><span style="color: #E60012">S</span>NS</span>
+                        </div>
+                        <svg class="zig-shadow"><polygon points="70,90 80,90 60,170 110,230 80,290 50,290 70,225 30,170"/></svg>
+                        <svg class="zig"><polygon points="70,80 80,80 60,160 110,220 80,280 50,280 70,215 30,160"/></svg>
+                        <div class="messages" id="p5-contacts">
+                            <!-- Contacts render here -->
+                        </div>
+                    </div>
+                    <!-- Chat View -->
+                    <div class="chat-view" id="chat-view">
+                        <div class="chat-view-header">
+                            <button class="chat-view-back" onclick="backToContacts()">←</button>
+                            <span class="chat-view-name" id="chat-view-name">CONTACT</span>
+                        </div>
+                        <div class="chat-messages-p5" id="chat-messages-p5"></div>
+                        <div class="chat-input-bar">
+                            <input type="text" id="p5-msg-input" placeholder="Message..." onkeypress="if(event.key==='Enter')sendP5Msg()">
+                            <button onclick="sendP5Msg()">SEND</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="p5-chat-close" onclick="toggleP5Chat()">✕</button>
-        </div>
-        <div class="p5-chat-info">
-            <input type="text" class="p5-chat-nickname-input" id="p5-nickname-input" 
-                   placeholder="CODENAME" maxlength="12" onchange="saveP5Nickname()">
-        </div>
-        <div class="p5-chat-messages" id="p5-chat-messages">
-        </div>
-        <div class="p5-chat-input-area">
-            <input type="text" class="p5-chat-input" id="p5-chat-input" 
-                   placeholder="Type message..." onkeypress="handleP5ChatKey(event)">
-            <button class="p5-chat-send" onclick="sendP5Message()">▶ SEND</button>
         </div>
     </div>
 
     <script>
-        // ==================== THEME SYSTEM ====================
+        // ==================== THEME ====================
         const themes = {
-            default: {
-                '--p-primary': '#8B5CF6', '--p-primary-hover': '#7C3AED',
-                '--p-primary-light': '#A78BFA', '--p-primary-dark': '#5B21B6',
-                '--p-highlight': '#C4B5FD', '--p-surface': '#1F2937',
-                '--p-surface-hover': '#374151', '--p-surface-light': '#2D3748',
-                '--p-background': '#111827', '--p-background-alt': '#0F172A',
-                '--p-text': '#F9FAFB', '--p-text-muted': '#D1D5DB',
-                '--p-text-dim': '#9CA3AF', '--p-text-on-primary': '#FFFFFF',
-                '--p-border': '#374151', '--p-border-light': '#4B5563',
-                '--p-border-hover': '#6B7280',
-                '--btn-bg': 'rgba(139, 92, 246, 0.25)', '--btn-border': 'rgba(139, 92, 246, 0.6)',
-                '--btn-hover-bg': 'rgba(139, 92, 246, 0.45)', '--btn-text': '#FFFFFF',
-                '--card-bg': 'rgba(255, 255, 255, 0.07)', '--card-bg-hover': 'rgba(255, 255, 255, 0.12)'
-            },
-            light: {
-                '--p-primary': '#8B5CF6', '--p-primary-hover': '#7C3AED',
-                '--p-primary-light': '#6D28D9', '--p-primary-dark': '#5B21B6',
-                '--p-highlight': '#A78BFA', '--p-surface': '#FFFFFF',
-                '--p-surface-hover': '#F5F3FF', '--p-surface-light': '#EDE9FE',
-                '--p-background': '#FEF7FF', '--p-background-alt': '#F3E8FF',
-                '--p-text': '#1E1B4B', '--p-text-muted': '#4C1D95',
-                '--p-text-dim': '#7C3AED', '--p-text-on-primary': '#FFFFFF',
-                '--p-border': '#DDD6FE', '--p-border-light': '#C4B5FD',
-                '--p-border-hover': '#A78BFA',
-                '--btn-bg': 'rgba(139, 92, 246, 0.12)', '--btn-border': 'rgba(139, 92, 246, 0.4)',
-                '--btn-hover-bg': 'rgba(139, 92, 246, 0.25)', '--btn-text': '#1E1B4B',
-                '--card-bg': 'rgba(255, 255, 255, 0.9)', '--card-bg-hover': 'rgba(255, 255, 255, 1)'
-            },
-            p3: {
-                '--p-primary': '#1B2838', '--p-primary-hover': '#2D4A6E',
-                '--p-primary-light': '#4A90D9', '--p-primary-dark': '#0F1923',
-                '--p-highlight': '#6BB5FF', '--p-surface': '#152230',
-                '--p-surface-hover': '#1E3348', '--p-surface-light': '#1A2D42',
-                '--p-background': '#0D1520', '--p-background-alt': '#0A1018',
-                '--p-text': '#E8F0F8', '--p-text-muted': '#8CB4D8',
-                '--p-text-dim': '#5A8AB5', '--p-text-on-primary': '#FFFFFF',
-                '--p-border': '#1E3348', '--p-border-light': '#2D4A6E',
-                '--p-border-hover': '#4A90D9',
-                '--btn-bg': 'rgba(74, 144, 217, 0.2)', '--btn-border': 'rgba(74, 144, 217, 0.5)',
-                '--btn-hover-bg': 'rgba(74, 144, 217, 0.4)', '--btn-text': '#FFFFFF',
-                '--card-bg': 'rgba(30, 51, 72, 0.4)', '--card-bg-hover': 'rgba(30, 51, 72, 0.6)'
-            }
+            default: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#A78BFA','--p-primary-dark':'#5B21B6','--p-highlight':'#C4B5FD','--p-surface':'#1F2937','--p-surface-hover':'#374151','--p-surface-light':'#2D3748','--p-background':'#111827','--p-background-alt':'#0F172A','--p-text':'#F9FAFB','--p-text-muted':'#D1D5DB','--p-text-dim':'#9CA3AF','--p-border':'#374151','--p-border-light':'#4B5563','--p-border-hover':'#6B7280','--btn-bg':'rgba(139,92,246,0.25)','--btn-border':'rgba(139,92,246,0.6)','--btn-hover-bg':'rgba(139,92,246,0.45)','--btn-text':'#FFFFFF','--card-bg':'rgba(255,255,255,0.07)','--card-bg-hover':'rgba(255,255,255,0.12)'},
+            light: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#6D28D9','--p-primary-dark':'#5B21B6','--p-highlight':'#A78BFA','--p-surface':'#FFFFFF','--p-surface-hover':'#F5F3FF','--p-surface-light':'#EDE9FE','--p-background':'#FEF7FF','--p-background-alt':'#F3E8FF','--p-text':'#1E1B4B','--p-text-muted':'#4C1D95','--p-text-dim':'#7C3AED','--p-border':'#DDD6FE','--p-border-light':'#C4B5FD','--p-border-hover':'#A78BFA','--btn-bg':'rgba(139,92,246,0.12)','--btn-border':'rgba(139,92,246,0.4)','--btn-hover-bg':'rgba(139,92,246,0.25)','--btn-text':'#1E1B4B','--card-bg':'rgba(255,255,255,0.9)','--card-bg-hover':'rgba(255,255,255,1)'},
+            p3: {'--p-primary':'#1B2838','--p-primary-hover':'#2D4A6E','--p-primary-light':'#4A90D9','--p-primary-dark':'#0F1923','--p-highlight':'#6BB5FF','--p-surface':'#152230','--p-surface-hover':'#1E3348','--p-surface-light':'#1A2D42','--p-background':'#0D1520','--p-background-alt':'#0A1018','--p-text':'#E8F0F8','--p-text-muted':'#8CB4D8','--p-text-dim':'#5A8AB5','--p-border':'#1E3348','--p-border-light':'#2D4A6E','--p-border-hover':'#4A90D9','--p-btn-bg':'rgba(74,144,217,0.2)','--btn-border':'rgba(74,144,217,0.5)','--btn-hover-bg':'rgba(74,144,217,0.4)','--btn-text':'#FFFFFF','--card-bg':'rgba(30,51,72,0.4)','--card-bg-hover':'rgba(30,51,72,0.6)'}
         };
 
-        function setTheme(theme) {
-            const root = document.documentElement;
-            Object.entries(themes[theme]).forEach(([prop, val]) => root.style.setProperty(prop, val));
-            root.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
+        function setTheme(t) {
+            Object.entries(themes[t]).forEach(([k,v]) => document.documentElement.style.setProperty(k,v));
+            document.documentElement.setAttribute('data-theme', t);
+            localStorage.setItem('theme', t);
             document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`${theme}-theme-btn`).classList.add('active');
+            document.getElementById(t+'-theme-btn').classList.add('active');
         }
 
         // ==================== LANGUAGE ====================
-        let currentLanguage = 'russian';
+        let cl = 'russian';
         function toggleLanguage() {
-            const russian = document.querySelectorAll('.russian');
-            const english = document.querySelectorAll('.english');
-            if (currentLanguage === 'russian') {
-                russian.forEach(e => e.style.display = 'none');
-                english.forEach(e => e.style.display = 'block');
-                document.querySelector('.lang-text').textContent = 'Русский';
-                currentLanguage = 'english';
-            } else {
-                russian.forEach(e => e.style.display = 'block');
-                english.forEach(e => e.style.display = 'none');
-                document.querySelector('.lang-text').textContent = 'English';
-                currentLanguage = 'russian';
-            }
-            localStorage.setItem('language', currentLanguage);
+            const ru = document.querySelectorAll('.russian'), en = document.querySelectorAll('.english');
+            if (cl === 'russian') { ru.forEach(e => e.style.display='none'); en.forEach(e => e.style.display='block'); document.querySelector('.lang-text').textContent='Русский'; cl = 'english'; }
+            else { ru.forEach(e => e.style.display='block'); en.forEach(e => e.style.display='none'); document.querySelector('.lang-text').textContent='English'; cl = 'russian'; }
+            localStorage.setItem('language', cl);
         }
 
-        // ==================== ADMIN SYSTEM ====================
+        // ==================== ADMIN ====================
         let isAdmin = false;
-        const ADMIN_PASSWORD = 'persona3reload';
-
+        const AP = 'persona3reload';
         function updateAdminUI() {
-            const indicator = document.getElementById('admin-indicator');
-            const adminBtn = document.querySelector('.admin-btn');
-            
-            if (isAdmin) {
-                indicator.classList.add('visible');
-                adminBtn.innerHTML = '<i class="fas fa-lock-open"></i> Admin ON';
-                adminBtn.style.color = '#00FF00';
-            } else {
-                indicator.classList.remove('visible');
-                adminBtn.innerHTML = '<i class="fas fa-lock"></i> Admin';
-                adminBtn.style.color = '';
-            }
+            document.getElementById('admin-indicator').classList.toggle('visible', isAdmin);
+            const btn = document.querySelector('.admin-btn');
+            if (isAdmin) { btn.innerHTML = '<i class="fas fa-lock-open"></i> Admin ON'; btn.style.color = '#00FF00'; }
+            else { btn.innerHTML = '<i class="fas fa-lock"></i> Admin'; btn.style.color = ''; }
         }
-
-        function toggleAdminModal() {
-            const modal = document.getElementById('admin-modal');
-            modal.classList.toggle('open');
-            document.getElementById('admin-password').value = '';
-            document.getElementById('admin-status').textContent = '';
-        }
-
+        function toggleAdminModal() { document.getElementById('admin-modal').classList.toggle('open'); document.getElementById('admin-password').value=''; document.getElementById('admin-status').textContent=''; }
         function adminLogin() {
-            const password = document.getElementById('admin-password').value;
-            if (password === ADMIN_PASSWORD) {
-                isAdmin = true;
-                localStorage.setItem('isAdmin', 'true');
-                document.getElementById('admin-status').textContent = '✅ ACCESS GRANTED';
-                document.getElementById('admin-status').style.color = '#00FF00';
-                updateAdminUI();
-                setTimeout(() => toggleAdminModal(), 800);
-            } else {
-                document.getElementById('admin-status').textContent = '❌ ACCESS DENIED';
-                document.getElementById('admin-status').style.color = '#FF3333';
-            }
+            if (document.getElementById('admin-password').value === AP) {
+                isAdmin = true; localStorage.setItem('isAdmin','true');
+                document.getElementById('admin-status').textContent='✅ ACCESS GRANTED'; document.getElementById('admin-status').style.color='#00FF00';
+                updateAdminUI(); setTimeout(toggleAdminModal, 800);
+            } else { document.getElementById('admin-status').textContent='❌ ACCESS DENIED'; document.getElementById('admin-status').style.color='#FF3333'; }
         }
-
-        function adminLogout() {
-            isAdmin = false;
-            localStorage.setItem('isAdmin', 'false');
-            updateAdminUI();
-        }
+        function adminLogout() { isAdmin = false; localStorage.setItem('isAdmin','false'); updateAdminUI(); }
 
         // ==================== P5 CHAT ====================
-        let p5ChatOpen = false;
-        let p5Messages = JSON.parse(localStorage.getItem('p5_messages') || '[]');
-        let p5Nickname = localStorage.getItem('p5_nickname') || '';
+        let p5Chats = JSON.parse(localStorage.getItem('p5_chats') || '{}');
+        let currentChat = null;
 
-        function toggleP5Chat() {
-            p5ChatOpen = !p5ChatOpen;
-            document.getElementById('p5-chat-modal').classList.toggle('open', p5ChatOpen);
-            if (p5ChatOpen) {
-                document.getElementById('p5-nickname-input').value = p5Nickname;
-                renderP5Messages();
+        function openP5Chat() { document.getElementById('p5-chat-overlay').classList.add('open'); renderContacts(); }
+        function closeP5Chat() { document.getElementById('p5-chat-overlay').classList.remove('open'); backToContacts(); }
+
+        function getOrCreateChat(name) {
+            if (!p5Chats[name]) p5Chats[name] = { name, avatar: '', messages: [] };
+            return p5Chats[name];
+        }
+
+        function renderContacts() {
+            document.getElementById('sns-view').style.display = 'block';
+            document.getElementById('chat-view').classList.remove('active');
+            currentChat = null;
+
+            const container = document.getElementById('p5-contacts');
+            const names = Object.keys(p5Chats);
+            
+            if (names.length === 0) {
+                container.innerHTML = `
+                    <div class="contact" onclick="startNewChat()">
+                        <svg class="border"><polygon points="0,5 60,0 70,30 10,55"/></svg>
+                        <svg class="outline"><polygon points="8,7 58,2 67,28 18,48"/></svg>
+                        <svg class="panel"><polygon points="12,11 56,5 64,26 20,42"/></svg>
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23E60012' width='100' height='100'/><text x='50' y='65' text-anchor='middle' fill='white' font-size='50'>+</text></svg>" alt="New">
+                        <div class="text-container">
+                            <svg class="text-outline-1"><polygon points="78,10 220,0 210,44 69,48"/></svg>
+                            <svg class="text-outline-2"><polygon points="80,12 210,4 205,40 73,44"/></svg>
+                            <div class="text-skew"><label>New Chat</label></div>
+                        </div>
+                    </div>
+                `;
+                return;
             }
-        }
 
-        function saveP5Nickname() {
-            p5Nickname = document.getElementById('p5-nickname-input').value.trim() || 'ANONYMOUS';
-            localStorage.setItem('p5_nickname', p5Nickname);
-        }
-
-        function handleP5ChatKey(event) {
-            if (event.key === 'Enter') sendP5Message();
-        }
-
-        function sendP5Message() {
-            const input = document.getElementById('p5-chat-input');
-            const message = input.value.trim();
-            if (!message) return;
-            
-            saveP5Nickname();
-            
-            const msgObj = {
-                id: Date.now(),
-                nickname: isAdmin ? 'ONELIFEONEDEATH' : p5Nickname,
-                message: message,
-                timestamp: new Date().toISOString(),
-                isOwner: !isAdmin,
-                isReply: isAdmin
-            };
-            
-            p5Messages.push(msgObj);
-            localStorage.setItem('p5_messages', JSON.stringify(p5Messages));
-            input.value = '';
-            renderP5Messages();
-        }
-
-        function renderP5Messages() {
-            const container = document.getElementById('p5-chat-messages');
-            container.innerHTML = p5Messages.map(msg => {
-                const isOwn = (isAdmin && msg.isReply) || (!isAdmin && msg.isOwner);
+            container.innerHTML = names.map((name, i) => {
+                const chat = p5Chats[name];
+                const lastMsg = chat.messages.length > 0 ? chat.messages[chat.messages.length-1].text : '';
+                const isActive = i === 0;
                 return `
-                <div class="p5-message ${isOwn ? 'own' : ''}">
-                    <div class="p5-message-avatar">
-                        ${msg.isReply ? '👑' : (msg.nickname.charAt(0).toUpperCase())}
+                <div class="contact" onclick="openChat('${name.replace(/'/g, "\\'")}')">
+                    <svg class="border"><polygon points="0,5 60,0 70,30 10,55"/></svg>
+                    <svg class="outline"><polygon points="8,7 58,2 67,28 18,48"/></svg>
+                    <svg class="${isActive ? 'panel-b' : 'panel'}"><polygon points="12,11 56,5 64,26 20,42"/></svg>
+                    <img src="${chat.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" alt="${name}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'">
+                    <div class="text-container">
+                        <svg class="text-outline-1"><polygon points="78,10 220,0 210,44 69,48"/></svg>
+                        <svg class="text-outline-2"><polygon points="80,12 210,4 205,40 73,44"/></svg>
+                        <div class="text-skew">${name}<label>${lastMsg.substring(0,20)}</label></div>
                     </div>
-                    <div class="p5-message-content">
-                        <div class="p5-message-nickname">${escapeHtml(msg.nickname)}</div>
-                        <div class="p5-message-bubble">${escapeHtml(msg.message)}</div>
-                    </div>
+                    ${!isAdmin && chat.messages.some(m => m.from === 'admin' && !m.read) ? `
+                    <div class="message-type">
+                        <svg class="lettering-outline"><polygon points="0,3 9,1 16,4 17,13 13,18 11,25 3,25 2,17 3,12 0,10"/></svg>
+                        <span class="lettering">!</span>
+                    </div>` : ''}
                 </div>
                 `;
-            }).join('');
+            }).join('') + `
+            <div class="contact" onclick="startNewChat()" style="opacity:0.6;">
+                <svg class="border"><polygon points="0,5 60,0 70,30 10,55"/></svg>
+                <svg class="outline"><polygon points="8,7 58,2 67,28 18,48"/></svg>
+                <svg class="panel"><polygon points="12,11 56,5 64,26 20,42"/></svg>
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23333' width='100' height='100'/><text x='50' y='65' text-anchor='middle' fill='%23E60012' font-size='50'>+</text></svg>" alt="New">
+                <div class="text-container">
+                    <svg class="text-outline-1"><polygon points="78,10 220,0 210,44 69,48"/></svg>
+                    <svg class="text-outline-2"><polygon points="80,12 210,4 205,40 73,44"/></svg>
+                    <div class="text-skew"><label>New Chat</label></div>
+                </div>
+            </div>`;
+        }
+
+        function startNewChat() {
+            const name = prompt(isAdmin ? 'Enter visitor name:' : 'Enter your name:');
+            if (!name || name.trim() === '') return;
+            const chat = getOrCreateChat(name.trim());
+            if (!chat.avatar) {
+                const avatar = prompt('Enter avatar URL (or leave blank for default):');
+                if (avatar && avatar.trim()) chat.avatar = avatar.trim();
+            }
+            saveChats();
+            openChat(name.trim());
+        }
+
+        function openChat(name) {
+            currentChat = name;
+            document.getElementById('sns-view').style.display = 'none';
+            document.getElementById('chat-view').classList.add('active');
+            document.getElementById('chat-view-name').textContent = name;
+            
+            // Mark messages as read
+            const chat = getOrCreateChat(name);
+            chat.messages.forEach(m => { if (m.from === 'admin' && !m.read) m.read = true; });
+            saveChats();
+            renderMessages();
+        }
+
+        function backToContacts() {
+            currentChat = null;
+            document.getElementById('sns-view').style.display = 'block';
+            document.getElementById('chat-view').classList.remove('active');
+            renderContacts();
+        }
+
+        function sendP5Msg() {
+            const input = document.getElementById('p5-msg-input');
+            const text = input.value.trim();
+            if (!text || !currentChat) return;
+
+            const chat = getOrCreateChat(currentChat);
+            chat.messages.push({
+                from: isAdmin ? 'admin' : 'user',
+                text,
+                time: new Date().toISOString(),
+                read: isAdmin
+            });
+            saveChats();
+            input.value = '';
+            renderMessages();
+        }
+
+        function renderMessages() {
+            if (!currentChat) return;
+            const chat = getOrCreateChat(currentChat);
+            const container = document.getElementById('chat-messages-p5');
+            container.innerHTML = chat.messages.map(m => `
+                <div class="chat-msg ${(isAdmin && m.from === 'admin') || (!isAdmin && m.from === 'user') ? 'own' : ''}">
+                    <img class="chat-msg-avatar" src="${m.from === 'admin' ? (chat.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg') : 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" 
+                         onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'">
+                    <div class="chat-msg-bubble">${escapeHtml(m.text)}</div>
+                </div>
+            `).join('');
             container.scrollTop = container.scrollHeight;
         }
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+        function saveChats() { localStorage.setItem('p5_chats', JSON.stringify(p5Chats)); }
+        function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
         // ==================== BRAINFUCK ====================
         class SimpleBrainfuck {
-            constructor() {
-                this.tape = new Array(30).fill(0);
-                this.pointer = 0;
-                this.code = '';
-                this.ip = 0;
-                this.output = '';
-                this.stats = { '>':0, '<':0, '+':0, '-':0, '.':0, ',':0, '[':0, ']':0 };
-                this.bracketMap = {};
-            }
-            loadCode(code) {
-                this.code = code;
-                this.output = '';
-                this.pointer = 0;
-                this.ip = 0;
-                this.tape = new Array(30).fill(0);
-                this.stats = { '>':0, '<':0, '+':0, '-':0, '.':0, ',':0, '[':0, ']':0 };
-                this.buildBracketMap();
-            }
-            buildBracketMap() {
-                let stack = [];
-                this.bracketMap = {};
-                for (let i = 0; i < this.code.length; i++) {
-                    if (this.code[i] === '[') stack.push(i);
-                    else if (this.code[i] === ']') {
-                        if (stack.length === 0) throw new Error("Unmatched ]");
-                        let start = stack.pop();
-                        this.bracketMap[start] = i;
-                        this.bracketMap[i] = start;
-                    }
-                }
-            }
-            step() {
-                if (this.ip >= this.code.length) return null;
-                let cmd = this.code[this.ip];
-                if (cmd in this.stats) this.stats[cmd]++;
-                switch(cmd) {
-                    case '>': this.pointer++; break;
-                    case '<': this.pointer--; break;
-                    case '+': this.tape[this.pointer] = (this.tape[this.pointer] + 1) % 256; break;
-                    case '-': this.tape[this.pointer] = (this.tape[this.pointer] - 1 + 256) % 256; break;
-                    case '.': this.output += String.fromCharCode(this.tape[this.pointer]); break;
-                    case '[': if (this.tape[this.pointer] === 0) this.ip = this.bracketMap[this.ip]; break;
-                    case ']': if (this.tape[this.pointer] !== 0) this.ip = this.bracketMap[this.ip]; break;
-                }
-                this.ip++;
-                return true;
-            }
+            constructor() { this.tape = new Array(30).fill(0); this.pointer = 0; this.code = ''; this.ip = 0; this.output = ''; this.stats = {'>':0,'<':0,'+':0,'-':0,'.':0,',':0,'[':0,']':0}; this.bracketMap = {}; }
+            loadCode(c) { this.code = c; this.output = ''; this.pointer = 0; this.ip = 0; this.tape = new Array(30).fill(0); this.stats = {'>':0,'<':0,'+':0,'-':0,'.':0,',':0,'[':0,']':0}; this.buildBracketMap(); }
+            buildBracketMap() { let s = []; this.bracketMap = {}; for (let i = 0; i < this.code.length; i++) { if (this.code[i] === '[') s.push(i); else if (this.code[i] === ']') { let st = s.pop(); this.bracketMap[st] = i; this.bracketMap[i] = st; } } }
+            step() { if (this.ip >= this.code.length) return null; let c = this.code[this.ip]; if (c in this.stats) this.stats[c]++; switch(c) { case '>': this.pointer++; break; case '<': this.pointer--; break; case '+': this.tape[this.pointer] = (this.tape[this.pointer]+1)%256; break; case '-': this.tape[this.pointer] = (this.tape[this.pointer]-1+256)%256; break; case '.': this.output += String.fromCharCode(this.tape[this.pointer]); break; case '[': if (this.tape[this.pointer]===0) this.ip = this.bracketMap[this.ip]; break; case ']': if (this.tape[this.pointer]!==0) this.ip = this.bracketMap[this.ip]; break; } this.ip++; return true; }
         }
-
         let bf = new SimpleBrainfuck();
-
-        function resetBrainfuck() {
-            bf.loadCode(document.getElementById('bf-code').value);
-            updateDisplay();
-        }
+        function resetBrainfuck() { bf.loadCode(document.getElementById('bf-code').value); updateDisplay(); }
         function runBrainfuck() { resetBrainfuck(); executeSteps(); }
         function stepBrainfuck() { if (bf.step()) updateDisplay(); }
         function executeSteps() { if (bf.step()) { updateDisplay(); setTimeout(executeSteps, 100); } }
         function updateDisplay() {
             document.getElementById('bf-output').textContent = bf.output;
-            const tape = document.getElementById('bf-tape');
-            tape.innerHTML = '';
-            for (let i = 0; i < 15; i++) {
-                const cell = document.createElement('div');
-                cell.className = `tape-cell ${i === bf.pointer ? 'active' : ''}`;
-                cell.textContent = bf.tape[i];
-                tape.appendChild(cell);
-            }
-            const total = Object.values(bf.stats).reduce((a,b) => a+b, 0);
-            document.getElementById('bf-stats').textContent = `Total: ${total}`;
+            const tape = document.getElementById('bf-tape'); tape.innerHTML = '';
+            for (let i = 0; i < 15; i++) { const cell = document.createElement('div'); cell.className = `tape-cell ${i===bf.pointer?'active':''}`; cell.textContent = bf.tape[i]; tape.appendChild(cell); }
+            document.getElementById('bf-stats').textContent = `Total: ${Object.values(bf.stats).reduce((a,b)=>a+b,0)}`;
         }
 
         // ==================== INIT ====================
@@ -1660,9 +1189,6 @@
             resetBrainfuck();
             setTheme(localStorage.getItem('theme') || 'default');
             if (localStorage.getItem('language') === 'english') toggleLanguage();
-            if (p5Nickname) document.getElementById('p5-nickname-input').value = p5Nickname;
-            
-            // Check admin status
             isAdmin = localStorage.getItem('isAdmin') === 'true';
             updateAdminUI();
         });
