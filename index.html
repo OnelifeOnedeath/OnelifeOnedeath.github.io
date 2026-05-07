@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OnelifeOnedeath - Universal Engineer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Default Purple Theme */
             --p-primary: #8B5CF6;
             --p-primary-hover: #7C3AED;
             --p-primary-light: #A78BFA;
@@ -22,37 +23,39 @@
             --p-text-dim: #9CA3AF;
             --p-border: #374151;
             --p-border-light: #4B5563;
-            --p-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1);
-            --p-glow: 0 0 15px rgba(139, 92, 246, 0.3);
             --btn-bg: rgba(139, 92, 246, 0.25);
             --btn-border: rgba(139, 92, 246, 0.6);
             --btn-hover-bg: rgba(139, 92, 246, 0.45);
             --btn-text: #FFFFFF;
             --card-bg: rgba(255, 255, 255, 0.07);
+            --card-padding: 1.5rem;
         }
 
+        /* Persona 3 Reload Theme */
         [data-theme="p3"] {
-            --p-primary: #1B2838;
-            --p-primary-hover: #2D4A6E;
+            --p-primary: #0D1B2A;
+            --p-primary-hover: #1B3A5C;
             --p-primary-light: #4A90D9;
-            --p-primary-dark: #0F1923;
+            --p-primary-dark: #060F18;
             --p-highlight: #6BB5FF;
-            --p-surface: #152230;
-            --p-surface-hover: #1E3348;
-            --p-background: #0D1520;
-            --p-background-alt: #0A1018;
+            --p-surface: #0F1F33;
+            --p-surface-hover: #162D4A;
+            --p-background: #0A1628;
+            --p-background-alt: #060F18;
             --p-text: #E8F0F8;
             --p-text-muted: #8CB4D8;
             --p-text-dim: #5A8AB5;
-            --p-border: #1E3348;
+            --p-border: #1B3A5C;
             --p-border-light: #2D4A6E;
             --btn-bg: rgba(74, 144, 217, 0.2);
             --btn-border: rgba(74, 144, 217, 0.5);
-            --btn-hover-bg: rgba(74, 144, 217, 0.4);
-            --btn-text: #FFFFFF;
-            --card-bg: rgba(30, 51, 72, 0.4);
+            --btn-hover-bg: rgba(74, 144, 217, 0.35);
+            --btn-text: #E8F0F8;
+            --card-bg: rgba(15, 31, 51, 0.6);
+            --card-padding: 1.5rem;
         }
 
+        /* Light Theme */
         [data-theme="light"] {
             --p-primary: #8B5CF6;
             --p-primary-hover: #7C3AED;
@@ -73,278 +76,337 @@
             --btn-hover-bg: rgba(139, 92, 246, 0.25);
             --btn-text: #1E1B4B;
             --card-bg: rgba(255, 255, 255, 0.9);
+            --card-padding: 1.5rem;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.4s ease; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; }
 
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
             background: var(--p-background);
             color: var(--p-text);
             line-height: 1.6;
+            min-height: 100vh;
         }
 
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 10px var(--p-highlight); } 50% { box-shadow: 0 0 25px var(--p-highlight); } }
+        @keyframes caustic-shift { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
+        /* Hero */
         .hero {
-            min-height: 100vh; display: flex; align-items: center;
-            background: linear-gradient(135deg, var(--p-primary-dark), var(--p-primary));
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--p-primary-dark) 0%, var(--p-primary) 50%, var(--p-primary-light) 100%);
             position: relative; overflow: hidden;
         }
-        .hero::before {
+        
+        [data-theme="p3"] .hero {
+            background: 
+                radial-gradient(ellipse at 30% 50%, rgba(74,144,217,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(107,181,255,0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #060F18 0%, #0D1B2A 30%, #0A1628 70%, #060F18 100%);
+        }
+        
+        [data-theme="p3"] .hero::before {
             content: ''; position: absolute; inset: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%238B5CF6" fill-opacity="0.05" points="0,1000 1000,0 1000,1000"/></svg>');
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(74,144,217,0.03) 2px, rgba(74,144,217,0.03) 4px),
+                radial-gradient(circle at 50% 50%, rgba(107,181,255,0.05) 0%, transparent 50%);
+            animation: caustic-shift 20s linear infinite;
+            pointer-events: none;
         }
 
         .anime-gif-left, .anime-gif-right {
             position: absolute; border-radius: 50%; overflow: hidden;
-            border: 3px solid var(--p-primary-light); box-shadow: var(--p-glow); z-index: 1;
+            border: 3px solid var(--p-primary-light); box-shadow: var(--p-glow, 0 0 15px rgba(139,92,246,0.3)); z-index: 1;
         }
         .anime-gif-left { bottom: 2rem; left: 2rem; width: 180px; height: 180px; opacity: 0.8; animation: float 8s ease-in-out infinite; }
         .anime-gif-right { top: 2rem; right: 2rem; width: 160px; height: 160px; opacity: 0.9; animation: float 7s ease-in-out infinite reverse; }
         .anime-gif-left img, .anime-gif-right img { width: 100%; height: 100%; object-fit: cover; }
 
+        /* Top Bars */
         .top-bars {
             position: fixed; top: 1rem; left: 0; right: 0; z-index: 1000;
-            display: flex; justify-content: center; gap: 1rem; pointer-events: none;
+            display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+            pointer-events: none; padding: 0 1rem;
         }
         .theme-switcher-bar, .lang-switcher-bar {
             display: flex; gap: 0.5rem; background: var(--p-surface); padding: 0.5rem;
-            border-radius: 1rem; backdrop-filter: blur(10px); border: 2px solid var(--p-border);
-            box-shadow: var(--p-shadow); pointer-events: all;
+            border-radius: 1rem; backdrop-filter: blur(20px); border: 2px solid var(--p-border);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); pointer-events: all;
+            flex-wrap: wrap; justify-content: center;
         }
         .theme-btn, .lang-btn {
             background: var(--btn-bg); border: 2px solid var(--btn-border); color: var(--btn-text);
-            padding: 0.5rem 1rem; border-radius: 0.75rem; cursor: pointer; font-weight: 600;
-            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1rem; border-radius: 0.75rem; cursor: pointer; font-weight: 700;
+            display: flex; align-items: center; gap: 0.5rem; font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem; letter-spacing: 0.5px; white-space: nowrap;
         }
         .theme-btn:hover, .lang-btn:hover { background: var(--btn-hover-bg); border-color: var(--p-primary-light); transform: translateY(-2px); }
         .theme-btn.active { background: var(--p-primary); border-color: var(--p-primary-light); animation: pulse-glow 2s infinite; }
 
-        .brand-header { text-align: center; position: relative; z-index: 2; width: 100%; margin-top: 4rem; }
-        .username { font-size: 4rem; font-weight: 800; background: linear-gradient(135deg, var(--p-primary-light), var(--p-text)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
-        .tagline { font-size: 1.5rem; margin-bottom: 2rem; color: var(--p-text); }
-        .universal-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--p-border-light); border-radius: 2rem; padding: 0.75rem 1.5rem; margin-bottom: 3rem; color: var(--p-text); }
+        .brand-header { text-align: center; position: relative; z-index: 2; width: 100%; }
+        .username { 
+            font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900;
+            background: linear-gradient(135deg, var(--p-primary-light), var(--p-text));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem; letter-spacing: 2px;
+        }
+        .tagline { font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
+        .universal-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--p-border-light); border-radius: 2rem; padding: 0.75rem 1.5rem; margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
 
-        .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; max-width: 800px; margin: 0 auto; }
-        .social-card { background: var(--card-bg); border: 1px solid var(--p-border); border-radius: 1rem; padding: 1.5rem; text-align: center; text-decoration: none; color: var(--p-text); }
-        .social-card:hover { background: var(--card-bg); border-color: var(--p-primary-light); transform: translateY(-5px); box-shadow: var(--p-glow); }
-        .social-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; max-width: 800px; margin: 0 auto; padding: 0 1rem; }
+        .social-card { background: var(--card-bg); border: 1px solid var(--p-border); border-radius: 1rem; padding: var(--card-padding); text-align: center; text-decoration: none; color: var(--p-text); transition: all 0.3s ease; }
+        .social-card:hover { border-color: var(--p-primary-light); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .social-icon { font-size: 2rem; margin-bottom: 0.75rem; }
         .social-card.github .social-icon { color: #6e5494; }
         .social-card.telegram .social-icon { color: #0088cc; }
         .social-card.vk .social-icon { color: #0077FF; }
         .social-card.youtube .social-icon { color: #FF0000; }
         .social-card.steam .social-icon { color: #00adee; }
         .social-card.discord .social-icon { color: #5865F2; }
-        .social-name { font-weight: 600; margin-bottom: 0.5rem; }
-        .social-handle { font-size: 0.9rem; color: var(--p-text-dim); }
+        .social-name { font-weight: 700; margin-bottom: 0.25rem; font-size: 0.9rem; }
+        .social-handle { font-size: 0.8rem; color: var(--p-text-dim); }
 
-        .projects, .skills, .contact, .philosophy, .tapeworm-demo { padding: 5rem 0; }
-        .projects { background: var(--p-background-alt); }
-        .tapeworm-demo { background: var(--p-background); }
-        .skills { background: var(--p-background); }
-        .contact { background: var(--p-background-alt); text-align: center; }
-        .philosophy { background: var(--p-background); text-align: center; }
+        /* Sections */
+        .section-content { padding: 4rem 0; }
+        .section-content:nth-child(odd) { background: var(--p-background-alt); }
+        .section-content:nth-child(even) { background: var(--p-background); }
 
-        .section-title { font-size: 2.5rem; text-align: center; margin-bottom: 3rem; color: var(--p-text); }
-        .project-grid { display: grid; gap: 2rem; max-width: 800px; margin: 0 auto; }
+        .section-title { 
+            font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 2.5rem;
+            color: var(--p-text); font-weight: 900; letter-spacing: 1px;
+        }
+        [data-theme="p3"] .section-title { color: var(--p-primary-light); text-shadow: 0 0 20px rgba(74,144,217,0.3); }
+
+        .project-grid { display: grid; gap: 1.5rem; max-width: 800px; margin: 0 auto; padding: 0 1rem; }
         .project-card { background: var(--p-surface); border-radius: 1rem; padding: 2rem; border: 1px solid var(--p-border); }
-        .project-card:hover { transform: translateY(-5px); box-shadow: var(--p-glow); border-color: var(--p-primary-light); }
-        .project-title { font-size: 1.5rem; color: var(--p-primary-light); margin-bottom: 1rem; }
-        .project-description { color: var(--p-text-muted); margin-bottom: 1.5rem; }
-        .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-        .tech-tag { background: var(--btn-bg); color: var(--btn-text); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem; border: 1px solid var(--btn-border); }
-        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--p-primary); color: white !important; text-decoration: none; border-radius: 0.5rem; font-weight: 600; border: 2px solid var(--p-primary-light); cursor: pointer; }
+        .project-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); border-color: var(--p-primary-light); }
+        .project-title { font-size: 1.4rem; color: var(--p-primary-light); margin-bottom: 0.75rem; font-weight: 800; }
+        .project-description { color: var(--p-text-muted); margin-bottom: 1.25rem; font-size: 0.95rem; }
+        .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+        .tech-tag { background: var(--btn-bg); color: var(--btn-text); padding: 0.3rem 0.8rem; border-radius: 1rem; font-size: 0.8rem; border: 1px solid var(--btn-border); font-weight: 600; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.5rem; background: var(--p-primary); color: white !important; text-decoration: none; border-radius: 0.5rem; font-weight: 700; border: 2px solid var(--p-primary-light); cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px; }
         .btn:hover { background: var(--p-primary-hover); transform: translateY(-2px); }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 800px; margin: 0 auto; }
-        .skill-category { background: var(--p-surface); border-radius: 1rem; padding: 2rem; border: 1px solid var(--p-border); }
-        .skill-category:hover { transform: translateY(-5px); border-color: var(--p-primary-light); }
-        .skill-category h3 { color: var(--p-primary-light); margin-bottom: 1rem; }
+
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; max-width: 800px; margin: 0 auto; padding: 0 1rem; }
+        .skill-category { background: var(--p-surface); border-radius: 1rem; padding: 1.5rem; border: 1px solid var(--p-border); }
+        .skill-category:hover { border-color: var(--p-primary-light); }
+        .skill-category h3 { color: var(--p-primary-light); margin-bottom: 1rem; font-weight: 800; }
         .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
-        /* ==================== P5 CHAT ==================== */
+        /* ==================== PERSONA 5 CHAT (Based on Persona-IM) ==================== */
         .p5-chat-fab {
             position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
             width: 60px; height: 60px; border-radius: 50%;
-            background: linear-gradient(135deg, #E60012, #B8000F);
-            border: 3px solid #FF4444; color: white; font-size: 1.5rem;
-            cursor: pointer; box-shadow: 0 0 25px rgba(230,0,18,0.5);
+            background: #E60012; border: 3px solid #FF4444; color: white;
+            font-size: 1.5rem; cursor: pointer;
+            box-shadow: 0 0 30px rgba(230,0,18,0.5);
             display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
         }
-        .p5-chat-fab:hover { transform: scale(1.1); }
+        .p5-chat-fab:hover { transform: scale(1.1); box-shadow: 0 0 40px rgba(230,0,18,0.7); }
 
         .p5-chat-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000;
             display: none; align-items: center; justify-content: center;
         }
         .p5-chat-overlay.open { display: flex; }
 
-        .phone-container {
-            position: relative; width: 300px; height: 450px;
-            filter: drop-shadow(0 0 30px rgba(230,0,18,0.4));
+        /* Persona 5 Phone */
+        .p5-phone {
+            width: 320px; height: 520px; background: #0A0A0A;
+            border: 3px solid #E60012; border-radius: 20px;
+            position: relative; overflow: hidden;
+            box-shadow: 0 0 50px rgba(230,0,18,0.3), inset 0 0 30px rgba(230,0,18,0.05);
         }
-        .phone-svg { position: absolute; width: 100%; height: 100%; }
-        .phone-svg polygon { fill: #1a1a1a; stroke: #333; stroke-width: 2; }
-        .screen-border-svg { position: absolute; width: 100%; height: 100%; }
-        .screen-border-svg polygon { fill: none; stroke: #E60012; stroke-width: 3; }
-        .screen-svg { position: absolute; width: 100%; height: 100%; }
-        .screen-svg polygon { fill: #0a0a0a; stroke: #222; stroke-width: 1; }
-
-        .screen {
-            position: absolute; top: 18px; left: 28px; right: 30px; bottom: 15px;
-            background: #0a0a0a; overflow-y: auto; overflow-x: hidden; padding: 10px 5px;
+        .p5-phone-notch {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 100px; height: 20px; background: #0A0A0A;
+            border-radius: 0 0 15px 15px; z-index: 10;
+            border: 2px solid #333; border-top: none;
         }
-        .screen::-webkit-scrollbar { width: 3px; }
-        .screen::-webkit-scrollbar-track { background: #111; }
-        .screen::-webkit-scrollbar-thumb { background: #E60012; }
-
-        .sns { text-align: center; padding: 5px 0 15px; position: relative; }
-        .lettering-under { font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: #333; position: absolute; left: 50%; transform: translateX(-50%); top: 3px; }
-        .lettering { font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: white; position: relative; z-index: 1; }
-
-        .zig-shadow, .zig { position: absolute; width: 100%; height: 100px; top: 60px; left: 0; }
-        .zig-shadow polygon { fill: rgba(230,0,18,0.2); }
-        .zig polygon { fill: none; stroke: #E60012; stroke-width: 2; }
-
-        .messages { display: flex; flex-direction: column; gap: 8px; margin-top: 40px; position: relative; z-index: 2; }
-
-        .contact {
-            position: relative; height: 60px; cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .contact:hover { transform: translateX(5px); }
-        .contact .border, .contact .outline, .contact .panel, .contact .panel-b {
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0;
-        }
-        .contact .border polygon { fill: #E60012; }
-        .contact .outline polygon { fill: #0a0a0a; }
-        .contact .panel polygon { fill: #1a1a1a; stroke: #333; stroke-width: 1; }
-        .contact .panel-b polygon { fill: #E60012; }
-        .contact img {
-            position: absolute; width: 40px; height: 40px; left: 20px; top: 10px;
-            object-fit: cover;
-            clip-path: polygon(0 5%, 100% 0, 95% 100%, 5% 95%);
-        }
-        .text-container { position: absolute; left: 70px; top: 8px; right: 20px; }
-        .text-outline-1 polygon { fill: rgba(230,0,18,0.3); }
-        .text-outline-2 polygon { fill: #0a0a0a; }
-        .text-skew {
-            position: absolute; left: 85px; top: 12px;
-            transform: skewX(-10deg); color: #ccc; font-size: 0.75rem;
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        .message-type {
-            position: absolute; right: 10px; top: 12px;
-        }
-        .message-type .lettering-outline polygon { fill: rgba(230,0,18,0.3); }
-        .message-type .lettering {
-            position: absolute; top: 2px; left: 4px;
-            font-family: 'Luckiest Guy', cursive; color: #E60012; font-size: 1.2rem;
+        .p5-phone-screen {
+            position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px;
+            background: #111; border-radius: 12px; overflow: hidden;
+            display: flex; flex-direction: column;
         }
 
-        .ellipse { text-align: center; padding: 10px; color: #E60012; font-size: 1.5rem; letter-spacing: 3px; }
+        /* Chat list */
+        .p5-chat-list {
+            flex: 1; overflow-y: auto; padding: 10px;
+            background: linear-gradient(180deg, #0A0A0A 0%, #111 100%);
+        }
+        .p5-chat-list-header {
+            text-align: center; padding: 15px 0 20px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 2rem; color: #FFF; letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(230,0,18,0.5);
+        }
+        .p5-chat-list-header span { color: #E60012; }
 
-        /* Chat view */
-        .chat-view { display: none; flex-direction: column; height: 100%; }
-        .chat-view.active { display: flex; }
-        .chat-view-header {
-            display: flex; align-items: center; gap: 10px; padding: 8px;
-            border-bottom: 2px solid #E60012; margin-bottom: 10px;
+        .p5-contact {
+            display: flex; align-items: center; gap: 12px; padding: 12px;
+            margin: 4px 0; cursor: pointer; border-radius: 4px;
+            border: 1px solid transparent; transition: all 0.2s;
+            background: rgba(20,20,20,0.8);
+            transform: skewX(-3deg);
         }
-        .chat-view-back {
-            background: none; border: 2px solid #E60012; color: #E60012;
-            padding: 4px 8px; cursor: pointer; font-weight: bold; transform: skewX(-10deg);
+        .p5-contact:hover { border-color: #E60012; background: rgba(230,0,18,0.1); }
+        .p5-contact-avatar {
+            width: 44px; height: 44px; border-radius: 2px; object-fit: cover;
+            border: 2px solid #333; background: #1A1A1A;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
         }
-        .chat-view-avatar {
-            width: 30px; height: 30px; object-fit: cover;
-            clip-path: polygon(0 10%, 100% 0, 90% 100%, 10% 90%);
+        .p5-contact-info { flex: 1; min-width: 0; }
+        .p5-contact-last-msg {
+            color: #888; font-size: 0.8rem; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis;
+            font-family: 'Share Tech Mono', monospace;
         }
-        .chat-messages-p5 { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 5px; }
-        .chat-msg { display: flex; gap: 8px; animation: fadeInUp 0.3s ease; }
-        .chat-msg.own { flex-direction: row-reverse; }
-        .chat-msg-avatar {
-            width: 30px; height: 30px; object-fit: cover; flex-shrink: 0;
-            clip-path: polygon(0 10%, 100% 0, 90% 100%, 10% 90%);
+        .p5-contact-badge {
+            background: #E60012; color: white; border-radius: 50%;
+            width: 22px; height: 22px; display: flex; align-items: center;
+            justify-content: center; font-size: 0.7rem; font-weight: bold;
         }
-        .chat-msg-bubble {
-            background: #1a1a1a; border: 1px solid #333; padding: 8px 12px;
-            transform: skewX(-5deg); max-width: 70%; color: #ccc; font-size: 0.8rem;
+        .p5-new-chat {
+            display: flex; align-items: center; gap: 12px; padding: 12px;
+            margin: 4px 0; cursor: pointer; border-radius: 4px;
+            border: 1px dashed #333; transition: all 0.2s;
+            background: rgba(20,20,20,0.5);
+            transform: skewX(-3deg); opacity: 0.6;
         }
-        .chat-msg.own .chat-msg-bubble {
-            background: #E60012; border-color: #FF4444; color: white;
+        .p5-new-chat:hover { border-color: #E60012; opacity: 1; }
+        .p5-new-chat-icon {
+            width: 44px; height: 44px; border-radius: 2px;
+            border: 2px solid #333; display: flex; align-items: center;
+            justify-content: center; color: #E60012; font-size: 1.5rem;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
         }
-        .chat-input-bar { display: flex; gap: 5px; padding: 8px 0 0; border-top: 2px solid #222; margin-top: 10px; }
-        .chat-input-bar input {
-            flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ccc;
-            padding: 6px 10px; transform: skewX(-5deg); font-size: 0.8rem; outline: none;
+
+        /* Chat messages view */
+        .p5-chat-messages {
+            flex: 1; overflow-y: auto; padding: 15px;
+            background: #0D0D0D;
         }
-        .chat-input-bar input:focus { border-color: #E60012; }
-        .chat-input-bar button {
+        .p5-msg {
+            display: flex; gap: 8px; margin: 8px 0;
+            animation: fadeInUp 0.4s ease;
+            align-items: flex-end;
+        }
+        .p5-msg.sent { flex-direction: row-reverse; }
+        .p5-msg-avatar {
+            width: 32px; height: 32px; border-radius: 2px; object-fit: cover;
+            border: 2px solid #333; background: #1A1A1A;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            flex-shrink: 0;
+        }
+        .p5-msg-bubble {
+            max-width: 70%; padding: 10px 14px; border-radius: 2px;
+            font-size: 0.85rem; line-height: 1.5;
+            font-family: 'Share Tech Mono', monospace;
+            position: relative; transform: skewX(-2deg);
+        }
+        .p5-msg.received .p5-msg-bubble {
+            background: #1A1A1A; color: #DDD; border: 1px solid #333;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+        }
+        .p5-msg.sent .p5-msg-bubble {
+            background: #E60012; color: #FFF; border: 1px solid #FF4444;
+            clip-path: polygon(5% 0, 100% 0, 100% 100%, 0 100%);
+        }
+        .p5-msg-nickname {
+            font-size: 0.65rem; color: #E60012; font-weight: bold;
+            margin-bottom: 2px; text-transform: uppercase; letter-spacing: 2px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .p5-msg.sent .p5-msg-nickname { text-align: right; color: #FF9999; }
+
+        .p5-chat-input-area {
+            display: flex; gap: 8px; padding: 10px;
+            background: #0A0A0A; border-top: 2px solid #222;
+        }
+        .p5-chat-input {
+            flex: 1; background: #1A1A1A; border: 1px solid #333;
+            color: #DDD; padding: 10px 14px; border-radius: 2px;
+            font-family: 'Share Tech Mono', monospace; font-size: 0.85rem;
+            outline: none; transform: skewX(-3deg);
+        }
+        .p5-chat-input:focus { border-color: #E60012; }
+        .p5-chat-send {
             background: #E60012; border: 2px solid #FF4444; color: white;
-            padding: 6px 12px; cursor: pointer; transform: skewX(-10deg);
-            font-weight: bold; text-transform: uppercase; font-size: 0.7rem;
+            padding: 10px 16px; cursor: pointer; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 1px;
+            font-family: 'Montserrat', sans-serif; font-size: 0.75rem;
+            transform: skewX(-5deg); transition: all 0.2s;
         }
+        .p5-chat-send:hover { background: #FF2222; }
 
-        .p5-chat-close {
-            position: absolute; top: -35px; right: 0;
-            background: none; border: 2px solid #E60012; color: #E60012;
-            width: 30px; height: 30px; cursor: pointer; font-size: 1rem;
-            display: flex; align-items: center; justify-content: center;
+        .p5-back-btn {
+            background: none; border: 1px solid #E60012; color: #E60012;
+            padding: 6px 12px; cursor: pointer; font-weight: bold;
+            transform: skewX(-5deg); font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem; letter-spacing: 1px;
+        }
+        .p5-back-btn:hover { background: #E60012; color: white; }
+
+        .p5-chat-header-bar {
+            display: flex; align-items: center; gap: 10px; padding: 10px;
+            background: #0A0A0A; border-bottom: 2px solid #222;
+        }
+        .p5-chat-close-btn {
+            position: absolute; top: -30px; right: 5px;
+            background: none; border: 1px solid #E60012; color: #E60012;
+            width: 28px; height: 28px; cursor: pointer; font-size: 0.9rem;
         }
 
         /* Admin */
-        .admin-area { position: fixed; top: 1rem; left: 1rem; z-index: 1001; }
-        .admin-btn-small {
-            background: var(--card-bg); border: 1px solid var(--p-border-light);
-            color: var(--p-text-dim); padding: 0.3rem 0.6rem; border-radius: 0.5rem;
-            cursor: pointer; font-size: 0.7rem;
-        }
-        .admin-indicator {
-            position: fixed; top: 3rem; left: 1rem; z-index: 1001;
-            background: var(--p-surface); border: 1px solid var(--p-border-light);
-            padding: 0.3rem 0.6rem; border-radius: 0.5rem; font-size: 0.7rem;
-            display: none; color: #00FF00; align-items: center; gap: 0.3rem;
-        }
+        .admin-area { position: fixed; top: 1rem; left: 1rem; z-index: 1001; display: flex; gap: 0.5rem; align-items: center; }
+        .admin-btn-small { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); padding: 0.3rem 0.6rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.7rem; }
+        .admin-indicator { background: rgba(0,0,0,0.7); border: 1px solid rgba(0,255,0,0.3); padding: 0.3rem 0.6rem; border-radius: 0.5rem; font-size: 0.7rem; display: none; color: #0f0; align-items: center; gap: 0.3rem; }
         .admin-indicator.show { display: flex; }
-        .admin-modal {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
-            background: var(--p-surface); border: 2px solid var(--p-border-light);
-            border-radius: 1rem; padding: 2rem; z-index: 3000; display: none; min-width: 300px;
-        }
+        .admin-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--p-surface); border: 2px solid var(--p-border-light); border-radius: 1rem; padding: 2rem; z-index: 3000; display: none; min-width: 300px; }
         .admin-modal.open { display: block; }
-        .admin-input { width: 100%; background: var(--p-background); border: 1px solid var(--p-border); padding: 0.5rem; border-radius: 0.5rem; color: var(--p-text); margin: 0.5rem 0; }
+        .admin-input { width: 100%; background: var(--p-background); border: 1px solid var(--p-border); padding: 0.5rem; border-radius: 0.5rem; color: var(--p-text); margin: 0.5rem 0; font-family: 'Montserrat', sans-serif; }
 
         /* Tapeworm */
         .demo-container { max-width: 1000px; margin: 0 auto; background: var(--p-surface); border-radius: 1rem; padding: 2rem; border: 1px solid var(--p-border-light); }
-        .demo-interface { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-        .code-input-section textarea { width: 100%; background: var(--p-background); border: 1px solid var(--p-border); border-radius: 0.5rem; padding: 1rem; color: var(--p-text); font-family: monospace; resize: vertical; }
+        .demo-interface { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        @media (max-width: 768px) { .demo-interface { grid-template-columns: 1fr; } }
+        .code-input-section textarea { width: 100%; background: var(--p-background); border: 1px solid var(--p-border); border-radius: 0.5rem; padding: 1rem; color: var(--p-text); font-family: 'Share Tech Mono', monospace; resize: vertical; }
         .output-display, .tape-display, .stats-display { background: var(--p-background); border: 1px solid var(--p-border); border-radius: 0.5rem; padding: 1rem; margin-bottom: 1rem; }
         .tape-visualization { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .tape-cell { width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; background: var(--btn-bg); border: 2px solid var(--p-border); font-family: monospace; color: var(--btn-text); }
-        .tape-cell.active { background: var(--p-primary); border-color: var(--p-primary-light); box-shadow: var(--p-glow); color: white; }
+        .tape-cell { width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; background: var(--btn-bg); border: 2px solid var(--p-border); font-family: 'Share Tech Mono', monospace; color: var(--btn-text); font-size: 0.9rem; }
+        .tape-cell.active { background: var(--p-primary); border-color: var(--p-primary-light); box-shadow: 0 0 10px var(--p-primary-light); color: white; }
 
-        footer { background: var(--p-surface); padding: 3rem 0; text-align: center; border-top: 1px solid var(--p-border-light); }
+        footer { background: var(--p-surface); padding: 2rem 0; text-align: center; border-top: 1px solid var(--p-border-light); }
+        
         .english { display: none; }
 
         @media (max-width: 768px) {
-            .username { font-size: 2.5rem; }
+            .hero { min-height: 100vh; padding: 6rem 0 2rem; }
+            .social-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+            .social-card { padding: 1rem; }
+            .p5-phone { width: 90vw; height: 80vh; max-width: 320px; }
+            .top-bars { flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 480px) {
             .social-grid { grid-template-columns: repeat(2, 1fr); }
-            .demo-interface { grid-template-columns: 1fr; }
-            .phone-container { transform: scale(0.85); }
-            .anime-gif-left, .anime-gif-right { width: 80px; height: 80px; }
+            .username { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
     <!-- Admin -->
-    <div class="admin-indicator" id="admin-indicator"><span style="width:8px;height:8px;border-radius:50%;background:#0f0;"></span> ADMIN <button onclick="adminLogout()" style="background:none;border:none;color:var(--p-text-dim);cursor:pointer;">✕</button></div>
-    <div class="admin-area"><button class="admin-btn-small" onclick="toggleAdminModal()">🔒</button></div>
+    <div class="admin-area">
+        <button class="admin-btn-small" onclick="toggleAdminModal()">🔒</button>
+        <div class="admin-indicator" id="admin-indicator"><span style="width:6px;height:6px;border-radius:50%;background:#0f0;display:inline-block;"></span> ADMIN <button onclick="adminLogout()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:0.7rem;">✕</button></div>
+    </div>
     <div class="admin-modal" id="admin-modal">
-        <h3 style="color:var(--p-primary-light);">Admin Access</h3>
+        <h3 style="color:var(--p-primary-light);font-family:'Montserrat',sans-serif;">Admin Access</h3>
         <input type="password" class="admin-input" id="admin-key" placeholder="Enter secret key">
         <button class="btn" onclick="adminLogin()" style="width:100%;margin-top:0.5rem;">Login</button>
         <button class="btn" onclick="toggleAdminModal()" style="width:100%;margin-top:0.5rem;background:var(--p-surface-hover);">Cancel</button>
@@ -383,7 +445,7 @@
     </section>
 
     <!-- Projects -->
-    <section class="projects"><div class="container">
+    <section class="section-content"><div class="container">
         <h2 class="section-title russian">Исследовательские проекты</h2><h2 class="section-title english">Research Projects</h2>
         <div class="project-grid">
             <div class="project-card"><h3 class="project-title">Tapeworm 🐛</h3><p class="project-description russian">Визуализатор Brainfuck.</p><p class="project-description english">Brainfuck visualizer.</p><div class="project-tech"><span class="tech-tag">Rust</span><span class="tech-tag">WASM</span></div><a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
@@ -393,16 +455,16 @@
     </div></section>
 
     <!-- Tapeworm Demo -->
-    <section class="tapeworm-demo"><div class="container">
+    <section class="section-content"><div class="container">
         <h2 class="section-title">Tapeworm 🐛 Demo</h2>
         <div class="demo-container"><div class="demo-interface">
-            <div class="code-input-section"><textarea id="bf-code" rows="6">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea><div style="display:flex;gap:1rem;"><button class="btn" onclick="runBF()">▶ Run</button><button class="btn" onclick="resetBF()">↺ Reset</button><button class="btn" onclick="stepBF()">⏭ Step</button></div></div>
-            <div><div class="output-display"><h4>Output:</h4><div id="bf-out"></div></div><div class="tape-display"><h4>Tape:</h4><div id="bf-tape" class="tape-visualization"></div></div><div class="stats-display"><h4>Stats:</h4><div id="bf-stats"></div></div></div>
+            <div class="code-input-section"><textarea id="bf-code" rows="6">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea><div style="display:flex;gap:0.5rem;margin-top:0.5rem;"><button class="btn" onclick="runBF()">▶ Run</button><button class="btn" onclick="resetBF()">↺ Reset</button><button class="btn" onclick="stepBF()">⏭ Step</button></div></div>
+            <div><div class="output-display"><strong>Output:</strong><div id="bf-out" style="font-family:'Share Tech Mono',monospace;min-height:1.5rem;"></div></div><div class="tape-display"><strong>Tape:</strong><div id="bf-tape" class="tape-visualization"></div></div></div>
         </div></div>
     </div></section>
 
     <!-- Skills -->
-    <section class="skills"><div class="container">
+    <section class="section-content"><div class="container">
         <h2 class="section-title russian">Технологии</h2><h2 class="section-title english">Technologies</h2>
         <div class="skills-grid">
             <div class="skill-category"><h3>Backend</h3><div class="skill-tags"><span class="tech-tag">C#/.NET</span><span class="tech-tag">Rust</span><span class="tech-tag">Python</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Redis</span></div></div>
@@ -411,42 +473,50 @@
         </div>
     </div></section>
 
-    <section class="contact"><div class="container"><h2 class="section-title russian">Контакты</h2><h2 class="section-title english">Contacts</h2><a href="mailto:igorb9475@gmail.com" class="btn"><i class="fas fa-envelope"></i> <span class="russian">Написать</span><span class="english">Email</span></a></div></section>
-    <section class="philosophy"><div class="container"><p style="font-size:1.4rem;font-style:italic;" class="russian">"Одна жизнь, одна смерть — философия глубинного понимания систем."</p><p style="font-size:1.4rem;font-style:italic;" class="english">"One life, one death — a philosophy of deep system understanding."</p></div></section>
-    <footer><div class="container"><div style="font-size:2rem;font-weight:800;color:var(--p-primary-light);">OnelifeOnedeath</div><p class="footer-text russian">Универсальный инженер • 2025</p><p class="footer-text english">Universal Engineer • 2025</p></div></footer>
+    <!-- Contact -->
+    <section class="section-content"><div class="container" style="text-align:center;">
+        <h2 class="section-title russian">Контакты</h2><h2 class="section-title english">Contacts</h2>
+        <a href="mailto:igorb9475@gmail.com" class="btn"><i class="fas fa-envelope"></i> <span class="russian">Написать</span><span class="english">Email</span></a>
+    </div></section>
 
-    <!-- P5 Chat FAB -->
+    <!-- Philosophy -->
+    <section class="section-content"><div class="container" style="text-align:center;">
+        <p style="font-size:1.2rem;font-style:italic;" class="russian">"Одна жизнь, одна смерть — философия глубинного понимания систем."</p>
+        <p style="font-size:1.2rem;font-style:italic;" class="english">"One life, one death — a philosophy of deep system understanding."</p>
+    </div></section>
+
+    <footer><div class="container">
+        <div style="font-size:1.5rem;font-weight:900;color:var(--p-primary-light);">OnelifeOnedeath</div>
+        <p style="color:var(--p-text-dim);margin-top:0.5rem;" class="russian">Универсальный инженер • 2025</p>
+        <p style="color:var(--p-text-dim);margin-top:0.5rem;" class="english">Universal Engineer • 2025</p>
+    </div></footer>
+
+    <!-- Persona 5 Chat FAB -->
     <button class="p5-chat-fab" onclick="openP5Chat()">💬</button>
 
-    <!-- P5 Chat Overlay -->
+    <!-- Persona 5 Chat Overlay -->
     <div class="p5-chat-overlay" id="p5-overlay">
         <div style="position:relative;">
-            <button class="p5-chat-close" onclick="closeP5Chat()">✕</button>
-            <div class="phone-container">
-                <svg class="phone-svg"><polygon points="10,0 290,0 280,300 280,450 0,450"/></svg>
-                <svg class="screen-border-svg"><polygon points="20,10 280,10 270,300 270,440 10,440"/></svg>
-                <svg class="screen-svg"><polygon points="25,14 270,18 265,437 18,432"/></svg>
-                <div class="screen" id="p5-screen">
-                    <!-- Contacts View -->
-                    <div id="contacts-view">
-                        <div class="sns">
-                            <span class="lettering-under">SNS</span>
-                            <span class="lettering"><span style="color:#E60012;">S</span>NS</span>
+            <button class="p5-chat-close-btn" onclick="closeP5Chat()">✕</button>
+            <div class="p5-phone">
+                <div class="p5-phone-notch"></div>
+                <div class="p5-phone-screen" id="p5-screen">
+                    <!-- Chat List -->
+                    <div id="p5-chat-list-view" style="display:flex;flex-direction:column;height:100%;">
+                        <div class="p5-chat-list" id="p5-contacts">
+                            <div class="p5-chat-list-header"><span>S</span>NS</div>
                         </div>
-                        <svg class="zig-shadow"><polygon points="70,90 80,90 60,170 110,230 80,290 50,290 70,225 30,170"/></svg>
-                        <svg class="zig"><polygon points="70,80 80,80 60,160 110,220 80,280 50,280 70,215 30,160"/></svg>
-                        <div class="messages" id="p5-contacts"></div>
                     </div>
-                    <!-- Chat View -->
-                    <div class="chat-view" id="chat-view">
-                        <div class="chat-view-header">
-                            <button class="chat-view-back" onclick="backToContacts()">←</button>
-                            <img class="chat-view-avatar" id="chat-view-avatar" src="" onerror="this.style.display='none'" style="display:none;">
+                    <!-- Chat Messages View -->
+                    <div id="p5-chat-msg-view" style="display:none;flex-direction:column;height:100%;">
+                        <div class="p5-chat-header-bar">
+                            <button class="p5-back-btn" onclick="backToChatList()">← BACK</button>
+                            <img id="p5-chat-avatar" src="" style="width:32px;height:32px;object-fit:cover;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);display:none;" onerror="this.style.display='none'">
                         </div>
-                        <div class="chat-messages-p5" id="chat-messages-p5"></div>
-                        <div class="chat-input-bar">
-                            <input type="text" id="p5-msg-input" placeholder="Message..." onkeypress="if(event.key==='Enter')sendP5Msg()">
-                            <button onclick="sendP5Msg()">SEND</button>
+                        <div class="p5-chat-messages" id="p5-messages"></div>
+                        <div class="p5-chat-input-area">
+                            <input type="text" class="p5-chat-input" id="p5-input" placeholder="Type message..." onkeypress="if(event.key==='Enter')sendP5Msg()">
+                            <button class="p5-chat-send" onclick="sendP5Msg()">▶ SEND</button>
                         </div>
                     </div>
                 </div>
@@ -455,57 +525,32 @@
     </div>
 
     <script>
-        // ==================== YOUR SECRET KEY ====================
-        // Change this to your own secret key!
-        const SECRET_ADMIN_KEY = 'MakotoYukiP3R2024';
+        // ==================== SECRET KEY ====================
+        const SECRET_KEY = 'MakotoYukiP3R2024';
         
-        // Generate device fingerprint for extra security
-        function getDeviceFingerprint() {
-            const data = navigator.userAgent + navigator.language + screen.width + screen.height + new Date().getTimezoneOffset();
-            let hash = 0;
-            for (let i = 0; i < data.length; i++) {
-                const char = data.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
-            }
-            return Math.abs(hash).toString(36);
+        function getFingerprint() {
+            const d = navigator.userAgent + navigator.language + screen.width + screen.height + new Date().getTimezoneOffset();
+            let h = 0; for (let i = 0; i < d.length; i++) { h = ((h << 5) - h) + d.charCodeAt(i); h |= 0; }
+            return Math.abs(h).toString(36);
         }
 
         // ==================== ADMIN ====================
         let isAdmin = false;
         
-        function checkAdminAccess() {
-            const storedKey = localStorage.getItem('admin_key_hash');
-            const deviceFingerprint = getDeviceFingerprint();
-            const storedFingerprint = localStorage.getItem('admin_device_fingerprint');
-            
-            if (storedKey && storedFingerprint === deviceFingerprint) {
-                // Verify the key is still valid
-                const keyHash = btoa(SECRET_ADMIN_KEY + deviceFingerprint);
-                if (storedKey === keyHash) {
-                    isAdmin = true;
-                } else {
-                    // Invalid or tampered key
-                    localStorage.removeItem('admin_key_hash');
-                    localStorage.removeItem('admin_device_fingerprint');
-                    isAdmin = false;
-                }
+        function checkAdmin() {
+            const kh = localStorage.getItem('akh');
+            const fp = getFingerprint();
+            const sfp = localStorage.getItem('afp');
+            if (kh && sfp === fp) {
+                const expected = btoa(SECRET_KEY + fp);
+                isAdmin = (kh === expected);
+                if (!isAdmin) { localStorage.removeItem('akh'); localStorage.removeItem('afp'); }
             }
             updateAdminUI();
         }
 
         function updateAdminUI() {
-            const indicator = document.getElementById('admin-indicator');
-            const btn = document.querySelector('.admin-btn-small');
-            if (isAdmin) {
-                indicator.classList.add('show');
-                btn.style.color = '#00FF00';
-                btn.title = 'Admin Mode Active';
-            } else {
-                indicator.classList.remove('show');
-                btn.style.color = '';
-                btn.title = 'Admin Login';
-            }
+            document.getElementById('admin-indicator').classList.toggle('show', isAdmin);
         }
 
         function toggleAdminModal() {
@@ -517,44 +562,36 @@
         function adminLogin() {
             const key = document.getElementById('admin-key').value;
             const status = document.getElementById('admin-status');
-            
-            if (key === SECRET_ADMIN_KEY) {
-                const deviceFingerprint = getDeviceFingerprint();
-                const keyHash = btoa(key + deviceFingerprint);
-                
-                localStorage.setItem('admin_key_hash', keyHash);
-                localStorage.setItem('admin_device_fingerprint', deviceFingerprint);
-                
-                isAdmin = true;
-                updateAdminUI();
-                status.textContent = '✅ Access Granted';
-                status.style.color = '#00FF00';
+            if (key === SECRET_KEY) {
+                const fp = getFingerprint();
+                localStorage.setItem('akh', btoa(key + fp));
+                localStorage.setItem('afp', fp);
+                isAdmin = true; updateAdminUI();
+                status.textContent = '✅ Access Granted'; status.style.color = '#0f0';
                 setTimeout(toggleAdminModal, 800);
             } else {
-                status.textContent = '❌ Access Denied';
-                status.style.color = '#FF3333';
+                status.textContent = '❌ Access Denied'; status.style.color = '#f33';
             }
         }
 
         function adminLogout() {
-            localStorage.removeItem('admin_key_hash');
-            localStorage.removeItem('admin_device_fingerprint');
-            isAdmin = false;
-            updateAdminUI();
+            localStorage.removeItem('akh'); localStorage.removeItem('afp');
+            isAdmin = false; updateAdminUI();
         }
 
         // ==================== THEME ====================
         const themes = {
             default: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#A78BFA','--p-primary-dark':'#5B21B6','--p-highlight':'#C4B5FD','--p-surface':'#1F2937','--p-surface-hover':'#374151','--p-background':'#111827','--p-background-alt':'#0F172A','--p-text':'#F9FAFB','--p-text-muted':'#D1D5DB','--p-text-dim':'#9CA3AF','--p-border':'#374151','--p-border-light':'#4B5563','--btn-bg':'rgba(139,92,246,0.25)','--btn-border':'rgba(139,92,246,0.6)','--btn-hover-bg':'rgba(139,92,246,0.45)','--btn-text':'#FFFFFF','--card-bg':'rgba(255,255,255,0.07)'},
             light: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#6D28D9','--p-primary-dark':'#5B21B6','--p-highlight':'#A78BFA','--p-surface':'#FFFFFF','--p-surface-hover':'#F5F3FF','--p-background':'#FEF7FF','--p-background-alt':'#F3E8FF','--p-text':'#1E1B4B','--p-text-muted':'#4C1D95','--p-text-dim':'#7C3AED','--p-border':'#DDD6FE','--p-border-light':'#C4B5FD','--btn-bg':'rgba(139,92,246,0.12)','--btn-border':'rgba(139,92,246,0.4)','--btn-hover-bg':'rgba(139,92,246,0.25)','--btn-text':'#1E1B4B','--card-bg':'rgba(255,255,255,0.9)'},
-            p3: {'--p-primary':'#1B2838','--p-primary-hover':'#2D4A6E','--p-primary-light':'#4A90D9','--p-primary-dark':'#0F1923','--p-highlight':'#6BB5FF','--p-surface':'#152230','--p-surface-hover':'#1E3348','--p-background':'#0D1520','--p-background-alt':'#0A1018','--p-text':'#E8F0F8','--p-text-muted':'#8CB4D8','--p-text-dim':'#5A8AB5','--p-border':'#1E3348','--p-border-light':'#2D4A6E','--btn-bg':'rgba(74,144,217,0.2)','--btn-border':'rgba(74,144,217,0.5)','--btn-hover-bg':'rgba(74,144,217,0.4)','--btn-text':'#FFFFFF','--card-bg':'rgba(30,51,72,0.4)'}
+            p3: {'--p-primary':'#0D1B2A','--p-primary-hover':'#1B3A5C','--p-primary-light':'#4A90D9','--p-primary-dark':'#060F18','--p-highlight':'#6BB5FF','--p-surface':'#0F1F33','--p-surface-hover':'#162D4A','--p-background':'#0A1628','--p-background-alt':'#060F18','--p-text':'#E8F0F8','--p-text-muted':'#8CB4D8','--p-text-dim':'#5A8AB5','--p-border':'#1B3A5C','--p-border-light':'#2D4A6E','--btn-bg':'rgba(74,144,217,0.2)','--btn-border':'rgba(74,144,217,0.5)','--btn-hover-bg':'rgba(74,144,217,0.35)','--btn-text':'#E8F0F8','--card-bg':'rgba(15,31,51,0.6)'}
         };
         function setTheme(t) {
             Object.entries(themes[t]).forEach(([k,v]) => document.documentElement.style.setProperty(k,v));
             document.documentElement.setAttribute('data-theme', t);
             localStorage.setItem('theme', t);
             document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(t+'-theme-btn').classList.add('active');
+            const btn = document.getElementById(t+'-theme-btn');
+            if (btn) btn.classList.add('active');
         }
 
         // ==================== LANGUAGE ====================
@@ -566,148 +603,116 @@
             localStorage.setItem('language', cl);
         }
 
-        // ==================== P5 CHAT ====================
-        let p5Chats = JSON.parse(localStorage.getItem('p5_chats') || '{}');
-        let currentChat = null;
+        // ==================== P5 CHAT (Persona-IM inspired) ====================
+        let chats = JSON.parse(localStorage.getItem('p5chats') || '{}');
+        let currentChatId = null;
 
-        function openP5Chat() { document.getElementById('p5-overlay').classList.add('open'); renderContacts(); }
-        function closeP5Chat() { document.getElementById('p5-overlay').classList.remove('open'); backToContacts(); }
+        function openP5Chat() { document.getElementById('p5-overlay').classList.add('open'); showChatList(); }
+        function closeP5Chat() { document.getElementById('p5-overlay').classList.remove('open'); }
 
-        function getOrCreateChat(id) {
-            if (!p5Chats[id]) p5Chats[id] = { id, avatar: '', messages: [] };
-            return p5Chats[id];
+        function showChatList() {
+            document.getElementById('p5-chat-list-view').style.display = 'flex';
+            document.getElementById('p5-chat-msg-view').style.display = 'none';
+            currentChatId = null;
+            renderChatList();
         }
 
-        function renderContacts() {
-            document.getElementById('contacts-view').style.display = 'block';
-            document.getElementById('chat-view').classList.remove('active');
-            currentChat = null;
+        function backToChatList() { showChatList(); }
 
+        function goc(id) { if (!chats[id]) chats[id] = { avatar: '', msgs: [] }; return chats[id]; }
+
+        function renderChatList() {
             const container = document.getElementById('p5-contacts');
-            const ids = Object.keys(p5Chats);
-
-            container.innerHTML = ids.map((id, i) => {
-                const chat = p5Chats[id];
-                const lastMsg = chat.messages.length > 0 ? chat.messages[chat.messages.length-1].text.substring(0, 20) : '';
-                const unreadCount = chat.messages.filter(m => m.from === 'user' && !m.read).length;
-                
-                return `
-                <div class="contact" onclick="openChat('${id}')">
-                    <svg class="border"><polygon points="0,5 60,0 70,30 10,55"/></svg>
-                    <svg class="outline"><polygon points="8,7 58,2 67,28 18,48"/></svg>
-                    <svg class="${i === 0 ? 'panel-b' : 'panel'}"><polygon points="12,11 56,5 64,26 20,42"/></svg>
-                    <img src="${chat.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" 
-                         alt="" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'">
-                    <div class="text-container">
-                        <svg class="text-outline-1"><polygon points="78,10 220,0 210,44 69,48"/></svg>
-                        <svg class="text-outline-2"><polygon points="80,12 210,4 205,40 73,44"/></svg>
-                        <div class="text-skew">${lastMsg || 'New chat'}</div>
+            const ids = Object.keys(chats);
+            let html = '<div class="p5-chat-list-header"><span>S</span>NS</div>';
+            
+            ids.forEach(id => {
+                const c = chats[id];
+                const last = c.msgs.length > 0 ? c.msgs[c.msgs.length-1].text.substring(0, 25) : 'New chat';
+                const unread = c.msgs.filter(m => m.from === 'user' && !m.read).length;
+                html += `
+                <div class="p5-contact" onclick="openChat('${id}')">
+                    <img class="p5-contact-avatar" src="${c.avatar || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'">
+                    <div class="p5-contact-info">
+                        <div class="p5-contact-last-msg">${esc(last)}</div>
                     </div>
-                    ${unreadCount > 0 ? `
-                    <div class="message-type">
-                        <svg class="lettering-outline"><polygon points="0,3 9,1 16,4 17,13 13,18 11,25 3,25 2,17 3,12 0,10"/></svg>
-                        <span class="lettering">${unreadCount}</span>
-                    </div>` : ''}
+                    ${unread > 0 ? `<div class="p5-contact-badge">${unread}</div>` : ''}
                 </div>`;
-            }).join('') + `
-            <div class="contact" onclick="startNewChat()">
-                <svg class="border"><polygon points="0,5 60,0 70,30 10,55"/></svg>
-                <svg class="outline"><polygon points="8,7 58,2 67,28 18,48"/></svg>
-                <svg class="panel"><polygon points="12,11 56,5 64,26 20,42"/></svg>
-                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23333' width='100' height='100'/><text x='50' y='65' text-anchor='middle' fill='%23E60012' font-size='40'>+</text></svg>" alt="">
-                <div class="text-container">
-                    <svg class="text-outline-1"><polygon points="78,10 220,0 210,44 69,48"/></svg>
-                    <svg class="text-outline-2"><polygon points="80,12 210,4 205,40 73,44"/></svg>
-                    <div class="text-skew">New Chat</div>
-                </div>
+            });
+            
+            html += `
+            <div class="p5-new-chat" onclick="newChat()">
+                <div class="p5-new-chat-icon">+</div>
+                <div class="p5-contact-last-msg">New Chat</div>
             </div>`;
+            
+            container.innerHTML = html;
         }
 
-        function startNewChat() {
-            const avatar = prompt('Enter avatar URL (optional):');
-            const id = 'user_' + Date.now();
-            const chat = getOrCreateChat(id);
-            if (avatar && avatar.trim()) chat.avatar = avatar.trim();
+        function newChat() {
+            const av = prompt('Avatar URL (optional):');
+            const id = 'u' + Date.now();
+            const c = goc(id);
+            if (av && av.trim()) c.avatar = av.trim();
             saveChats();
-            renderContacts();
+            renderChatList();
             openChat(id);
         }
 
         function openChat(id) {
-            currentChat = id;
-            const chat = getOrCreateChat(id);
+            currentChatId = id;
+            const c = goc(id);
+            document.getElementById('p5-chat-list-view').style.display = 'none';
+            document.getElementById('p5-chat-msg-view').style.display = 'flex';
             
-            document.getElementById('contacts-view').style.display = 'none';
-            document.getElementById('chat-view').classList.add('active');
+            const avEl = document.getElementById('p5-chat-avatar');
+            if (c.avatar) { avEl.src = c.avatar; avEl.style.display = 'block'; }
+            else { avEl.style.display = 'none'; }
             
-            const avatarEl = document.getElementById('chat-view-avatar');
-            if (chat.avatar) {
-                avatarEl.src = chat.avatar;
-                avatarEl.style.display = 'block';
-            } else {
-                avatarEl.style.display = 'none';
-            }
-            
-            // Mark messages as read if admin
-            if (isAdmin) {
-                chat.messages.forEach(m => { if (m.from === 'user') m.read = true; });
-                saveChats();
-            }
-            
-            renderMessages();
-        }
-
-        function backToContacts() {
-            currentChat = null;
-            document.getElementById('contacts-view').style.display = 'block';
-            document.getElementById('chat-view').classList.remove('active');
-            renderContacts();
+            if (isAdmin) { c.msgs.forEach(m => { if (m.from === 'user') m.read = true; }); saveChats(); }
+            renderMsgs();
         }
 
         function sendP5Msg() {
-            const input = document.getElementById('p5-msg-input');
+            const input = document.getElementById('p5-input');
             const text = input.value.trim();
-            if (!text || !currentChat) return;
-
-            const chat = getOrCreateChat(currentChat);
-            chat.messages.push({
-                from: isAdmin ? 'admin' : 'user',
-                text,
-                time: Date.now(),
-                read: isAdmin
-            });
+            if (!text || !currentChatId) return;
+            const c = goc(currentChatId);
+            c.msgs.push({ from: isAdmin ? 'admin' : 'user', text, time: Date.now(), read: isAdmin });
             saveChats();
             input.value = '';
-            renderMessages();
+            renderMsgs();
         }
 
-        function renderMessages() {
-            if (!currentChat) return;
-            const chat = getOrCreateChat(currentChat);
-            const container = document.getElementById('chat-messages-p5');
-            
-            container.innerHTML = chat.messages.map(m => {
-                const isOwn = (isAdmin && m.from === 'admin') || (!isAdmin && m.from === 'user');
+        function renderMsgs() {
+            if (!currentChatId) return;
+            const c = goc(currentChatId);
+            const container = document.getElementById('p5-messages');
+            container.innerHTML = c.msgs.map(m => {
+                const sent = (isAdmin && m.from === 'admin') || (!isAdmin && m.from === 'user');
+                const nick = m.from === 'admin' ? 'ONELIFE' : '???';
                 return `
-                <div class="chat-msg ${isOwn ? 'own' : ''}">
-                    <img class="chat-msg-avatar" 
-                         src="${m.from === 'admin' ? (chat.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg') : 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" 
-                         onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'">
-                    <div class="chat-msg-bubble">${escHtml(m.text)}</div>
+                <div class="p5-msg ${sent ? 'sent' : 'received'}">
+                    <img class="p5-msg-avatar" src="${m.from === 'admin' ? (c.avatar || '') : 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'}" 
+                         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'">
+                    <div>
+                        <div class="p5-msg-nickname">${nick}</div>
+                        <div class="p5-msg-bubble">${esc(m.text)}</div>
+                    </div>
                 </div>`;
             }).join('');
             container.scrollTop = container.scrollHeight;
         }
 
-        function saveChats() { localStorage.setItem('p5_chats', JSON.stringify(p5Chats)); }
-        function escHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+        function saveChats() { localStorage.setItem('p5chats', JSON.stringify(chats)); }
+        function esc(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
         // ==================== BRAINFUCK ====================
         class BF {
-            constructor() { this.t = new Array(30).fill(0); this.p = 0; this.c = ''; this.i = 0; this.o = ''; this.s = {'>':0,'<':0,'+':0,'-':0,'.':0,',':0,'[':0,']':0}; this.b = {}; }
-            load(c) { this.c = c; this.o = ''; this.p = 0; this.i = 0; this.t = new Array(30).fill(0); this.s = {'>':0,'<':0,'+':0,'-':0,'.':0,',':0,'[':0,']':0}; this._b(); }
+            constructor() { this.t = new Array(30).fill(0); this.p = 0; this.c = ''; this.i = 0; this.o = ''; this.b = {}; }
+            load(c) { this.c = c; this.o = ''; this.p = 0; this.i = 0; this.t = new Array(30).fill(0); this._b(); }
             _b() { let s = []; this.b = {}; for (let i = 0; i < this.c.length; i++) { if (this.c[i] === '[') s.push(i); else if (this.c[i] === ']') { let st = s.pop(); this.b[st] = i; this.b[i] = st; } } }
-            step() { if (this.i >= this.c.length) return null; let c = this.c[this.i]; if (c in this.s) this.s[c]++; switch(c) { case '>': this.p++; break; case '<': this.p--; break; case '+': this.t[this.p] = (this.t[this.p]+1)%256; break; case '-': this.t[this.p] = (this.t[this.p]-1+256)%256; break; case '.': this.o += String.fromCharCode(this.t[this.p]); break; case '[': if (this.t[this.p]===0) this.i = this.b[this.i]; break; case ']': if (this.t[this.p]!==0) this.i = this.b[this.i]; break; } this.i++; return true; }
+            step() { if (this.i >= this.c.length) return null; let c = this.c[this.i]; switch(c) { case '>': this.p++; break; case '<': this.p--; break; case '+': this.t[this.p] = (this.t[this.p]+1)%256; break; case '-': this.t[this.p] = (this.t[this.p]-1+256)%256; break; case '.': this.o += String.fromCharCode(this.t[this.p]); break; case '[': if (this.t[this.p]===0) this.i = this.b[this.i]; break; case ']': if (this.t[this.p]!==0) this.i = this.b[this.i]; break; } this.i++; return true; }
         }
         let bf = new BF();
         function resetBF() { bf.load(document.getElementById('bf-code').value); updBF(); }
@@ -718,7 +723,6 @@
             document.getElementById('bf-out').textContent = bf.o;
             const tape = document.getElementById('bf-tape'); tape.innerHTML = '';
             for (let i = 0; i < 15; i++) { const cell = document.createElement('div'); cell.className = `tape-cell ${i===bf.p?'active':''}`; cell.textContent = bf.t[i]; tape.appendChild(cell); }
-            document.getElementById('bf-stats').textContent = 'Steps: ' + Object.values(bf.s).reduce((a,b)=>a+b,0);
         }
 
         // ==================== INIT ====================
@@ -726,7 +730,7 @@
             resetBF();
             setTheme(localStorage.getItem('theme') || 'default');
             if (localStorage.getItem('language') === 'english') toggleLanguage();
-            checkAdminAccess();
+            checkAdmin();
         });
     </script>
 </body>
