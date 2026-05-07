@@ -33,7 +33,6 @@
             --font-mono: 'Share Tech Mono', monospace;
         }
 
-        /* Persona 3 Reload Theme */
         [data-theme="p3"] {
             --p-primary: #0D1B2A;
             --p-primary-hover: #1B3A5C;
@@ -60,7 +59,6 @@
             --font-mono: 'Share Tech Mono', monospace;
         }
 
-        /* Light Theme */
         [data-theme="light"] {
             --p-primary: #8B5CF6;
             --p-primary-hover: #7C3AED;
@@ -100,13 +98,15 @@
 
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes float-slow { 0%,100% { transform: translateY(0px) rotate(0deg); } 33% { transform: translateY(-6px) rotate(2deg); } 66% { transform: translateY(3px) rotate(-1deg); } }
         @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 10px var(--p-highlight); } 50% { box-shadow: 0 0 25px var(--p-highlight), 0 0 40px var(--p-primary-light); } }
-        @keyframes caustic-shift { 0% { background-position: 0% 0%; opacity: 0.3; } 50% { opacity: 0.6; } 100% { background-position: 100% 100%; opacity: 0.3; } }
-        @keyframes makoto-float { 0%,100% { transform: translateY(0px) rotate(0deg); } 33% { transform: translateY(-8px) rotate(1deg); } 66% { transform: translateY(4px) rotate(-1deg); } }
+        @keyframes caustic-shift { 0% { background-position: 0% 0%; opacity: 0.3; } 50% { opacity: 0.5; } 100% { background-position: 100% 100%; opacity: 0.3; } }
+        @keyframes cursor-twitch { 0%,100% { transform: translateY(0px) rotate(-16deg); } 50% { transform: translateY(-12px) rotate(-14deg); } }
+        @keyframes menu-item-appear { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-        /* Hero */
+        /* ==================== P3R PAUSE MENU HERO ==================== */
         .hero {
             min-height: 100vh; display: flex; align-items: center; justify-content: center;
             background: linear-gradient(135deg, var(--p-primary-dark) 0%, var(--p-primary) 50%, var(--p-primary-light) 100%);
@@ -115,45 +115,261 @@
         
         [data-theme="p3"] .hero {
             background: 
-                radial-gradient(ellipse at 30% 60%, rgba(74,144,217,0.2) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 20%, rgba(107,181,255,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(13,27,42,0.5) 0%, transparent 70%),
-                linear-gradient(180deg, #060F18 0%, #0D1B2A 35%, #0A1628 70%, #060F18 100%);
+                radial-gradient(ellipse at 25% 65%, rgba(74,144,217,0.25) 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 25%, rgba(107,181,255,0.15) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 50%, rgba(13,27,42,0.6) 0%, transparent 70%),
+                linear-gradient(180deg, #060F18 0%, #0A1628 30%, #0D1B2A 60%, #060F18 100%);
         }
         
         [data-theme="p3"] .hero::before {
             content: ''; position: absolute; inset: 0;
             background: 
                 repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(74,144,217,0.04) 2px, rgba(74,144,217,0.04) 4px),
-                radial-gradient(circle at 40% 60%, rgba(107,181,255,0.08) 0%, transparent 60%);
-            animation: caustic-shift 25s ease-in-out infinite;
+                radial-gradient(circle at 35% 65%, rgba(107,181,255,0.08) 0%, transparent 60%);
+            animation: caustic-shift 20s ease-in-out infinite;
+            pointer-events: none; z-index: 1;
+        }
+
+        /* P3R Makoto - висит вниз головой */
+        [data-theme="p3"] .makoto-container {
+            display: block;
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 45%;
+            z-index: 0;
             pointer-events: none;
         }
 
-        /* Makoto overlay for P3 theme */
-        [data-theme="p3"] .hero::after {
+        [data-theme="p3"] .makoto-img {
+            position: absolute;
+            left: -5%;
+            top: 50%;
+            transform: translateY(-50%) rotate(180deg);
+            width: 100%;
+            height: auto;
+            max-height: 90vh;
+            object-fit: contain;
+            object-position: center;
+            opacity: 0.35;
+            filter: brightness(0.7) saturate(0.6) contrast(1.2);
+            animation: float-slow 8s ease-in-out infinite;
+        }
+
+        /* P3R Menu Items */
+        [data-theme="p3"] .p3r-menu {
+            display: flex;
+            position: absolute;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            flex-direction: column;
+            gap: clamp(0.5rem, 1.5vh, 1.2rem);
+            z-index: 3;
+            width: clamp(200px, 30vw, 450px);
+        }
+
+        [data-theme="p3"] .p3r-menu-item {
+            font-family: var(--font-main);
+            font-weight: 800;
+            font-size: clamp(1.5rem, 4vw, 3.5rem);
+            color: rgba(74,144,217,0.7);
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transform: skewX(-5deg);
+            transition: all 0.3s ease;
+            text-shadow: 0 0 20px rgba(74,144,217,0.2);
+            animation: menu-item-appear 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        [data-theme="p3"] .p3r-menu-item:nth-child(1) { animation-delay: 0.1s; }
+        [data-theme="p3"] .p3r-menu-item:nth-child(2) { animation-delay: 0.2s; }
+        [data-theme="p3"] .p3r-menu-item:nth-child(3) { animation-delay: 0.3s; }
+        [data-theme="p3"] .p3r-menu-item:nth-child(4) { animation-delay: 0.4s; }
+        [data-theme="p3"] .p3r-menu-item:nth-child(5) { animation-delay: 0.5s; }
+        [data-theme="p3"] .p3r-menu-item:nth-child(6) { animation-delay: 0.6s; }
+        [data-theme="p3"] .p3r-menu-item:nth-child(7) { animation-delay: 0.7s; }
+        [data-theme="p3"] .p3r-menu-item:nth-child(8) { animation-delay: 0.8s; }
+        [data-theme="p3"] .p3r-menu-item:nth-child(9) { animation-delay: 0.9s; }
+
+        [data-theme="p3"] .p3r-menu-item:hover,
+        [data-theme="p3"] .p3r-menu-item.selected {
+            color: #FFFFFF;
+            text-shadow: 0 0 30px rgba(74,144,217,0.8), 0 0 60px rgba(107,181,255,0.4);
+            transform: skewX(-5deg) scale(1.15);
+            letter-spacing: 4px;
+        }
+
+        [data-theme="p3"] .p3r-menu-item.selected {
+            color: #000000;
+            text-shadow: none;
+        }
+
+        /* P3R Cursor Triangle */
+        [data-theme="p3"] .p3r-cursor {
+            position: absolute;
+            right: calc(8% + clamp(200px, 30vw, 450px) + 20px);
+            top: 50%;
+            transform: translateY(-50%) translateX(10px);
+            width: 0;
+            height: 0;
+            border-left: 25px solid #E60012;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            z-index: 4;
+            transition: top 0.2s ease;
+            animation: cursor-twitch 1.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        [data-theme="p3"] .p3r-cursor::after {
             content: '';
             position: absolute;
-            top: 0;
-            right: -5%;
-            width: 50%;
-            height: 100%;
-            background: url('https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/textures/makoto_ui_texture.png') no-repeat center right;
-            background-size: contain;
-            opacity: 0.25;
-            filter: brightness(0.8) saturate(0.5);
-            animation: makoto-float 10s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
+            left: -35px;
+            top: -18px;
+            width: 0;
+            height: 0;
+            border-left: 30px solid rgba(230,0,18,0.3);
+            border-top: 18px solid transparent;
+            border-bottom: 18px solid transparent;
         }
 
+        /* P3R Menu Info */
+        [data-theme="p3"] .p3r-menu-info {
+            position: absolute;
+            left: 5%;
+            bottom: 10%;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+
+        [data-theme="p3"] .p3r-menu-number {
+            font-family: var(--font-main);
+            font-size: clamp(6rem, 15vw, 15rem);
+            font-weight: 900;
+            color: rgba(255,255,255,0.08);
+            line-height: 0.8;
+            letter-spacing: -10px;
+        }
+
+        [data-theme="p3"] .p3r-menu-name {
+            font-family: var(--font-main);
+            font-size: clamp(2rem, 5vw, 5rem);
+            font-weight: 900;
+            color: #FFFFFF;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+            transform: skewX(-3deg);
+        }
+
+        /* P3R Wallet */
+        [data-theme="p3"] .p3r-wallet {
+            position: absolute;
+            left: 5%;
+            top: 8%;
+            z-index: 3;
+            background: rgba(255,255,255,0.95);
+            border: 3px solid #000;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            transform: skewX(-3deg);
+            pointer-events: none;
+        }
+
+        [data-theme="p3"] .p3r-wallet-yen {
+            font-family: var(--font-main);
+            font-size: clamp(1rem, 2vw, 1.8rem);
+            font-weight: 700;
+            color: #000;
+        }
+
+        [data-theme="p3"] .p3r-wallet-amount {
+            font-family: var(--font-main);
+            font-size: clamp(1.2rem, 2.5vw, 2.5rem);
+            font-weight: 900;
+            color: #000;
+            letter-spacing: 2px;
+        }
+
+        [data-theme="p3"] .p3r-wallet-label {
+            font-family: var(--font-main);
+            font-size: clamp(0.6rem, 1vw, 0.8rem);
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* P3R Tooltip */
+        [data-theme="p3"] .p3r-tooltip {
+            position: absolute;
+            right: 5%;
+            bottom: 8%;
+            z-index: 3;
+            color: #FFF;
+            font-family: var(--font-main);
+            text-align: right;
+            pointer-events: none;
+        }
+
+        [data-theme="p3"] .p3r-tooltip-title {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 800;
+            text-shadow: 0 0 15px rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        [data-theme="p3"] .p3r-tooltip-subtitle {
+            font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        [data-theme="p3"] .p3r-tooltip-line {
+            flex: 1;
+            height: 2px;
+            background: rgba(255,255,255,0.4);
+            max-width: 100px;
+        }
+
+        /* P3R Confetti */
+        [data-theme="p3"] .p3r-confetti {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        [data-theme="p3"] .p3r-confetti-piece {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(74,144,217,0.4), rgba(107,181,255,0.15));
+            clip-path: polygon(0 0, 100% 30%, 70% 100%, 10% 80%);
+            animation: float 7s ease-in-out infinite;
+        }
+
+        /* Hide default elements in P3R theme */
+        [data-theme="p3"] .anime-gif-left,
+        [data-theme="p3"] .anime-gif-right { display: none; }
+        
+        [data-theme="p3"] .brand-header { display: none; }
+
+        /* Default/Light theme elements */
         .anime-gif-left, .anime-gif-right {
             position: absolute; border-radius: 50%; overflow: hidden;
             border: 3px solid var(--p-primary-light); box-shadow: var(--p-glow, 0 0 15px rgba(139,92,246,0.3)); z-index: 1;
         }
         .anime-gif-left { bottom: 2rem; left: 2rem; width: 180px; height: 180px; opacity: 0.8; animation: float 8s ease-in-out infinite; }
         .anime-gif-right { top: 2rem; right: 2rem; width: 160px; height: 160px; opacity: 0.9; animation: float 7s ease-in-out infinite reverse; }
-        [data-theme="p3"] .anime-gif-left, [data-theme="p3"] .anime-gif-right { display: none; }
         .anime-gif-left img, .anime-gif-right img { width: 100%; height: 100%; object-fit: cover; }
 
         /* Top Bars */
@@ -168,7 +384,11 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3); pointer-events: all;
             flex-wrap: wrap; justify-content: center;
         }
-        [data-theme="light"] .theme-switcher-bar, [data-theme="light"] .lang-switcher-bar { background: rgba(255,255,255,0.9); }
+        [data-theme="light"] .theme-switcher-bar,
+        [data-theme="light"] .lang-switcher-bar { background: rgba(255,255,255,0.9); }
+        [data-theme="p3"] .theme-switcher-bar,
+        [data-theme="p3"] .lang-switcher-bar { background: rgba(6,15,24,0.8); border-color: #2D4A6E; }
+
         .theme-btn, .lang-btn {
             background: var(--btn-bg); border: 2px solid var(--btn-border); color: var(--btn-text);
             padding: 0.5rem 1rem; border-radius: 0.75rem; cursor: pointer; font-weight: 700;
@@ -179,23 +399,11 @@
         .theme-btn.active { background: var(--p-primary); border-color: var(--p-primary-light); animation: pulse-glow 2s infinite; }
 
         .brand-header { text-align: center; position: relative; z-index: 2; width: 100%; }
-        .username { 
-            font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900;
-            background: linear-gradient(135deg, var(--p-primary-light), var(--p-text));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem; letter-spacing: 2px;
-        }
+        .username { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; background: linear-gradient(135deg, var(--p-primary-light), var(--p-text)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; letter-spacing: 2px; }
         .tagline { font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
         .universal-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--p-border-light); border-radius: 2rem; padding: 0.75rem 1.5rem; margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
 
-        .social-grid { 
-            display: grid; 
-            grid-template-columns: repeat(6, 1fr); 
-            gap: 1rem; 
-            max-width: 900px; 
-            margin: 0 auto; 
-            padding: 0 1rem; 
-        }
+        .social-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; max-width: 900px; margin: 0 auto; padding: 0 1rem; }
         .social-card { background: var(--card-bg); border: 1px solid var(--p-border); border-radius: 1rem; padding: var(--card-padding); text-align: center; text-decoration: none; color: var(--p-text); transition: all 0.3s ease; }
         .social-card:hover { border-color: var(--p-primary-light); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .social-icon { font-size: 2rem; margin-bottom: 0.75rem; }
@@ -213,10 +421,7 @@
         .section-content:nth-child(odd) { background: var(--p-background-alt); }
         .section-content:nth-child(even) { background: var(--p-background); }
 
-        .section-title { 
-            font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 2.5rem;
-            color: var(--p-text); font-weight: 900; letter-spacing: 1px;
-        }
+        .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 2.5rem; color: var(--p-text); font-weight: 900; letter-spacing: 1px; }
         [data-theme="p3"] .section-title { color: var(--p-primary-light); text-shadow: 0 0 20px rgba(74,144,217,0.3); }
 
         .project-grid { display: grid; gap: 1.5rem; max-width: 800px; margin: 0 auto; padding: 0 1rem; }
@@ -235,166 +440,48 @@
         .skill-category h3 { color: var(--p-primary-light); margin-bottom: 1rem; font-weight: 800; }
         .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
-        /* P3R Confetti */
-        [data-theme="p3"] .hero .confetti {
-            position: absolute; inset: 0; pointer-events: none; z-index: 0;
-        }
-        [data-theme="p3"] .confetti-piece {
-            position: absolute; width: 30px; height: 20px;
-            background: linear-gradient(135deg, rgba(74,144,217,0.3), rgba(107,181,255,0.1));
-            clip-path: polygon(0 0, 100% 20%, 80% 100%, 20% 80%);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* Persona 5 Chat */
-        .p5-chat-fab {
-            position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
-            width: 60px; height: 60px; border-radius: 50%;
-            background: #E60012; border: 3px solid #FF4444; color: white;
-            font-size: 1.5rem; cursor: pointer;
-            box-shadow: 0 0 30px rgba(230,0,18,0.5);
-            display: flex; align-items: center; justify-content: center;
-        }
+        /* P5 Chat */
+        .p5-chat-fab { position: fixed; bottom: 2rem; right: 2rem; z-index: 999; width: 60px; height: 60px; border-radius: 50%; background: #E60012; border: 3px solid #FF4444; color: white; font-size: 1.5rem; cursor: pointer; box-shadow: 0 0 30px rgba(230,0,18,0.5); display: flex; align-items: center; justify-content: center; }
         .p5-chat-fab:hover { transform: scale(1.1); box-shadow: 0 0 40px rgba(230,0,18,0.7); }
 
-        .p5-chat-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000;
-            display: none; align-items: center; justify-content: center;
-        }
+        .p5-chat-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: none; align-items: center; justify-content: center; }
         .p5-chat-overlay.open { display: flex; }
 
-        .p5-phone {
-            width: 320px; height: 520px; background: #0A0A0A;
-            border: 3px solid #E60012; border-radius: 20px;
-            position: relative; overflow: hidden;
-            box-shadow: 0 0 50px rgba(230,0,18,0.3), inset 0 0 30px rgba(230,0,18,0.05);
-        }
-        .p5-phone-notch {
-            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 100px; height: 20px; background: #0A0A0A;
-            border-radius: 0 0 15px 15px; z-index: 10;
-            border: 2px solid #333; border-top: none;
-        }
-        .p5-phone-screen {
-            position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px;
-            background: #111; border-radius: 12px; overflow: hidden;
-            display: flex; flex-direction: column;
-        }
+        .p5-phone { width: 320px; height: 520px; background: #0A0A0A; border: 3px solid #E60012; border-radius: 20px; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(230,0,18,0.3), inset 0 0 30px rgba(230,0,18,0.05); }
+        .p5-phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 20px; background: #0A0A0A; border-radius: 0 0 15px 15px; z-index: 10; border: 2px solid #333; border-top: none; }
+        .p5-phone-screen { position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px; background: #111; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
 
-        .p5-chat-list {
-            flex: 1; overflow-y: auto; padding: 10px;
-            background: linear-gradient(180deg, #0A0A0A 0%, #111 100%);
-        }
-        .p5-chat-list-header {
-            text-align: center; padding: 15px 0 20px;
-            font-family: var(--font-mono);
-            font-size: 2rem; color: #FFF; letter-spacing: 3px;
-            text-shadow: 0 0 10px rgba(230,0,18,0.5);
-        }
+        .p5-chat-list { flex: 1; overflow-y: auto; padding: 10px; background: linear-gradient(180deg, #0A0A0A 0%, #111 100%); }
+        .p5-chat-list-header { text-align: center; padding: 15px 0 20px; font-family: var(--font-mono); font-size: 2rem; color: #FFF; letter-spacing: 3px; text-shadow: 0 0 10px rgba(230,0,18,0.5); }
         .p5-chat-list-header span { color: #E60012; }
 
-        .p5-contact {
-            display: flex; align-items: center; gap: 12px; padding: 12px;
-            margin: 4px 0; cursor: pointer; border-radius: 4px;
-            border: 1px solid transparent; transition: all 0.2s;
-            background: rgba(20,20,20,0.8);
-            transform: skewX(-3deg);
-        }
+        .p5-contact { display: flex; align-items: center; gap: 12px; padding: 12px; margin: 4px 0; cursor: pointer; border-radius: 4px; border: 1px solid transparent; background: rgba(20,20,20,0.8); transform: skewX(-3deg); }
         .p5-contact:hover { border-color: #E60012; background: rgba(230,0,18,0.1); }
-        .p5-contact-avatar {
-            width: 44px; height: 44px; border-radius: 2px; object-fit: cover;
-            border: 2px solid #333; background: #1A1A1A;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-        }
+        .p5-contact-avatar { width: 44px; height: 44px; object-fit: cover; border: 2px solid #333; background: #1A1A1A; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
         .p5-contact-info { flex: 1; min-width: 0; }
-        .p5-contact-last-msg {
-            color: #888; font-size: 0.8rem; white-space: nowrap;
-            overflow: hidden; text-overflow: ellipsis;
-            font-family: var(--font-mono);
-        }
-        .p5-contact-badge {
-            background: #E60012; color: white; border-radius: 50%;
-            width: 22px; height: 22px; display: flex; align-items: center;
-            justify-content: center; font-size: 0.7rem; font-weight: bold;
-        }
-        .p5-new-chat {
-            display: flex; align-items: center; gap: 12px; padding: 12px;
-            margin: 4px 0; cursor: pointer; border-radius: 4px;
-            border: 1px dashed #333; transition: all 0.2s;
-            background: rgba(20,20,20,0.5);
-            transform: skewX(-3deg); opacity: 0.6;
-        }
+        .p5-contact-last-msg { color: #888; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-mono); }
+        .p5-contact-badge { background: #E60012; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; }
+        .p5-new-chat { display: flex; align-items: center; gap: 12px; padding: 12px; margin: 4px 0; cursor: pointer; border: 1px dashed #333; background: rgba(20,20,20,0.5); transform: skewX(-3deg); opacity: 0.6; }
         .p5-new-chat:hover { border-color: #E60012; opacity: 1; }
 
         .p5-chat-messages { flex: 1; overflow-y: auto; padding: 15px; background: #0D0D0D; }
-        .p5-msg {
-            display: flex; gap: 8px; margin: 8px 0;
-            animation: fadeInUp 0.4s ease; align-items: flex-end;
-        }
+        .p5-msg { display: flex; gap: 8px; margin: 8px 0; animation: fadeInUp 0.4s ease; align-items: flex-end; }
         .p5-msg.sent { flex-direction: row-reverse; }
-        .p5-msg-avatar {
-            width: 32px; height: 32px; border-radius: 2px; object-fit: cover;
-            border: 2px solid #333; background: #1A1A1A;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-            flex-shrink: 0;
-        }
-        .p5-msg-bubble {
-            max-width: 70%; padding: 10px 14px; border-radius: 2px;
-            font-size: 0.85rem; line-height: 1.5;
-            font-family: var(--font-mono);
-            position: relative; transform: skewX(-2deg);
-        }
-        .p5-msg.received .p5-msg-bubble {
-            background: #1A1A1A; color: #DDD; border: 1px solid #333;
-            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
-        }
-        .p5-msg.sent .p5-msg-bubble {
-            background: #E60012; color: #FFF; border: 1px solid #FF4444;
-            clip-path: polygon(5% 0, 100% 0, 100% 100%, 0 100%);
-        }
-        .p5-msg-nickname {
-            font-size: 0.65rem; color: #E60012; font-weight: bold;
-            margin-bottom: 2px; text-transform: uppercase; letter-spacing: 2px;
-            font-family: var(--font-main);
-        }
+        .p5-msg-avatar { width: 32px; height: 32px; object-fit: cover; border: 2px solid #333; background: #1A1A1A; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); flex-shrink: 0; }
+        .p5-msg-bubble { max-width: 70%; padding: 10px 14px; font-size: 0.85rem; line-height: 1.5; font-family: var(--font-mono); transform: skewX(-2deg); }
+        .p5-msg.received .p5-msg-bubble { background: #1A1A1A; color: #DDD; border: 1px solid #333; clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%); }
+        .p5-msg.sent .p5-msg-bubble { background: #E60012; color: #FFF; border: 1px solid #FF4444; clip-path: polygon(5% 0, 100% 0, 100% 100%, 0 100%); }
+        .p5-msg-nickname { font-size: 0.65rem; color: #E60012; font-weight: bold; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 2px; font-family: var(--font-main); }
         .p5-msg.sent .p5-msg-nickname { text-align: right; color: #FF9999; }
 
-        .p5-chat-input-area {
-            display: flex; gap: 8px; padding: 10px;
-            background: #0A0A0A; border-top: 2px solid #222;
-        }
-        .p5-chat-input {
-            flex: 1; background: #1A1A1A; border: 1px solid #333;
-            color: #DDD; padding: 10px 14px; border-radius: 2px;
-            font-family: var(--font-mono); font-size: 0.85rem;
-            outline: none; transform: skewX(-3deg);
-        }
+        .p5-chat-input-area { display: flex; gap: 8px; padding: 10px; background: #0A0A0A; border-top: 2px solid #222; }
+        .p5-chat-input { flex: 1; background: #1A1A1A; border: 1px solid #333; color: #DDD; padding: 10px 14px; font-family: var(--font-mono); font-size: 0.85rem; outline: none; transform: skewX(-3deg); }
         .p5-chat-input:focus { border-color: #E60012; }
-        .p5-chat-send {
-            background: #E60012; border: 2px solid #FF4444; color: white;
-            padding: 10px 16px; cursor: pointer; font-weight: bold;
-            text-transform: uppercase; letter-spacing: 1px;
-            font-family: var(--font-main); font-size: 0.75rem;
-            transform: skewX(-5deg); transition: all 0.2s;
-        }
+        .p5-chat-send { background: #E60012; border: 2px solid #FF4444; color: white; padding: 10px 16px; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-main); font-size: 0.75rem; transform: skewX(-5deg); }
         .p5-chat-send:hover { background: #FF2222; }
-
-        .p5-back-btn {
-            background: none; border: 1px solid #E60012; color: #E60012;
-            padding: 6px 12px; cursor: pointer; font-weight: bold;
-            transform: skewX(-5deg); font-family: var(--font-main);
-            font-size: 0.75rem; letter-spacing: 1px;
-        }
-
-        .p5-chat-header-bar {
-            display: flex; align-items: center; gap: 10px; padding: 10px;
-            background: #0A0A0A; border-bottom: 2px solid #222;
-        }
-        .p5-chat-close-btn {
-            position: absolute; top: -30px; right: 5px;
-            background: none; border: 1px solid #E60012; color: #E60012;
-            width: 28px; height: 28px; cursor: pointer; font-size: 0.9rem;
-        }
+        .p5-back-btn { background: none; border: 1px solid #E60012; color: #E60012; padding: 6px 12px; cursor: pointer; font-weight: bold; transform: skewX(-5deg); font-family: var(--font-main); font-size: 0.75rem; letter-spacing: 1px; }
+        .p5-chat-header-bar { display: flex; align-items: center; gap: 10px; padding: 10px; background: #0A0A0A; border-bottom: 2px solid #222; }
+        .p5-chat-close-btn { position: absolute; top: -30px; right: 5px; background: none; border: 1px solid #E60012; color: #E60012; width: 28px; height: 28px; cursor: pointer; font-size: 0.9rem; }
 
         /* Admin */
         .admin-area { position: fixed; top: 1rem; left: 1rem; z-index: 1001; display: flex; gap: 0.5rem; align-items: center; }
@@ -409,17 +496,20 @@
         .demo-container { max-width: 1000px; margin: 0 auto; background: var(--p-surface); border-radius: 1rem; padding: 2rem; border: 1px solid var(--p-border-light); }
         .demo-interface { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
         .code-input-section textarea { width: 100%; background: var(--p-background); border: 1px solid var(--p-border); border-radius: 0.5rem; padding: 1rem; color: var(--p-text); font-family: var(--font-mono); resize: vertical; }
-        .output-display, .tape-display, .stats-display { background: var(--p-background); border: 1px solid var(--p-border); border-radius: 0.5rem; padding: 1rem; margin-bottom: 1rem; }
+        .output-display, .tape-display { background: var(--p-background); border: 1px solid var(--p-border); border-radius: 0.5rem; padding: 1rem; margin-bottom: 1rem; }
         .tape-visualization { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tape-cell { width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; background: var(--btn-bg); border: 2px solid var(--p-border); font-family: var(--font-mono); color: var(--btn-text); font-size: 0.9rem; }
         .tape-cell.active { background: var(--p-primary); border-color: var(--p-primary-light); box-shadow: 0 0 10px var(--p-primary-light); color: white; }
 
         footer { background: var(--p-surface); padding: 2rem 0; text-align: center; border-top: 1px solid var(--p-border-light); }
-        
         .english { display: none; }
 
+        /* Responsive */
         @media (max-width: 1024px) {
             .social-grid { grid-template-columns: repeat(3, 1fr); }
+            [data-theme="p3"] .makoto-container { width: 35%; }
+            [data-theme="p3"] .p3r-menu { right: 5%; width: clamp(180px, 28vw, 350px); }
+            [data-theme="p3"] .p3r-menu-item { font-size: clamp(1.2rem, 3vw, 2.5rem); }
         }
         @media (max-width: 768px) {
             .hero { min-height: 100vh; padding: 6rem 0 2rem; }
@@ -428,17 +518,39 @@
             .p5-phone { width: 90vw; height: 80vh; max-width: 320px; }
             .top-bars { flex-direction: column; align-items: center; }
             .demo-interface { grid-template-columns: 1fr; }
-            [data-theme="p3"] .hero::after { width: 70%; right: -10%; }
+            
+            [data-theme="p3"] .makoto-container { width: 30%; left: -5%; }
+            [data-theme="p3"] .makoto-img { opacity: 0.2; }
+            [data-theme="p3"] .p3r-menu { right: 3%; width: 50%; gap: 0.3rem; }
+            [data-theme="p3"] .p3r-menu-item { font-size: clamp(0.9rem, 2.5vw, 1.5rem); }
+            [data-theme="p3"] .p3r-cursor { border-left-width: 15px; border-top-width: 10px; border-bottom-width: 10px; right: calc(3% + 50% + 10px); }
+            [data-theme="p3"] .p3r-menu-number { font-size: clamp(3rem, 8vw, 6rem); }
+            [data-theme="p3"] .p3r-menu-name { font-size: clamp(1rem, 3vw, 2rem); }
+            [data-theme="p3"] .p3r-wallet { top: 5%; left: 2%; padding: 0.4rem 0.8rem; }
+            [data-theme="p3"] .p3r-wallet-amount { font-size: clamp(0.8rem, 2vw, 1.5rem); }
+            [data-theme="p3"] .p3r-tooltip { bottom: 5%; right: 2%; }
         }
         @media (max-width: 480px) {
             .social-grid { grid-template-columns: repeat(2, 1fr); }
             .username { font-size: 2rem; }
+            
+            [data-theme="p3"] .makoto-container { width: 25%; left: -10%; }
+            [data-theme="p3"] .makoto-img { opacity: 0.15; }
+            [data-theme="p3"] .p3r-menu { right: 2%; width: 55%; gap: 0.2rem; }
+            [data-theme="p3"] .p3r-menu-item { font-size: clamp(0.7rem, 3vw, 1rem); letter-spacing: 1px; }
+            [data-theme="p3"] .p3r-cursor { display: none; }
+            [data-theme="p3"] .p3r-menu-number { font-size: clamp(2rem, 6vw, 4rem); }
+            [data-theme="p3"] .p3r-menu-name { font-size: clamp(0.8rem, 2.5vw, 1.5rem); }
+            [data-theme="p3"] .p3r-confetti { display: none; }
         }
     </style>
 </head>
 <body>
-    <!-- P3R Confetti -->
-    <div class="confetti" id="confetti-container"></div>
+    <!-- P3R Elements (only visible in P3R theme) -->
+    <div class="makoto-container" id="makoto-container">
+        <img class="makoto-img" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/textures/makoto_ui_texture.png" alt="Makoto" loading="eager">
+    </div>
+    <div class="p3r-confetti" id="p3r-confetti"></div>
 
     <!-- Admin -->
     <div class="admin-area">
@@ -447,7 +559,7 @@
     </div>
     <div class="admin-modal" id="admin-modal">
         <h3 style="color:var(--p-primary-light);font-family:var(--font-main);">Admin Access</h3>
-        <p style="font-size:0.8rem;color:var(--p-text-dim);margin-bottom:1rem;">Enter your secret key to access admin features</p>
+        <p style="font-size:0.8rem;color:var(--p-text-dim);margin-bottom:1rem;">Enter your secret key</p>
         <input type="password" class="admin-input" id="admin-key" placeholder="Enter secret key">
         <button class="btn" onclick="adminLogin()" style="width:100%;margin-top:0.5rem;">Login</button>
         <button class="btn" onclick="toggleAdminModal()" style="width:100%;margin-top:0.5rem;background:var(--p-surface-hover);">Cancel</button>
@@ -470,6 +582,43 @@
     <section class="hero">
         <div class="anime-gif-left"><img src="https://99px.ru/sstorage/86/2016/10/image_862910161743391536726.gif" alt="Lain" loading="lazy"></div>
         <div class="anime-gif-right"><img src="https://99px.ru/sstorage/86/2020/04/10804200835411467.gif" alt="Lain" loading="lazy"></div>
+        
+        <!-- P3R Menu -->
+        <div class="p3r-menu" id="p3r-menu">
+            <div class="p3r-menu-item selected" data-index="0">SKILL</div>
+            <div class="p3r-menu-item" data-index="1">ITEM</div>
+            <div class="p3r-menu-item" data-index="2">EQUIP</div>
+            <div class="p3r-menu-item" data-index="3">PERSONA</div>
+            <div class="p3r-menu-item" data-index="4">STATS</div>
+            <div class="p3r-menu-item" data-index="5">QUEST</div>
+            <div class="p3r-menu-item" data-index="6">SOCIAL LINK</div>
+            <div class="p3r-menu-item" data-index="7">CALENDAR</div>
+            <div class="p3r-menu-item" data-index="8">SYSTEM</div>
+        </div>
+        <div class="p3r-cursor" id="p3r-cursor"></div>
+
+        <!-- P3R Menu Info -->
+        <div class="p3r-menu-info" id="p3r-menu-info">
+            <div class="p3r-menu-number" id="p3r-menu-number">1</div>
+            <div class="p3r-menu-name" id="p3r-menu-name">SKILL</div>
+        </div>
+
+        <!-- P3R Wallet -->
+        <div class="p3r-wallet">
+            <div class="p3r-wallet-yen">¥</div>
+            <div class="p3r-wallet-amount">999,999</div>
+            <div class="p3r-wallet-label">current wallet</div>
+        </div>
+
+        <!-- P3R Tooltip -->
+        <div class="p3r-tooltip" id="p3r-tooltip">
+            <div class="p3r-tooltip-title" id="p3r-tooltip-title">Use a Skill</div>
+            <div class="p3r-tooltip-subtitle">
+                <span class="p3r-tooltip-line"></span>
+                <span id="p3r-tooltip-sub">Command</span>
+            </div>
+        </div>
+
         <div class="container"><div class="brand-header">
             <div class="username">OnelifeOnedeath</div>
             <div class="russian"><div class="tagline">Универсальный инженер • Исследователь систем</div><div class="universal-badge"><i class="fas fa-globe"></i> Один никнейм — все платформы</div></div>
@@ -489,9 +638,9 @@
     <section class="section-content"><div class="container">
         <h2 class="section-title russian">Исследовательские проекты</h2><h2 class="section-title english">Research Projects</h2>
         <div class="project-grid">
-            <div class="project-card"><h3 class="project-title">Tapeworm 🐛</h3><p class="project-description russian">Визуализатор Brainfuck с анимированным ленточным червем. Исследование эзотерических языков.</p><p class="project-description english">Brainfuck visualizer with animated tape worm. Esoteric language research.</p><div class="project-tech"><span class="tech-tag">Rust</span><span class="tech-tag">WASM</span><span class="tech-tag">Visualization</span></div><a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
-            <div class="project-card"><h3 class="project-title">Codex Mortis</h3><p class="project-description russian">Мультиязычный кодекс на 10+ языках. Сравнительный анализ парадигм программирования.</p><p class="project-description english">Multi-language codex in 10+ languages. Comparative analysis of paradigms.</p><div class="project-tech"><span class="tech-tag">Polyglot</span><span class="tech-tag">Latin</span><span class="tech-tag">Research</span></div><a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
-            <div class="project-card"><h3 class="project-title">Ubuntu Design Helper</h3><p class="project-description russian">Инструментарий для дизайнеров в Linux. Автоматизация рабочих процессов.</p><p class="project-description english">Toolkit for designers in Linux. Workflow automation.</p><div class="project-tech"><span class="tech-tag">Linux</span><span class="tech-tag">Bash/Python</span><span class="tech-tag">Automation</span></div><a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+            <div class="project-card"><h3 class="project-title">Tapeworm 🐛</h3><p class="project-description russian">Визуализатор Brainfuck с анимированным ленточным червем. Исследование эзотерических языков.</p><p class="project-description english">Brainfuck visualizer with animated tape worm.</p><div class="project-tech"><span class="tech-tag">Rust</span><span class="tech-tag">WASM</span><span class="tech-tag">Visualization</span></div><a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+            <div class="project-card"><h3 class="project-title">Codex Mortis</h3><p class="project-description russian">Мультиязычный кодекс на 10+ языках. Сравнительный анализ парадигм.</p><p class="project-description english">Multi-language codex in 10+ languages.</p><div class="project-tech"><span class="tech-tag">Polyglot</span><span class="tech-tag">Latin</span><span class="tech-tag">Research</span></div><a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+            <div class="project-card"><h3 class="project-title">Ubuntu Design Helper</h3><p class="project-description russian">Инструментарий для дизайнеров в Linux. Автоматизация процессов.</p><p class="project-description english">Toolkit for designers in Linux.</p><div class="project-tech"><span class="tech-tag">Linux</span><span class="tech-tag">Bash/Python</span><span class="tech-tag">Automation</span></div><a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
         </div>
     </div></section>
 
@@ -526,8 +675,6 @@
     <section class="section-content"><div class="container" style="text-align:center;">
         <p style="font-size:1.3rem;font-style:italic;max-width:600px;margin:0 auto;" class="russian">"Одна жизнь, одна смерть — философия глубинного понимания систем."</p>
         <p style="font-size:1.3rem;font-style:italic;max-width:600px;margin:0 auto;" class="english">"One life, one death — a philosophy of deep system understanding."</p>
-        <p style="margin-top:1rem;color:var(--p-text-dim);" class="russian">От компиляторов до P2P-сетей, от эзотерических языков до практических инструментов.</p>
-        <p style="margin-top:1rem;color:var(--p-text-dim);" class="english">From compilers to P2P networks, from esoteric languages to practical tools.</p>
     </div></section>
 
     <footer><div class="container">
@@ -536,7 +683,7 @@
         <p style="color:var(--p-text-dim);margin-top:0.5rem;" class="english">Universal Engineer • 2025</p>
     </div></footer>
 
-    <!-- Persona 5 Chat -->
+    <!-- P5 Chat -->
     <button class="p5-chat-fab" onclick="openP5Chat()">💬</button>
     <div class="p5-chat-overlay" id="p5-overlay">
         <div style="position:relative;">
@@ -545,9 +692,7 @@
                 <div class="p5-phone-notch"></div>
                 <div class="p5-phone-screen" id="p5-screen">
                     <div id="p5-chat-list-view" style="display:flex;flex-direction:column;height:100%;">
-                        <div class="p5-chat-list" id="p5-contacts">
-                            <div class="p5-chat-list-header"><span>S</span>NS</div>
-                        </div>
+                        <div class="p5-chat-list" id="p5-contacts"><div class="p5-chat-list-header"><span>S</span>NS</div></div>
                     </div>
                     <div id="p5-chat-msg-view" style="display:none;flex-direction:column;height:100%;">
                         <div class="p5-chat-header-bar">
@@ -577,54 +722,22 @@
 
         // ==================== ADMIN ====================
         let isAdmin = false;
-        
         function checkAdmin() {
-            const kh = localStorage.getItem('akh');
-            const fp = getFingerprint();
-            const sfp = localStorage.getItem('afp');
-            if (kh && sfp === fp) {
-                const expected = btoa(SECRET_KEY + fp);
-                isAdmin = (kh === expected);
-                if (!isAdmin) { localStorage.removeItem('akh'); localStorage.removeItem('afp'); }
-            }
+            const kh = localStorage.getItem('akh'), fp = getFingerprint(), sfp = localStorage.getItem('afp');
+            if (kh && sfp === fp) { const e = btoa(SECRET_KEY + fp); isAdmin = (kh === e); if (!isAdmin) { localStorage.removeItem('akh'); localStorage.removeItem('afp'); } }
             updateAdminUI();
         }
-
-        function updateAdminUI() {
-            const indicator = document.getElementById('admin-indicator');
-            if (indicator) indicator.classList.toggle('show', isAdmin);
-        }
-
-        function toggleAdminModal() {
-            const modal = document.getElementById('admin-modal');
-            if (modal) {
-                modal.classList.toggle('open');
-                document.getElementById('admin-key').value = '';
-                document.getElementById('admin-status').textContent = '';
-            }
-        }
-
+        function updateAdminUI() { document.getElementById('admin-indicator').classList.toggle('show', isAdmin); }
+        function toggleAdminModal() { document.getElementById('admin-modal').classList.toggle('open'); document.getElementById('admin-key').value=''; document.getElementById('admin-status').textContent=''; }
         function adminLogin() {
-            const key = document.getElementById('admin-key').value;
-            const status = document.getElementById('admin-status');
+            const key = document.getElementById('admin-key').value, status = document.getElementById('admin-status');
             if (key === SECRET_KEY) {
-                const fp = getFingerprint();
-                localStorage.setItem('akh', btoa(key + fp));
-                localStorage.setItem('afp', fp);
-                isAdmin = true; updateAdminUI();
-                status.textContent = '✅ Access Granted - Welcome, OnelifeOnedeath!';
-                status.style.color = '#0f0';
+                const fp = getFingerprint(); localStorage.setItem('akh', btoa(key + fp)); localStorage.setItem('afp', fp);
+                isAdmin = true; updateAdminUI(); status.textContent = '✅ Access Granted - Welcome!'; status.style.color = '#0f0';
                 setTimeout(toggleAdminModal, 1000);
-            } else {
-                status.textContent = '❌ Access Denied - Invalid Key';
-                status.style.color = '#f33';
-            }
+            } else { status.textContent = '❌ Access Denied'; status.style.color = '#f33'; }
         }
-
-        function adminLogout() {
-            localStorage.removeItem('akh'); localStorage.removeItem('afp');
-            isAdmin = false; updateAdminUI();
-        }
+        function adminLogout() { localStorage.removeItem('akh'); localStorage.removeItem('afp'); isAdmin = false; updateAdminUI(); }
 
         // ==================== THEME ====================
         const themes = {
@@ -637,177 +750,168 @@
             document.documentElement.setAttribute('data-theme', t);
             localStorage.setItem('theme', t);
             document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-            const btn = document.getElementById(t+'-theme-btn');
-            if (btn) btn.classList.add('active');
-            
-            // Generate confetti for P3 theme
-            if (t === 'p3') generateConfetti();
+            const btn = document.getElementById(t+'-theme-btn'); if (btn) btn.classList.add('active');
+            updateP3RVisibility(t);
+            if (t === 'p3') { generateConfetti(); initP3RMenu(); }
+        }
+
+        function updateP3RVisibility(theme) {
+            const isP3 = theme === 'p3';
+            const p3Elements = document.querySelectorAll('.makoto-container, .p3r-menu, .p3r-cursor, .p3r-menu-info, .p3r-wallet, .p3r-tooltip, .p3r-confetti');
+            p3Elements.forEach(el => el.style.display = isP3 ? '' : 'none');
         }
 
         function generateConfetti() {
-            const container = document.getElementById('confetti-container');
+            const container = document.getElementById('p3r-confetti');
             if (!container) return;
             container.innerHTML = '';
-            const hero = document.querySelector('.hero');
-            if (!hero) return;
-            
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 15; i++) {
                 const piece = document.createElement('div');
-                piece.className = 'confetti-piece';
-                piece.style.left = Math.random() * 90 + '%';
-                piece.style.top = Math.random() * 90 + '%';
-                piece.style.animationDuration = (4 + Math.random() * 6) + 's';
-                piece.style.animationDelay = Math.random() * 5 + 's';
-                piece.style.width = (15 + Math.random() * 40) + 'px';
-                piece.style.height = (10 + Math.random() * 25) + 'px';
-                piece.style.opacity = 0.1 + Math.random() * 0.3;
+                piece.className = 'p3r-confetti-piece';
+                piece.style.cssText = `
+                    left: ${Math.random() * 90}%; top: ${Math.random() * 90}%;
+                    animation-duration: ${5 + Math.random() * 8}s;
+                    animation-delay: ${Math.random() * 6}s;
+                    width: ${10 + Math.random() * 35}px;
+                    height: ${8 + Math.random() * 20}px;
+                    opacity: ${0.08 + Math.random() * 0.3};
+                `;
                 container.appendChild(piece);
             }
+        }
+
+        // ==================== P3R MENU ====================
+        let p3rSelectedIndex = 0;
+        const p3rMenuItems = [
+            { name: 'SKILL', title: 'Use a Skill', sub: 'Command' },
+            { name: 'ITEM', title: 'View / Use Items', sub: 'Inventory' },
+            { name: 'EQUIP', title: 'View / Change Equipment', sub: 'Equipment' },
+            { name: 'PERSONA', title: 'View / Change Personas', sub: 'Persona' },
+            { name: 'STATS', title: 'View Stats / Organize Party', sub: 'Status' },
+            { name: 'QUEST', title: 'View Requests', sub: 'Requests' },
+            { name: 'SOCIAL LINK', title: 'View Social Links', sub: 'Community' },
+            { name: 'CALENDAR', title: 'View Calendar', sub: 'Schedule' },
+            { name: 'SYSTEM', title: 'View Settings', sub: 'Config' }
+        ];
+
+        function initP3RMenu() {
+            const items = document.querySelectorAll('.p3r-menu-item');
+            items.forEach((item, i) => {
+                item.addEventListener('click', () => selectP3RItem(i));
+                item.addEventListener('mouseenter', () => selectP3RItem(i));
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (document.documentElement.getAttribute('data-theme') !== 'p3') return;
+                if (e.key === 'ArrowDown') { e.preventDefault(); selectP3RItem((p3rSelectedIndex + 1) % 9); }
+                if (e.key === 'ArrowUp') { e.preventDefault(); selectP3RItem((p3rSelectedIndex - 1 + 9) % 9); }
+            });
+
+            selectP3RItem(0);
+        }
+
+        function selectP3RItem(index) {
+            p3rSelectedIndex = index;
+            const items = document.querySelectorAll('.p3r-menu-item');
+            items.forEach((item, i) => {
+                item.classList.toggle('selected', i === index);
+            });
+
+            const itemHeight = items[0]?.offsetHeight || 40;
+            const cursor = document.getElementById('p3r-cursor');
+            if (cursor) {
+                const menuRect = document.getElementById('p3r-menu').getBoundingClientRect();
+                const itemRect = items[index].getBoundingClientRect();
+                cursor.style.top = (itemRect.top - menuRect.top + itemRect.height / 2) + 'px';
+            }
+
+            document.getElementById('p3r-menu-number').textContent = index + 1;
+            document.getElementById('p3r-menu-name').textContent = p3rMenuItems[index].name;
+            document.getElementById('p3r-tooltip-title').textContent = p3rMenuItems[index].title;
+            document.getElementById('p3r-tooltip-sub').textContent = p3rMenuItems[index].sub;
         }
 
         // ==================== LANGUAGE ====================
         let cl = 'russian';
         function toggleLanguage() {
             const ru = document.querySelectorAll('.russian'), en = document.querySelectorAll('.english');
-            if (cl === 'russian') { 
-                ru.forEach(e => e.style.display='none'); 
-                en.forEach(e => e.style.display='block'); 
-                document.querySelector('.lang-text').textContent='Русский'; 
-                cl = 'english'; 
-            } else { 
-                ru.forEach(e => e.style.display='block'); 
-                en.forEach(e => e.style.display='none'); 
-                document.querySelector('.lang-text').textContent='English'; 
-                cl = 'russian'; 
-            }
+            if (cl === 'russian') { ru.forEach(e => e.style.display='none'); en.forEach(e => e.style.display='block'); document.querySelector('.lang-text').textContent='Русский'; cl = 'english'; }
+            else { ru.forEach(e => e.style.display='block'); en.forEach(e => e.style.display='none'); document.querySelector('.lang-text').textContent='English'; cl = 'russian'; }
             localStorage.setItem('language', cl);
         }
 
         // ==================== P5 CHAT ====================
-        let chats = JSON.parse(localStorage.getItem('p5chats') || '{}');
-        let currentChatId = null;
-
+        let chats = JSON.parse(localStorage.getItem('p5chats') || '{}'), currentChatId = null;
         function openP5Chat() { document.getElementById('p5-overlay').classList.add('open'); showChatList(); }
         function closeP5Chat() { document.getElementById('p5-overlay').classList.remove('open'); }
-        function showChatList() {
-            document.getElementById('p5-chat-list-view').style.display = 'flex';
-            document.getElementById('p5-chat-msg-view').style.display = 'none';
-            currentChatId = null;
-            renderChatList();
-        }
+        function showChatList() { document.getElementById('p5-chat-list-view').style.display='flex'; document.getElementById('p5-chat-msg-view').style.display='none'; currentChatId=null; renderChatList(); }
         function backToChatList() { showChatList(); }
         function goc(id) { if (!chats[id]) chats[id] = { avatar: '', msgs: [] }; return chats[id]; }
-
         function renderChatList() {
-            const container = document.getElementById('p5-contacts');
-            const ids = Object.keys(chats);
+            const container = document.getElementById('p5-contacts'), ids = Object.keys(chats);
             let html = '<div class="p5-chat-list-header"><span>S</span>NS</div>';
-            
             ids.forEach(id => {
-                const c = chats[id];
-                const last = c.msgs.length > 0 ? c.msgs[c.msgs.length-1].text.substring(0, 25) : 'New chat';
+                const c = chats[id], last = c.msgs.length > 0 ? c.msgs[c.msgs.length-1].text.substring(0, 25) : 'New chat';
                 const unread = c.msgs.filter(m => m.from === 'user' && !m.read).length;
-                html += `
-                <div class="p5-contact" onclick="openChat('${id}')">
-                    <img class="p5-contact-avatar" src="${c.avatar || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'">
-                    <div class="p5-contact-info">
-                        <div class="p5-contact-last-msg">${esc(last)}</div>
-                    </div>
-                    ${unread > 0 ? `<div class="p5-contact-badge">${unread}</div>` : ''}
-                </div>`;
+                html += `<div class="p5-contact" onclick="openChat('${id}')"><img class="p5-contact-avatar" src="${c.avatar || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'"><div class="p5-contact-info"><div class="p5-contact-last-msg">${esc(last)}</div></div>${unread > 0 ? `<div class="p5-contact-badge">${unread}</div>` : ''}</div>`;
             });
-            
-            html += `
-            <div class="p5-new-chat" onclick="newChat()">
-                <img class="p5-contact-avatar" src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23E60012%22 font-size=%2250%22>+</text></svg>">
-                <div class="p5-contact-last-msg">New Chat</div>
-            </div>`;
-            
+            html += `<div class="p5-new-chat" onclick="newChat()"><img class="p5-contact-avatar" src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23E60012%22 font-size=%2250%22>+</text></svg>"><div class="p5-contact-last-msg">New Chat</div></div>`;
             container.innerHTML = html;
         }
-
-        function newChat() {
-            const av = prompt('Avatar URL (optional):');
-            const id = 'u' + Date.now();
-            const c = goc(id);
-            if (av && av.trim()) c.avatar = av.trim();
-            saveChats();
-            renderChatList();
-            openChat(id);
-        }
-
+        function newChat() { const av = prompt('Avatar URL (optional):'), id = 'u' + Date.now(), c = goc(id); if (av && av.trim()) c.avatar = av.trim(); saveChats(); renderChatList(); openChat(id); }
         function openChat(id) {
-            currentChatId = id;
-            const c = goc(id);
-            document.getElementById('p5-chat-list-view').style.display = 'none';
-            document.getElementById('p5-chat-msg-view').style.display = 'flex';
-            
+            currentChatId = id; const c = goc(id);
+            document.getElementById('p5-chat-list-view').style.display='none'; document.getElementById('p5-chat-msg-view').style.display='flex';
             const avEl = document.getElementById('p5-chat-avatar');
-            if (c.avatar) { avEl.src = c.avatar; avEl.style.display = 'block'; }
-            else { avEl.style.display = 'none'; }
-            
+            if (c.avatar) { avEl.src = c.avatar; avEl.style.display='block'; } else { avEl.style.display='none'; }
             if (isAdmin) { c.msgs.forEach(m => { if (m.from === 'user') m.read = true; }); saveChats(); }
             renderMsgs();
         }
-
         function sendP5Msg() {
-            const input = document.getElementById('p5-input');
-            const text = input.value.trim();
+            const input = document.getElementById('p5-input'), text = input.value.trim();
             if (!text || !currentChatId) return;
-            const c = goc(currentChatId);
-            c.msgs.push({ from: isAdmin ? 'admin' : 'user', text, time: Date.now(), read: isAdmin });
-            saveChats();
-            input.value = '';
-            renderMsgs();
+            const c = goc(currentChatId); c.msgs.push({ from: isAdmin ? 'admin' : 'user', text, time: Date.now(), read: isAdmin });
+            saveChats(); input.value = ''; renderMsgs();
         }
-
         function renderMsgs() {
             if (!currentChatId) return;
-            const c = goc(currentChatId);
-            const container = document.getElementById('p5-messages');
+            const c = goc(currentChatId), container = document.getElementById('p5-messages');
             container.innerHTML = c.msgs.map(m => {
                 const sent = (isAdmin && m.from === 'admin') || (!isAdmin && m.from === 'user');
                 const nick = m.from === 'admin' ? 'ONELIFE' : '???';
-                return `
-                <div class="p5-msg ${sent ? 'sent' : 'received'}">
-                    <img class="p5-msg-avatar" src="${m.from === 'admin' ? (c.avatar || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23E60012%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2240%22>O</text></svg>') : 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'}" 
-                         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'">
-                    <div>
-                        <div class="p5-msg-nickname">${nick}</div>
-                        <div class="p5-msg-bubble">${esc(m.text)}</div>
-                    </div>
-                </div>`;
+                return `<div class="p5-msg ${sent ? 'sent' : 'received'}"><img class="p5-msg-avatar" src="${m.from === 'admin' ? (c.avatar || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23E60012%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2240%22>O</text></svg>') : 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'"><div><div class="p5-msg-nickname">${nick}</div><div class="p5-msg-bubble">${esc(m.text)}</div></div></div>`;
             }).join('');
             container.scrollTop = container.scrollHeight;
         }
-
         function saveChats() { localStorage.setItem('p5chats', JSON.stringify(chats)); }
         function esc(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
         // ==================== BRAINFUCK ====================
         class BF {
-            constructor() { this.t = new Array(30).fill(0); this.p = 0; this.c = ''; this.i = 0; this.o = ''; this.b = {}; }
-            load(c) { this.c = c; this.o = ''; this.p = 0; this.i = 0; this.t = new Array(30).fill(0); this._b(); }
-            _b() { let s = []; this.b = {}; for (let i = 0; i < this.c.length; i++) { if (this.c[i] === '[') s.push(i); else if (this.c[i] === ']') { let st = s.pop(); this.b[st] = i; this.b[i] = st; } } }
-            step() { if (this.i >= this.c.length) return null; let c = this.c[this.i]; switch(c) { case '>': this.p++; break; case '<': this.p--; break; case '+': this.t[this.p] = (this.t[this.p]+1)%256; break; case '-': this.t[this.p] = (this.t[this.p]-1+256)%256; break; case '.': this.o += String.fromCharCode(this.t[this.p]); break; case '[': if (this.t[this.p]===0) this.i = this.b[this.i]; break; case ']': if (this.t[this.p]!==0) this.i = this.b[this.i]; break; } this.i++; return true; }
+            constructor() { this.t=new Array(30).fill(0); this.p=0; this.c=''; this.i=0; this.o=''; this.b={}; }
+            load(c) { this.c=c; this.o=''; this.p=0; this.i=0; this.t=new Array(30).fill(0); this._b(); }
+            _b() { let s=[]; this.b={}; for(let i=0;i<this.c.length;i++){if(this.c[i]==='[')s.push(i);else if(this.c[i]===']'){let st=s.pop();this.b[st]=i;this.b[i]=st;}}}
+            step(){if(this.i>=this.c.length)return null;let c=this.c[this.i];switch(c){case'>':this.p++;break;case'<':this.p--;break;case'+':this.t[this.p]=(this.t[this.p]+1)%256;break;case'-':this.t[this.p]=(this.t[this.p]-1+256)%256;break;case'.':this.o+=String.fromCharCode(this.t[this.p]);break;case'[':if(this.t[this.p]===0)this.i=this.b[this.i];break;case']':if(this.t[this.p]!==0)this.i=this.b[this.i];break;}this.i++;return true;}
         }
         let bf = new BF();
-        function resetBF() { bf.load(document.getElementById('bf-code').value); updBF(); }
-        function runBF() { resetBF(); execBF(); }
-        function stepBF() { if (bf.step()) updBF(); }
-        function execBF() { if (bf.step()) { updBF(); setTimeout(execBF, 80); } }
-        function updBF() {
-            document.getElementById('bf-out').textContent = bf.o;
-            const tape = document.getElementById('bf-tape'); tape.innerHTML = '';
-            for (let i = 0; i < 15; i++) { const cell = document.createElement('div'); cell.className = `tape-cell ${i===bf.p?'active':''}`; cell.textContent = bf.t[i]; tape.appendChild(cell); }
+        function resetBF(){bf.load(document.getElementById('bf-code').value);updBF();}
+        function runBF(){resetBF();execBF();}
+        function stepBF(){if(bf.step())updBF();}
+        function execBF(){if(bf.step()){updBF();setTimeout(execBF,80);}}
+        function updBF(){
+            document.getElementById('bf-out').textContent=bf.o;
+            const tape=document.getElementById('bf-tape'); tape.innerHTML='';
+            for(let i=0;i<15;i++){const cell=document.createElement('div');cell.className=`tape-cell ${i===bf.p?'active':''}`;cell.textContent=bf.t[i];tape.appendChild(cell);}
         }
 
         // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
             resetBF();
-            setTheme(localStorage.getItem('theme') || 'default');
+            const savedTheme = localStorage.getItem('theme') || 'default';
+            setTheme(savedTheme);
             if (localStorage.getItem('language') === 'english') toggleLanguage();
             checkAdmin();
+            updateP3RVisibility(savedTheme);
         });
     </script>
 </body>
