@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OnelifeOnedeath - Universal Engineer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Share+Tech+Mono&family=Luckiest+Guy&display=swap" rel="stylesheet">
     <style>
         :root {
             --p-primary: #8B5CF6; --p-primary-hover: #7C3AED; --p-primary-light: #A78BFA;
@@ -48,157 +48,313 @@
         @keyframes caustic-shift { 0% { background-position: 0% 0%; opacity: 0.3; } 50% { opacity: 0.5; } 100% { background-position: 100% 100%; opacity: 0.3; } }
         @keyframes cursor-twitch { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
         @keyframes menu-item-appear { from { opacity: 0; transform: translateY(12px) skewX(-5deg); } to { opacity: 1; transform: translateY(0) skewX(-5deg); } }
+        @keyframes msg-pop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-        .hero {
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, var(--p-primary-dark) 0%, var(--p-primary) 50%, var(--p-primary-light) 100%);
-            position: relative; overflow: hidden;
-        }
-        [data-theme="p3"] .hero {
-            background: radial-gradient(ellipse at 25% 65%, rgba(74,144,217,0.25) 0%, transparent 55%),
-                        radial-gradient(ellipse at 75% 25%, rgba(107,181,255,0.15) 0%, transparent 45%),
-                        linear-gradient(180deg, #060F18 0%, #0A1628 30%, #0D1B2A 60%, #060F18 100%);
-        }
-        [data-theme="p3"] .hero::before {
-            content: ''; position: absolute; inset: 0;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(74,144,217,0.04) 2px, rgba(74,144,217,0.04) 4px);
-            animation: caustic-shift 20s ease-in-out infinite; pointer-events: none; z-index: 1;
-        }
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--p-primary-dark) 0%, var(--p-primary) 50%, var(--p-primary-light) 100%); position: relative; overflow: hidden; }
+        [data-theme="p3"] .hero { background: radial-gradient(ellipse at 25% 65%, rgba(74,144,217,0.25) 0%, transparent 55%), radial-gradient(ellipse at 75% 25%, rgba(107,181,255,0.15) 0%, transparent 45%), linear-gradient(180deg, #060F18 0%, #0A1628 30%, #0D1B2A 60%, #060F18 100%); }
+        [data-theme="p3"] .hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(74,144,217,0.04) 2px, rgba(74,144,217,0.04) 4px); animation: caustic-shift 20s ease-in-out infinite; pointer-events: none; z-index: 1; }
 
         /* MAKOTO */
         .makoto-container { display: none; position: absolute; left: -3%; top: 0; bottom: 0; width: 55%; z-index: 2; pointer-events: none; }
         [data-theme="p3"] .makoto-container { display: block; }
         .makoto-figure { position: absolute; left: 0; top: 50%; transform: translateY(-50%) rotate(180deg); width: 100%; height: 100%; animation: makoto-swing 10s ease-in-out infinite; }
-        .makoto-silhouette {
-            position: absolute; inset: 0;
-            background: url('https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/textures/makoto_ui_texture.png') no-repeat center;
-            background-size: contain; opacity: 0.4;
-            filter: brightness(0.4) saturate(0.2) contrast(1.5) hue-rotate(-15deg);
-            mix-blend-mode: screen;
-        }
-        .makoto-outline {
-            position: absolute; inset: 0;
-            background: url('https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/textures/makoto_ui_texture.png') no-repeat center;
-            background-size: contain; opacity: 0.2;
-            filter: brightness(0.2) contrast(1.8);
-        }
+        .makoto-silhouette { position: absolute; inset: 0; background: url('https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/textures/makoto_ui_texture.png') no-repeat center; background-size: contain; opacity: 0.4; filter: brightness(0.4) saturate(0.2) contrast(1.5) hue-rotate(-15deg); mix-blend-mode: screen; }
+        .makoto-outline { position: absolute; inset: 0; background: url('https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/textures/makoto_ui_texture.png') no-repeat center; background-size: contain; opacity: 0.2; filter: brightness(0.2) contrast(1.8); }
 
         /* P3R MENU */
-        [data-theme="p3"] .p3r-menu { display: flex; position: absolute; right: 8%; top: 50%; transform: translateY(-50%); flex-direction: column; gap: clamp(0.25rem, 1vh, 0.8rem); z-index: 3; width: clamp(190px, 28vw, 420px); }
         .p3r-menu { display: none; }
+        [data-theme="p3"] .p3r-menu { display: flex; position: absolute; right: 8%; top: 50%; transform: translateY(-50%); flex-direction: column; gap: clamp(0.25rem, 1vh, 0.8rem); z-index: 3; width: clamp(190px, 28vw, 420px); }
         .p3r-menu-item { display: none; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(1rem, 3vw, 2.8rem); color: rgba(74,144,217,0.7); cursor: pointer; letter-spacing: 2px; text-transform: uppercase; transform: skewX(-5deg); transition: all 0.25s ease; text-shadow: 0 0 12px rgba(74,144,217,0.2); animation: menu-item-appear 0.4s ease forwards; opacity: 0; }
         [data-theme="p3"] .p3r-menu-item { display: block; }
         .p3r-menu-item:nth-child(1){animation-delay:0.03s}.p3r-menu-item:nth-child(2){animation-delay:0.07s}.p3r-menu-item:nth-child(3){animation-delay:0.11s}.p3r-menu-item:nth-child(4){animation-delay:0.15s}.p3r-menu-item:nth-child(5){animation-delay:0.19s}.p3r-menu-item:nth-child(6){animation-delay:0.23s}.p3r-menu-item:nth-child(7){animation-delay:0.27s}.p3r-menu-item:nth-child(8){animation-delay:0.31s}.p3r-menu-item:nth-child(9){animation-delay:0.35s}
         .p3r-menu-item:hover,.p3r-menu-item.selected{color:#FFF!important;text-shadow:0 0 30px rgba(74,144,217,0.8),0 0 60px rgba(107,181,255,0.4)!important;transform:skewX(-5deg) scale(1.07)!important}
 
-        [data-theme="p3"] .p3r-cursor{display:block;position:absolute;right:calc(8% + clamp(190px,28vw,420px) + 12px);top:50%;width:0;height:0;border-left:16px solid #E60012;border-top:9px solid transparent;border-bottom:9px solid transparent;z-index:4;pointer-events:none;animation:cursor-twitch 1.2s ease-in-out infinite;transition:top 0.15s ease}
-        .p3r-cursor{display:none}.p3r-cursor::after{content:'';position:absolute;left:-24px;top:-12px;width:0;height:0;border-left:20px solid rgba(230,0,18,0.25);border-top:12px solid transparent;border-bottom:12px solid transparent}
+        /* CURSOR - fixed position */
+        .p3r-cursor { display: none; }
+        [data-theme="p3"] .p3r-cursor { display: block; position: absolute; right: calc(8% + clamp(190px, 28vw, 420px) + 25px); top: 50%; width: 0; height: 0; border-left: 16px solid #E60012; border-top: 9px solid transparent; border-bottom: 9px solid transparent; z-index: 4; pointer-events: none; animation: cursor-twitch 1.2s ease-in-out infinite; transform: translateY(-50%); }
+        .p3r-cursor::after { content: ''; position: absolute; left: -24px; top: -12px; width: 0; height: 0; border-left: 20px solid rgba(230,0,18,0.25); border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
 
-        [data-theme="p3"] .p3r-info{display:flex;position:absolute;left:5%;bottom:12%;z-index:3;flex-direction:column;gap:0;pointer-events:none}.p3r-info{display:none}
-        .p3r-info-number{font-size:clamp(3rem,10vw,12rem);font-weight:900;color:rgba(255,255,255,0.05);line-height:0.8;letter-spacing:-6px}
-        .p3r-info-name{font-size:clamp(1.2rem,3.5vw,3.5rem);font-weight:900;color:#FFF;text-transform:uppercase;letter-spacing:3px;text-shadow:0 0 20px rgba(255,255,255,0.3);transform:skewX(-3deg)}
+        /* INFO */
+        .p3r-info { display: none; }
+        [data-theme="p3"] .p3r-info { display: flex; position: absolute; left: 5%; bottom: 12%; z-index: 3; flex-direction: column; gap: 0; pointer-events: none; }
+        .p3r-info-number { font-size: clamp(3rem, 10vw, 12rem); font-weight: 900; color: rgba(255,255,255,0.05); line-height: 0.8; letter-spacing: -6px; }
+        .p3r-info-name { font-size: clamp(1.2rem, 3.5vw, 3.5rem); font-weight: 900; color: #FFF; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 20px rgba(255,255,255,0.3); transform: skewX(-3deg); }
 
-        [data-theme="p3"] .p3r-wallet{display:flex;position:absolute;left:5%;top:7%;z-index:3;background:rgba(255,255,255,0.93);border:2px solid #000;padding:0.5rem 1rem;flex-direction:column;gap:0;transform:skewX(-3deg);pointer-events:none}.p3r-wallet{display:none}
-        .p3r-wallet-icon{font-size:1.3rem;font-weight:700;color:#000}.p3r-wallet-amount{font-size:1.7rem;font-weight:900;color:#000;letter-spacing:1px}.p3r-wallet-label{font-size:0.65rem;color:#666;font-weight:600}
+        /* WALLET */
+        .p3r-wallet { display: none; }
+        [data-theme="p3"] .p3r-wallet { display: flex; position: absolute; left: 5%; top: 7%; z-index: 3; background: rgba(255,255,255,0.93); border: 2px solid #000; padding: 0.5rem 1rem; flex-direction: column; gap: 0; transform: skewX(-3deg); pointer-events: none; }
+        .p3r-wallet-icon { font-size: 1.3rem; font-weight: 700; color: #000; } .p3r-wallet-amount { font-size: 1.7rem; font-weight: 900; color: #000; letter-spacing: 1px; } .p3r-wallet-label { font-size: 0.65rem; color: #666; font-weight: 600; }
 
-        [data-theme="p3"] .p3r-tooltip{display:block;position:absolute;right:5%;bottom:8%;z-index:3;color:#FFF;text-align:right;pointer-events:none}.p3r-tooltip{display:none}
-        .p3r-tooltip-title{font-size:clamp(0.8rem,1.6vw,1.2rem);font-weight:800;text-shadow:0 0 12px rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:2px}
-        .p3r-tooltip-sub{font-size:clamp(0.6rem,1.1vw,0.9rem);font-weight:600;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:0.5rem;justify-content:flex-end}
-        .p3r-tooltip-line{flex:1;height:1px;background:rgba(255,255,255,0.3);max-width:70px}
+        /* TOOLTIP */
+        .p3r-tooltip { display: none; }
+        [data-theme="p3"] .p3r-tooltip { display: block; position: absolute; right: 5%; bottom: 8%; z-index: 3; color: #FFF; text-align: right; pointer-events: none; }
+        .p3r-tooltip-title { font-size: clamp(0.8rem, 1.6vw, 1.2rem); font-weight: 800; text-shadow: 0 0 12px rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 2px; }
+        .p3r-tooltip-sub { font-size: clamp(0.6rem, 1.1vw, 0.9rem); font-weight: 600; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end; }
+        .p3r-tooltip-line { flex: 1; height: 1px; background: rgba(255,255,255,0.3); max-width: 70px; }
 
-        [data-theme="p3"] .p3r-confetti{display:block;position:absolute;inset:0;pointer-events:none;z-index:2}.p3r-confetti{display:none}
-        .confetti-piece{position:absolute;width:18px;height:12px;background:linear-gradient(135deg,rgba(74,144,217,0.5),rgba(107,181,255,0.2));clip-path:polygon(0 0,100% 30%,70% 100%,10% 80%);animation:confetti-float 7s ease-in-out infinite}
-        @keyframes confetti-float{0%{transform:translateY(0) rotate(0deg);opacity:0}10%{opacity:0.7}90%{opacity:0.7}100%{transform:translateY(-60px) rotate(360deg);opacity:0}}
+        /* CONFETTI */
+        .p3r-confetti { display: none; }
+        [data-theme="p3"] .p3r-confetti { display: block; position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+        .confetti-piece { position: absolute; width: 18px; height: 12px; background: linear-gradient(135deg, rgba(74,144,217,0.5), rgba(107,181,255,0.2)); clip-path: polygon(0 0, 100% 30%, 70% 100%, 10% 80%); animation: confetti-float 7s ease-in-out infinite; }
+        @keyframes confetti-float { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 10% { opacity: 0.7; } 90% { opacity: 0.7; } 100% { transform: translateY(-60px) rotate(360deg); opacity: 0; } }
 
         /* MODAL */
-        .p3r-modal{position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:5000;display:none;align-items:center;justify-content:center}
-        .p3r-modal.open{display:flex}
-        .p3r-modal-content{background:var(--p-surface);border:2px solid var(--p-border-light);border-radius:1rem;padding:2rem;max-width:600px;width:90%;max-height:80vh;overflow-y:auto;color:var(--p-text);position:relative}
-        .p3r-modal-close{position:absolute;top:0.5rem;right:0.5rem;background:none;border:2px solid var(--p-primary-light);color:var(--p-text);font-size:1.2rem;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%}
-        .persona-card{text-align:center;padding:1rem}.persona-card img{width:120px;height:120px;object-fit:contain;margin-bottom:1rem}
-        .social-links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:0.75rem}
-        .social-link-card{background:var(--btn-bg);border:1px solid var(--btn-border);border-radius:0.75rem;padding:0.75rem;text-align:center;color:var(--btn-text);text-decoration:none}
-        .social-link-card:hover{background:var(--btn-hover-bg);border-color:var(--p-primary-light)}.calendar-display{text-align:center;padding:1rem}.calendar-display .date{font-size:2.5rem;font-weight:900;color:var(--p-primary-light)}.calendar-display .time{font-size:1.5rem;font-weight:700;color:var(--p-text)}
+        .p3r-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 5000; display: none; align-items: center; justify-content: center; }
+        .p3r-modal.open { display: flex; }
+        .p3r-modal-content { background: var(--p-surface); border: 2px solid var(--p-border-light); border-radius: 1rem; padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; color: var(--p-text); position: relative; }
+        .p3r-modal-close { position: absolute; top: 0.5rem; right: 0.5rem; background: none; border: 2px solid var(--p-primary-light); color: var(--p-text); font-size: 1.2rem; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .persona-card { text-align: center; padding: 1rem; }
+        .persona-card img { width: 120px; height: 120px; object-fit: contain; margin-bottom: 1rem; background: rgba(0,0,0,0.3); border-radius: 1rem; padding: 0.5rem; }
+        .social-links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.75rem; }
+        .social-link-card { background: var(--btn-bg); border: 1px solid var(--btn-border); border-radius: 0.75rem; padding: 0.75rem; text-align: center; color: var(--btn-text); text-decoration: none; }
+        .social-link-card:hover { background: var(--btn-hover-bg); border-color: var(--p-primary-light); }
+        .calendar-display { text-align: center; padding: 1rem; }
+        .calendar-display .date { font-size: 2.5rem; font-weight: 900; color: var(--p-primary-light); }
+        .calendar-display .time { font-size: 1.5rem; font-weight: 700; color: var(--p-text); }
 
-        [data-theme="p3"] .anime-gif-left,[data-theme="p3"] .anime-gif-right,[data-theme="p3"] .brand-header{display:none}
-        .anime-gif-left,.anime-gif-right{position:absolute;border-radius:50%;overflow:hidden;border:3px solid var(--p-primary-light);z-index:1}
-        .anime-gif-left{bottom:2rem;left:2rem;width:180px;height:180px;opacity:0.8;animation:float 8s ease-in-out infinite}
-        .anime-gif-right{top:2rem;right:2rem;width:160px;height:160px;opacity:0.9;animation:float 7s ease-in-out infinite reverse}
-        .anime-gif-left img,.anime-gif-right img{width:100%;height:100%;object-fit:cover}
+        /* Add friend */
+        .add-friend-area { margin-top: 1rem; display: flex; gap: 0.5rem; }
+        .add-friend-input { flex: 1; background: var(--p-background); border: 1px solid var(--p-border); color: var(--p-text); padding: 0.5rem; border-radius: 0.5rem; font-family: 'Montserrat', sans-serif; }
+        .friend-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+        .friend-item { display: flex; align-items: center; justify-content: space-between; background: var(--btn-bg); padding: 0.5rem 0.75rem; border-radius: 0.5rem; border: 1px solid var(--btn-border); }
+        .friend-item button { background: var(--p-primary); border: 1px solid var(--p-primary-light); color: white; padding: 0.25rem 0.75rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.75rem; }
 
-        /* P5 Chat - P5X style */
-        .p5-chat-fab{position:fixed;top:5rem;left:1rem;z-index:999;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#E60012,#B8000F);border:3px solid #FF4444;color:white;font-size:1rem;cursor:pointer;box-shadow:0 0 20px rgba(230,0,18,0.4);display:flex;align-items:center;justify-content:center}
-        .p5-chat-fab:hover{transform:scale(1.1);box-shadow:0 0 30px rgba(230,0,18,0.6)}
-        .p5-chat-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:2000;display:none;align-items:center;justify-content:center}
-        .p5-chat-overlay.open{display:flex}
-        .p5-phone{width:320px;height:520px;background:#0A0A0A;border:3px solid #E60012;border-radius:18px;position:relative;overflow:hidden;box-shadow:0 0 50px rgba(230,0,18,0.3),inset 0 0 30px rgba(230,0,18,0.05)}
-        .p5-phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:90px;height:18px;background:#0A0A0A;border-radius:0 0 12px 12px;z-index:10;border:2px solid #333;border-top:none}
-        .p5-phone-screen{position:absolute;top:6px;left:6px;right:6px;bottom:6px;background:#111;border-radius:12px;display:flex;flex-direction:column;overflow:hidden}
-        .p5-chat-list{flex:1;overflow-y:auto;padding:8px;background:linear-gradient(180deg,#0A0A0A,#111)}
-        .p5-chat-list-header{text-align:center;padding:10px 0 15px;font-family:'Share Tech Mono',monospace;font-size:1.8rem;color:#FFF;letter-spacing:3px;text-shadow:0 0 8px rgba(230,0,18,0.5)}
-        .p5-chat-list-header span{color:#E60012}
-        .p5-contact{display:flex;align-items:center;gap:10px;padding:10px;margin:2px 0;cursor:pointer;background:rgba(20,20,20,0.8);border:1px solid transparent;border-radius:3px;transform:skewX(-3deg)}
-        .p5-contact:hover{border-color:#E60012;background:rgba(230,0,18,0.08)}
-        .p5-contact-avatar{width:40px;height:40px;object-fit:cover;border:2px solid #333;background:#1A1A1A;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%)}
-        .p5-contact-info{flex:1;min-width:0}.p5-contact-last{color:#888;font-size:0.72rem;font-family:'Share Tech Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .p5-contact-badge{background:#E60012;color:white;border-radius:50%;min-width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:bold}
-        .p5-chat-msgs{flex:1;overflow-y:auto;padding:10px;background:#0D0D0D}
-        .p5-msg{display:flex;gap:6px;margin:5px 0;animation:fadeInUp 0.3s ease;align-items:flex-end}
-        .p5-msg.sent{flex-direction:row-reverse}
-        .p5-msg-avatar{width:26px;height:26px;object-fit:cover;border:2px solid #333;background:#1A1A1A;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);flex-shrink:0}
-        .p5-msg-bubble{max-width:72%;padding:7px 10px;font-size:0.75rem;line-height:1.4;font-family:'Share Tech Mono',monospace;word-break:break-word}
-        .p5-msg.recv .p5-msg-bubble{background:#1A1A1A;color:#DDD;border:1px solid #333;clip-path:polygon(0 0,100% 0,95% 100%,5% 100%)}
-        .p5-msg.sent .p5-msg-bubble{background:#E60012;color:#FFF;border:1px solid #FF4444;clip-path:polygon(5% 0,100% 0,100% 100%,0 100%)}
-        .p5-input-area{display:flex;gap:5px;padding:8px;background:#0A0A0A;border-top:2px solid #222}
-        .p5-input{flex:1;background:#1A1A1A;border:1px solid #333;color:#DDD;padding:8px 10px;font-family:'Share Tech Mono',monospace;font-size:0.75rem;outline:none;transform:skewX(-3deg)}
-        .p5-input:focus{border-color:#E60012}
-        .p5-send{background:#E60012;border:2px solid #FF4444;color:white;padding:8px 14px;cursor:pointer;font-weight:bold;font-size:0.65rem;transform:skewX(-5deg);letter-spacing:1px}
-        .p5-send:hover{background:#FF2222}
+        [data-theme="p3"] .anime-gif-left, [data-theme="p3"] .anime-gif-right, [data-theme="p3"] .brand-header { display: none; }
+        .anime-gif-left, .anime-gif-right { position: absolute; border-radius: 50%; overflow: hidden; border: 3px solid var(--p-primary-light); z-index: 1; }
+        .anime-gif-left { bottom: 2rem; left: 2rem; width: 180px; height: 180px; opacity: 0.8; animation: float 8s ease-in-out infinite; }
+        .anime-gif-right { top: 2rem; right: 2rem; width: 160px; height: 160px; opacity: 0.9; animation: float 7s ease-in-out infinite reverse; }
+        .anime-gif-left img, .anime-gif-right img { width: 100%; height: 100%; object-fit: cover; }
 
-        .top-bars{position:fixed;top:1rem;left:50%;transform:translateX(-50%);z-index:1000;display:flex;gap:0.4rem;flex-wrap:wrap;justify-content:center}
-        .theme-btn,.lang-btn{background:var(--btn-bg);border:2px solid var(--btn-border);color:var(--btn-text);padding:0.35rem 0.7rem;border-radius:0.75rem;cursor:pointer;font-weight:700;font-size:0.75rem;white-space:nowrap;display:flex;align-items:center;gap:0.3rem}
-        .theme-btn.active{background:var(--p-primary);border-color:var(--p-primary-light);animation:pulse-glow 2s infinite}
+        /* ==================== P5 CHAT (ZIGZAG STYLE) ==================== */
+        .p5-chat-fab {
+            position: fixed; top: 5rem; left: 1rem; z-index: 999;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: linear-gradient(135deg, #E60012, #B8000F);
+            border: 3px solid #FF4444; color: white;
+            font-size: 1.2rem; cursor: pointer;
+            box-shadow: 0 0 25px rgba(230,0,18,0.5);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .p5-chat-fab:hover { transform: scale(1.15); box-shadow: 0 0 40px rgba(230,0,18,0.7); }
+        .p5-chat-fab .badge {
+            position: absolute; top: -5px; right: -5px;
+            background: #FFD700; color: #000; border-radius: 50%;
+            width: 20px; height: 20px; font-size: 0.6rem; font-weight: 900;
+            display: flex; align-items: center; justify-content: center;
+            display: none;
+        }
+        .p5-chat-fab .badge.show { display: flex; }
 
-        .brand-header{text-align:center;position:relative;z-index:2;width:100%}
-        .username{font-size:clamp(2.5rem,8vw,4.5rem);font-weight:900;background:linear-gradient(135deg,var(--p-primary-light),var(--p-text));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}
-        .tagline{font-size:clamp(1rem,3vw,1.5rem);margin-bottom:2rem;color:var(--p-text);font-weight:600}
-        .universal-badge{display:inline-flex;gap:0.5rem;background:var(--card-bg);border:1px solid var(--p-border-light);border-radius:2rem;padding:0.75rem 1.5rem;margin-bottom:2rem;color:var(--p-text);font-weight:600}
-        .social-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0.75rem;max-width:800px;margin:0 auto}
-        .social-card{background:var(--card-bg);border:1px solid var(--p-border);border-radius:1rem;padding:1.25rem;text-align:center;text-decoration:none;color:var(--p-text)}
-        .social-card:hover{border-color:var(--p-primary-light);transform:translateY(-4px)}
-        .social-icon{font-size:1.75rem;margin-bottom:0.5rem}
-        .social-card.github .social-icon{color:#6e5494}.social-card.telegram .social-icon{color:#0088cc}.social-card.vk .social-icon{color:#0077FF}
-        .social-card.youtube .social-icon{color:#FF0000}.social-card.steam .social-icon{color:#00adee}.social-card.discord .social-icon{color:#5865F2}
-        .social-name{font-weight:700;font-size:0.8rem}.social-handle{font-size:0.7rem;color:var(--p-text-dim);word-break:break-all}
+        .p5-chat-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; display: none; align-items: center; justify-content: center; }
+        .p5-chat-overlay.open { display: flex; }
 
-        .section-content{padding:4rem 0}.section-content:nth-child(odd){background:var(--p-background-alt)}
-        .section-title{font-size:clamp(1.8rem,4vw,2.5rem);text-align:center;margin-bottom:2rem;font-weight:900}
-        .project-grid{display:grid;gap:1.5rem;max-width:800px;margin:0 auto}
-        .project-card{background:var(--p-surface);border-radius:1rem;padding:1.5rem;border:1px solid var(--p-border)}
-        .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 1.5rem;background:var(--p-primary);color:white!important;text-decoration:none;border-radius:0.5rem;font-weight:700;border:2px solid var(--p-primary-light);cursor:pointer}
-        .btn:hover{background:var(--p-primary-hover);transform:translateY(-2px)}
-        .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;max-width:800px;margin:0 auto}
-        .skill-category{background:var(--p-surface);border-radius:1rem;padding:1.5rem;border:1px solid var(--p-border)}
-        .tech-tag{background:var(--btn-bg);color:var(--btn-text);padding:0.25rem 0.7rem;border-radius:1rem;font-size:0.8rem;border:1px solid var(--btn-border);font-weight:600}
-        .demo-container{max-width:1000px;margin:0 auto;background:var(--p-surface);border-radius:1rem;padding:1.5rem}
-        .demo-interface{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-        .tape-visualization{display:flex;flex-wrap:wrap;gap:0.4rem}
-        .tape-cell{width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;background:var(--btn-bg);border:2px solid var(--p-border);font-family:'Share Tech Mono',monospace;color:var(--btn-text);font-size:0.8rem}
-        .tape-cell.active{background:var(--p-primary);border-color:var(--p-primary-light);color:white}
-        .admin-area{position:fixed;top:1rem;right:1rem;z-index:1001;display:flex;gap:0.3rem}
-        .admin-btn-small{background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);padding:0.2rem 0.4rem;border-radius:0.5rem;cursor:pointer;font-size:0.6rem}
-        .admin-indicator{background:rgba(0,0,0,0.7);padding:0.2rem 0.4rem;border-radius:0.5rem;font-size:0.6rem;display:none;color:#0f0}
-        .admin-indicator.show{display:flex;align-items:center;gap:0.2rem}
-        .admin-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--p-surface);border:2px solid var(--p-border-light);border-radius:1rem;padding:2rem;z-index:3000;display:none}
-        .admin-modal.open{display:block}
-        footer{background:var(--p-surface);padding:2rem 0;text-align:center}
-        .english{display:none}
+        /* Phone with P5 style */
+        .p5-phone {
+            width: 300px; height: 450px;
+            position: relative; overflow: visible;
+        }
+        .p5-phone-svg { position: absolute; width: 100%; height: 100%; }
+        .p5-phone-svg polygon { fill: #1a1a1a; stroke: #333; stroke-width: 2; }
+        .p5-screen-border-svg { position: absolute; width: 100%; height: 100%; }
+        .p5-screen-border-svg polygon { fill: none; stroke: #E60012; stroke-width: 3; }
+        .p5-screen-svg { position: absolute; width: 100%; height: 100%; }
+        .p5-screen-svg polygon { fill: #0a0a0a; stroke: #222; stroke-width: 1; }
 
-        @media(max-width:1024px){.social-grid{grid-template-columns:repeat(3,1fr)}[data-theme="p3"] .makoto-container{width:45%}}
-        @media(max-width:768px){.social-grid{grid-template-columns:repeat(2,1fr)}.demo-interface{grid-template-columns:1fr}[data-theme="p3"] .makoto-container{width:38%;left:-6%}[data-theme="p3"] .p3r-menu{right:3%;width:50%}[data-theme="p3"] .p3r-menu-item{font-size:clamp(0.6rem,2vw,1.1rem)}[data-theme="p3"] .p3r-cursor{border-left-width:10px;right:calc(3% + 50% + 5px)}.p5-phone{width:85vw;height:75vh}}
-        @media(max-width:480px){[data-theme="p3"] .makoto-container{width:32%;left:-10%;opacity:0.5}[data-theme="p3"] .p3r-cursor{display:none}}
+        .p5-screen {
+            position: absolute; top: 18px; left: 28px; right: 30px; bottom: 15px;
+            background: #0a0a0a; overflow-y: auto; overflow-x: hidden; padding: 10px 5px;
+            display: flex; flex-direction: column;
+        }
+        .p5-screen::-webkit-scrollbar { width: 2px; }
+        .p5-screen::-webkit-scrollbar-thumb { background: #E60012; }
+
+        /* SNS Header */
+        .p5-sns { text-align: center; padding: 5px 0 10px; position: relative; flex-shrink: 0; }
+        .p5-sns-under { font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; color: #333; position: absolute; left: 50%; transform: translateX(-50%); top: 3px; }
+        .p5-sns-main { font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; color: white; position: relative; z-index: 1; }
+
+        /* Zigzag decoration */
+        .p5-zig-shadow, .p5-zig { position: absolute; width: 100%; height: 80px; top: 50px; left: 0; pointer-events: none; }
+        .p5-zig-shadow polygon { fill: rgba(230,0,18,0.2); }
+        .p5-zig polygon { fill: none; stroke: #E60012; stroke-width: 2; }
+
+        /* Contact List */
+        .p5-contacts { display: flex; flex-direction: column; gap: 6px; flex: 1; overflow-y: auto; position: relative; z-index: 2; margin-top: 35px; }
+        
+        .p5-contact-item {
+            position: relative; height: 55px; cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .p5-contact-item:hover { transform: translateX(3px); }
+        
+        .p5-contact-border, .p5-contact-outline, .p5-contact-panel {
+            position: absolute; width: 100%; height: 100%; top: 0; left: 0;
+        }
+        .p5-contact-border polygon { fill: #E60012; }
+        .p5-contact-outline polygon { fill: #0a0a0a; }
+        .p5-contact-panel polygon { fill: #1a1a1a; stroke: #333; stroke-width: 1; }
+        .p5-contact-panel.active polygon { fill: #E60012; }
+        
+        .p5-contact-avatar {
+            position: absolute; width: 38px; height: 38px; left: 18px; top: 8px;
+            object-fit: cover; clip-path: polygon(0 5%, 100% 0, 95% 100%, 5% 95%);
+        }
+        
+        .p5-contact-text {
+            position: absolute; left: 65px; top: 12px; right: 15px;
+            color: #ccc; font-size: 0.75rem; font-family: 'Share Tech Mono', monospace;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            transform: skewX(-10deg);
+        }
+        
+        .p5-contact-badge {
+            position: absolute; right: 10px; top: 12px;
+            font-family: 'Luckiest Guy', cursive; color: #E60012; font-size: 1rem;
+        }
+
+        /* Chat Messages View */
+        .p5-chat-view { display: none; flex-direction: column; height: 100%; flex: 1; }
+        .p5-chat-view.active { display: flex; }
+        
+        .p5-chat-header {
+            display: flex; align-items: center; gap: 8px; padding: 6px 8px;
+            border-bottom: 2px solid #E60012; flex-shrink: 0;
+        }
+        .p5-chat-back {
+            background: none; border: 2px solid #E60012; color: #E60012;
+            padding: 3px 8px; cursor: pointer; font-weight: bold;
+            font-family: 'Luckiest Guy', cursive; font-size: 0.7rem;
+        }
+        
+        .p5-chat-messages {
+            flex: 1; overflow-y: auto; padding: 8px;
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        
+        /* P5 Message Bubble - ZIGZAG style */
+        .p5-msg {
+            display: flex; gap: 6px; animation: msg-pop 0.3s ease;
+            align-items: flex-start;
+        }
+        .p5-msg.own { flex-direction: row-reverse; }
+        
+        .p5-msg-avatar {
+            width: 28px; height: 28px; flex-shrink: 0;
+            object-fit: cover; clip-path: polygon(0 10%, 100% 0, 90% 100%, 10% 90%);
+        }
+        
+        .p5-msg-bubble-wrap {
+            position: relative; max-width: 70%;
+        }
+        .p5-msg-bubble {
+            padding: 8px 12px; font-size: 0.72rem; line-height: 1.4;
+            font-family: 'Share Tech Mono', monospace; word-break: break-word;
+            position: relative;
+            clip-path: polygon(
+                0% 5%, 5% 0%, 95% 0%, 100% 5%,
+                100% 95%, 95% 100%, 5% 100%, 0% 95%
+            );
+        }
+        .p5-msg.received .p5-msg-bubble {
+            background: #1a1a1a; color: #ddd; border: 1px solid #333;
+        }
+        .p5-msg.own .p5-msg-bubble {
+            background: #E60012; color: #fff; border: 1px solid #FF4444;
+        }
+        
+        /* Zigzag accent on messages */
+        .p5-msg-zigzag {
+            position: absolute; top: -6px; left: 10px;
+            width: 14px; height: 8px;
+            background: #E60012;
+            clip-path: polygon(0% 100%, 25% 0%, 50% 100%, 75% 0%, 100% 100%);
+        }
+        .p5-msg.own .p5-msg-zigzag { left: auto; right: 10px; }
+        .p5-msg.received .p5-msg-zigzag { background: #333; }
+
+        .p5-chat-input-area {
+            display: flex; gap: 4px; padding: 6px;
+            background: #0A0A0A; border-top: 2px solid #222; flex-shrink: 0;
+        }
+        .p5-chat-input {
+            flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ddd;
+            padding: 6px 10px; font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+            outline: none; clip-path: polygon(2% 0, 100% 0, 98% 100%, 0 100%);
+        }
+        .p5-chat-input:focus { border-color: #E60012; }
+        .p5-chat-send {
+            background: #E60012; border: 2px solid #FF4444; color: white;
+            padding: 6px 12px; cursor: pointer; font-weight: bold;
+            font-family: 'Luckiest Guy', cursive; font-size: 0.65rem; letter-spacing: 1px;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+        .p5-chat-send:hover { background: #FF2222; }
+
+        /* P5 Close button */
+        .p5-close-btn {
+            position: absolute; top: -35px; right: 5px;
+            background: none; border: 2px solid #E60012; color: #E60012;
+            width: 28px; height: 28px; cursor: pointer; font-size: 0.9rem;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10;
+        }
+
+        .top-bars { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
+        .theme-btn, .lang-btn { background: var(--btn-bg); border: 2px solid var(--btn-border); color: var(--btn-text); padding: 0.35rem 0.7rem; border-radius: 0.75rem; cursor: pointer; font-weight: 700; font-size: 0.75rem; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
+        .theme-btn.active { background: var(--p-primary); border-color: var(--p-primary-light); animation: pulse-glow 2s infinite; }
+
+        .brand-header { text-align: center; position: relative; z-index: 2; width: 100%; }
+        .username { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; background: linear-gradient(135deg, var(--p-primary-light), var(--p-text)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .tagline { font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
+        .universal-badge { display: inline-flex; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--p-border-light); border-radius: 2rem; padding: 0.75rem 1.5rem; margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
+        .social-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.75rem; max-width: 800px; margin: 0 auto; }
+        .social-card { background: var(--card-bg); border: 1px solid var(--p-border); border-radius: 1rem; padding: 1.25rem; text-align: center; text-decoration: none; color: var(--p-text); }
+        .social-card:hover { border-color: var(--p-primary-light); transform: translateY(-4px); }
+        .social-icon { font-size: 1.75rem; margin-bottom: 0.5rem; }
+        .social-card.github .social-icon { color: #6e5494; } .social-card.telegram .social-icon { color: #0088cc; } .social-card.vk .social-icon { color: #0077FF; }
+        .social-card.youtube .social-icon { color: #FF0000; } .social-card.steam .social-icon { color: #00adee; } .social-card.discord .social-icon { color: #5865F2; }
+        .social-name { font-weight: 700; font-size: 0.8rem; } .social-handle { font-size: 0.7rem; color: var(--p-text-dim); word-break: break-all; }
+
+        .section-content { padding: 4rem 0; } .section-content:nth-child(odd) { background: var(--p-background-alt); }
+        .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 2rem; font-weight: 900; }
+        .project-grid { display: grid; gap: 1.5rem; max-width: 800px; margin: 0 auto; }
+        .project-card { background: var(--p-surface); border-radius: 1rem; padding: 1.5rem; border: 1px solid var(--p-border); }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.5rem; background: var(--p-primary); color: white !important; text-decoration: none; border-radius: 0.5rem; font-weight: 700; border: 2px solid var(--p-primary-light); cursor: pointer; }
+        .btn:hover { background: var(--p-primary-hover); transform: translateY(-2px); }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; max-width: 800px; margin: 0 auto; }
+        .skill-category { background: var(--p-surface); border-radius: 1rem; padding: 1.5rem; border: 1px solid var(--p-border); }
+        .tech-tag { background: var(--btn-bg); color: var(--btn-text); padding: 0.25rem 0.7rem; border-radius: 1rem; font-size: 0.8rem; border: 1px solid var(--btn-border); font-weight: 600; }
+        .demo-container { max-width: 1000px; margin: 0 auto; background: var(--p-surface); border-radius: 1rem; padding: 1.5rem; }
+        .demo-interface { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .tape-visualization { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .tape-cell { width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; background: var(--btn-bg); border: 2px solid var(--p-border); font-family: 'Share Tech Mono', monospace; color: var(--btn-text); font-size: 0.8rem; }
+        .tape-cell.active { background: var(--p-primary); border-color: var(--p-primary-light); color: white; }
+        .admin-area { position: fixed; top: 1rem; right: 1rem; z-index: 1001; display: flex; gap: 0.3rem; }
+        .admin-btn-small { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); padding: 0.2rem 0.4rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.6rem; }
+        .admin-indicator { background: rgba(0,0,0,0.7); padding: 0.2rem 0.4rem; border-radius: 0.5rem; font-size: 0.6rem; display: none; color: #0f0; }
+        .admin-indicator.show { display: flex; align-items: center; gap: 0.2rem; }
+        .admin-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--p-surface); border: 2px solid var(--p-border-light); border-radius: 1rem; padding: 2rem; z-index: 3000; display: none; }
+        .admin-modal.open { display: block; }
+        footer { background: var(--p-surface); padding: 2rem 0; text-align: center; }
+        .english { display: none; }
+
+        @media (max-width: 1024px) { .social-grid { grid-template-columns: repeat(3, 1fr); } [data-theme="p3"] .makoto-container { width: 45%; } }
+        @media (max-width: 768px) {
+            .social-grid { grid-template-columns: repeat(2, 1fr); } .demo-interface { grid-template-columns: 1fr; }
+            [data-theme="p3"] .makoto-container { width: 38%; left: -6%; }
+            [data-theme="p3"] .p3r-menu { right: 3%; width: 50%; }
+            [data-theme="p3"] .p3r-menu-item { font-size: clamp(0.6rem, 2vw, 1.1rem); }
+            [data-theme="p3"] .p3r-cursor { border-left-width: 10px; right: calc(3% + 50% + 18px); }
+            .p5-phone { width: 85vw; height: auto; max-height: 80vh; }
+        }
+        @media (max-width: 480px) {
+            [data-theme="p3"] .makoto-container { width: 32%; left: -10%; opacity: 0.5; }
+            [data-theme="p3"] .p3r-cursor { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -208,8 +364,13 @@
     <audio id="sfx-cancel" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/plum_softening.wav"></audio>
     <audio id="sfx-open" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/bubbles.wav"></audio>
 
+    <!-- MAKOTO -->
     <div class="makoto-container"><div class="makoto-figure"><div class="makoto-silhouette"></div><div class="makoto-outline"></div></div></div>
+    
+    <!-- P3R CONFETTI -->
     <div class="p3r-confetti" id="p3r-confetti"></div>
+    
+    <!-- P3R MENU -->
     <div class="p3r-menu" id="p3r-menu">
         <div class="p3r-menu-item selected" data-idx="0">SKILL</div>
         <div class="p3r-menu-item" data-idx="1">ITEM</div>
@@ -222,12 +383,16 @@
         <div class="p3r-menu-item" data-idx="8">SYSTEM</div>
     </div>
     <div class="p3r-cursor" id="p3r-cursor"></div>
+    
+    <!-- P3R INFO -->
     <div class="p3r-info"><div class="p3r-info-number" id="p3r-num">1</div><div class="p3r-info-name" id="p3r-name">SKILL</div></div>
     <div class="p3r-wallet"><div class="p3r-wallet-icon">¥</div><div class="p3r-wallet-amount">999,999</div><div class="p3r-wallet-label">current wallet</div></div>
     <div class="p3r-tooltip"><div class="p3r-tooltip-title" id="p3r-tt-title">Use a Skill</div><div class="p3r-tooltip-sub"><span class="p3r-tooltip-line"></span><span id="p3r-tt-sub">Command</span></div></div>
 
+    <!-- MODAL -->
     <div class="p3r-modal" id="p3r-modal"><div class="p3r-modal-content" id="p3r-modal-content"><button class="p3r-modal-close" onclick="closeP3RModal()">✕</button></div></div>
 
+    <!-- ADMIN -->
     <div class="admin-area">
         <button class="admin-btn-small" onclick="toggleAdminModal()">🔒</button>
         <div class="admin-indicator" id="admin-indicator"><span style="width:5px;height:5px;border-radius:50%;background:#0f0;display:inline-block;"></span> ADMIN <button onclick="adminLogout()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:0.5rem;">✕</button></div>
@@ -240,6 +405,7 @@
         <div id="admin-msg" style="margin-top:0.5rem;font-size:0.8rem;"></div>
     </div>
 
+    <!-- TOP BARS -->
     <div class="top-bars">
         <button class="lang-btn" onclick="toggleLang()"><i class="fas fa-language"></i> <span class="lang-text">English</span></button>
         <button class="theme-btn active" onclick="setTheme('default')" id="dt">Default</button>
@@ -247,6 +413,7 @@
         <button class="theme-btn" onclick="setTheme('light')" id="lt"><i class="fas fa-sun"></i> Light</button>
     </div>
 
+    <!-- HERO -->
     <section class="hero">
         <div class="anime-gif-left"><img src="https://99px.ru/sstorage/86/2016/10/image_862910161743391536726.gif" alt="Lain" loading="lazy"></div>
         <div class="anime-gif-right"><img src="https://99px.ru/sstorage/86/2020/04/10804200835411467.gif" alt="Lain" loading="lazy"></div>
@@ -265,6 +432,7 @@
         </div></div>
     </section>
 
+    <!-- SECTIONS -->
     <section class="section-content"><div class="container">
         <h2 class="section-title russian">Проекты</h2><h2 class="section-title english">Projects</h2>
         <div class="project-grid">
@@ -285,8 +453,8 @@
     <section class="section-content"><div class="container">
         <h2 class="section-title russian">Технологии</h2><h2 class="section-title english">Technologies</h2>
         <div class="skills-grid">
-            <div class="skill-category"><h3 style="color:var(--p-primary-light);">Backend</h3><div style="display:flex;flex-wrap:wrap;gap:0.4rem;"><span class="tech-tag">C#/.NET</span><span class="tech-tag">Rust</span><span class="tech-tag">Python</span><span class="tech-tag">PostgreSQL</span></div></div>
-            <div class="skill-category"><h3 style="color:var(--p-primary-light);">System</h3><div style="display:flex;flex-wrap:wrap;gap:0.4rem;"><span class="tech-tag">Linux</span><span class="tech-tag">Docker</span><span class="tech-tag">Bash</span><span class="tech-tag">WASM</span></div></div>
+            <div class="skill-category"><h3 style="color:var(--p-primary-light);">Backend</h3><div style="display:flex;flex-wrap:wrap;gap:0.4rem;"><span class="tech-tag">C#/.NET</span><span class="tech-tag">Rust</span><span class="tech-tag">Python</span></div></div>
+            <div class="skill-category"><h3 style="color:var(--p-primary-light);">System</h3><div style="display:flex;flex-wrap:wrap;gap:0.4rem;"><span class="tech-tag">Linux</span><span class="tech-tag">Docker</span><span class="tech-tag">WASM</span></div></div>
             <div class="skill-category"><h3 style="color:var(--p-primary-light);">Tools</h3><div style="display:flex;flex-wrap:wrap;gap:0.4rem;"><span class="tech-tag">Git</span><span class="tech-tag">AWS</span><span class="tech-tag">CI/CD</span></div></div>
         </div>
     </div></section>
@@ -303,22 +471,45 @@
 
     <footer><div class="container"><div style="font-weight:900;color:var(--p-primary-light);font-size:1.3rem;">OnelifeOnedeath</div><p style="color:var(--p-text-dim);" class="russian">Универсальный инженер • 2025</p><p style="color:var(--p-text-dim);" class="english">Universal Engineer • 2025</p></div></footer>
 
-    <!-- P5 Chat -->
-    <button class="p5-chat-fab" onclick="openP5Chat()">💬</button>
+    <!-- P5 CHAT FAB -->
+    <button class="p5-chat-fab" onclick="openP5Chat()" id="p5-fab">
+        💬
+        <span class="badge" id="p5-badge">0</span>
+    </button>
+
+    <!-- P5 CHAT OVERLAY -->
     <div class="p5-chat-overlay" id="p5-overlay">
         <div style="position:relative;">
-            <button class="p3r-modal-close" onclick="closeP5Chat()" style="position:absolute;top:-36px;right:0;z-index:10;">✕</button>
+            <button class="p5-close-btn" onclick="closeP5Chat()">✕</button>
             <div class="p5-phone">
-                <div class="p5-phone-notch"></div>
-                <div class="p5-phone-screen">
-                    <div id="p5-list-view" style="flex:1;display:flex;flex-direction:column;"><div class="p5-chat-list" id="p5-contacts"><div class="p5-chat-list-header"><span>S</span>NS</div></div></div>
-                    <div id="p5-msg-view" style="display:none;flex-direction:column;flex:1;">
-                        <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:#0A0A0A;border-bottom:2px solid #222;">
-                            <button class="p5-send" style="padding:3px 6px;font-size:0.55rem;" onclick="backToList()">←</button>
-                            <img id="p5-av" src="" style="width:24px;height:24px;object-fit:cover;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);display:none;">
+                <svg class="p5-phone-svg"><polygon points="10,0 290,0 280,300 280,450 0,450"/></svg>
+                <svg class="p5-screen-border-svg"><polygon points="20,10 280,10 270,300 270,440 10,440"/></svg>
+                <svg class="p5-screen-svg"><polygon points="25,14 270,18 265,437 18,432"/></svg>
+                <div class="p5-screen" id="p5-screen">
+                    <!-- Contacts View -->
+                    <div id="p5-contacts-view" style="display:flex;flex-direction:column;height:100%;">
+                        <div class="p5-sns">
+                            <span class="p5-sns-under">SNS</span>
+                            <span class="p5-sns-main"><span style="color:#E60012;">S</span>NS</span>
                         </div>
-                        <div class="p5-chat-msgs" id="p5-msgs"></div>
-                        <div class="p5-input-area"><input class="p5-input" id="p5-inp" placeholder="Message..." onkeypress="if(event.key==='Enter')sendMsg()"><button class="p5-send" onclick="sendMsg()">SEND</button></div>
+                        <svg class="p5-zig-shadow"><polygon points="70,70 80,70 60,150 110,210 80,270 50,270 70,205 30,150"/></svg>
+                        <svg class="p5-zig"><polygon points="70,60 80,60 60,140 110,200 80,260 50,260 70,195 30,140"/></svg>
+                        <div class="p5-contacts" id="p5-contacts-list"></div>
+                        <div style="padding:5px;text-align:center;flex-shrink:0;">
+                            <button class="p5-chat-send" onclick="addFriend()" style="font-size:0.6rem;padding:4px 10px;clip-path:none;border-radius:4px;">+ ADD FRIEND</button>
+                        </div>
+                    </div>
+                    <!-- Chat View -->
+                    <div class="p5-chat-view" id="p5-chat-view">
+                        <div class="p5-chat-header">
+                            <button class="p5-chat-back" onclick="backToContacts()">← BACK</button>
+                            <img id="p5-chat-avatar" src="" style="width:28px;height:28px;object-fit:cover;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);display:none;">
+                        </div>
+                        <div class="p5-chat-messages" id="p5-chat-messages"></div>
+                        <div class="p5-chat-input-area">
+                            <input type="text" class="p5-chat-input" id="p5-chat-input" placeholder="Message..." onkeypress="if(event.key==='Enter')sendMsg()">
+                            <button class="p5-chat-send" onclick="sendMsg()">SEND</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -327,14 +518,7 @@
 
     <script>
         // ==================== SOUNDS ====================
-        function playSfx(id) {
-            const el = document.getElementById('sfx-' + id);
-            if (el) { el.currentTime = 0; el.play().catch(() => {}); }
-        }
-        function playOpen() { playSfx('open'); }
-        function playSelect() { playSfx('select'); }
-        function playMove() { playSfx('move'); }
-        function playCancel() { playSfx('cancel'); }
+        function playSfx(id) { const el = document.getElementById('sfx-' + id); if (el) { el.currentTime = 0; el.play().catch(() => {}); } }
 
         // ==================== ADMIN ====================
         const SK = 'NyxsAvatarsP3R!';
@@ -343,11 +527,7 @@
         function chk() { const kh = localStorage.getItem('kh'), f = fp(), sf = localStorage.getItem('kf'); if (kh && sf === f) { const e = btoa(SK + f); isAdmin = (kh === e); if (!isAdmin) { localStorage.removeItem('kh'); localStorage.removeItem('kf'); } } updateAdminUI(); }
         function updateAdminUI() { document.getElementById('admin-indicator').classList.toggle('show', isAdmin); }
         function toggleAdminModal() { const m = document.getElementById('admin-modal'); m.classList.toggle('open'); document.getElementById('admin-key').value=''; document.getElementById('admin-msg').textContent=''; }
-        function adminLogin() {
-            const k = document.getElementById('admin-key').value, msg = document.getElementById('admin-msg');
-            if (k === SK) { const f = fp(); localStorage.setItem('kh', btoa(k + f)); localStorage.setItem('kf', f); isAdmin = true; updateAdminUI(); msg.textContent = '✅ Welcome!'; msg.style.color = '#0f0'; setTimeout(toggleAdminModal, 800); }
-            else { msg.textContent = '❌ Denied'; msg.style.color = '#f33'; }
-        }
+        function adminLogin() { const k = document.getElementById('admin-key').value, msg = document.getElementById('admin-msg'); if (k === SK) { const f = fp(); localStorage.setItem('kh', btoa(k + f)); localStorage.setItem('kf', f); isAdmin = true; updateAdminUI(); msg.textContent = '✅ Welcome!'; msg.style.color = '#0f0'; setTimeout(toggleAdminModal, 800); } else { msg.textContent = '❌ Denied'; msg.style.color = '#f33'; } }
         function adminLogout() { localStorage.removeItem('kh'); localStorage.removeItem('kf'); isAdmin = false; updateAdminUI(); }
 
         // ==================== THEME ====================
@@ -358,203 +538,247 @@
         };
         function setTheme(t) {
             Object.entries(themes[t]).forEach(([k,v]) => document.documentElement.style.setProperty(k,v));
-            document.documentElement.setAttribute('data-theme', t);
-            localStorage.setItem('theme', t);
+            document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t);
             ['dt','p3t','lt'].forEach(id => document.getElementById(id)?.classList.remove('active'));
             const bid = t === 'default' ? 'dt' : t === 'p3' ? 'p3t' : 'lt';
             document.getElementById(bid)?.classList.add('active');
-            if (t === 'p3') { genConfetti(); initP3RMenu(); playOpen(); }
+            if (t === 'p3') { genConfetti(); initP3RMenu(); playSfx('open'); }
         }
-        function genConfetti() {
-            const c = document.getElementById('p3r-confetti'); if (!c) return;
-            c.innerHTML = '';
-            for (let i = 0; i < 15; i++) {
-                const p = document.createElement('div'); p.className = 'confetti-piece';
-                p.style.cssText = `left:${Math.random()*90}%;top:${Math.random()*90}%;animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*4}s;width:${8+Math.random()*20}px;height:${6+Math.random()*12}px;`;
-                c.appendChild(p);
-            }
-        }
+        function genConfetti() { const c = document.getElementById('p3r-confetti'); if (!c) return; c.innerHTML = ''; for (let i = 0; i < 15; i++) { const p = document.createElement('div'); p.className = 'confetti-piece'; p.style.cssText = `left:${Math.random()*90}%;top:${Math.random()*90}%;animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*4}s;width:${8+Math.random()*20}px;height:${6+Math.random()*12}px;`; c.appendChild(p); } }
 
+        // ==================== P3R MENU ====================
         const p3rData = [
-            { n:'SKILL', t:'Use a Skill', s:'Command', a: ()=>openModal('SKILL','Combat abilities menu') },
+            { n:'SKILL', t:'Use a Skill', s:'Command', a: ()=>openModal('SKILL','Combat abilities') },
             { n:'ITEM', t:'View / Use Items', s:'Inventory', a: ()=>openModal('ITEMS','Your inventory') },
             { n:'EQUIP', t:'View / Change Equipment', s:'Equipment', a: ()=>openModal('EQUIP','Gear and weapons') },
             { n:'PERSONA', t:'View / Change Personas', s:'Persona', a: showPersona },
-            { n:'STATS', t:'View Stats / Organize Party', s:'Status', a: ()=>openModal('STATS','Character statistics') },
+            { n:'STATS', t:'View Stats', s:'Status', a: ()=>openModal('STATS','Character statistics') },
             { n:'QUEST', t:'View Requests', s:'Requests', a: ()=>openModal('QUESTS','Active requests') },
             { n:'SOCIAL LINK', t:'View Social Links', s:'Community', a: showSocialLinks },
             { n:'CALENDAR', t:'View Calendar', s:'Schedule', a: showCalendar },
             { n:'SYSTEM', t:'View Settings', s:'Config', a: showSystem }
         ];
         let p3rIdx = 0;
-
         function initP3RMenu() {
             document.querySelectorAll('.p3r-menu-item').forEach((item, i) => {
-                item.onclick = () => { selectP3R(i); playSelect(); if (p3rData[i].a) p3rData[i].a(); };
-                item.onmouseenter = () => { if (p3rIdx !== i) { selectP3R(i); playMove(); } };
+                item.onclick = () => { selectP3R(i); playSfx('select'); if (p3rData[i].a) p3rData[i].a(); };
+                item.onmouseenter = () => { if (p3rIdx !== i) { selectP3R(i); playSfx('move'); } };
             });
             document.onkeydown = (e) => {
                 if (document.documentElement.getAttribute('data-theme') !== 'p3') return;
-                if (e.key === 'ArrowDown') { e.preventDefault(); selectP3R((p3rIdx + 1) % 9); playMove(); }
-                if (e.key === 'ArrowUp') { e.preventDefault(); selectP3R((p3rIdx - 1 + 9) % 9); playMove(); }
-                if (e.key === 'Enter') { e.preventDefault(); playSelect(); if (p3rData[p3rIdx].a) p3rData[p3rIdx].a(); }
+                if (e.key === 'ArrowDown') { e.preventDefault(); selectP3R((p3rIdx + 1) % 9); playSfx('move'); }
+                if (e.key === 'ArrowUp') { e.preventDefault(); selectP3R((p3rIdx - 1 + 9) % 9); playSfx('move'); }
+                if (e.key === 'Enter') { e.preventDefault(); playSfx('select'); if (p3rData[p3rIdx].a) p3rData[p3rIdx].a(); }
             };
             selectP3R(0);
         }
         function selectP3R(i) {
             p3rIdx = i;
             document.querySelectorAll('.p3r-menu-item').forEach((el, j) => el.classList.toggle('selected', j === i));
-            const item = document.querySelectorAll('.p3r-menu-item')[i], menu = document.getElementById('p3r-menu'), cursor = document.getElementById('p3r-cursor');
-            if (item && menu && cursor) {
-                const mr = menu.getBoundingClientRect(), ir = item.getBoundingClientRect();
-                cursor.style.top = (ir.top - mr.top + ir.height / 2 - 9) + 'px';
-            }
+            const item = document.querySelectorAll('.p3r-menu-item')[i], menu = document.getElementById('p3r-menu');
             document.getElementById('p3r-num').textContent = i + 1;
             document.getElementById('p3r-name').textContent = p3rData[i].n;
             document.getElementById('p3r-tt-title').textContent = p3rData[i].t;
             document.getElementById('p3r-tt-sub').textContent = p3rData[i].s;
         }
+        function openModal(title, content) { const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);margin-bottom:1rem;">${title}</h2><p>${content}</p>`; m.classList.add('open'); }
+        function closeP3RModal() { document.getElementById('p3r-modal').classList.remove('open'); playSfx('cancel'); }
 
-        function openModal(title, content) {
-            const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content');
-            c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);margin-bottom:1rem;">${title}</h2><p>${content}</p>`;
-            m.classList.add('open');
-        }
-        function closeP3RModal() { document.getElementById('p3r-modal').classList.remove('open'); playCancel(); }
-
-        // Personas
         const allPersonas = [
-            { name: 'Arsène', img: 'https://megatenwiki.com/images/0/0e/P5X_Ars%C3%A8ne_Artwork.png', desc: 'The gentleman thief - P5 Protagonist' },
-            { name: 'Izanagi', img: 'https://preview.redd.it/i-hope-they-keep-izanagi-relevant-throughout-the-game-in-v0-l0zll2z0qnif1.jpeg?width=640&crop=smart&auto=webp&s=44601bd0c2bf9410fc851f36cd1a2a8506f7bdde', desc: 'The god who created Japan - P4 Protagonist' },
-            { name: 'Messiah', img: 'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest', desc: 'The ultimate Persona of Makoto Yuki' },
+            { name: 'Arsène', img: 'https://megatenwiki.com/images/0/0e/P5X_Ars%C3%A8ne_Artwork.png', desc: 'The gentleman thief' },
+            { name: 'Izanagi', img: 'https://preview.redd.it/i-hope-they-keep-izanagi-relevant-throughout-the-game-in-v0-l0zll2z0qnif1.jpeg?width=640&crop=smart&auto=webp&s=44601bd0c2bf9410fc851f36cd1a2a8506f7bdde', desc: 'The god who created Japan' },
+            { name: 'Messiah', img: 'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest', desc: 'The ultimate Persona' },
             { name: 'Orpheus', img: 'https://static.wikia.nocookie.net/megamitensei/images/3/3a/Orpheus_P3R.png', desc: 'The poet of Greek myth' },
-            { name: 'Jack Frost', img: 'https://static.wikia.nocookie.net/megamitensei/images/9/9f/Jack_Frost_SMT5.png', desc: 'Mischievous snow spirit' },
-            { name: 'Pixie', img: 'https://static.wikia.nocookie.net/megamitensei/images/8/8e/Pixie_SMT5.png', desc: 'Playful fairy' },
         ];
         function getPersona() {
-            if (isAdmin) return { name: 'Messiah', img: 'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest', desc: 'The ultimate Persona - Creator\'s power' };
-            const s = localStorage.getItem('up');
-            if (s) try { return JSON.parse(s); } catch(e) {}
-            const p = allPersonas[Math.floor(Math.random() * allPersonas.length)];
-            localStorage.setItem('up', JSON.stringify(p));
-            return p;
+            if (isAdmin) return { name: 'Messiah', img: 'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest', desc: 'Creator\'s ultimate Persona' };
+            const s = localStorage.getItem('up'); if (s) try { return JSON.parse(s); } catch(e) {}
+            const p = allPersonas[Math.floor(Math.random() * allPersonas.length)]; localStorage.setItem('up', JSON.stringify(p)); return p;
         }
-        function showPersona() {
-            const p = getPersona(), m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content');
-            c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><div class="persona-card"><img src="${p.img}" alt="${p.name}" onerror="this.style.display='none'"><h3 style="color:var(--p-primary-light);">${p.name}</h3><p>${p.desc}</p>${isAdmin?'<p style="color:#E60012;font-weight:bold;margin-top:1rem;">⚡ Creator Persona - Messiah ⚡</p>':'<p style="font-size:0.7rem;margin-top:0.5rem;">Random persona assigned</p>'}</div>`;
-            m.classList.add('open');
-        }
-        function showSocialLinks() {
-            const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content');
-            c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);margin-bottom:1rem;">SOCIAL LINKS</h2><div class="social-links-grid">
-                <a href="https://github.com/OnelifeOnedeath" class="social-link-card" target="_blank"><i class="fab fa-github" style="font-size:2rem;color:#6e5494;"></i><div style="font-weight:700;margin-top:0.25rem;">GitHub</div></a>
-                <a href="https://t.me/OnelifeOnedeath" class="social-link-card" target="_blank"><i class="fab fa-telegram" style="font-size:2rem;color:#0088cc;"></i><div style="font-weight:700;margin-top:0.25rem;">Telegram</div></a>
-                <a href="https://vk.com/onelifeonedeath" class="social-link-card" target="_blank"><i class="fab fa-vk" style="font-size:2rem;color:#0077FF;"></i><div style="font-weight:700;margin-top:0.25rem;">VK</div></a>
-                <a href="https://youtube.com/@OnelifeOnedeath" class="social-link-card" target="_blank"><i class="fab fa-youtube" style="font-size:2rem;color:#FF0000;"></i><div style="font-weight:700;margin-top:0.25rem;">YouTube</div></a>
-                <a href="https://steamcommunity.com/id/OnelifeOnedeath" class="social-link-card" target="_blank"><i class="fab fa-steam" style="font-size:2rem;color:#00adee;"></i><div style="font-weight:700;margin-top:0.25rem;">Steam</div></a>
-                <a href="#" class="social-link-card"><i class="fab fa-discord" style="font-size:2rem;color:#5865F2;"></i><div style="font-weight:700;margin-top:0.25rem;">Discord</div></a>
-            </div>`;
-            m.classList.add('open');
-        }
-        function showCalendar() {
-            const n = new Date(), tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content');
-            c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);margin-bottom:1rem;">CALENDAR</h2><div class="calendar-display"><div class="date">${n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})}</div><div class="time" id="cal-time">${n.toLocaleTimeString()}</div><div style="color:var(--p-text-dim);margin-top:0.5rem;">Timezone: ${tz}</div></div>`;
-            m.classList.add('open');
-            const timer = setInterval(() => {
-                if (!m.classList.contains('open')) { clearInterval(timer); return; }
-                const t = document.getElementById('cal-time'); if (t) t.textContent = new Date().toLocaleTimeString();
-            }, 1000);
-        }
-        function showSystem() {
-            const ua = navigator.userAgent;
-            const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content');
-            c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);margin-bottom:1rem;">SYSTEM</h2>
-                <p><strong>Browser:</strong> ${ua.includes('Chrome')?'Chrome':ua.includes('Firefox')?'Firefox':ua.includes('Safari')?'Safari':'Other'}</p>
-                <p><strong>Screen:</strong> ${screen.width}×${screen.height} @${window.devicePixelRatio}x</p>
-                <p><strong>Language:</strong> ${navigator.language}</p>
-                <p><strong>Platform:</strong> ${navigator.platform}</p>
-                <p><strong>Theme:</strong> Persona 3 Reload</p>
-                ${isAdmin ? `<p style="margin-top:1rem;color:#E60012;"><strong>Admin Key:</strong> ${SK}</p>` : ''}`;
-            m.classList.add('open');
-        }
+        function showPersona() { const p = getPersona(), m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><div class="persona-card"><img src="${p.img}" alt="${p.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%231B3A5C%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2260%22 text-anchor=%22middle%22 fill=%22%236BB5FF%22 font-size=%2214%22>${p.name}</text></svg>'"><h3 style="color:var(--p-primary-light);">${p.name}</h3><p>${p.desc}</p>${isAdmin?'<p style="color:#E60012;font-weight:bold;">⚡ Creator Persona</p>':''}</div>`; m.classList.add('open'); }
+        function showSocialLinks() { const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">SOCIAL LINKS</h2><div class="social-links-grid">${['GitHub','Telegram','VK','YouTube','Steam','Discord'].map(n => `<a href="#" class="social-link-card"><i class="fab fa-${n.toLowerCase()}"></i><div>${n}</div></a>`).join('')}</div>`; m.classList.add('open'); }
+        function showCalendar() { const n = new Date(), tz = Intl.DateTimeFormat().resolvedOptions().timeZone, m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">CALENDAR</h2><div class="calendar-display"><div class="date">${n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})}</div><div class="time" id="cal-time">${n.toLocaleTimeString()}</div><div style="color:var(--p-text-dim);">${tz}</div></div>`; m.classList.add('open'); const tmr = setInterval(() => { if (!m.classList.contains('open')) { clearInterval(tmr); return; } const t = document.getElementById('cal-time'); if (t) t.textContent = new Date().toLocaleTimeString(); }, 1000); }
+        function showSystem() { const ua = navigator.userAgent, m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">SYSTEM</h2><p>Browser: ${ua.includes('Chrome')?'Chrome':ua.includes('Firefox')?'Firefox':'Other'}</p><p>Screen: ${screen.width}×${screen.height}</p>${isAdmin?`<p style="color:#E60012;">Key: ${SK}</p>`:''}`; m.classList.add('open'); }
 
+        // ==================== LANGUAGE ====================
         let cl = 'russian';
-        function toggleLang() {
-            document.querySelectorAll('.russian').forEach(e => e.style.display = cl === 'russian' ? 'none' : 'block');
-            document.querySelectorAll('.english').forEach(e => e.style.display = cl === 'russian' ? 'block' : 'none');
-            document.querySelector('.lang-text').textContent = cl === 'russian' ? 'Русский' : 'English';
-            cl = cl === 'russian' ? 'english' : 'russian';
-            localStorage.setItem('lang', cl);
+        function toggleLang() { document.querySelectorAll('.russian').forEach(e => e.style.display = cl === 'russian' ? 'none' : 'block'); document.querySelectorAll('.english').forEach(e => e.style.display = cl === 'russian' ? 'block' : 'none'); document.querySelector('.lang-text').textContent = cl === 'russian' ? 'Русский' : 'English'; cl = cl === 'russian' ? 'english' : 'russian'; localStorage.setItem('lang', cl); }
+
+        // ==================== P5 CHAT (MESSENGER) ====================
+        let friends = JSON.parse(localStorage.getItem('p5friends') || '[]');
+        let chats = JSON.parse(localStorage.getItem('p5chats') || '{}');
+        let currentChatId = null;
+
+        function openP5Chat() { document.getElementById('p5-overlay').classList.add('open'); showContacts(); updateBadge(); }
+        function closeP5Chat() { document.getElementById('p5-overlay').classList.remove('open'); }
+
+        function showContacts() {
+            document.getElementById('p5-contacts-view').style.display = 'flex';
+            document.getElementById('p5-chat-view').classList.remove('active');
+            currentChatId = null;
+            renderContacts();
+        }
+        function backToContacts() { showContacts(); }
+
+        function gc(id) { if (!chats[id]) chats[id] = { avatar: '', msgs: [] }; return chats[id]; }
+
+        function renderContacts() {
+            const container = document.getElementById('p5-contacts-list');
+            let html = '';
+            
+            friends.forEach((friend, i) => {
+                const chat = gc(friend.id);
+                const lastMsg = chat.msgs.length > 0 ? chat.msgs[chat.msgs.length-1].text.slice(0, 18) : 'No messages';
+                const unread = chat.msgs.filter(m => m.from === friend.id && !m.read).length;
+                
+                html += `
+                <div class="p5-contact-item" onclick="openChat('${friend.id}')">
+                    <svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg>
+                    <svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg>
+                    <svg class="p5-contact-panel ${i === 0 ? 'active' : ''}"><polygon points="12,11 56,5 64,26 20,42"/></svg>
+                    <img class="p5-contact-avatar" src="${friend.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'">
+                    <div class="p5-contact-text">${esc(lastMsg)}</div>
+                    ${unread > 0 ? `<div class="p5-contact-badge">!</div>` : ''}
+                </div>`;
+            });
+            
+            html += `
+            <div class="p5-contact-item" onclick="addFriend()" style="opacity:0.6;">
+                <svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg>
+                <svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg>
+                <svg class="p5-contact-panel"><polygon points="12,11 56,5 64,26 20,42"/></svg>
+                <img class="p5-contact-avatar" src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23E60012%22 font-size=%2250%22>+</text></svg>">
+                <div class="p5-contact-text">Add Friend</div>
+            </div>`;
+            
+            container.innerHTML = html;
         }
 
-        // Chat - everyone chats with you
-        let chats = JSON.parse(localStorage.getItem('p5c') || '{}'), cc = null;
-        function openP5Chat() { document.getElementById('p5-overlay').classList.add('open'); showList(); }
-        function closeP5Chat() { document.getElementById('p5-overlay').classList.remove('open'); }
-        function showList() { document.getElementById('p5-list-view').style.display='flex'; document.getElementById('p5-msg-view').style.display='none'; cc=null; renderList(); }
-        function backToList() { showList(); }
-        function gc(id) { if (!chats[id]) chats[id]={av:'',msgs:[]}; return chats[id]; }
-        function renderList() {
-            const c = document.getElementById('p5-contacts'), ids = Object.keys(chats);
-            let h = '<div class="p5-chat-list-header"><span>S</span>NS</div>';
-            ids.forEach(id => {
-                const ch = chats[id], last = ch.msgs.length > 0 ? ch.msgs[ch.msgs.length-1].text.slice(0,20) : 'New chat';
-                const unread = !isAdmin ? 0 : ch.msgs.filter(m => m.from === 'user' && !m.read).length;
-                h += `<div class="p5-contact" onclick="openChat('${id}')"><img class="p5-contact-avatar" src="${ch.av||'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'}"><div class="p5-contact-info"><div class="p5-contact-last">${esc(last)}</div></div>${unread>0?`<div class="p5-contact-badge">${unread}</div>`:''}</div>`;
+        function addFriend() {
+            const nickname = prompt('Enter friend nickname to add:');
+            if (!nickname || !nickname.trim()) return;
+            
+            const avatar = prompt('Friend avatar URL (optional):');
+            const friendId = 'f_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
+            
+            friends.push({
+                id: friendId,
+                nickname: nickname.trim(),
+                avatar: avatar && avatar.trim() ? avatar.trim() : ''
             });
-            h += `<div class="p5-contact" onclick="newChat()" style="opacity:0.5;"><img class="p5-contact-avatar" src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23E60012%22 font-size=%2250%22>+</text></svg>"><div class="p5-contact-last">New Chat</div></div>`;
-            c.innerHTML = h;
+            
+            gc(friendId); // create chat
+            saveFriends();
+            saveChats();
+            showContacts();
         }
-        function newChat() { const av = prompt('Your avatar URL (optional):'), id = 'u'+Date.now(), ch = gc(id); if (av&&av.trim()) ch.av=av.trim(); save(); renderList(); openChat(id); }
-        function openChat(id) {
-            cc = id; const ch = gc(id);
-            document.getElementById('p5-list-view').style.display='none'; document.getElementById('p5-msg-view').style.display='flex';
-            const a = document.getElementById('p5-av'); if (ch.av) { a.src=ch.av; a.style.display='block'; } else { a.style.display='none'; }
-            if (isAdmin) { ch.msgs.forEach(m=>{if(m.from==='user')m.read=true;}); save(); }
-            renderMsgs();
+
+        function openChat(friendId) {
+            currentChatId = friendId;
+            const friend = friends.find(f => f.id === friendId);
+            const chat = gc(friendId);
+            
+            document.getElementById('p5-contacts-view').style.display = 'none';
+            document.getElementById('p5-chat-view').classList.add('active');
+            
+            const avEl = document.getElementById('p5-chat-avatar');
+            if (friend && friend.avatar) {
+                avEl.src = friend.avatar;
+                avEl.style.display = 'block';
+            } else {
+                avEl.style.display = 'none';
+            }
+            
+            // Mark as read
+            chat.msgs.forEach(m => { if (m.from === friendId) m.read = true; });
+            saveChats();
+            renderMessages();
+            updateBadge();
         }
+
         function sendMsg() {
-            const inp = document.getElementById('p5-inp'), text = inp.value.trim();
-            if (!text || !cc) return;
-            const ch = gc(cc); ch.msgs.push({from:isAdmin?'admin':'user',text,time:Date.now(),read:isAdmin});
-            save(); inp.value=''; renderMsgs();
+            const input = document.getElementById('p5-chat-input');
+            const text = input.value.trim();
+            if (!text || !currentChatId) return;
+            
+            const chat = gc(currentChatId);
+            chat.msgs.push({
+                from: isAdmin ? 'admin' : 'user',
+                text,
+                time: Date.now(),
+                read: isAdmin
+            });
+            
+            saveChats();
+            input.value = '';
+            renderMessages();
+            playSfx('select');
         }
-        function renderMsgs() {
-            if (!cc) return;
-            const ch = gc(cc), container = document.getElementById('p5-msgs');
-            container.innerHTML = ch.msgs.map(m => {
-                const s = (isAdmin&&m.from==='admin')||(!isAdmin&&m.from==='user');
-                return `<div class="p5-msg ${s?'sent':'recv'}"><img class="p5-msg-avatar" src="${m.from==='admin'?(ch.av||'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23E60012%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2240%22>O</text></svg>'):''}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'"><div class="p5-msg-bubble">${esc(m.text)}</div></div>`;
+
+        function renderMessages() {
+            if (!currentChatId) return;
+            const chat = gc(currentChatId);
+            const container = document.getElementById('p5-chat-messages');
+            const friend = friends.find(f => f.id === currentChatId);
+            
+            container.innerHTML = chat.msgs.map((m, i) => {
+                const isOwn = (isAdmin && m.from === 'admin') || (!isAdmin && m.from === 'user');
+                const showZigzag = (i === 0) || (i > 0 && chat.msgs[i-1].from !== m.from);
+                
+                return `
+                <div class="p5-msg ${isOwn ? 'own' : 'received'}">
+                    <img class="p5-msg-avatar" src="${isOwn ? (friend?.avatar || '') : 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'">
+                    <div class="p5-msg-bubble-wrap">
+                        ${showZigzag ? '<div class="p5-msg-zigzag"></div>' : ''}
+                        <div class="p5-msg-bubble">${esc(m.text)}</div>
+                    </div>
+                </div>`;
             }).join('');
+            
             container.scrollTop = container.scrollHeight;
         }
-        function save() { localStorage.setItem('p5c', JSON.stringify(chats)); }
+
+        function updateBadge() {
+            const badge = document.getElementById('p5-badge');
+            let total = 0;
+            
+            friends.forEach(f => {
+                const chat = gc(f.id);
+                total += chat.msgs.filter(m => m.from === f.id && !m.read).length;
+            });
+            
+            if (total > 0) {
+                badge.textContent = total > 99 ? '99+' : total;
+                badge.classList.add('show');
+            } else {
+                badge.classList.remove('show');
+            }
+        }
+
+        function saveFriends() { localStorage.setItem('p5friends', JSON.stringify(friends)); }
+        function saveChats() { localStorage.setItem('p5chats', JSON.stringify(chats)); }
         function esc(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
-        class BF {
-            constructor() { this.t=new Array(30).fill(0); this.p=0; this.c=''; this.i=0; this.o=''; this.b={}; }
-            load(c) { this.c=c; this.o=''; this.p=0; this.i=0; this.t=new Array(30).fill(0); this._b(); }
-            _b() { let s=[]; this.b={}; for(let i=0;i<this.c.length;i++){if(this.c[i]==='[')s.push(i);else if(this.c[i]===']'){let st=s.pop();this.b[st]=i;this.b[i]=st;}}}
-            step(){if(this.i>=this.c.length)return null;let c=this.c[this.i];switch(c){case'>':this.p++;break;case'<':this.p--;break;case'+':this.t[this.p]=(this.t[this.p]+1)%256;break;case'-':this.t[this.p]=(this.t[this.p]-1+256)%256;break;case'.':this.o+=String.fromCharCode(this.t[this.p]);break;case'[':if(this.t[this.p]===0)this.i=this.b[this.i];break;case']':if(this.t[this.p]!==0)this.i=this.b[this.i];break;}this.i++;return true;}
-        }
+        // ==================== BRAINFUCK ====================
+        class BF { constructor() { this.t = new Array(30).fill(0); this.p = 0; this.c = ''; this.i = 0; this.o = ''; this.b = {}; } load(c) { this.c = c; this.o = ''; this.p = 0; this.i = 0; this.t = new Array(30).fill(0); this._b(); } _b() { let s = []; this.b = {}; for (let i = 0; i < this.c.length; i++) { if (this.c[i] === '[') s.push(i); else if (this.c[i] === ']') { let st = s.pop(); this.b[st] = i; this.b[i] = st; } } } step() { if (this.i >= this.c.length) return null; let c = this.c[this.i]; switch (c) { case '>': this.p++; break; case '<': this.p--; break; case '+': this.t[this.p] = (this.t[this.p] + 1) % 256; break; case '-': this.t[this.p] = (this.t[this.p] - 1 + 256) % 256; break; case '.': this.o += String.fromCharCode(this.t[this.p]); break; case '[': if (this.t[this.p] === 0) this.i = this.b[this.i]; break; case ']': if (this.t[this.p] !== 0) this.i = this.b[this.i]; break; } this.i++; return true; } }
         let bf = new BF();
-        function resetBF(){bf.load(document.getElementById('bf-code').value);updBF();}
-        function runBF(){resetBF();execBF();}
-        function stepBF(){if(bf.step())updBF();}
-        function execBF(){if(bf.step()){updBF();setTimeout(execBF,60);}}
-        function updBF(){
-            document.getElementById('bf-out').textContent=bf.o;
-            const tape=document.getElementById('bf-tape'); tape.innerHTML='';
-            for(let i=0;i<12;i++){const cell=document.createElement('div');cell.className=`tape-cell ${i===bf.p?'active':''}`;cell.textContent=bf.t[i];tape.appendChild(cell);}
-        }
+        function resetBF() { bf.load(document.getElementById('bf-code').value); updBF(); }
+        function runBF() { resetBF(); execBF(); }
+        function stepBF() { if (bf.step()) updBF(); }
+        function execBF() { if (bf.step()) { updBF(); setTimeout(execBF, 60); } }
+        function updBF() { document.getElementById('bf-out').textContent = bf.o; const tape = document.getElementById('bf-tape'); tape.innerHTML = ''; for (let i = 0; i < 12; i++) { const cell = document.createElement('div'); cell.className = `tape-cell ${i === bf.p ? 'active' : ''}`; cell.textContent = bf.t[i]; tape.appendChild(cell); } }
 
+        // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
             resetBF();
             const st = localStorage.getItem('theme') || 'default';
             setTheme(st);
             if (localStorage.getItem('lang') === 'english') toggleLang();
             chk();
+            updateBadge();
+            
+            // Poll for new messages
+            setInterval(updateBadge, 3000);
         });
     </script>
 </body>
