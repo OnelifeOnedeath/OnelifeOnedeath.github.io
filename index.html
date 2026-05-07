@@ -34,32 +34,32 @@
             --card-bg: rgba(255, 255, 255, 0.05);
         }
 
-        /* Тема Persona 3 */
+        /* Тема Persona 3 Reload */
         [data-theme="p3"] {
-            --p-primary: #1a3a5c;
-            --p-primary-hover: #254a74;
-            --p-primary-light: #4a8bc2;
-            --p-primary-dark: #0d1f33;
-            --p-highlight: #5ba4e6;
+            --p-primary: #1B2838;
+            --p-primary-hover: #2D4A6E;
+            --p-primary-light: #4A90D9;
+            --p-primary-dark: #0F1923;
+            --p-highlight: #6BB5FF;
             
-            --p-surface: #0d1f33;
-            --p-surface-hover: #1a3050;
-            --p-background: #0a1628;
-            --p-background-alt: #061020;
+            --p-surface: #152230;
+            --p-surface-hover: #1E3348;
+            --p-background: #0D1520;
+            --p-background-alt: #0A1018;
             
-            --p-text: #e8f0f8;
-            --p-text-muted: #8ab4d8;
-            --p-text-dim: #5a8ab5;
+            --p-text: #E8F0F8;
+            --p-text-muted: #8CB4D8;
+            --p-text-dim: #5A8AB5;
             
-            --p-border: #1a3a5c;
-            --p-border-light: #254a74;
-            --p-shadow: 0 4px 6px -1px rgba(26, 58, 92, 0.3);
-            --p-glow: 0 0 20px rgba(74, 139, 194, 0.4);
+            --p-border: #1E3348;
+            --p-border-light: #2D4A6E;
+            --p-shadow: 0 4px 6px -1px rgba(74, 144, 217, 0.2);
+            --p-glow: 0 0 20px rgba(74, 144, 217, 0.3);
             
-            --btn-bg: rgba(26, 58, 92, 0.3);
-            --btn-border: rgba(74, 139, 194, 0.4);
-            --btn-hover-bg: rgba(74, 139, 194, 0.3);
-            --card-bg: rgba(26, 58, 92, 0.2);
+            --btn-bg: rgba(74, 144, 217, 0.15);
+            --btn-border: rgba(74, 144, 217, 0.4);
+            --btn-hover-bg: rgba(74, 144, 217, 0.3);
+            --card-bg: rgba(30, 51, 72, 0.3);
         }
 
         * {
@@ -95,18 +95,23 @@
         }
 
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 10px var(--p-primary-light); }
-            50% { box-shadow: 0 0 25px var(--p-primary-light), 0 0 50px var(--p-primary); }
+            0%, 100% { box-shadow: 0 0 10px var(--p-highlight); }
+            50% { box-shadow: 0 0 25px var(--p-highlight), 0 0 50px var(--p-primary-light); }
         }
 
-        @keyframes chatFadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes chatSlideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         @keyframes personaSlide {
             from { transform: translateX(-100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes messagePop {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .container {
@@ -137,7 +142,7 @@
         }
 
         [data-theme="p3"] .hero::before {
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%235ba4e6" fill-opacity="0.08" points="0,1000 1000,0 1000,1000"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%236BB5FF" fill-opacity="0.08" points="0,1000 1000,0 1000,1000"/></svg>');
         }
 
         .anime-gif-left, .anime-gif-right {
@@ -212,13 +217,10 @@
             padding: 0.5rem 1rem;
             border-radius: 0.75rem;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            white-space: nowrap;
-            backdrop-filter: blur(10px);
         }
 
         .theme-btn:hover, .lang-btn:hover {
@@ -233,22 +235,6 @@
             border-color: var(--p-primary-light);
             box-shadow: var(--p-glow);
             animation: pulse-glow 2s infinite;
-        }
-
-        .theme-btn.p3-btn {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .theme-btn.p3-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(91, 164, 230, 0.3), transparent);
-            animation: personaSlide 2s infinite;
         }
 
         .brand-header {
@@ -267,12 +253,6 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
             animation: fadeInUp 0.8s ease-out;
-            text-shadow: none;
-            filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
-        }
-
-        [data-theme="p3"] .username {
-            filter: drop-shadow(0 0 20px rgba(91, 164, 230, 0.5));
         }
 
         .tagline {
@@ -310,29 +290,81 @@
             border-radius: 1rem;
             padding: 1.5rem;
             text-align: center;
-            transition: all 0.3s ease;
             text-decoration: none;
             color: var(--p-text);
             animation: fadeInUp 0.8s ease-out 0.6s both;
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--social-color, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .social-card:hover {
-            border-color: var(--p-primary-light);
             transform: translateY(-5px);
             box-shadow: var(--p-glow);
-            background: var(--btn-hover-bg);
+            border-color: var(--p-primary-light);
+        }
+
+        .social-card:hover::before {
+            opacity: 0.1;
         }
 
         .social-icon {
             font-size: 2rem;
             margin-bottom: 1rem;
-            color: var(--p-primary-light);
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
-        .social-card:hover .social-icon {
-            transform: scale(1.2) rotate(5deg);
+        /* Цвета для каждой соцсети */
+        .social-card.github .social-icon { color: #6e5494; }
+        .social-card.github:hover { border-color: #6e5494; box-shadow: 0 0 20px rgba(110, 84, 148, 0.3); }
+        .social-card.github::before { --social-color: #6e5494; }
+
+        .social-card.telegram .social-icon { color: #0088cc; }
+        .social-card.telegram:hover { border-color: #0088cc; box-shadow: 0 0 20px rgba(0, 136, 204, 0.3); }
+        .social-card.telegram::before { --social-color: #0088cc; }
+
+        .social-card.vk .social-icon { color: #0077FF; }
+        .social-card.vk:hover { border-color: #0077FF; box-shadow: 0 0 20px rgba(0, 119, 255, 0.3); }
+        .social-card.vk::before { --social-color: #0077FF; }
+
+        .social-card.youtube .social-icon { color: #FF0000; }
+        .social-card.youtube:hover { border-color: #FF0000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); }
+        .social-card.youtube::before { --social-color: #FF0000; }
+
+        .social-card.steam .social-icon { color: #00adee; }
+        .social-card.steam:hover { border-color: #00adee; box-shadow: 0 0 20px rgba(0, 173, 238, 0.3); }
+        .social-card.steam::before { --social-color: #00adee; }
+
+        .social-card.discord .social-icon { color: #5865F2; }
+        .social-card.discord:hover { border-color: #5865F2; box-shadow: 0 0 20px rgba(88, 101, 242, 0.3); }
+        .social-card.discord::before { --social-color: #5865F2; }
+
+        .social-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-handle {
+            color: var(--p-text-muted);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
         }
 
         /* Sections */
@@ -376,21 +408,6 @@
             overflow: hidden;
         }
 
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .project-card:hover::before {
-            left: 100%;
-        }
-
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--p-glow);
@@ -427,26 +444,18 @@
             border: 1px solid var(--btn-border);
         }
 
-        .tech-tag:hover {
-            background: var(--p-primary);
-            transform: translateY(-2px);
-        }
-
         .btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
             background: var(--p-primary);
-            color: white;
+            color: white !important;
             text-decoration: none;
             border-radius: 0.5rem;
             font-weight: 600;
-            transition: all 0.3s ease;
             border: 2px solid var(--p-primary-light);
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
 
         .btn:hover {
@@ -468,7 +477,6 @@
             border-radius: 1rem;
             padding: 2rem;
             border: 1px solid var(--p-border);
-            transition: all 0.3s ease;
         }
 
         .skill-category:hover {
@@ -489,211 +497,305 @@
             gap: 0.5rem;
         }
 
-        /* Chat Button */
-        .chat-fab {
+        /* Persona 5 Style Chat */
+        .p5-chat-button {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
             z-index: 999;
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
-            background: var(--p-primary);
-            border: 2px solid var(--p-primary-light);
+            background: linear-gradient(135deg, #E60012, #CC0000);
+            border: 3px solid #FF3333;
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: var(--p-glow);
+            box-shadow: 0 0 20px rgba(230, 0, 18, 0.5), 0 5px 15px rgba(0,0,0,0.3);
             animation: pulse-glow 2s infinite;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
         }
 
-        .chat-fab:hover {
+        .p5-chat-button::after {
+            content: '';
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            border: 2px dashed #FF3333;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .p5-chat-button:hover {
             transform: scale(1.1);
-            background: var(--p-primary-hover);
+            background: linear-gradient(135deg, #FF1A1A, #E60012);
+            box-shadow: 0 0 30px rgba(230, 0, 18, 0.7);
         }
 
-        /* Chat Modal */
-        .chat-modal {
+        /* P5 Chat Modal */
+        .p5-chat-modal {
             position: fixed;
             bottom: 5rem;
             right: 2rem;
-            width: 380px;
-            max-height: 500px;
-            background: var(--p-surface);
-            border: 2px solid var(--p-border-light);
+            width: 400px;
+            max-height: 550px;
+            background: #1A1A2E;
+            border: 2px solid #FF3333;
             border-radius: 1rem;
-            box-shadow: var(--p-glow);
             z-index: 1000;
             display: none;
             flex-direction: column;
-            backdrop-filter: blur(20px);
-            animation: chatFadeIn 0.3s ease;
+            box-shadow: 0 0 30px rgba(230, 0, 18, 0.3), 0 10px 30px rgba(0,0,0,0.5);
+            animation: chatSlideIn 0.3s ease;
+            overflow: hidden;
         }
 
-        .chat-modal.open {
+        .p5-chat-modal.open {
             display: flex;
         }
 
-        .chat-header {
+        .p5-chat-header {
+            background: #111;
             padding: 1rem;
-            border-bottom: 2px solid var(--p-border);
+            border-bottom: 2px solid #FF3333;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-radius: 1rem 1rem 0 0;
         }
 
-        .chat-avatar-section {
+        .p5-chat-title {
             display: flex;
             align-items: center;
             gap: 0.75rem;
         }
 
-        .chat-avatar {
+        .p5-chat-title-icon {
             width: 40px;
             height: 40px;
+            background: #E60012;
             border-radius: 50%;
-            background: var(--p-primary);
-            border: 2px solid var(--p-primary-light);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            overflow: hidden;
         }
 
-        .chat-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .p5-chat-title-text {
+            color: #E60012;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .chat-avatar:hover {
-            transform: scale(1.1);
-            box-shadow: var(--p-glow);
-        }
-
-        .chat-nickname-input {
-            background: transparent;
-            border: none;
-            color: var(--p-text);
-            font-size: 1rem;
-            font-weight: 600;
-            width: 150px;
-            outline: none;
-        }
-
-        .chat-nickname-input::placeholder {
-            color: var(--p-text-dim);
-        }
-
-        .chat-close {
+        .p5-chat-close {
             background: none;
             border: none;
-            color: var(--p-text-muted);
+            color: #FF3333;
             cursor: pointer;
             font-size: 1.2rem;
-            transition: all 0.3s ease;
         }
 
-        .chat-close:hover {
-            color: var(--p-primary-light);
+        .p5-chat-close:hover {
+            color: #FF6666;
         }
 
-        .chat-messages {
+        .p5-chat-messages {
             flex: 1;
             overflow-y: auto;
             padding: 1rem;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
-            max-height: 300px;
+            gap: 1rem;
+            max-height: 350px;
+            background: #0D0D1A;
         }
 
-        .chat-message {
+        .p5-message {
             display: flex;
-            gap: 0.5rem;
-            animation: chatFadeIn 0.3s ease;
+            gap: 0.75rem;
+            animation: messagePop 0.3s ease;
+            align-items: flex-start;
         }
 
-        .chat-message.own {
+        .p5-message.own {
             flex-direction: row-reverse;
         }
 
-        .chat-message-avatar {
-            width: 30px;
-            height: 30px;
+        .p5-message-avatar {
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             overflow: hidden;
+            border: 2px solid #FF3333;
             flex-shrink: 0;
+            background: #1A1A2E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #E60012;
         }
 
-        .chat-message-avatar img {
+        .p5-message-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .chat-message-bubble {
-            background: var(--btn-bg);
-            padding: 0.75rem;
-            border-radius: 1rem;
-            border: 1px solid var(--p-border);
+        .p5-message-content {
             max-width: 70%;
-            word-wrap: break-word;
-            color: var(--p-text);
         }
 
-        .chat-message.own .chat-message-bubble {
-            background: var(--p-primary);
-            border-color: var(--p-primary-light);
+        .p5-message-bubble {
+            background: #1E1E3A;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #333;
+            color: #E0E0E0;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
-        .chat-input-area {
+        .p5-message.own .p5-message-bubble {
+            background: #E60012;
+            border-color: #FF3333;
+            color: white;
+        }
+
+        .p5-message-nickname {
+            font-size: 0.8rem;
+            color: #FF3333;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .p5-message.own .p5-message-nickname {
+            color: #FF9999;
+        }
+
+        .p5-chat-input-area {
             padding: 1rem;
-            border-top: 2px solid var(--p-border);
+            background: #111;
+            border-top: 2px solid #FF3333;
             display: flex;
             gap: 0.5rem;
         }
 
-        .chat-input {
+        .p5-chat-input {
             flex: 1;
-            background: var(--p-background);
-            border: 1px solid var(--p-border);
-            border-radius: 1rem;
+            background: #0D0D1A;
+            border: 1px solid #333;
+            border-radius: 0.5rem;
             padding: 0.5rem 1rem;
-            color: var(--p-text);
+            color: #E0E0E0;
             outline: none;
-            transition: all 0.3s ease;
+            font-size: 0.95rem;
         }
 
-        .chat-input:focus {
+        .p5-chat-input:focus {
+            border-color: #FF3333;
+        }
+
+        .p5-chat-input::placeholder {
+            color: #666;
+        }
+
+        .p5-chat-send {
+            background: #E60012;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .p5-chat-send:hover {
+            background: #FF1A1A;
+        }
+
+        .p5-chat-info {
+            padding: 0.5rem 1rem;
+            background: #111;
+            text-align: center;
+        }
+
+        .p5-chat-nickname-input {
+            background: transparent;
+            border: 1px solid #333;
+            color: #FF3333;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.9rem;
+            width: 120px;
+            text-align: center;
+            outline: none;
+        }
+
+        .p5-chat-nickname-input:focus {
+            border-color: #FF3333;
+        }
+
+        .p5-chat-nickname-input::placeholder {
+            color: #666;
+        }
+
+        /* Admin Login */
+        .admin-login {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+        }
+
+        .admin-btn {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--p-border);
+            color: var(--p-text-dim);
+            padding: 0.3rem 0.7rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .admin-btn:hover {
+            color: var(--p-text);
             border-color: var(--p-primary-light);
         }
 
-        .chat-send {
-            background: var(--p-primary);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: white;
-            transition: all 0.3s ease;
+        .admin-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--p-surface);
+            border: 2px solid var(--p-border-light);
+            border-radius: 1rem;
+            padding: 2rem;
+            z-index: 2000;
+            display: none;
+            box-shadow: var(--p-glow);
         }
 
-        .chat-send:hover {
-            background: var(--p-primary-hover);
-            transform: scale(1.1);
+        .admin-modal.open {
+            display: block;
+        }
+
+        .admin-input {
+            width: 100%;
+            background: var(--p-background);
+            border: 1px solid var(--p-border);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            color: var(--p-text);
+            margin: 0.5rem 0;
         }
 
         /* Tapeworm Demo */
@@ -725,12 +827,6 @@
             margin-bottom: 1rem;
         }
 
-        .control-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
         .output-display, .tape-display, .stats-display {
             background: var(--p-background);
             border: 1px solid var(--p-border);
@@ -741,11 +837,9 @@
 
         .output-text, .stats-text {
             font-family: 'Courier New', monospace;
-            background: rgba(0,0,0,0.3);
             padding: 0.5rem;
             border-radius: 0.25rem;
             min-height: 2rem;
-            color: var(--p-text);
         }
 
         .tape-visualization {
@@ -767,8 +861,6 @@
             border-radius: 0.25rem;
             font-family: 'Courier New', monospace;
             font-weight: bold;
-            color: var(--p-text);
-            transition: all 0.3s ease;
         }
 
         .tape-cell.active {
@@ -811,22 +903,33 @@
             .username { font-size: 2.5rem; }
             .social-grid { grid-template-columns: repeat(2, 1fr); }
             .demo-interface { grid-template-columns: 1fr; }
-            .chat-modal { width: 90vw; right: 5vw; }
-            .theme-switcher-bar, .lang-switcher-bar { 
-                position: relative;
-                top: auto;
-                right: auto;
-                left: auto;
-                transform: none;
-                margin: 0.5rem;
-                justify-content: center;
-            }
+            .p5-chat-modal { width: 90vw; right: 5vw; }
             .anime-gif-left, .anime-gif-right { width: 80px; height: 80px; }
-            .theme-switcher-bar { margin-top: 60px; }
+            .theme-switcher-bar, .lang-switcher-bar { position: relative; margin: 0.5rem; }
         }
     </style>
 </head>
 <body>
+    <!-- Admin Login Button -->
+    <div class="admin-login">
+        <button class="admin-btn" onclick="toggleAdminModal()">
+            <i class="fas fa-lock"></i> Admin
+        </button>
+    </div>
+
+    <!-- Admin Modal -->
+    <div class="admin-modal" id="admin-modal">
+        <h3 style="color: var(--p-primary-light); margin-bottom: 1rem;">Admin Login</h3>
+        <input type="password" class="admin-input" id="admin-password" placeholder="Enter password">
+        <button class="btn" onclick="adminLogin()" style="width: 100%; margin-top: 0.5rem;">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+        <button class="btn" onclick="toggleAdminModal()" style="width: 100%; margin-top: 0.5rem; background: var(--p-surface-hover);">
+            Cancel
+        </button>
+        <div id="admin-status" style="margin-top: 0.5rem; font-size: 0.8rem;"></div>
+    </div>
+
     <!-- Language Switcher -->
     <div class="lang-switcher-bar">
         <button class="lang-btn" onclick="toggleLanguage()">
@@ -838,16 +941,13 @@
     <!-- Theme Switcher -->
     <div class="theme-switcher-bar">
         <button class="theme-btn active" onclick="setTheme('default')" id="default-theme-btn">
-            <i class="fas fa-moon"></i>
-            <span>Default</span>
+            <i class="fas fa-moon"></i> Default
         </button>
-        <button class="theme-btn p3-btn" onclick="setTheme('p3')" id="p3-theme-btn">
-            <i class="fas fa-clock"></i>
-            <span>P3</span>
+        <button class="theme-btn" onclick="setTheme('p3')" id="p3-theme-btn">
+            <i class="fas fa-clock"></i> P3R
         </button>
         <button class="theme-btn" onclick="setTheme('light')" id="light-theme-btn">
-            <i class="fas fa-sun"></i>
-            <span>Light</span>
+            <i class="fas fa-sun"></i> Light
         </button>
     </div>
 
@@ -866,45 +966,43 @@
                 <div class="russian">
                     <div class="tagline">Универсальный инженер • Исследователь систем</div>
                     <div class="universal-badge">
-                        <i class="fas fa-globe"></i>
-                        Один никнейм — все платформы
+                        <i class="fas fa-globe"></i> Один никнейм — все платформы
                     </div>
                 </div>
                 <div class="english">
                     <div class="tagline">Universal Engineer • Systems Researcher</div>
                     <div class="universal-badge">
-                        <i class="fas fa-globe"></i>
-                        One username — all platforms
+                        <i class="fas fa-globe"></i> One username — all platforms
                     </div>
                 </div>
 
                 <div class="social-grid">
-                    <a href="https://github.com/OnelifeOnedeath" class="social-card" target="_blank">
+                    <a href="https://github.com/OnelifeOnedeath" class="social-card github" target="_blank">
                         <div class="social-icon"><i class="fab fa-github"></i></div>
                         <div class="social-name">GitHub</div>
                         <div class="social-handle">OnelifeOnedeath</div>
                     </a>
-                    <a href="https://t.me/OnelifeOnedeath" class="social-card" target="_blank">
+                    <a href="https://t.me/OnelifeOnedeath" class="social-card telegram" target="_blank">
                         <div class="social-icon"><i class="fab fa-telegram"></i></div>
                         <div class="social-name">Telegram</div>
                         <div class="social-handle">@OnelifeOnedeath</div>
                     </a>
-                    <a href="https://vk.com/onelifeonedeath" class="social-card" target="_blank">
+                    <a href="https://vk.com/onelifeonedeath" class="social-card vk" target="_blank">
                         <div class="social-icon"><i class="fab fa-vk"></i></div>
                         <div class="social-name">VK</div>
                         <div class="social-handle">onelifeonedeath</div>
                     </a>
-                    <a href="https://www.youtube.com/@OnelifeOnedeath" class="social-card" target="_blank">
+                    <a href="https://www.youtube.com/@OnelifeOnedeath" class="social-card youtube" target="_blank">
                         <div class="social-icon"><i class="fab fa-youtube"></i></div>
                         <div class="social-name">YouTube</div>
                         <div class="social-handle">@OnelifeOnedeath</div>
                     </a>
-                    <a href="https://steamcommunity.com/id/OnelifeOnedeath" class="social-card" target="_blank">
+                    <a href="https://steamcommunity.com/id/OnelifeOnedeath" class="social-card steam" target="_blank">
                         <div class="social-icon"><i class="fab fa-steam"></i></div>
                         <div class="social-name">Steam</div>
                         <div class="social-handle">OnelifeOnedeath</div>
                     </a>
-                    <a href="#" class="social-card">
+                    <a href="#" class="social-card discord">
                         <div class="social-icon"><i class="fab fa-discord"></i></div>
                         <div class="social-name">Discord</div>
                         <div class="social-handle">OnelifeOnedeath</div>
@@ -968,30 +1066,17 @@
                 <div class="demo-interface">
                     <div class="code-input-section">
                         <textarea id="bf-code" rows="6">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea>
-                        <div class="control-buttons">
+                        <div class="control-buttons" style="display:flex; gap:1rem;">
                             <button class="btn" onclick="runBrainfuck()"><i class="fas fa-play"></i> Run</button>
                             <button class="btn" onclick="resetBrainfuck()"><i class="fas fa-redo"></i> Reset</button>
                             <button class="btn" onclick="stepBrainfuck()"><i class="fas fa-step-forward"></i> Step</button>
                         </div>
                     </div>
                     <div class="visualization-section">
-                        <div class="output-display">
-                            <h4>Output:</h4>
-                            <div id="bf-output" class="output-text"></div>
-                        </div>
-                        <div class="tape-display">
-                            <h4>Memory Tape:</h4>
-                            <div id="bf-tape" class="tape-visualization"></div>
-                        </div>
-                        <div class="stats-display">
-                            <h4>Statistics:</h4>
-                            <div id="bf-stats" class="stats-text"></div>
-                        </div>
+                        <div class="output-display"><h4>Output:</h4><div id="bf-output" class="output-text"></div></div>
+                        <div class="tape-display"><h4>Memory Tape:</h4><div id="bf-tape" class="tape-visualization"></div></div>
+                        <div class="stats-display"><h4>Statistics:</h4><div id="bf-stats" class="stats-text"></div></div>
                     </div>
-                </div>
-                <div class="example-buttons" style="display:flex; gap:1rem; justify-content:center; margin:1rem 0;">
-                    <button class="example-btn" onclick="loadExample('hello')">Hello World</button>
-                    <button class="example-btn" onclick="loadExample('counter')">Counter</button>
                 </div>
             </div>
         </div>
@@ -1052,8 +1137,8 @@
     <!-- Philosophy -->
     <section class="philosophy">
         <div class="container">
-            <p class="philosophy-main russian">"Одна жизнь, одна смерть — философия глубинного понимания систем."</p>
-            <p class="philosophy-main english">"One life, one death — a philosophy of deep system understanding."</p>
+            <p class="philosophy-main russian" style="font-size:1.4rem; font-style:italic;">"Одна жизнь, одна смерть — философия глубинного понимания систем."</p>
+            <p class="philosophy-main english" style="font-size:1.4rem; font-style:italic;">"One life, one death — a philosophy of deep system understanding."</p>
         </div>
     </section>
 
@@ -1066,264 +1151,231 @@
         </div>
     </footer>
 
-    <!-- Chat FAB -->
-    <button class="chat-fab" onclick="toggleChat()" title="Chat with me">
-        <i class="fas fa-comments"></i>
+    <!-- Persona 5 Style Chat Button -->
+    <button class="p5-chat-button" onclick="toggleP5Chat()" title="Chat">
+        <i class="fas fa-comment-dots"></i>
     </button>
 
-    <!-- Chat Modal -->
-    <div class="chat-modal" id="chat-modal">
-        <div class="chat-header">
-            <div class="chat-avatar-section">
-                <div class="chat-avatar" id="user-avatar" onclick="changeAvatar()">
-                    <i class="fas fa-user"></i>
-                </div>
-                <input type="text" class="chat-nickname-input" id="nickname-input" 
-                       placeholder="Your nickname" maxlength="20">
+    <!-- Persona 5 Style Chat Modal -->
+    <div class="p5-chat-modal" id="p5-chat-modal">
+        <div class="p5-chat-header">
+            <div class="p5-chat-title">
+                <div class="p5-chat-title-icon">💬</div>
+                <div class="p5-chat-title-text">CHAT</div>
             </div>
-            <button class="chat-close" onclick="toggleChat()">
-                <i class="fas fa-times"></i>
-            </button>
+            <button class="p5-chat-close" onclick="toggleP5Chat()">✕</button>
         </div>
-        <div class="chat-messages" id="chat-messages">
-            <!-- Messages will appear here -->
+        <div class="p5-chat-info">
+            <input type="text" class="p5-chat-nickname-input" id="p5-nickname-input" 
+                   placeholder="YOUR NAME" maxlength="15" onchange="saveP5Nickname()">
         </div>
-        <div class="chat-input-area">
-            <input type="text" class="chat-input" id="chat-input" 
-                   placeholder="Type a message..." onkeypress="handleChatKey(event)">
-            <button class="chat-send" onclick="sendMessage()">
-                <i class="fas fa-paper-plane"></i>
-            </button>
+        <div class="p5-chat-messages" id="p5-chat-messages">
+            <!-- Messages appear here -->
+        </div>
+        <div class="p5-chat-input-area">
+            <input type="text" class="p5-chat-input" id="p5-chat-input" 
+                   placeholder="Type message..." onkeypress="handleP5ChatKey(event)">
+            <button class="p5-chat-send" onclick="sendP5Message()">SEND</button>
         </div>
     </div>
 
     <script>
-        // Theme System
+        // ==================== THEME SYSTEM ====================
         const themes = {
             default: {
-                '--p-primary': '#8B5CF6',
-                '--p-primary-hover': '#7C3AED',
-                '--p-primary-light': '#A78BFA',
-                '--p-primary-dark': '#5B21B6',
-                '--p-highlight': '#C4B5FD',
-                '--p-surface': '#1F2937',
-                '--p-surface-hover': '#374151',
-                '--p-background': '#111827',
-                '--p-background-alt': '#0F172A',
-                '--p-text': '#F9FAFB',
-                '--p-text-muted': '#D1D5DB',
-                '--p-text-dim': '#9CA3AF',
-                '--p-border': '#374151',
-                '--p-border-light': '#4B5563',
-                '--p-shadow': '0 4px 6px -1px rgba(139, 92, 246, 0.1)',
-                '--p-glow': '0 0 15px rgba(139, 92, 246, 0.3)',
-                '--btn-bg': 'rgba(139, 92, 246, 0.2)',
-                '--btn-border': 'rgba(139, 92, 246, 0.5)',
-                '--btn-hover-bg': 'rgba(139, 92, 246, 0.4)',
-                '--card-bg': 'rgba(255, 255, 255, 0.05)'
+                '--p-primary': '#8B5CF6', '--p-primary-hover': '#7C3AED',
+                '--p-primary-light': '#A78BFA', '--p-primary-dark': '#5B21B6',
+                '--p-highlight': '#C4B5FD', '--p-surface': '#1F2937',
+                '--p-surface-hover': '#374151', '--p-background': '#111827',
+                '--p-background-alt': '#0F172A', '--p-text': '#F9FAFB',
+                '--p-text-muted': '#D1D5DB', '--p-text-dim': '#9CA3AF',
+                '--p-border': '#374151', '--p-border-light': '#4B5563',
+                '--btn-bg': 'rgba(139, 92, 246, 0.2)', '--btn-border': 'rgba(139, 92, 246, 0.5)',
+                '--btn-hover-bg': 'rgba(139, 92, 246, 0.4)', '--card-bg': 'rgba(255, 255, 255, 0.05)'
             },
             light: {
-                '--p-primary': '#7C3AED',
-                '--p-primary-hover': '#6D28D9',
-                '--p-primary-light': '#5B21B6',
-                '--p-primary-dark': '#4C1D95',
-                '--p-highlight': '#A78BFA',
-                '--p-surface': '#FFFFFF',
-                '--p-surface-hover': '#F3E8FF',
-                '--p-background': '#FEF7FF',
-                '--p-background-alt': '#F3E8FF',
-                '--p-text': '#1E1B4B',
-                '--p-text-muted': '#5B21B6',
-                '--p-text-dim': '#7C3AED',
-                '--p-border': '#DDD6FE',
-                '--p-border-light': '#C4B5FD',
-                '--p-shadow': '0 4px 6px -1px rgba(124, 58, 237, 0.1)',
-                '--p-glow': '0 0 15px rgba(124, 58, 237, 0.2)',
-                '--btn-bg': 'rgba(124, 58, 237, 0.1)',
-                '--btn-border': 'rgba(124, 58, 237, 0.3)',
-                '--btn-hover-bg': 'rgba(124, 58, 237, 0.2)',
-                '--card-bg': 'rgba(255, 255, 255, 0.8)'
+                '--p-primary': '#7C3AED', '--p-primary-hover': '#6D28D9',
+                '--p-primary-light': '#5B21B6', '--p-primary-dark': '#4C1D95',
+                '--p-highlight': '#A78BFA', '--p-surface': '#FFFFFF',
+                '--p-surface-hover': '#F3E8FF', '--p-background': '#FEF7FF',
+                '--p-background-alt': '#F3E8FF', '--p-text': '#1E1B4B',
+                '--p-text-muted': '#5B21B6', '--p-text-dim': '#7C3AED',
+                '--p-border': '#DDD6FE', '--p-border-light': '#C4B5FD',
+                '--btn-bg': 'rgba(124, 58, 237, 0.1)', '--btn-border': 'rgba(124, 58, 237, 0.3)',
+                '--btn-hover-bg': 'rgba(124, 58, 237, 0.2)', '--card-bg': 'rgba(255, 255, 255, 0.8)'
             },
             p3: {
-                '--p-primary': '#1a3a5c',
-                '--p-primary-hover': '#254a74',
-                '--p-primary-light': '#4a8bc2',
-                '--p-primary-dark': '#0d1f33',
-                '--p-highlight': '#5ba4e6',
-                '--p-surface': '#0d1f33',
-                '--p-surface-hover': '#1a3050',
-                '--p-background': '#0a1628',
-                '--p-background-alt': '#061020',
-                '--p-text': '#e8f0f8',
-                '--p-text-muted': '#8ab4d8',
-                '--p-text-dim': '#5a8ab5',
-                '--p-border': '#1a3a5c',
-                '--p-border-light': '#254a74',
-                '--p-shadow': '0 4px 6px -1px rgba(26, 58, 92, 0.3)',
-                '--p-glow': '0 0 20px rgba(74, 139, 194, 0.4)',
-                '--btn-bg': 'rgba(26, 58, 92, 0.3)',
-                '--btn-border': 'rgba(74, 139, 194, 0.4)',
-                '--btn-hover-bg': 'rgba(74, 139, 194, 0.3)',
-                '--card-bg': 'rgba(26, 58, 92, 0.2)'
+                '--p-primary': '#1B2838', '--p-primary-hover': '#2D4A6E',
+                '--p-primary-light': '#4A90D9', '--p-primary-dark': '#0F1923',
+                '--p-highlight': '#6BB5FF', '--p-surface': '#152230',
+                '--p-surface-hover': '#1E3348', '--p-background': '#0D1520',
+                '--p-background-alt': '#0A1018', '--p-text': '#E8F0F8',
+                '--p-text-muted': '#8CB4D8', '--p-text-dim': '#5A8AB5',
+                '--p-border': '#1E3348', '--p-border-light': '#2D4A6E',
+                '--btn-bg': 'rgba(74, 144, 217, 0.15)', '--btn-border': 'rgba(74, 144, 217, 0.4)',
+                '--btn-hover-bg': 'rgba(74, 144, 217, 0.3)', '--card-bg': 'rgba(30, 51, 72, 0.3)'
             }
         };
 
         function setTheme(theme) {
             const root = document.documentElement;
-            const themeColors = themes[theme];
-            
-            Object.entries(themeColors).forEach(([property, value]) => {
-                root.style.setProperty(property, value);
-            });
-            
+            Object.entries(themes[theme]).forEach(([prop, val]) => root.style.setProperty(prop, val));
             root.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
-            
-            // Update active button
-            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(`${theme}-theme-btn`).classList.add('active');
         }
 
-        // Language System
+        // ==================== LANGUAGE ====================
         let currentLanguage = 'russian';
-
         function toggleLanguage() {
-            const russianElements = document.querySelectorAll('.russian');
-            const englishElements = document.querySelectorAll('.english');
-            const langText = document.querySelector('.lang-text');
-            
+            const russian = document.querySelectorAll('.russian');
+            const english = document.querySelectorAll('.english');
             if (currentLanguage === 'russian') {
-                russianElements.forEach(el => el.style.display = 'none');
-                englishElements.forEach(el => el.style.display = 'block');
-                langText.textContent = 'Русский';
+                russian.forEach(e => e.style.display = 'none');
+                english.forEach(e => e.style.display = 'block');
+                document.querySelector('.lang-text').textContent = 'Русский';
                 currentLanguage = 'english';
             } else {
-                russianElements.forEach(el => el.style.display = 'block');
-                englishElements.forEach(el => el.style.display = 'none');
-                langText.textContent = 'English';
+                russian.forEach(e => e.style.display = 'block');
+                english.forEach(e => e.style.display = 'none');
+                document.querySelector('.lang-text').textContent = 'English';
                 currentLanguage = 'russian';
             }
-            
             localStorage.setItem('language', currentLanguage);
         }
 
-        // Chat System
-        let chatOpen = false;
-        let messages = JSON.parse(localStorage.getItem('chat_messages') || '[]');
-        let userNickname = localStorage.getItem('chat_nickname') || '';
-        let userAvatar = localStorage.getItem('chat_avatar') || '';
+        // ==================== ADMIN SYSTEM ====================
+        let isAdmin = localStorage.getItem('isAdmin') === 'true';
+        const ADMIN_PASSWORD = 'persona3reload'; 
 
-        function toggleChat() {
-            chatOpen = !chatOpen;
-            document.getElementById('chat-modal').classList.toggle('open', chatOpen);
-            if (chatOpen) {
-                document.getElementById('nickname-input').value = userNickname;
-                updateAvatarDisplay();
-                renderMessages();
-            }
+        function toggleAdminModal() {
+            document.getElementById('admin-modal').classList.toggle('open');
+            document.getElementById('admin-password').value = '';
+            document.getElementById('admin-status').textContent = '';
         }
 
-        function changeAvatar() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        userAvatar = event.target.result;
-                        localStorage.setItem('chat_avatar', userAvatar);
-                        updateAvatarDisplay();
-                    };
-                    reader.readAsDataURL(file);
-                }
-            };
-            input.click();
-        }
-
-        function updateAvatarDisplay() {
-            const avatarEl = document.getElementById('user-avatar');
-            if (userAvatar) {
-                avatarEl.innerHTML = `<img src="${userAvatar}" alt="Avatar">`;
+        function adminLogin() {
+            const password = document.getElementById('admin-password').value;
+            if (password === ADMIN_PASSWORD) {
+                isAdmin = true;
+                localStorage.setItem('isAdmin', 'true');
+                document.getElementById('admin-status').textContent = '✅ Admin mode ON';
+                document.getElementById('admin-status').style.color = 'lightgreen';
+                setTimeout(() => toggleAdminModal(), 1000);
             } else {
-                avatarEl.innerHTML = '<i class="fas fa-user"></i>';
+                document.getElementById('admin-status').textContent = '❌ Wrong password';
+                document.getElementById('admin-status').style.color = '#FF3333';
             }
         }
 
-        function handleChatKey(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
+        function adminLogout() {
+            isAdmin = false;
+            localStorage.setItem('isAdmin', 'false');
+        }
+
+        // ==================== P5 CHAT ====================
+        let p5ChatOpen = false;
+        let p5Messages = JSON.parse(localStorage.getItem('p5_messages') || '[]');
+        let p5Nickname = localStorage.getItem('p5_nickname') || '';
+
+        function toggleP5Chat() {
+            p5ChatOpen = !p5ChatOpen;
+            document.getElementById('p5-chat-modal').classList.toggle('open', p5ChatOpen);
+            if (p5ChatOpen) {
+                document.getElementById('p5-nickname-input').value = p5Nickname;
+                renderP5Messages();
+                checkNewMessages();
             }
         }
 
-        function sendMessage() {
-            const input = document.getElementById('chat-input');
+        function saveP5Nickname() {
+            p5Nickname = document.getElementById('p5-nickname-input').value.trim() || 'ANONYMOUS';
+            localStorage.setItem('p5_nickname', p5Nickname);
+        }
+
+        function handleP5ChatKey(event) {
+            if (event.key === 'Enter') sendP5Message();
+        }
+
+        function sendP5Message() {
+            const input = document.getElementById('p5-chat-input');
             const message = input.value.trim();
-            const nickname = document.getElementById('nickname-input').value.trim() || 'Anonymous';
-            
             if (!message) return;
             
-            userNickname = nickname;
-            localStorage.setItem('chat_nickname', userNickname);
+            saveP5Nickname();
             
             const msgObj = {
                 id: Date.now(),
-                nickname: userNickname,
-                avatar: userAvatar,
+                nickname: p5Nickname,
                 message: message,
                 timestamp: new Date().toISOString(),
-                isOwner: true
+                isOwner: true,
+                read: isAdmin
             };
             
-            messages.push(msgObj);
-            localStorage.setItem('chat_messages', JSON.stringify(messages));
-            
+            p5Messages.push(msgObj);
+            localStorage.setItem('p5_messages', JSON.stringify(p5Messages));
             input.value = '';
-            renderMessages();
+            renderP5Messages();
             
-            // Auto-reply after 1 second
-            setTimeout(() => {
-                const reply = {
-                    id: Date.now() + 1,
-                    nickname: 'OnelifeOnedeath',
-                    avatar: '',
-                    message: getAutoReply(),
-                    timestamp: new Date().toISOString(),
-                    isOwner: false
-                };
-                messages.push(reply);
-                localStorage.setItem('chat_messages', JSON.stringify(messages));
-                renderMessages();
-            }, 1000);
+            // Notify admin
+            if (!isAdmin) {
+                notifyOwner();
+            }
         }
 
-        function getAutoReply() {
-            const replies = [
-                "Thanks for reaching out! I'll get back to you soon.",
-                "Interesting! Tell me more.",
-                "I appreciate your message. Let's connect!",
-                "Great to hear from you! What's on your mind?",
-                "Noted! I'll review this and respond properly."
-            ];
-            return replies[Math.floor(Math.random() * replies.length)];
+        function sendP5Reply() {
+            if (!isAdmin) return;
+            
+            const input = document.getElementById('p5-chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            const msgObj = {
+                id: Date.now(),
+                nickname: 'ONELIFEONEDEATH',
+                message: message,
+                timestamp: new Date().toISOString(),
+                isOwner: false,
+                isReply: true
+            };
+            
+            p5Messages.push(msgObj);
+            localStorage.setItem('p5_messages', JSON.stringify(p5Messages));
+            input.value = '';
+            renderP5Messages();
         }
 
-        function renderMessages() {
-            const container = document.getElementById('chat-messages');
-            container.innerHTML = messages.map(msg => `
-                <div class="chat-message ${msg.isOwner ? 'own' : ''}">
-                    <div class="chat-message-avatar">
-                        ${msg.avatar ? `<img src="${msg.avatar}" alt="">` : 
-                          (msg.isOwner ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>')}
+        function renderP5Messages() {
+            const container = document.getElementById('p5-chat-messages');
+            container.innerHTML = p5Messages.map(msg => `
+                <div class="p5-message ${msg.isOwner ? 'own' : ''}">
+                    <div class="p5-message-avatar">
+                        ${msg.isOwner ? (p5Nickname.charAt(0).toUpperCase()) : '👤'}
                     </div>
-                    <div class="chat-message-bubble">
-                        <strong style="color: var(--p-primary-light);">${escapeHtml(msg.nickname)}</strong>
-                        <div>${escapeHtml(msg.message)}</div>
+                    <div class="p5-message-content">
+                        <div class="p5-message-nickname">${escapeHtml(msg.nickname)}</div>
+                        <div class="p5-message-bubble">${escapeHtml(msg.message)}</div>
                     </div>
                 </div>
             `).join('');
             container.scrollTop = container.scrollHeight;
+        }
+
+        function checkNewMessages() {
+            const unread = p5Messages.filter(m => !m.isOwner && !m.read).length;
+            if (unread > 0 && isAdmin) {
+                // Visual notification
+                document.querySelector('.p5-chat-button').style.animation = 'pulse-glow 0.5s infinite';
+            } else {
+                document.querySelector('.p5-chat-button').style.animation = 'pulse-glow 2s infinite';
+            }
+        }
+
+        function notifyOwner() {
+            // In real implementation, this would send a notification
+            console.log('New message! Owner needs to check.');
         }
 
         function escapeHtml(text) {
@@ -1332,7 +1384,7 @@
             return div.innerHTML;
         }
 
-        // Brainfuck Interpreter
+        // ==================== BRAINFUCK ====================
         class SimpleBrainfuck {
             constructor() {
                 this.tape = new Array(30).fill(0);
@@ -1343,7 +1395,6 @@
                 this.stats = { '>':0, '<':0, '+':0, '-':0, '.':0, ',':0, '[':0, ']':0 };
                 this.bracketMap = {};
             }
-            
             loadCode(code) {
                 this.code = code;
                 this.output = '';
@@ -1353,7 +1404,6 @@
                 this.stats = { '>':0, '<':0, '+':0, '-':0, '.':0, ',':0, '[':0, ']':0 };
                 this.buildBracketMap();
             }
-            
             buildBracketMap() {
                 let stack = [];
                 this.bracketMap = {};
@@ -1366,14 +1416,11 @@
                         this.bracketMap[i] = start;
                     }
                 }
-                if (stack.length > 0) throw new Error("Unmatched [");
             }
-            
             step() {
                 if (this.ip >= this.code.length) return null;
                 let cmd = this.code[this.ip];
                 if (cmd in this.stats) this.stats[cmd]++;
-                
                 switch(cmd) {
                     case '>': this.pointer++; break;
                     case '<': this.pointer--; break;
@@ -1383,78 +1430,40 @@
                     case '[': if (this.tape[this.pointer] === 0) this.ip = this.bracketMap[this.ip]; break;
                     case ']': if (this.tape[this.pointer] !== 0) this.ip = this.bracketMap[this.ip]; break;
                 }
-                
                 this.ip++;
-                return { tape: [...this.tape], pointer: this.pointer, output: this.output };
+                return true;
             }
         }
 
         let bf = new SimpleBrainfuck();
 
-        function loadExample(type) {
-            const examples = {
-                hello: '++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.',
-                counter: '++>+++[<+>-]<.'
-            };
-            document.getElementById('bf-code').value = examples[type];
-            resetBrainfuck();
-        }
-
-        function runBrainfuck() {
-            resetBrainfuck();
-            executeSteps();
-        }
-
         function resetBrainfuck() {
-            const code = document.getElementById('bf-code').value;
-            bf.loadCode(code);
+            bf.loadCode(document.getElementById('bf-code').value);
             updateDisplay();
         }
-
-        function stepBrainfuck() {
-            if (bf.step()) updateDisplay();
-        }
-
-        function executeSteps() {
-            if (bf.step()) {
-                updateDisplay();
-                setTimeout(executeSteps, 100);
-            }
-        }
-
+        function runBrainfuck() { resetBrainfuck(); executeSteps(); }
+        function stepBrainfuck() { if (bf.step()) updateDisplay(); }
+        function executeSteps() { if (bf.step()) { updateDisplay(); setTimeout(executeSteps, 100); } }
         function updateDisplay() {
             document.getElementById('bf-output').textContent = bf.output;
-            
-            const tapeElement = document.getElementById('bf-tape');
-            tapeElement.innerHTML = '';
-            for (let i = 0; i < Math.min(15, bf.tape.length); i++) {
+            const tape = document.getElementById('bf-tape');
+            tape.innerHTML = '';
+            for (let i = 0; i < 15; i++) {
                 const cell = document.createElement('div');
                 cell.className = `tape-cell ${i === bf.pointer ? 'active' : ''}`;
                 cell.textContent = bf.tape[i];
-                tapeElement.appendChild(cell);
+                tape.appendChild(cell);
             }
-            
-            const stats = bf.stats;
-            const total = Object.values(stats).reduce((a, b) => a + b, 0);
-            const statsStr = Object.entries(stats)
-                .filter(([_, count]) => count > 0)
-                .map(([cmd, count]) => `${cmd}:${count}`)
-                .join(' | ');
-            document.getElementById('bf-stats').textContent = `Total: ${total} | ${statsStr}`;
+            const total = Object.values(bf.stats).reduce((a,b) => a+b, 0);
+            document.getElementById('bf-stats').textContent = `Total: ${total}`;
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', () => {
             resetBrainfuck();
-            
-            const savedTheme = localStorage.getItem('theme') || 'default';
-            setTheme(savedTheme);
-            
-            const savedLanguage = localStorage.getItem('language') || 'russian';
-            if (savedLanguage === 'english') toggleLanguage();
-            
-            if (userAvatar) updateAvatarDisplay();
-            if (userNickname) document.getElementById('nickname-input').value = userNickname;
+            setTheme(localStorage.getItem('theme') || 'default');
+            if (localStorage.getItem('language') === 'english') toggleLanguage();
+            if (p5Nickname) document.getElementById('p5-nickname-input').value = p5Nickname;
         });
     </script>
 </body>
