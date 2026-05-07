@@ -7,11 +7,8 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Share+Tech+Mono&family=Luckiest+Guy&display=swap" rel="stylesheet">
-    
-    <!-- FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-    
     <style>
         :root {
             --p-primary: #8B5CF6; --p-primary-hover: #7C3AED; --p-primary-light: #A78BFA;
@@ -44,14 +41,14 @@
             --card-bg: rgba(255,255,255,0.9);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', 'Segoe UI', sans-serif; background: var(--p-background); color: var(--p-text); line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
 
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         @keyframes makoto-swing { 0%,100% { transform: translateY(-50%) rotate(180deg) translateX(0px); } 25% { transform: translateY(-50%) rotate(180deg) translateX(-6px); } 50% { transform: translateY(-50%) rotate(182deg) translateX(-3px); } 75% { transform: translateY(-50%) rotate(180deg) translateX(6px); } }
-        @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 10px var(--p-highlight); } 50% { box-shadow: 0 0 25px var(--p-highlight), 0 0 40px var(--p-primary-light); } }
-        @keyframes caustic-shift { 0% { background-position: 0% 0%; opacity: 0.3; } 50% { opacity: 0.5; } 100% { background-position: 100% 100%; opacity: 0.3; } }
+        @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 10px var(--p-highlight); } 50% { box-shadow: 0 0 25px var(--p-highlight); } }
+        @keyframes caustic-shift { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
         @keyframes cursor-twitch { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
         @keyframes menu-item-appear { from { opacity: 0; transform: translateY(12px) skewX(-5deg); } to { opacity: 1; transform: translateY(0) skewX(-5deg); } }
         @keyframes msg-pop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -70,14 +67,25 @@
 
         .p3r-menu { display: none; }
         [data-theme="p3"] .p3r-menu { display: flex; position: absolute; right: 8%; top: 50%; transform: translateY(-50%); flex-direction: column; gap: clamp(0.25rem, 1vh, 0.8rem); z-index: 3; width: clamp(190px, 28vw, 420px); }
-        .p3r-menu-item { display: none; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(1rem, 3vw, 2.8rem); color: rgba(74,144,217,0.7); cursor: pointer; letter-spacing: 2px; text-transform: uppercase; transform: skewX(-5deg); transition: all 0.25s ease; text-shadow: 0 0 12px rgba(74,144,217,0.2); animation: menu-item-appear 0.4s ease forwards; opacity: 0; }
+        .p3r-menu-item { display: none; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(1rem, 3vw, 2.8rem); color: rgba(74,144,217,0.7); cursor: pointer; letter-spacing: 2px; text-transform: uppercase; transform: skewX(-5deg); transition: all 0.25s ease; text-shadow: 0 0 12px rgba(74,144,217,0.2); animation: menu-item-appear 0.4s ease forwards; opacity: 0; position: relative; }
         [data-theme="p3"] .p3r-menu-item { display: block; }
         .p3r-menu-item:nth-child(1){animation-delay:0.03s}.p3r-menu-item:nth-child(2){animation-delay:0.07s}.p3r-menu-item:nth-child(3){animation-delay:0.11s}.p3r-menu-item:nth-child(4){animation-delay:0.15s}.p3r-menu-item:nth-child(5){animation-delay:0.19s}.p3r-menu-item:nth-child(6){animation-delay:0.23s}.p3r-menu-item:nth-child(7){animation-delay:0.27s}.p3r-menu-item:nth-child(8){animation-delay:0.31s}.p3r-menu-item:nth-child(9){animation-delay:0.35s}
         .p3r-menu-item:hover,.p3r-menu-item.selected{color:#FFF!important;text-shadow:0 0 30px rgba(74,144,217,0.8),0 0 60px rgba(107,181,255,0.4)!important;transform:skewX(-5deg) scale(1.07)!important}
 
+        /* CURSOR - ПОЛНОСТЬЮ ПЕРЕПИСАН */
         .p3r-cursor { display: none; }
-        [data-theme="p3"] .p3r-cursor { display: block; position: absolute; right: calc(8% + clamp(190px, 28vw, 420px) + 25px); width: 0; height: 0; border-left: 16px solid #E60012; border-top: 9px solid transparent; border-bottom: 9px solid transparent; z-index: 4; pointer-events: none; animation: cursor-twitch 1.2s ease-in-out infinite; transition: top 0.15s ease; }
-        .p3r-cursor::after { content: ''; position: absolute; left: -24px; top: -12px; width: 0; height: 0; border-left: 20px solid rgba(230,0,18,0.25); border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
+        [data-theme="p3"] .p3r-cursor { 
+            display: block; position: absolute; 
+            right: calc(8% + clamp(190px, 28vw, 420px) + 30px); 
+            width: 0; height: 0; 
+            border-left: 18px solid #E60012; 
+            border-top: 10px solid transparent; 
+            border-bottom: 10px solid transparent; 
+            z-index: 4; pointer-events: none; 
+            animation: cursor-twitch 1.2s ease-in-out infinite; 
+            transition: top 0.15s ease; 
+        }
+        .p3r-cursor::after { content: ''; position: absolute; left: -26px; top: -13px; width: 0; height: 0; border-left: 22px solid rgba(230,0,18,0.25); border-top: 13px solid transparent; border-bottom: 13px solid transparent; }
 
         .p3r-info { display: none; }
         [data-theme="p3"] .p3r-info { display: flex; position: absolute; left: 5%; bottom: 12%; z-index: 3; flex-direction: column; gap: 0; pointer-events: none; }
@@ -90,8 +98,8 @@
 
         .p3r-tooltip { display: none; }
         [data-theme="p3"] .p3r-tooltip { display: block; position: absolute; right: 5%; bottom: 8%; z-index: 3; color: #FFF; text-align: right; pointer-events: none; }
-        .p3r-tooltip-title { font-size: clamp(0.8rem, 1.6vw, 1.2rem); font-weight: 800; text-shadow: 0 0 12px rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 2px; }
-        .p3r-tooltip-sub { font-size: clamp(0.6rem, 1.1vw, 0.9rem); font-weight: 600; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end; }
+        .p3r-tooltip-title { font-size: clamp(0.8rem, 1.6vw, 1.2rem); font-weight: 800; }
+        .p3r-tooltip-sub { font-size: clamp(0.6rem, 1.1vw, 0.9rem); color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end; }
         .p3r-tooltip-line { flex: 1; height: 1px; background: rgba(255,255,255,0.3); max-width: 70px; }
 
         .p3r-confetti { display: none; }
@@ -105,12 +113,6 @@
         .p3r-modal-close { position: absolute; top: 0.5rem; right: 0.5rem; background: none; border: 2px solid var(--p-primary-light); color: var(--p-text); font-size: 1.2rem; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
         .persona-card { text-align: center; padding: 1rem; }
         .persona-card img { width: 120px; height: 120px; object-fit: contain; margin-bottom: 1rem; background: rgba(0,0,0,0.3); border-radius: 1rem; padding: 0.5rem; }
-        .social-links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.75rem; }
-        .social-link-card { background: var(--btn-bg); border: 1px solid var(--btn-border); border-radius: 0.75rem; padding: 0.75rem; text-align: center; color: var(--btn-text); text-decoration: none; }
-        .social-link-card:hover { background: var(--btn-hover-bg); border-color: var(--p-primary-light); }
-        .calendar-display { text-align: center; padding: 1rem; }
-        .calendar-display .date { font-size: 2.5rem; font-weight: 900; color: var(--p-primary-light); }
-        .calendar-display .time { font-size: 1.5rem; font-weight: 700; color: var(--p-text); }
 
         [data-theme="p3"] .anime-gif-left, [data-theme="p3"] .anime-gif-right, [data-theme="p3"] .brand-header { display: none; }
         .anime-gif-left, .anime-gif-right { position: absolute; border-radius: 50%; overflow: hidden; border: 3px solid var(--p-primary-light); z-index: 1; }
@@ -118,16 +120,16 @@
         .anime-gif-right { top: 2rem; right: 2rem; width: 160px; height: 160px; opacity: 0.9; animation: float 7s ease-in-out infinite reverse; }
         .anime-gif-left img, .anime-gif-right img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* P5 CHAT - УВЕЛИЧЕННЫЙ */
-        .p5-chat-fab { position: fixed; top: 5rem; left: 1rem; z-index: 999; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #E60012, #B8000F); border: 3px solid #FF4444; color: white; font-size: 1.2rem; cursor: pointer; box-shadow: 0 0 25px rgba(230,0,18,0.5); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-        .p5-chat-fab:hover { transform: scale(1.15); box-shadow: 0 0 40px rgba(230,0,18,0.7); }
-        .p5-chat-fab .badge { position: absolute; top: -5px; right: -5px; background: #FFD700; color: #000; border-radius: 50%; min-width: 20px; height: 20px; font-size: 0.6rem; font-weight: 900; display: none; align-items: center; justify-content: center; padding: 0 3px; }
+        /* P5 CHAT - ЕЩЁ БОЛЬШЕ */
+        .p5-chat-fab { position: fixed; top: 5rem; left: 1rem; z-index: 999; width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, #E60012, #B8000F); border: 3px solid #FF4444; color: white; font-size: 1.3rem; cursor: pointer; box-shadow: 0 0 30px rgba(230,0,18,0.5); display: flex; align-items: center; justify-content: center; }
+        .p5-chat-fab:hover { transform: scale(1.15); }
+        .p5-chat-fab .badge { position: absolute; top: -5px; right: -5px; background: #FFD700; color: #000; border-radius: 50%; min-width: 22px; height: 22px; font-size: 0.7rem; font-weight: 900; display: none; align-items: center; justify-content: center; }
         .p5-chat-fab .badge.show { display: flex; }
 
         .p5-chat-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; display: none; align-items: center; justify-content: center; }
         .p5-chat-overlay.open { display: flex; }
 
-        .p5-phone { width: 380px; height: 600px; position: relative; overflow: visible; }
+        .p5-phone { width: 420px; height: 650px; position: relative; overflow: visible; }
         .p5-phone-svg { position: absolute; width: 100%; height: 100%; }
         .p5-phone-svg polygon { fill: #1a1a1a; stroke: #333; stroke-width: 2; }
         .p5-screen-border-svg { position: absolute; width: 100%; height: 100%; }
@@ -135,63 +137,62 @@
         .p5-screen-svg { position: absolute; width: 100%; height: 100%; }
         .p5-screen-svg polygon { fill: #0a0a0a; stroke: #222; stroke-width: 1; }
 
-        .p5-screen { position: absolute; top: 24px; left: 38px; right: 40px; bottom: 20px; background: #0a0a0a; overflow-y: auto; overflow-x: hidden; padding: 12px 8px; display: flex; flex-direction: column; }
+        .p5-screen { position: absolute; top: 26px; left: 42px; right: 44px; bottom: 22px; background: #0a0a0a; overflow-y: auto; overflow-x: hidden; padding: 14px 10px; display: flex; flex-direction: column; }
         .p5-screen::-webkit-scrollbar { width: 2px; }
         .p5-screen::-webkit-scrollbar-thumb { background: #E60012; }
 
-        .p5-sns { text-align: center; padding: 5px 0 10px; position: relative; flex-shrink: 0; }
-        .p5-sns-under { font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; color: #333; position: absolute; left: 50%; transform: translateX(-50%); top: 3px; }
-        .p5-sns-main { font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; color: white; position: relative; z-index: 1; }
+        .p5-sns { text-align: center; padding: 5px 0 12px; position: relative; flex-shrink: 0; }
+        .p5-sns-under { font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: #333; position: absolute; left: 50%; transform: translateX(-50%); top: 3px; }
+        .p5-sns-main { font-family: 'Luckiest Guy', cursive; font-size: 2rem; color: white; position: relative; z-index: 1; }
 
-        .p5-zig-shadow, .p5-zig { position: absolute; width: 100%; height: 80px; top: 50px; left: 0; pointer-events: none; }
+        .p5-zig-shadow, .p5-zig { position: absolute; width: 100%; height: 90px; top: 55px; left: 0; pointer-events: none; }
         .p5-zig-shadow polygon { fill: rgba(230,0,18,0.2); }
         .p5-zig polygon { fill: none; stroke: #E60012; stroke-width: 2; }
 
-        .p5-contacts { display: flex; flex-direction: column; gap: 6px; flex: 1; overflow-y: auto; position: relative; z-index: 2; margin-top: 35px; }
-        .p5-contact-item { position: relative; height: 65px; cursor: pointer; transition: transform 0.2s; }
+        .p5-contacts { display: flex; flex-direction: column; gap: 8px; flex: 1; overflow-y: auto; position: relative; z-index: 2; margin-top: 40px; }
+        .p5-contact-item { position: relative; height: 70px; cursor: pointer; }
         .p5-contact-item:hover { transform: translateX(3px); }
         .p5-contact-border, .p5-contact-outline, .p5-contact-panel { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
         .p5-contact-border polygon { fill: #E60012; }
         .p5-contact-outline polygon { fill: #0a0a0a; }
         .p5-contact-panel polygon { fill: #1a1a1a; stroke: #333; stroke-width: 1; }
         .p5-contact-panel.active polygon { fill: #E60012; }
-        .p5-contact-avatar { position: absolute; width: 44px; height: 44px; left: 20px; top: 10px; object-fit: cover; clip-path: polygon(0 5%, 100% 0, 95% 100%, 5% 95%); }
-        .p5-contact-text { position: absolute; left: 75px; top: 15px; right: 20px; color: #ccc; font-size: 0.8rem; font-family: 'Share Tech Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transform: skewX(-10deg); }
-        .p5-contact-badge { position: absolute; right: 10px; top: 10px; background: #E60012; color: #FFF; border-radius: 50%; min-width: 20px; height: 20px; font-size: 0.6rem; font-weight: 900; display: flex; align-items: center; justify-content: center; padding: 0 3px; }
+        .p5-contact-avatar { position: absolute; width: 48px; height: 48px; left: 22px; top: 11px; object-fit: cover; clip-path: polygon(0 5%, 100% 0, 95% 100%, 5% 95%); }
+        .p5-contact-text { position: absolute; left: 82px; top: 17px; right: 22px; color: #ccc; font-size: 0.85rem; font-family: 'Share Tech Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transform: skewX(-10deg); }
 
         .p5-chat-view { display: none; flex-direction: column; height: 100%; flex: 1; }
         .p5-chat-view.active { display: flex; }
-        .p5-chat-header { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-bottom: 2px solid #E60012; flex-shrink: 0; }
-        .p5-chat-back { background: none; border: 2px solid #E60012; color: #E60012; padding: 3px 8px; cursor: pointer; font-weight: bold; font-family: 'Luckiest Guy', cursive; font-size: 0.7rem; }
-        .p5-chat-messages { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+        .p5-chat-header { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-bottom: 2px solid #E60012; flex-shrink: 0; }
+        .p5-chat-back { background: none; border: 2px solid #E60012; color: #E60012; padding: 4px 10px; cursor: pointer; font-weight: bold; font-family: 'Luckiest Guy', cursive; font-size: 0.75rem; }
+        .p5-chat-messages { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
         
-        .p5-msg { display: flex; gap: 8px; animation: msg-pop 0.3s ease; align-items: flex-start; }
+        .p5-msg { display: flex; gap: 10px; animation: msg-pop 0.3s ease; align-items: flex-start; }
         .p5-msg.own { flex-direction: row-reverse; }
-        .p5-msg-avatar { width: 32px; height: 32px; flex-shrink: 0; object-fit: cover; clip-path: polygon(5% 0, 100% 5%, 95% 100%, 0% 95%); }
-        .p5-msg-bubble-wrap { position: relative; max-width: 75%; }
-        .p5-msg-bubble { padding: 10px 14px; font-size: 0.8rem; line-height: 1.5; font-family: 'Share Tech Mono', monospace; word-break: break-word; position: relative; clip-path: polygon(0% 8%, 8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%); }
-        .p5-msg-bubble img, .p5-msg-bubble video { max-width: 240px; border-radius: 6px; margin: 4px 0; }
-        .p5-msg-bubble audio { max-width: 240px; margin: 4px 0; }
+        .p5-msg-avatar { width: 36px; height: 36px; flex-shrink: 0; object-fit: cover; clip-path: polygon(5% 0, 100% 5%, 95% 100%, 0% 95%); }
+        .p5-msg-bubble-wrap { position: relative; max-width: 78%; }
+        .p5-msg-bubble { padding: 12px 16px; font-size: 0.85rem; line-height: 1.5; font-family: 'Share Tech Mono', monospace; word-break: break-word; clip-path: polygon(0% 8%, 8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%); }
+        .p5-msg-bubble img, .p5-msg-bubble video { max-width: 260px; border-radius: 6px; margin: 4px 0; }
+        .p5-msg-bubble audio { max-width: 260px; margin: 4px 0; }
         .p5-msg.received .p5-msg-bubble { background: #1a1a1a; color: #ddd; border: 1px solid #333; }
         .p5-msg.own .p5-msg-bubble { background: #E60012; color: #fff; border: 1px solid #FF4444; }
-        .p5-msg-zigzag { position: absolute; top: -6px; width: 16px; height: 10px; clip-path: polygon(0% 100%, 25% 0%, 50% 100%, 75% 0%, 100% 100%); }
-        .p5-msg.received .p5-msg-zigzag { left: 12px; background: #333; }
-        .p5-msg.own .p5-msg-zigzag { right: 12px; left: auto; background: #E60012; }
+        .p5-msg-zigzag { position: absolute; top: -7px; width: 18px; height: 11px; clip-path: polygon(0% 100%, 25% 0%, 50% 100%, 75% 0%, 100% 100%); }
+        .p5-msg.received .p5-msg-zigzag { left: 14px; background: #333; }
+        .p5-msg.own .p5-msg-zigzag { right: 14px; background: #E60012; }
 
-        .p5-chat-toolbar { display: flex; gap: 3px; padding: 5px 8px; background: #0A0A0A; border-top: 1px solid #222; }
-        .p5-toolbar-btn { background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 6px 10px; cursor: pointer; font-size: 0.9rem; border-radius: 3px; transition: all 0.2s; }
+        .p5-chat-toolbar { display: flex; gap: 4px; padding: 6px 10px; background: #0A0A0A; border-top: 1px solid #222; }
+        .p5-toolbar-btn { background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 7px 12px; cursor: pointer; font-size: 1rem; border-radius: 4px; }
         .p5-toolbar-btn:hover { background: #333; border-color: #E60012; color: #E60012; }
 
-        .p5-chat-input-area { display: flex; gap: 4px; padding: 6px; background: #0A0A0A; border-top: 2px solid #222; flex-shrink: 0; }
-        .p5-chat-input { flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 8px 12px; font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; outline: none; clip-path: polygon(2% 0, 100% 0, 98% 100%, 0 100%); }
+        .p5-chat-input-area { display: flex; gap: 5px; padding: 8px; background: #0A0A0A; border-top: 2px solid #222; flex-shrink: 0; }
+        .p5-chat-input { flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 10px 14px; font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; outline: none; clip-path: polygon(2% 0, 100% 0, 98% 100%, 0 100%); }
         .p5-chat-input:focus { border-color: #E60012; }
-        .p5-chat-send { background: #E60012; border: 2px solid #FF4444; color: white; padding: 8px 14px; cursor: pointer; font-weight: bold; font-family: 'Luckiest Guy', cursive; font-size: 0.75rem; letter-spacing: 1px; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
+        .p5-chat-send { background: #E60012; border: 2px solid #FF4444; color: white; padding: 10px 16px; cursor: pointer; font-weight: bold; font-family: 'Luckiest Guy', cursive; font-size: 0.8rem; letter-spacing: 1px; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
         .p5-chat-send:hover { background: #FF2222; }
 
-        .p5-close-btn { position: absolute; top: -35px; right: 5px; background: none; border: 2px solid #E60012; color: #E60012; width: 28px; height: 28px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; z-index: 10; }
+        .p5-close-btn { position: absolute; top: -38px; right: 5px; background: none; border: 2px solid #E60012; color: #E60012; width: 30px; height: 30px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; z-index: 10; }
 
-        .emoji-panel { position: absolute; bottom: 90px; left: 0; right: 0; background: #1a1a1a; border: 2px solid #E60012; border-radius: 8px; padding: 10px; z-index: 100; display: none; flex-wrap: wrap; gap: 5px; max-height: 200px; overflow-y: auto; }
-        .emoji-btn-item { background: none; border: 1px solid #333; color: #fff; padding: 6px 8px; cursor: pointer; font-size: 1.3rem; border-radius: 4px; }
+        .emoji-panel { position: absolute; bottom: 95px; left: 0; right: 0; background: #1a1a1a; border: 2px solid #E60012; border-radius: 8px; padding: 12px; z-index: 100; display: none; flex-wrap: wrap; gap: 6px; max-height: 220px; overflow-y: auto; }
+        .emoji-btn-item { background: none; border: 1px solid #333; color: #fff; padding: 7px 9px; cursor: pointer; font-size: 1.4rem; border-radius: 4px; }
         .emoji-btn-item:hover { background: #333; border-color: #E60012; }
 
         .top-bars { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
@@ -208,7 +209,7 @@
         .social-icon { font-size: 1.75rem; margin-bottom: 0.5rem; }
         .social-card.github .social-icon { color: #6e5494; } .social-card.telegram .social-icon { color: #0088cc; } .social-card.vk .social-icon { color: #0077FF; }
         .social-card.youtube .social-icon { color: #FF0000; } .social-card.steam .social-icon { color: #00adee; } .social-card.discord .social-icon { color: #5865F2; }
-        .social-name { font-weight: 700; font-size: 0.8rem; } .social-handle { font-size: 0.7rem; color: var(--p-text-dim); word-break: break-all; }
+        .social-name { font-weight: 700; font-size: 0.8rem; }
 
         .section-content { padding: 4rem 0; } .section-content:nth-child(odd) { background: var(--p-background-alt); }
         .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 2rem; font-weight: 900; }
@@ -238,28 +239,24 @@
             .social-grid { grid-template-columns: repeat(2, 1fr); } .demo-interface { grid-template-columns: 1fr; }
             [data-theme="p3"] .makoto-container { width: 38%; left: -6%; } [data-theme="p3"] .p3r-menu { right: 3%; width: 50%; }
             [data-theme="p3"] .p3r-menu-item { font-size: clamp(0.6rem, 2vw, 1.1rem); }
-            [data-theme="p3"] .p3r-cursor { border-left-width: 10px; right: calc(3% + 50% + 18px); }
-            .p5-phone { width: 85vw; height: auto; max-height: 80vh; }
+            [data-theme="p3"] .p3r-cursor { border-left-width: 12px; right: calc(3% + 50% + 22px); }
+            .p5-phone { width: 90vw; height: 80vh; max-width: 420px; max-height: 650px; }
         }
         @media (max-width: 480px) { 
-            [data-theme="p3"] .makoto-container { width: 32%; left: -10%; opacity: 0.5; } 
+            .social-grid { grid-template-columns: repeat(2, 1fr); } [data-theme="p3"] .makoto-container { width: 32%; left: -10%; opacity: 0.5; } 
             [data-theme="p3"] .p3r-cursor { display: none; }
-            .p5-phone { width: 95vw; height: 85vh; max-width: 380px; max-height: 600px; }
+            .p5-phone { width: 95vw; height: 85vh; }
             .p5-msg-bubble img, .p5-msg-bubble video { max-width: 180px; }
         }
     </style>
 </head>
 <body>
-    <!-- ЗВУКИ -->
     <audio id="sfx-select" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/splash.wav"></audio>
     <audio id="sfx-move" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/menu1.wav"></audio>
     <audio id="sfx-cancel" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/plum_softening.wav"></audio>
     <audio id="sfx-open" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/bubbles.wav"></audio>
 
-    <!-- MAKOTO -->
     <div class="makoto-container"><div class="makoto-figure"><div class="makoto-silhouette"></div><div class="makoto-outline"></div></div></div>
-    
-    <!-- P3R ЭЛЕМЕНТЫ -->
     <div class="p3r-confetti" id="p3r-confetti"></div>
     <div class="p3r-menu" id="p3r-menu">
         <div class="p3r-menu-item selected" data-idx="0">SKILL</div><div class="p3r-menu-item" data-idx="1">ITEM</div>
@@ -274,7 +271,6 @@
     <div class="p3r-tooltip"><div class="p3r-tooltip-title" id="p3r-tt-title">Use a Skill</div><div class="p3r-tooltip-sub"><span class="p3r-tooltip-line"></span><span id="p3r-tt-sub">Command</span></div></div>
     <div class="p3r-modal" id="p3r-modal"><div class="p3r-modal-content" id="p3r-modal-content"><button class="p3r-modal-close" onclick="closeP3RModal()">✕</button></div></div>
 
-    <!-- ADMIN -->
     <div class="admin-area">
         <button class="admin-btn-small" onclick="toggleAdminModal()">🔒</button>
         <div class="admin-indicator" id="admin-indicator"><span style="width:5px;height:5px;border-radius:50%;background:#0f0;display:inline-block;"></span> ADMIN <button onclick="adminLogout()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:0.5rem;">✕</button></div>
@@ -287,7 +283,6 @@
         <div id="admin-msg" style="margin-top:0.5rem;font-size:0.8rem;"></div>
     </div>
 
-    <!-- TOP BARS -->
     <div class="top-bars">
         <button class="lang-btn" onclick="toggleLang()"><i class="fas fa-language"></i> <span class="lang-text">English</span></button>
         <button class="theme-btn active" onclick="setTheme('default')" id="dt">Default</button>
@@ -295,7 +290,6 @@
         <button class="theme-btn" onclick="setTheme('light')" id="lt"><i class="fas fa-sun"></i> Light</button>
     </div>
 
-    <!-- HERO -->
     <section class="hero">
         <div class="anime-gif-left"><img src="https://99px.ru/sstorage/86/2016/10/image_862910161743391536726.gif" alt="Lain"></div>
         <div class="anime-gif-right"><img src="https://99px.ru/sstorage/86/2020/04/10804200835411467.gif" alt="Lain"></div>
@@ -347,32 +341,30 @@
 
     <footer><div class="container"><div style="font-weight:900;color:var(--p-primary-light);font-size:1.3rem;">OnelifeOnedeath</div><p style="color:var(--p-text-dim);">Универсальный инженер • 2025</p></div></footer>
 
-    <!-- P5 CHAT FAB -->
     <button class="p5-chat-fab" onclick="openP5Chat()" id="p5-fab">💬<span class="badge" id="p5-badge">0</span></button>
 
-    <!-- P5 CHAT OVERLAY -->
     <div class="p5-chat-overlay" id="p5-overlay">
         <div style="position:relative;">
             <button class="p5-close-btn" onclick="closeP5Chat()">✕</button>
             <div class="p5-phone">
-                <svg class="p5-phone-svg"><polygon points="15,0 365,0 350,400 350,600 0,600"/></svg>
-                <svg class="p5-screen-border-svg"><polygon points="25,14 355,14 340,390 340,585 14,585"/></svg>
-                <svg class="p5-screen-svg"><polygon points="32,18 342,22 332,380 332,575 22,572"/></svg>
+                <svg class="p5-phone-svg"><polygon points="18,0 402,0 385,450 385,650 0,650"/></svg>
+                <svg class="p5-screen-border-svg"><polygon points="28,16 392,16 375,435 375,635 16,635"/></svg>
+                <svg class="p5-screen-svg"><polygon points="36,20 380,24 368,425 368,625 24,622"/></svg>
                 <div class="p5-screen" id="p5-screen">
                     <div id="p5-contacts-view" style="display:flex;flex-direction:column;height:100%;">
                         <div class="p5-sns"><span class="p5-sns-under">SNS</span><span class="p5-sns-main"><span style="color:#E60012;">S</span>NS</span></div>
-                        <svg class="p5-zig-shadow"><polygon points="70,70 80,70 60,150 110,210 80,270 50,270 70,205 30,150"/></svg>
-                        <svg class="p5-zig"><polygon points="70,60 80,60 60,140 110,200 80,260 50,260 70,195 30,140"/></svg>
+                        <svg class="p5-zig-shadow"><polygon points="80,80 90,80 70,170 120,240 90,300 60,300 80,235 40,170"/></svg>
+                        <svg class="p5-zig"><polygon points="80,70 90,70 70,160 120,230 90,290 60,290 80,225 40,160"/></svg>
                         <div class="p5-contacts" id="p5-contacts-list"></div>
-                        <div style="padding:5px;text-align:center;flex-shrink:0;border-top:1px solid #222;">
-                            <button class="p5-chat-send" onclick="findUser()" style="font-size:0.6rem;padding:4px 10px;clip-path:none;border-radius:4px;">+ FIND USER</button>
-                            <div id="p5-my-nick" style="color:#666;font-size:0.55rem;margin-top:3px;font-family:'Share Tech Mono',monospace;"></div>
+                        <div style="padding:6px;text-align:center;flex-shrink:0;border-top:1px solid #222;">
+                            <button class="p5-chat-send" onclick="findUser()" style="font-size:0.65rem;padding:5px 12px;clip-path:none;border-radius:4px;">+ FIND USER</button>
+                            <div id="p5-my-nick" style="color:#666;font-size:0.6rem;margin-top:4px;font-family:'Share Tech Mono',monospace;"></div>
                         </div>
                     </div>
                     <div class="p5-chat-view" id="p5-chat-view">
                         <div class="p5-chat-header">
                             <button class="p5-chat-back" onclick="backToContacts()">← BACK</button>
-                            <img id="p5-chat-avatar" src="" style="width:28px;height:28px;object-fit:cover;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);display:none;">
+                            <img id="p5-chat-avatar" src="" style="width:32px;height:32px;object-fit:cover;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);display:none;">
                         </div>
                         <div class="p5-chat-messages" id="p5-chat-messages"></div>
                         <div class="p5-chat-toolbar" id="p5-chat-toolbar">
@@ -395,7 +387,6 @@
     </div>
 
     <script>
-        // ==================== FIREBASE ====================
         const firebaseConfig = {
             apiKey: "AIzaSyAWoeMopkw1Mc9YEO5XhiCsH6oiHwVVDfg",
             authDomain: "persona-chat-63dc3.firebaseapp.com",
@@ -408,10 +399,8 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // ==================== SOUNDS ====================
         function playSfx(id) { const el = document.getElementById('sfx-' + id); if (el) { el.currentTime = 0; el.play().catch(() => {}); } }
 
-        // ==================== ADMIN ====================
         const SK = 'NyxsAvatarsP3R!';
         let isAdmin = false;
         function fp() { const d = navigator.userAgent + navigator.language + screen.width + screen.height + new Date().getTimezoneOffset(); let h = 0; for (let i = 0; i < d.length; i++) { h = ((h << 5) - h) + d.charCodeAt(i); h |= 0; } return Math.abs(h).toString(36); }
@@ -421,7 +410,6 @@
         function adminLogin() { const k = document.getElementById('admin-key').value, msg = document.getElementById('admin-msg'); if (k === SK) { const f = fp(); localStorage.setItem('kh', btoa(k + f)); localStorage.setItem('kf', f); isAdmin = true; updateAdminUI(); msg.textContent = '✅ Welcome!'; msg.style.color = '#0f0'; setTimeout(toggleAdminModal, 800); } else { msg.textContent = '❌ Denied'; msg.style.color = '#f33'; } }
         function adminLogout() { localStorage.removeItem('kh'); localStorage.removeItem('kf'); isAdmin = false; updateAdminUI(); }
 
-        // ==================== THEME ====================
         const themes = {
             default: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#A78BFA','--p-primary-dark':'#5B21B6','--p-highlight':'#C4B5FD','--p-surface':'#1F2937','--p-surface-hover':'#374151','--p-background':'#111827','--p-background-alt':'#0F172A','--p-text':'#F9FAFB','--p-text-muted':'#D1D5DB','--p-text-dim':'#9CA3AF','--p-border':'#374151','--p-border-light':'#4B5563','--btn-bg':'rgba(139,92,246,0.25)','--btn-border':'rgba(139,92,246,0.6)','--btn-hover-bg':'rgba(139,92,246,0.45)','--btn-text':'#FFFFFF','--card-bg':'rgba(255,255,255,0.07)'},
             light: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#6D28D9','--p-primary-dark':'#5B21B6','--p-highlight':'#A78BFA','--p-surface':'#FFFFFF','--p-surface-hover':'#F5F3FF','--p-background':'#FEF7FF','--p-background-alt':'#F3E8FF','--p-text':'#1E1B4B','--p-text-muted':'#4C1D95','--p-text-dim':'#7C3AED','--p-border':'#DDD6FE','--p-border-light':'#C4B5FD','--btn-bg':'rgba(139,92,246,0.12)','--btn-border':'rgba(139,92,246,0.4)','--btn-hover-bg':'rgba(139,92,246,0.25)','--btn-text':'#1E1B4B','--card-bg':'rgba(255,255,255,0.9)'},
@@ -436,16 +424,12 @@
         }
         function genConfetti() { const c = document.getElementById('p3r-confetti'); if (!c) return; c.innerHTML = ''; for (let i = 0; i < 12; i++) { const p = document.createElement('div'); p.className = 'confetti-piece'; p.style.cssText = `left:${Math.random()*90}%;top:${Math.random()*90}%;animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*4}s;`; c.appendChild(p); } }
 
-        // ==================== P3R MENU ====================
+        // P3R MENU - КУРСОР ПОЛНОСТЬЮ ПЕРЕПИСАН
         const p3rData = [
-            { n:'SKILL', t:'Use a Skill', s:'Command', a: ()=>openModal('SKILL','Combat menu') },
-            { n:'ITEM', t:'View Items', s:'Inventory', a: ()=>openModal('ITEMS','Inventory') },
-            { n:'EQUIP', t:'Change Equipment', s:'Equipment', a: ()=>openModal('EQUIP','Equipment') },
-            { n:'PERSONA', t:'View Personas', s:'Persona', a: showPersona },
-            { n:'STATS', t:'View Stats', s:'Status', a: ()=>openModal('STATS','Statistics') },
-            { n:'QUEST', t:'View Requests', s:'Requests', a: ()=>openModal('QUESTS','Requests') },
-            { n:'SOCIAL LINK', t:'Social Links', s:'Community', a: showSocialLinks },
-            { n:'CALENDAR', t:'Calendar', s:'Schedule', a: showCalendar },
+            { n:'SKILL', t:'Use a Skill', s:'Command', a: ()=>openModal('SKILL','Combat menu') }, { n:'ITEM', t:'View Items', s:'Inventory', a: ()=>openModal('ITEMS','Inventory') },
+            { n:'EQUIP', t:'Change Equipment', s:'Equipment', a: ()=>openModal('EQUIP','Equipment') }, { n:'PERSONA', t:'View Personas', s:'Persona', a: showPersona },
+            { n:'STATS', t:'View Stats', s:'Status', a: ()=>openModal('STATS','Statistics') }, { n:'QUEST', t:'View Requests', s:'Requests', a: ()=>openModal('QUESTS','Requests') },
+            { n:'SOCIAL LINK', t:'Social Links', s:'Community', a: showSocialLinks }, { n:'CALENDAR', t:'Calendar', s:'Schedule', a: showCalendar },
             { n:'SYSTEM', t:'Settings', s:'Config', a: showSystem }
         ];
         let p3rIdx = 0;
@@ -460,15 +444,28 @@
                 if (e.key === 'ArrowUp') { e.preventDefault(); selectP3R((p3rIdx - 1 + 9) % 9); playSfx('move'); }
                 if (e.key === 'Enter') { e.preventDefault(); playSfx('select'); if (p3rData[p3rIdx].a) p3rData[p3rIdx].a(); }
             };
-            setTimeout(() => selectP3R(0), 100);
+            selectP3R(0);
         }
         function selectP3R(i) {
             p3rIdx = i;
             document.querySelectorAll('.p3r-menu-item').forEach((el, j) => el.classList.toggle('selected', j === i));
-            const item = document.querySelectorAll('.p3r-menu-item')[i], menu = document.getElementById('p3r-menu'), cursor = document.getElementById('p3r-cursor');
-            if (item && menu && cursor) { const mr = menu.getBoundingClientRect(), ir = item.getBoundingClientRect(); cursor.style.top = (ir.top - mr.top + ir.height / 2 - 9) + 'px'; }
-            document.getElementById('p3r-num').textContent = i + 1; document.getElementById('p3r-name').textContent = p3rData[i].n;
-            document.getElementById('p3r-tt-title').textContent = p3rData[i].t; document.getElementById('p3r-tt-sub').textContent = p3rData[i].s;
+            const items = document.querySelectorAll('.p3r-menu-item');
+            const menu = document.getElementById('p3r-menu');
+            const cursor = document.getElementById('p3r-cursor');
+            
+            if (items[i] && menu && cursor) {
+                const menuRect = menu.getBoundingClientRect();
+                const itemRect = items[i].getBoundingClientRect();
+                // ТОЧНОЕ ПОЗИЦИОНИРОВАНИЕ: центр элемента минус верх меню минус половина высоты курсора
+                const cursorHeight = 20; // 10px top + 10px bottom
+                const itemCenter = itemRect.top - menuRect.top + (itemRect.height / 2);
+                cursor.style.top = (itemCenter - cursorHeight/2) + 'px';
+            }
+            
+            document.getElementById('p3r-num').textContent = i + 1;
+            document.getElementById('p3r-name').textContent = p3rData[i].n;
+            document.getElementById('p3r-tt-title').textContent = p3rData[i].t;
+            document.getElementById('p3r-tt-sub').textContent = p3rData[i].s;
         }
         function openModal(title, content) { const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);margin-bottom:1rem;">${title}</h2><p>${content}</p>`; m.classList.add('open'); }
         function closeP3RModal() { document.getElementById('p3r-modal').classList.remove('open'); playSfx('cancel'); }
@@ -488,7 +485,7 @@
         let cl='russian';
         function toggleLang(){document.querySelectorAll('.russian').forEach(e=>e.style.display=cl==='russian'?'none':'block');document.querySelectorAll('.english').forEach(e=>e.style.display=cl==='russian'?'block':'none');document.querySelector('.lang-text').textContent=cl==='russian'?'Русский':'English';cl=cl==='russian'?'english':'russian';localStorage.setItem('lang',cl)}
 
-        // ==================== CHAT ====================
+        // CHAT
         const MY_ID = localStorage.getItem('p5_uid') || (() => { const id = 'u_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7); localStorage.setItem('p5_uid', id); return id; })();
         let myNick = localStorage.getItem('p5_nick') || '';
         let myAvatar = localStorage.getItem('p5_av') || '';
@@ -534,9 +531,9 @@
             const msgContainer = document.getElementById('p5-chat-messages'), isOwn = msg.from === MY_ID, avSrc = isOwn ? (myAvatar || '') : (user?.avatar || '');
             const div = document.createElement('div'); div.className = `p5-msg ${isOwn ? 'own' : 'received'}`;
             let content = '';
-            if (msg.type === 'image' || msg.type === 'gif') content = `<img src="${msg.text}" style="max-width:240px;border-radius:6px;cursor:pointer;" loading="lazy">`;
-            else if (msg.type === 'video') content = `<video controls style="max-width:240px;border-radius:6px;"><source src="${msg.text}"></video>`;
-            else if (msg.type === 'audio') content = `<audio controls style="max-width:240px;"><source src="${msg.text}"></audio>`;
+            if (msg.type === 'image' || msg.type === 'gif') content = `<img src="${msg.text}" style="max-width:260px;border-radius:6px;cursor:pointer;" loading="lazy">`;
+            else if (msg.type === 'video') content = `<video controls style="max-width:260px;border-radius:6px;"><source src="${msg.text}"></video>`;
+            else if (msg.type === 'audio') content = `<audio controls style="max-width:260px;"><source src="${msg.text}"></audio>`;
             else if (msg.type === 'file') content = `<a href="${msg.text}" download="${msg.fileName||'file'}" style="color:#6BB5FF;">📎 ${msg.fileName||'Download'}</a>`;
             else content = esc(msg.text);
             div.innerHTML = `<img class="p5-msg-avatar" src="${avSrc || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-msg-bubble-wrap"><div class="p5-msg-zigzag"></div><div class="p5-msg-bubble">${content}</div></div>`;
@@ -558,7 +555,6 @@
 
         function esc(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
-        // ==================== BRAINFUCK ====================
         class BF { constructor() { this.t = new Array(30).fill(0); this.p = 0; this.c = ''; this.i = 0; this.o = ''; this.b = {}; } load(c) { this.c = c; this.o = ''; this.p = 0; this.i = 0; this.t = new Array(30).fill(0); this._b(); } _b() { let s = []; this.b = {}; for (let i = 0; i < this.c.length; i++) { if (this.c[i] === '[') s.push(i); else if (this.c[i] === ']') { let st = s.pop(); this.b[st] = i; this.b[i] = st; } } } step() { if (this.i >= this.c.length) return null; let c = this.c[this.i]; switch (c) { case '>': this.p++; break; case '<': this.p--; break; case '+': this.t[this.p] = (this.t[this.p] + 1) % 256; break; case '-': this.t[this.p] = (this.t[this.p] - 1 + 256) % 256; break; case '.': this.o += String.fromCharCode(this.t[this.p]); break; case '[': if (this.t[this.p] === 0) this.i = this.b[this.i]; break; case ']': if (this.t[this.p] !== 0) this.i = this.b[this.i]; break; } this.i++; return true; } }
         let bf = new BF();
         function resetBF() { bf.load(document.getElementById('bf-code').value); updBF(); }
@@ -567,7 +563,6 @@
         function execBF() { if (bf.step()) { updBF(); setTimeout(execBF, 50); } }
         function updBF() { document.getElementById('bf-out').textContent = bf.o; const tape = document.getElementById('bf-tape'); tape.innerHTML = ''; for (let i = 0; i < 12; i++) { const cell = document.createElement('div'); cell.className = `tape-cell ${i === bf.p ? 'active' : ''}`; cell.textContent = bf.t[i]; tape.appendChild(cell); } }
 
-        // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
             resetBF(); setTheme(localStorage.getItem('theme') || 'default');
             if (localStorage.getItem('lang') === 'english') toggleLang();
