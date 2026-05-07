@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Default Purple Theme */
             --p-primary: #8B5CF6;
             --p-primary-hover: #7C3AED;
             --p-primary-light: #A78BFA;
@@ -29,6 +28,9 @@
             --btn-text: #FFFFFF;
             --card-bg: rgba(255, 255, 255, 0.07);
             --card-padding: 1.5rem;
+            --section-padding: 5rem 0;
+            --font-main: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+            --font-mono: 'Share Tech Mono', monospace;
         }
 
         /* Persona 3 Reload Theme */
@@ -51,8 +53,11 @@
             --btn-border: rgba(74, 144, 217, 0.5);
             --btn-hover-bg: rgba(74, 144, 217, 0.35);
             --btn-text: #E8F0F8;
-            --card-bg: rgba(15, 31, 51, 0.6);
+            --card-bg: rgba(15, 31, 51, 0.7);
             --card-padding: 1.5rem;
+            --section-padding: 5rem 0;
+            --font-main: 'Montserrat', sans-serif;
+            --font-mono: 'Share Tech Mono', monospace;
         }
 
         /* Light Theme */
@@ -77,22 +82,27 @@
             --btn-text: #1E1B4B;
             --card-bg: rgba(255, 255, 255, 0.9);
             --card-padding: 1.5rem;
+            --section-padding: 5rem 0;
+            --font-main: 'Montserrat', sans-serif;
+            --font-mono: 'Share Tech Mono', monospace;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease; }
 
         body {
-            font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+            font-family: var(--font-main);
             background: var(--p-background);
             color: var(--p-text);
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-        @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 10px var(--p-highlight); } 50% { box-shadow: 0 0 25px var(--p-highlight); } }
-        @keyframes caustic-shift { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+        @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 10px var(--p-highlight); } 50% { box-shadow: 0 0 25px var(--p-highlight), 0 0 40px var(--p-primary-light); } }
+        @keyframes caustic-shift { 0% { background-position: 0% 0%; opacity: 0.3; } 50% { opacity: 0.6; } 100% { background-position: 100% 100%; opacity: 0.3; } }
+        @keyframes makoto-float { 0%,100% { transform: translateY(0px) rotate(0deg); } 33% { transform: translateY(-8px) rotate(1deg); } 66% { transform: translateY(4px) rotate(-1deg); } }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
@@ -105,18 +115,36 @@
         
         [data-theme="p3"] .hero {
             background: 
-                radial-gradient(ellipse at 30% 50%, rgba(74,144,217,0.15) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 30%, rgba(107,181,255,0.1) 0%, transparent 50%),
-                linear-gradient(180deg, #060F18 0%, #0D1B2A 30%, #0A1628 70%, #060F18 100%);
+                radial-gradient(ellipse at 30% 60%, rgba(74,144,217,0.2) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 20%, rgba(107,181,255,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(13,27,42,0.5) 0%, transparent 70%),
+                linear-gradient(180deg, #060F18 0%, #0D1B2A 35%, #0A1628 70%, #060F18 100%);
         }
         
         [data-theme="p3"] .hero::before {
             content: ''; position: absolute; inset: 0;
             background: 
-                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(74,144,217,0.03) 2px, rgba(74,144,217,0.03) 4px),
-                radial-gradient(circle at 50% 50%, rgba(107,181,255,0.05) 0%, transparent 50%);
-            animation: caustic-shift 20s linear infinite;
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(74,144,217,0.04) 2px, rgba(74,144,217,0.04) 4px),
+                radial-gradient(circle at 40% 60%, rgba(107,181,255,0.08) 0%, transparent 60%);
+            animation: caustic-shift 25s ease-in-out infinite;
             pointer-events: none;
+        }
+
+        /* Makoto overlay for P3 theme */
+        [data-theme="p3"] .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -5%;
+            width: 50%;
+            height: 100%;
+            background: url('https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/textures/makoto_ui_texture.png') no-repeat center right;
+            background-size: contain;
+            opacity: 0.25;
+            filter: brightness(0.8) saturate(0.5);
+            animation: makoto-float 10s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .anime-gif-left, .anime-gif-right {
@@ -125,6 +153,7 @@
         }
         .anime-gif-left { bottom: 2rem; left: 2rem; width: 180px; height: 180px; opacity: 0.8; animation: float 8s ease-in-out infinite; }
         .anime-gif-right { top: 2rem; right: 2rem; width: 160px; height: 160px; opacity: 0.9; animation: float 7s ease-in-out infinite reverse; }
+        [data-theme="p3"] .anime-gif-left, [data-theme="p3"] .anime-gif-right { display: none; }
         .anime-gif-left img, .anime-gif-right img { width: 100%; height: 100%; object-fit: cover; }
 
         /* Top Bars */
@@ -134,15 +163,16 @@
             pointer-events: none; padding: 0 1rem;
         }
         .theme-switcher-bar, .lang-switcher-bar {
-            display: flex; gap: 0.5rem; background: var(--p-surface); padding: 0.5rem;
+            display: flex; gap: 0.5rem; background: rgba(0,0,0,0.7); padding: 0.5rem;
             border-radius: 1rem; backdrop-filter: blur(20px); border: 2px solid var(--p-border);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); pointer-events: all;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); pointer-events: all;
             flex-wrap: wrap; justify-content: center;
         }
+        [data-theme="light"] .theme-switcher-bar, [data-theme="light"] .lang-switcher-bar { background: rgba(255,255,255,0.9); }
         .theme-btn, .lang-btn {
             background: var(--btn-bg); border: 2px solid var(--btn-border); color: var(--btn-text);
             padding: 0.5rem 1rem; border-radius: 0.75rem; cursor: pointer; font-weight: 700;
-            display: flex; align-items: center; gap: 0.5rem; font-family: 'Montserrat', sans-serif;
+            display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-main);
             font-size: 0.85rem; letter-spacing: 0.5px; white-space: nowrap;
         }
         .theme-btn:hover, .lang-btn:hover { background: var(--btn-hover-bg); border-color: var(--p-primary-light); transform: translateY(-2px); }
@@ -158,7 +188,14 @@
         .tagline { font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
         .universal-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--p-border-light); border-radius: 2rem; padding: 0.75rem 1.5rem; margin-bottom: 2rem; color: var(--p-text); font-weight: 600; }
 
-        .social-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; max-width: 800px; margin: 0 auto; padding: 0 1rem; }
+        .social-grid { 
+            display: grid; 
+            grid-template-columns: repeat(6, 1fr); 
+            gap: 1rem; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 0 1rem; 
+        }
         .social-card { background: var(--card-bg); border: 1px solid var(--p-border); border-radius: 1rem; padding: var(--card-padding); text-align: center; text-decoration: none; color: var(--p-text); transition: all 0.3s ease; }
         .social-card:hover { border-color: var(--p-primary-light); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .social-icon { font-size: 2rem; margin-bottom: 0.75rem; }
@@ -169,10 +206,10 @@
         .social-card.steam .social-icon { color: #00adee; }
         .social-card.discord .social-icon { color: #5865F2; }
         .social-name { font-weight: 700; margin-bottom: 0.25rem; font-size: 0.9rem; }
-        .social-handle { font-size: 0.8rem; color: var(--p-text-dim); }
+        .social-handle { font-size: 0.8rem; color: var(--p-text-dim); word-break: break-all; }
 
         /* Sections */
-        .section-content { padding: 4rem 0; }
+        .section-content { padding: var(--section-padding); }
         .section-content:nth-child(odd) { background: var(--p-background-alt); }
         .section-content:nth-child(even) { background: var(--p-background); }
 
@@ -189,7 +226,7 @@
         .project-description { color: var(--p-text-muted); margin-bottom: 1.25rem; font-size: 0.95rem; }
         .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
         .tech-tag { background: var(--btn-bg); color: var(--btn-text); padding: 0.3rem 0.8rem; border-radius: 1rem; font-size: 0.8rem; border: 1px solid var(--btn-border); font-weight: 600; }
-        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.5rem; background: var(--p-primary); color: white !important; text-decoration: none; border-radius: 0.5rem; font-weight: 700; border: 2px solid var(--p-primary-light); cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.5rem; background: var(--p-primary); color: white !important; text-decoration: none; border-radius: 0.5rem; font-weight: 700; border: 2px solid var(--p-primary-light); cursor: pointer; font-family: var(--font-main); letter-spacing: 0.5px; }
         .btn:hover { background: var(--p-primary-hover); transform: translateY(-2px); }
 
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; max-width: 800px; margin: 0 auto; padding: 0 1rem; }
@@ -198,7 +235,18 @@
         .skill-category h3 { color: var(--p-primary-light); margin-bottom: 1rem; font-weight: 800; }
         .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
-        /* ==================== PERSONA 5 CHAT (Based on Persona-IM) ==================== */
+        /* P3R Confetti */
+        [data-theme="p3"] .hero .confetti {
+            position: absolute; inset: 0; pointer-events: none; z-index: 0;
+        }
+        [data-theme="p3"] .confetti-piece {
+            position: absolute; width: 30px; height: 20px;
+            background: linear-gradient(135deg, rgba(74,144,217,0.3), rgba(107,181,255,0.1));
+            clip-path: polygon(0 0, 100% 20%, 80% 100%, 20% 80%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Persona 5 Chat */
         .p5-chat-fab {
             position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
             width: 60px; height: 60px; border-radius: 50%;
@@ -206,7 +254,6 @@
             font-size: 1.5rem; cursor: pointer;
             box-shadow: 0 0 30px rgba(230,0,18,0.5);
             display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s ease;
         }
         .p5-chat-fab:hover { transform: scale(1.1); box-shadow: 0 0 40px rgba(230,0,18,0.7); }
 
@@ -216,7 +263,6 @@
         }
         .p5-chat-overlay.open { display: flex; }
 
-        /* Persona 5 Phone */
         .p5-phone {
             width: 320px; height: 520px; background: #0A0A0A;
             border: 3px solid #E60012; border-radius: 20px;
@@ -235,14 +281,13 @@
             display: flex; flex-direction: column;
         }
 
-        /* Chat list */
         .p5-chat-list {
             flex: 1; overflow-y: auto; padding: 10px;
             background: linear-gradient(180deg, #0A0A0A 0%, #111 100%);
         }
         .p5-chat-list-header {
             text-align: center; padding: 15px 0 20px;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: var(--font-mono);
             font-size: 2rem; color: #FFF; letter-spacing: 3px;
             text-shadow: 0 0 10px rgba(230,0,18,0.5);
         }
@@ -265,7 +310,7 @@
         .p5-contact-last-msg {
             color: #888; font-size: 0.8rem; white-space: nowrap;
             overflow: hidden; text-overflow: ellipsis;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: var(--font-mono);
         }
         .p5-contact-badge {
             background: #E60012; color: white; border-radius: 50%;
@@ -280,22 +325,11 @@
             transform: skewX(-3deg); opacity: 0.6;
         }
         .p5-new-chat:hover { border-color: #E60012; opacity: 1; }
-        .p5-new-chat-icon {
-            width: 44px; height: 44px; border-radius: 2px;
-            border: 2px solid #333; display: flex; align-items: center;
-            justify-content: center; color: #E60012; font-size: 1.5rem;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-        }
 
-        /* Chat messages view */
-        .p5-chat-messages {
-            flex: 1; overflow-y: auto; padding: 15px;
-            background: #0D0D0D;
-        }
+        .p5-chat-messages { flex: 1; overflow-y: auto; padding: 15px; background: #0D0D0D; }
         .p5-msg {
             display: flex; gap: 8px; margin: 8px 0;
-            animation: fadeInUp 0.4s ease;
-            align-items: flex-end;
+            animation: fadeInUp 0.4s ease; align-items: flex-end;
         }
         .p5-msg.sent { flex-direction: row-reverse; }
         .p5-msg-avatar {
@@ -307,7 +341,7 @@
         .p5-msg-bubble {
             max-width: 70%; padding: 10px 14px; border-radius: 2px;
             font-size: 0.85rem; line-height: 1.5;
-            font-family: 'Share Tech Mono', monospace;
+            font-family: var(--font-mono);
             position: relative; transform: skewX(-2deg);
         }
         .p5-msg.received .p5-msg-bubble {
@@ -321,7 +355,7 @@
         .p5-msg-nickname {
             font-size: 0.65rem; color: #E60012; font-weight: bold;
             margin-bottom: 2px; text-transform: uppercase; letter-spacing: 2px;
-            font-family: 'Montserrat', sans-serif;
+            font-family: var(--font-main);
         }
         .p5-msg.sent .p5-msg-nickname { text-align: right; color: #FF9999; }
 
@@ -332,7 +366,7 @@
         .p5-chat-input {
             flex: 1; background: #1A1A1A; border: 1px solid #333;
             color: #DDD; padding: 10px 14px; border-radius: 2px;
-            font-family: 'Share Tech Mono', monospace; font-size: 0.85rem;
+            font-family: var(--font-mono); font-size: 0.85rem;
             outline: none; transform: skewX(-3deg);
         }
         .p5-chat-input:focus { border-color: #E60012; }
@@ -340,7 +374,7 @@
             background: #E60012; border: 2px solid #FF4444; color: white;
             padding: 10px 16px; cursor: pointer; font-weight: bold;
             text-transform: uppercase; letter-spacing: 1px;
-            font-family: 'Montserrat', sans-serif; font-size: 0.75rem;
+            font-family: var(--font-main); font-size: 0.75rem;
             transform: skewX(-5deg); transition: all 0.2s;
         }
         .p5-chat-send:hover { background: #FF2222; }
@@ -348,10 +382,9 @@
         .p5-back-btn {
             background: none; border: 1px solid #E60012; color: #E60012;
             padding: 6px 12px; cursor: pointer; font-weight: bold;
-            transform: skewX(-5deg); font-family: 'Montserrat', sans-serif;
+            transform: skewX(-5deg); font-family: var(--font-main);
             font-size: 0.75rem; letter-spacing: 1px;
         }
-        .p5-back-btn:hover { background: #E60012; color: white; }
 
         .p5-chat-header-bar {
             display: flex; align-items: center; gap: 10px; padding: 10px;
@@ -370,28 +403,32 @@
         .admin-indicator.show { display: flex; }
         .admin-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--p-surface); border: 2px solid var(--p-border-light); border-radius: 1rem; padding: 2rem; z-index: 3000; display: none; min-width: 300px; }
         .admin-modal.open { display: block; }
-        .admin-input { width: 100%; background: var(--p-background); border: 1px solid var(--p-border); padding: 0.5rem; border-radius: 0.5rem; color: var(--p-text); margin: 0.5rem 0; font-family: 'Montserrat', sans-serif; }
+        .admin-input { width: 100%; background: var(--p-background); border: 1px solid var(--p-border); padding: 0.5rem; border-radius: 0.5rem; color: var(--p-text); margin: 0.5rem 0; font-family: var(--font-main); }
 
         /* Tapeworm */
         .demo-container { max-width: 1000px; margin: 0 auto; background: var(--p-surface); border-radius: 1rem; padding: 2rem; border: 1px solid var(--p-border-light); }
         .demo-interface { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        @media (max-width: 768px) { .demo-interface { grid-template-columns: 1fr; } }
-        .code-input-section textarea { width: 100%; background: var(--p-background); border: 1px solid var(--p-border); border-radius: 0.5rem; padding: 1rem; color: var(--p-text); font-family: 'Share Tech Mono', monospace; resize: vertical; }
+        .code-input-section textarea { width: 100%; background: var(--p-background); border: 1px solid var(--p-border); border-radius: 0.5rem; padding: 1rem; color: var(--p-text); font-family: var(--font-mono); resize: vertical; }
         .output-display, .tape-display, .stats-display { background: var(--p-background); border: 1px solid var(--p-border); border-radius: 0.5rem; padding: 1rem; margin-bottom: 1rem; }
         .tape-visualization { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .tape-cell { width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; background: var(--btn-bg); border: 2px solid var(--p-border); font-family: 'Share Tech Mono', monospace; color: var(--btn-text); font-size: 0.9rem; }
+        .tape-cell { width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; background: var(--btn-bg); border: 2px solid var(--p-border); font-family: var(--font-mono); color: var(--btn-text); font-size: 0.9rem; }
         .tape-cell.active { background: var(--p-primary); border-color: var(--p-primary-light); box-shadow: 0 0 10px var(--p-primary-light); color: white; }
 
         footer { background: var(--p-surface); padding: 2rem 0; text-align: center; border-top: 1px solid var(--p-border-light); }
         
         .english { display: none; }
 
+        @media (max-width: 1024px) {
+            .social-grid { grid-template-columns: repeat(3, 1fr); }
+        }
         @media (max-width: 768px) {
             .hero { min-height: 100vh; padding: 6rem 0 2rem; }
             .social-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
             .social-card { padding: 1rem; }
             .p5-phone { width: 90vw; height: 80vh; max-width: 320px; }
             .top-bars { flex-direction: column; align-items: center; }
+            .demo-interface { grid-template-columns: 1fr; }
+            [data-theme="p3"] .hero::after { width: 70%; right: -10%; }
         }
         @media (max-width: 480px) {
             .social-grid { grid-template-columns: repeat(2, 1fr); }
@@ -400,13 +437,17 @@
     </style>
 </head>
 <body>
+    <!-- P3R Confetti -->
+    <div class="confetti" id="confetti-container"></div>
+
     <!-- Admin -->
     <div class="admin-area">
         <button class="admin-btn-small" onclick="toggleAdminModal()">🔒</button>
-        <div class="admin-indicator" id="admin-indicator"><span style="width:6px;height:6px;border-radius:50%;background:#0f0;display:inline-block;"></span> ADMIN <button onclick="adminLogout()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:0.7rem;">✕</button></div>
+        <div class="admin-indicator" id="admin-indicator"><span style="width:6px;height:6px;border-radius:50%;background:#0f0;display:inline-block;animation:pulse-glow 1s infinite;"></span> ADMIN <button onclick="adminLogout()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:0.7rem;">✕</button></div>
     </div>
     <div class="admin-modal" id="admin-modal">
-        <h3 style="color:var(--p-primary-light);font-family:'Montserrat',sans-serif;">Admin Access</h3>
+        <h3 style="color:var(--p-primary-light);font-family:var(--font-main);">Admin Access</h3>
+        <p style="font-size:0.8rem;color:var(--p-text-dim);margin-bottom:1rem;">Enter your secret key to access admin features</p>
         <input type="password" class="admin-input" id="admin-key" placeholder="Enter secret key">
         <button class="btn" onclick="adminLogin()" style="width:100%;margin-top:0.5rem;">Login</button>
         <button class="btn" onclick="toggleAdminModal()" style="width:100%;margin-top:0.5rem;background:var(--p-surface-hover);">Cancel</button>
@@ -448,9 +489,9 @@
     <section class="section-content"><div class="container">
         <h2 class="section-title russian">Исследовательские проекты</h2><h2 class="section-title english">Research Projects</h2>
         <div class="project-grid">
-            <div class="project-card"><h3 class="project-title">Tapeworm 🐛</h3><p class="project-description russian">Визуализатор Brainfuck.</p><p class="project-description english">Brainfuck visualizer.</p><div class="project-tech"><span class="tech-tag">Rust</span><span class="tech-tag">WASM</span></div><a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
-            <div class="project-card"><h3 class="project-title">Codex Mortis</h3><p class="project-description russian">Мультиязычный кодекс.</p><p class="project-description english">Multi-language codex.</p><div class="project-tech"><span class="tech-tag">Polyglot</span><span class="tech-tag">Latin</span></div><a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
-            <div class="project-card"><h3 class="project-title">Ubuntu Design Helper</h3><p class="project-description russian">Инструментарий для Linux.</p><p class="project-description english">Toolkit for Linux.</p><div class="project-tech"><span class="tech-tag">Linux</span><span class="tech-tag">Bash/Python</span></div><a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+            <div class="project-card"><h3 class="project-title">Tapeworm 🐛</h3><p class="project-description russian">Визуализатор Brainfuck с анимированным ленточным червем. Исследование эзотерических языков.</p><p class="project-description english">Brainfuck visualizer with animated tape worm. Esoteric language research.</p><div class="project-tech"><span class="tech-tag">Rust</span><span class="tech-tag">WASM</span><span class="tech-tag">Visualization</span></div><a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+            <div class="project-card"><h3 class="project-title">Codex Mortis</h3><p class="project-description russian">Мультиязычный кодекс на 10+ языках. Сравнительный анализ парадигм программирования.</p><p class="project-description english">Multi-language codex in 10+ languages. Comparative analysis of paradigms.</p><div class="project-tech"><span class="tech-tag">Polyglot</span><span class="tech-tag">Latin</span><span class="tech-tag">Research</span></div><a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+            <div class="project-card"><h3 class="project-title">Ubuntu Design Helper</h3><p class="project-description russian">Инструментарий для дизайнеров в Linux. Автоматизация рабочих процессов.</p><p class="project-description english">Toolkit for designers in Linux. Workflow automation.</p><div class="project-tech"><span class="tech-tag">Linux</span><span class="tech-tag">Bash/Python</span><span class="tech-tag">Automation</span></div><a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
         </div>
     </div></section>
 
@@ -458,8 +499,8 @@
     <section class="section-content"><div class="container">
         <h2 class="section-title">Tapeworm 🐛 Demo</h2>
         <div class="demo-container"><div class="demo-interface">
-            <div class="code-input-section"><textarea id="bf-code" rows="6">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea><div style="display:flex;gap:0.5rem;margin-top:0.5rem;"><button class="btn" onclick="runBF()">▶ Run</button><button class="btn" onclick="resetBF()">↺ Reset</button><button class="btn" onclick="stepBF()">⏭ Step</button></div></div>
-            <div><div class="output-display"><strong>Output:</strong><div id="bf-out" style="font-family:'Share Tech Mono',monospace;min-height:1.5rem;"></div></div><div class="tape-display"><strong>Tape:</strong><div id="bf-tape" class="tape-visualization"></div></div></div>
+            <div class="code-input-section"><textarea id="bf-code" rows="6">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea><div style="display:flex;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap;"><button class="btn" onclick="runBF()">▶ Run</button><button class="btn" onclick="resetBF()">↺ Reset</button><button class="btn" onclick="stepBF()">⏭ Step</button></div></div>
+            <div><div class="output-display"><strong>Output:</strong><div id="bf-out" style="font-family:var(--font-mono);min-height:1.5rem;"></div></div><div class="tape-display"><strong>Tape:</strong><div id="bf-tape" class="tape-visualization"></div></div></div>
         </div></div>
     </div></section>
 
@@ -467,22 +508,26 @@
     <section class="section-content"><div class="container">
         <h2 class="section-title russian">Технологии</h2><h2 class="section-title english">Technologies</h2>
         <div class="skills-grid">
-            <div class="skill-category"><h3>Backend</h3><div class="skill-tags"><span class="tech-tag">C#/.NET</span><span class="tech-tag">Rust</span><span class="tech-tag">Python</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Redis</span></div></div>
-            <div class="skill-category"><h3>System</h3><div class="skill-tags"><span class="tech-tag">Linux</span><span class="tech-tag">Docker</span><span class="tech-tag">Bash</span><span class="tech-tag">WASM</span></div></div>
-            <div class="skill-category"><h3>Tools</h3><div class="skill-tags"><span class="tech-tag">Git</span><span class="tech-tag">AWS</span><span class="tech-tag">CI/CD</span></div></div>
+            <div class="skill-category"><h3>Backend</h3><div class="skill-tags"><span class="tech-tag">C# / .NET</span><span class="tech-tag">Rust</span><span class="tech-tag">Python</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Redis</span></div></div>
+            <div class="skill-category"><h3 class="russian">Системное</h3><h3 class="english">System</h3><div class="skill-tags"><span class="tech-tag">Linux</span><span class="tech-tag">Docker</span><span class="tech-tag">Bash</span><span class="tech-tag">Networking</span><span class="tech-tag">WASM</span></div></div>
+            <div class="skill-category"><h3 class="russian">Инструменты</h3><h3 class="english">Tools</h3><div class="skill-tags"><span class="tech-tag">Git</span><span class="tech-tag">Docker</span><span class="tech-tag">AWS</span><span class="tech-tag">CI/CD</span></div></div>
         </div>
     </div></section>
 
     <!-- Contact -->
     <section class="section-content"><div class="container" style="text-align:center;">
         <h2 class="section-title russian">Контакты</h2><h2 class="section-title english">Contacts</h2>
-        <a href="mailto:igorb9475@gmail.com" class="btn"><i class="fas fa-envelope"></i> <span class="russian">Написать</span><span class="english">Email</span></a>
+        <p class="russian" style="margin-bottom:1.5rem;color:var(--p-text-muted);">Открыт к сотрудничеству и интересным проектам</p>
+        <p class="english" style="margin-bottom:1.5rem;color:var(--p-text-muted);">Open for collaboration and interesting projects</p>
+        <a href="mailto:igorb9475@gmail.com" class="btn"><i class="fas fa-envelope"></i> <span class="russian">Написать письмо</span><span class="english">Send Email</span></a>
     </div></section>
 
     <!-- Philosophy -->
     <section class="section-content"><div class="container" style="text-align:center;">
-        <p style="font-size:1.2rem;font-style:italic;" class="russian">"Одна жизнь, одна смерть — философия глубинного понимания систем."</p>
-        <p style="font-size:1.2rem;font-style:italic;" class="english">"One life, one death — a philosophy of deep system understanding."</p>
+        <p style="font-size:1.3rem;font-style:italic;max-width:600px;margin:0 auto;" class="russian">"Одна жизнь, одна смерть — философия глубинного понимания систем."</p>
+        <p style="font-size:1.3rem;font-style:italic;max-width:600px;margin:0 auto;" class="english">"One life, one death — a philosophy of deep system understanding."</p>
+        <p style="margin-top:1rem;color:var(--p-text-dim);" class="russian">От компиляторов до P2P-сетей, от эзотерических языков до практических инструментов.</p>
+        <p style="margin-top:1rem;color:var(--p-text-dim);" class="english">From compilers to P2P networks, from esoteric languages to practical tools.</p>
     </div></section>
 
     <footer><div class="container">
@@ -491,23 +536,19 @@
         <p style="color:var(--p-text-dim);margin-top:0.5rem;" class="english">Universal Engineer • 2025</p>
     </div></footer>
 
-    <!-- Persona 5 Chat FAB -->
+    <!-- Persona 5 Chat -->
     <button class="p5-chat-fab" onclick="openP5Chat()">💬</button>
-
-    <!-- Persona 5 Chat Overlay -->
     <div class="p5-chat-overlay" id="p5-overlay">
         <div style="position:relative;">
             <button class="p5-chat-close-btn" onclick="closeP5Chat()">✕</button>
             <div class="p5-phone">
                 <div class="p5-phone-notch"></div>
                 <div class="p5-phone-screen" id="p5-screen">
-                    <!-- Chat List -->
                     <div id="p5-chat-list-view" style="display:flex;flex-direction:column;height:100%;">
                         <div class="p5-chat-list" id="p5-contacts">
                             <div class="p5-chat-list-header"><span>S</span>NS</div>
                         </div>
                     </div>
-                    <!-- Chat Messages View -->
                     <div id="p5-chat-msg-view" style="display:none;flex-direction:column;height:100%;">
                         <div class="p5-chat-header-bar">
                             <button class="p5-back-btn" onclick="backToChatList()">← BACK</button>
@@ -526,7 +567,7 @@
 
     <script>
         // ==================== SECRET KEY ====================
-        const SECRET_KEY = 'MakotoYukiP3R2024';
+        const SECRET_KEY = 'NyxsAvatarsP3R!';
         
         function getFingerprint() {
             const d = navigator.userAgent + navigator.language + screen.width + screen.height + new Date().getTimezoneOffset();
@@ -550,13 +591,17 @@
         }
 
         function updateAdminUI() {
-            document.getElementById('admin-indicator').classList.toggle('show', isAdmin);
+            const indicator = document.getElementById('admin-indicator');
+            if (indicator) indicator.classList.toggle('show', isAdmin);
         }
 
         function toggleAdminModal() {
-            document.getElementById('admin-modal').classList.toggle('open');
-            document.getElementById('admin-key').value = '';
-            document.getElementById('admin-status').textContent = '';
+            const modal = document.getElementById('admin-modal');
+            if (modal) {
+                modal.classList.toggle('open');
+                document.getElementById('admin-key').value = '';
+                document.getElementById('admin-status').textContent = '';
+            }
         }
 
         function adminLogin() {
@@ -567,10 +612,12 @@
                 localStorage.setItem('akh', btoa(key + fp));
                 localStorage.setItem('afp', fp);
                 isAdmin = true; updateAdminUI();
-                status.textContent = '✅ Access Granted'; status.style.color = '#0f0';
-                setTimeout(toggleAdminModal, 800);
+                status.textContent = '✅ Access Granted - Welcome, OnelifeOnedeath!';
+                status.style.color = '#0f0';
+                setTimeout(toggleAdminModal, 1000);
             } else {
-                status.textContent = '❌ Access Denied'; status.style.color = '#f33';
+                status.textContent = '❌ Access Denied - Invalid Key';
+                status.style.color = '#f33';
             }
         }
 
@@ -583,7 +630,7 @@
         const themes = {
             default: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#A78BFA','--p-primary-dark':'#5B21B6','--p-highlight':'#C4B5FD','--p-surface':'#1F2937','--p-surface-hover':'#374151','--p-background':'#111827','--p-background-alt':'#0F172A','--p-text':'#F9FAFB','--p-text-muted':'#D1D5DB','--p-text-dim':'#9CA3AF','--p-border':'#374151','--p-border-light':'#4B5563','--btn-bg':'rgba(139,92,246,0.25)','--btn-border':'rgba(139,92,246,0.6)','--btn-hover-bg':'rgba(139,92,246,0.45)','--btn-text':'#FFFFFF','--card-bg':'rgba(255,255,255,0.07)'},
             light: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#6D28D9','--p-primary-dark':'#5B21B6','--p-highlight':'#A78BFA','--p-surface':'#FFFFFF','--p-surface-hover':'#F5F3FF','--p-background':'#FEF7FF','--p-background-alt':'#F3E8FF','--p-text':'#1E1B4B','--p-text-muted':'#4C1D95','--p-text-dim':'#7C3AED','--p-border':'#DDD6FE','--p-border-light':'#C4B5FD','--btn-bg':'rgba(139,92,246,0.12)','--btn-border':'rgba(139,92,246,0.4)','--btn-hover-bg':'rgba(139,92,246,0.25)','--btn-text':'#1E1B4B','--card-bg':'rgba(255,255,255,0.9)'},
-            p3: {'--p-primary':'#0D1B2A','--p-primary-hover':'#1B3A5C','--p-primary-light':'#4A90D9','--p-primary-dark':'#060F18','--p-highlight':'#6BB5FF','--p-surface':'#0F1F33','--p-surface-hover':'#162D4A','--p-background':'#0A1628','--p-background-alt':'#060F18','--p-text':'#E8F0F8','--p-text-muted':'#8CB4D8','--p-text-dim':'#5A8AB5','--p-border':'#1B3A5C','--p-border-light':'#2D4A6E','--btn-bg':'rgba(74,144,217,0.2)','--btn-border':'rgba(74,144,217,0.5)','--btn-hover-bg':'rgba(74,144,217,0.35)','--btn-text':'#E8F0F8','--card-bg':'rgba(15,31,51,0.6)'}
+            p3: {'--p-primary':'#0D1B2A','--p-primary-hover':'#1B3A5C','--p-primary-light':'#4A90D9','--p-primary-dark':'#060F18','--p-highlight':'#6BB5FF','--p-surface':'#0F1F33','--p-surface-hover':'#162D4A','--p-background':'#0A1628','--p-background-alt':'#060F18','--p-text':'#E8F0F8','--p-text-muted':'#8CB4D8','--p-text-dim':'#5A8AB5','--p-border':'#1B3A5C','--p-border-light':'#2D4A6E','--btn-bg':'rgba(74,144,217,0.2)','--btn-border':'rgba(74,144,217,0.5)','--btn-hover-bg':'rgba(74,144,217,0.35)','--btn-text':'#E8F0F8','--card-bg':'rgba(15,31,51,0.7)'}
         };
         function setTheme(t) {
             Object.entries(themes[t]).forEach(([k,v]) => document.documentElement.style.setProperty(k,v));
@@ -592,33 +639,63 @@
             document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
             const btn = document.getElementById(t+'-theme-btn');
             if (btn) btn.classList.add('active');
+            
+            // Generate confetti for P3 theme
+            if (t === 'p3') generateConfetti();
+        }
+
+        function generateConfetti() {
+            const container = document.getElementById('confetti-container');
+            if (!container) return;
+            container.innerHTML = '';
+            const hero = document.querySelector('.hero');
+            if (!hero) return;
+            
+            for (let i = 0; i < 12; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 90 + '%';
+                piece.style.top = Math.random() * 90 + '%';
+                piece.style.animationDuration = (4 + Math.random() * 6) + 's';
+                piece.style.animationDelay = Math.random() * 5 + 's';
+                piece.style.width = (15 + Math.random() * 40) + 'px';
+                piece.style.height = (10 + Math.random() * 25) + 'px';
+                piece.style.opacity = 0.1 + Math.random() * 0.3;
+                container.appendChild(piece);
+            }
         }
 
         // ==================== LANGUAGE ====================
         let cl = 'russian';
         function toggleLanguage() {
             const ru = document.querySelectorAll('.russian'), en = document.querySelectorAll('.english');
-            if (cl === 'russian') { ru.forEach(e => e.style.display='none'); en.forEach(e => e.style.display='block'); document.querySelector('.lang-text').textContent='Русский'; cl = 'english'; }
-            else { ru.forEach(e => e.style.display='block'); en.forEach(e => e.style.display='none'); document.querySelector('.lang-text').textContent='English'; cl = 'russian'; }
+            if (cl === 'russian') { 
+                ru.forEach(e => e.style.display='none'); 
+                en.forEach(e => e.style.display='block'); 
+                document.querySelector('.lang-text').textContent='Русский'; 
+                cl = 'english'; 
+            } else { 
+                ru.forEach(e => e.style.display='block'); 
+                en.forEach(e => e.style.display='none'); 
+                document.querySelector('.lang-text').textContent='English'; 
+                cl = 'russian'; 
+            }
             localStorage.setItem('language', cl);
         }
 
-        // ==================== P5 CHAT (Persona-IM inspired) ====================
+        // ==================== P5 CHAT ====================
         let chats = JSON.parse(localStorage.getItem('p5chats') || '{}');
         let currentChatId = null;
 
         function openP5Chat() { document.getElementById('p5-overlay').classList.add('open'); showChatList(); }
         function closeP5Chat() { document.getElementById('p5-overlay').classList.remove('open'); }
-
         function showChatList() {
             document.getElementById('p5-chat-list-view').style.display = 'flex';
             document.getElementById('p5-chat-msg-view').style.display = 'none';
             currentChatId = null;
             renderChatList();
         }
-
         function backToChatList() { showChatList(); }
-
         function goc(id) { if (!chats[id]) chats[id] = { avatar: '', msgs: [] }; return chats[id]; }
 
         function renderChatList() {
@@ -642,7 +719,7 @@
             
             html += `
             <div class="p5-new-chat" onclick="newChat()">
-                <div class="p5-new-chat-icon">+</div>
+                <img class="p5-contact-avatar" src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23E60012%22 font-size=%2250%22>+</text></svg>">
                 <div class="p5-contact-last-msg">New Chat</div>
             </div>`;
             
@@ -693,7 +770,7 @@
                 const nick = m.from === 'admin' ? 'ONELIFE' : '???';
                 return `
                 <div class="p5-msg ${sent ? 'sent' : 'received'}">
-                    <img class="p5-msg-avatar" src="${m.from === 'admin' ? (c.avatar || '') : 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'}" 
+                    <img class="p5-msg-avatar" src="${m.from === 'admin' ? (c.avatar || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23E60012%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2240%22>O</text></svg>') : 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'}" 
                          onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2240%22>?</text></svg>'">
                     <div>
                         <div class="p5-msg-nickname">${nick}</div>
@@ -718,7 +795,7 @@
         function resetBF() { bf.load(document.getElementById('bf-code').value); updBF(); }
         function runBF() { resetBF(); execBF(); }
         function stepBF() { if (bf.step()) updBF(); }
-        function execBF() { if (bf.step()) { updBF(); setTimeout(execBF, 100); } }
+        function execBF() { if (bf.step()) { updBF(); setTimeout(execBF, 80); } }
         function updBF() {
             document.getElementById('bf-out').textContent = bf.o;
             const tape = document.getElementById('bf-tape'); tape.innerHTML = '';
