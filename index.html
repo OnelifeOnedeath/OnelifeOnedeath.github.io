@@ -12,23 +12,61 @@
             --p-primary-hover: #7C3AED;
             --p-primary-light: #A78BFA;
             --p-primary-dark: #5B21B6;
+            --p-highlight: #C4B5FD;
             
             --p-surface: #1F2937;
+            --p-surface-hover: #374151;
             --p-background: #111827;
             --p-background-alt: #0F172A;
             
             --p-text: #F9FAFB;
             --p-text-muted: #D1D5DB;
+            --p-text-dim: #9CA3AF;
             
             --p-border: #374151;
+            --p-border-light: #4B5563;
             --p-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1);
+            --p-glow: 0 0 15px rgba(139, 92, 246, 0.3);
+            
+            --btn-bg: rgba(139, 92, 246, 0.2);
+            --btn-border: rgba(139, 92, 246, 0.5);
+            --btn-hover-bg: rgba(139, 92, 246, 0.4);
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Тема Persona 3 */
+        [data-theme="p3"] {
+            --p-primary: #1a3a5c;
+            --p-primary-hover: #254a74;
+            --p-primary-light: #4a8bc2;
+            --p-primary-dark: #0d1f33;
+            --p-highlight: #5ba4e6;
+            
+            --p-surface: #0d1f33;
+            --p-surface-hover: #1a3050;
+            --p-background: #0a1628;
+            --p-background-alt: #061020;
+            
+            --p-text: #e8f0f8;
+            --p-text-muted: #8ab4d8;
+            --p-text-dim: #5a8ab5;
+            
+            --p-border: #1a3a5c;
+            --p-border-light: #254a74;
+            --p-shadow: 0 4px 6px -1px rgba(26, 58, 92, 0.3);
+            --p-glow: 0 0 20px rgba(74, 139, 194, 0.4);
+            
+            --btn-bg: rgba(26, 58, 92, 0.3);
+            --btn-border: rgba(74, 139, 194, 0.4);
+            --btn-hover-bg: rgba(74, 139, 194, 0.3);
+            --card-bg: rgba(26, 58, 92, 0.2);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            transition: all 0.4s ease;
         }
 
         body {
@@ -40,14 +78,8 @@
 
         /* Анимации */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes float {
@@ -60,6 +92,21 @@
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             33% { transform: translateY(8px) rotate(-1deg); }
             66% { transform: translateY(-5px) rotate(1deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px var(--p-primary-light); }
+            50% { box-shadow: 0 0 25px var(--p-primary-light), 0 0 50px var(--p-primary); }
+        }
+
+        @keyframes chatFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes personaSlide {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         .container {
@@ -89,45 +136,60 @@
             background-size: cover;
         }
 
-        /* Аниме гифки */
-        .anime-gif-left {
+        [data-theme="p3"] .hero::before {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%235ba4e6" fill-opacity="0.08" points="0,1000 1000,0 1000,1000"/></svg>');
+        }
+
+        .anime-gif-left, .anime-gif-right {
             position: absolute;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--p-primary-light);
+            box-shadow: var(--p-glow);
+            z-index: 1;
+        }
+
+        .anime-gif-left {
             bottom: 2rem;
             left: 2rem;
             width: 180px;
             height: 180px;
-            border-radius: 50%;
-            overflow: hidden;
             opacity: 0.8;
             animation: float 8s ease-in-out infinite;
-            border: 3px solid var(--p-primary-light);
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
-            z-index: 1;
         }
 
         .anime-gif-right {
-            position: absolute;
             top: 2rem;
             right: 2rem;
             width: 160px;
             height: 160px;
-            border-radius: 50%;
-            overflow: hidden;
             opacity: 0.9;
             animation: floatReverse 7s ease-in-out infinite;
-            border: 3px solid var(--p-primary);
-            box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
-            z-index: 1;
         }
 
-        .anime-gif-left img,
-        .anime-gif-right img {
+        .anime-gif-left img, .anime-gif-right img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .language-switcher {
+        /* Theme Switcher Bar */
+        .theme-switcher-bar {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            display: flex;
+            gap: 0.5rem;
+            background: var(--p-surface);
+            padding: 0.5rem;
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--p-border);
+            box-shadow: var(--p-shadow);
+        }
+
+        .lang-switcher-bar {
             position: fixed;
             top: 1rem;
             left: 50%;
@@ -135,24 +197,20 @@
             z-index: 1000;
             display: flex;
             gap: 0.5rem;
-            background: rgba(0, 0, 0, 0.8);
+            background: var(--p-surface);
             padding: 0.5rem;
             border-radius: 1rem;
             backdrop-filter: blur(10px);
-            border: 1px solid var(--p-primary);
+            border: 2px solid var(--p-border);
+            box-shadow: var(--p-shadow);
         }
 
-        [data-theme="light"] .language-switcher {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid var(--p-primary);
-        }
-
-        .lang-btn, .theme-btn {
-            background: transparent;
-            border: 1px solid var(--p-primary);
+        .theme-btn, .lang-btn {
+            background: var(--btn-bg);
+            border: 2px solid var(--btn-border);
             color: var(--p-text);
             padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
+            border-radius: 0.75rem;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 600;
@@ -160,11 +218,37 @@
             align-items: center;
             gap: 0.5rem;
             white-space: nowrap;
+            backdrop-filter: blur(10px);
         }
 
-        .lang-btn:hover, .theme-btn:hover {
+        .theme-btn:hover, .lang-btn:hover {
+            background: var(--btn-hover-bg);
+            border-color: var(--p-primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--p-glow);
+        }
+
+        .theme-btn.active {
             background: var(--p-primary);
-            transform: scale(1.05);
+            border-color: var(--p-primary-light);
+            box-shadow: var(--p-glow);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .theme-btn.p3-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-btn.p3-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(91, 164, 230, 0.3), transparent);
+            animation: personaSlide 2s infinite;
         }
 
         .brand-header {
@@ -178,12 +262,17 @@
         .username {
             font-size: 4rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--p-primary-light), white);
+            background: linear-gradient(135deg, var(--p-primary-light), var(--p-text));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
             animation: fadeInUp 0.8s ease-out;
-            text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+            text-shadow: none;
+            filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+        }
+
+        [data-theme="p3"] .username {
+            filter: drop-shadow(0 0 20px rgba(91, 164, 230, 0.5));
         }
 
         .tagline {
@@ -197,8 +286,8 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--p-border);
+            background: var(--card-bg);
+            border: 1px solid var(--p-border-light);
             border-radius: 2rem;
             padding: 0.75rem 1.5rem;
             margin-bottom: 3rem;
@@ -216,7 +305,7 @@
         }
 
         .social-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
             border: 1px solid var(--p-border);
             border-radius: 1rem;
             padding: 1.5rem;
@@ -229,15 +318,16 @@
         }
 
         .social-card:hover {
-            border-color: var(--p-primary);
+            border-color: var(--p-primary-light);
             transform: translateY(-5px);
-            box-shadow: var(--p-shadow);
+            box-shadow: var(--p-glow);
+            background: var(--btn-hover-bg);
         }
 
         .social-icon {
             font-size: 2rem;
             margin-bottom: 1rem;
-            color: var(--p-primary);
+            color: var(--p-primary-light);
             transition: transform 0.3s ease;
         }
 
@@ -245,21 +335,20 @@
             transform: scale(1.2) rotate(5deg);
         }
 
-        .social-name {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .social-handle {
-            color: var(--p-text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Projects Section */
-        .projects {
+        /* Sections */
+        .projects, .skills, .contact, .philosophy, .tapeworm-demo {
             padding: 5rem 0;
-            background: var(--p-background-alt);
         }
+
+        .projects { background: var(--p-background-alt); }
+        .tapeworm-demo { 
+            background: var(--p-background);
+            border-top: 1px solid var(--p-border-light);
+            border-bottom: 1px solid var(--p-border-light);
+        }
+        .skills { background: var(--p-background); }
+        .contact { background: var(--p-background-alt); text-align: center; }
+        .philosophy { background: var(--p-background); text-align: center; }
 
         .section-title {
             font-size: 2.5rem;
@@ -304,8 +393,8 @@
 
         .project-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--p-shadow);
-            border-color: var(--p-primary);
+            box-shadow: var(--p-glow);
+            border-color: var(--p-primary-light);
         }
 
         .project-title {
@@ -329,13 +418,13 @@
         }
 
         .tech-tag {
-            background: var(--p-primary-dark);
+            background: var(--btn-bg);
             color: var(--p-text);
             padding: 0.25rem 0.75rem;
             border-radius: 1rem;
             font-size: 0.8rem;
             font-weight: 500;
-            transition: all 0.3s ease;
+            border: 1px solid var(--btn-border);
         }
 
         .tech-tag:hover {
@@ -354,184 +443,16 @@
             border-radius: 0.5rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            border: none;
+            border: 2px solid var(--p-primary-light);
             cursor: pointer;
             position: relative;
             overflow: hidden;
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            transform: translate(-50%, -50%);
-        }
-
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
         .btn:hover {
             background: var(--p-primary-hover);
             transform: translateY(-2px);
-        }
-
-        .btn i {
-            transition: transform 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .btn:hover i {
-            transform: scale(1.2) rotate(10deg);
-        }
-
-        /* Tapeworm Demo Section */
-        .tapeworm-demo {
-            padding: 5rem 0;
-            background: var(--p-background);
-            border-top: 1px solid var(--p-border);
-            border-bottom: 1px solid var(--p-border);
-        }
-
-        .demo-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: var(--p-surface);
-            border-radius: 1rem;
-            padding: 2rem;
-            border: 1px solid var(--p-border);
-        }
-
-        .demo-description {
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .code-examples {
-            margin-top: 1.5rem;
-        }
-
-        .example-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-
-        .example-btn {
-            background: var(--p-primary-dark);
-            color: var(--p-text);
-            border: 1px solid var(--p-border);
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .example-btn:hover {
-            background: var(--p-primary);
-            transform: translateY(-2px);
-        }
-
-        .demo-interface {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .code-input-section textarea {
-            width: 100%;
-            background: var(--p-background);
-            border: 1px solid var(--p-border);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            color: var(--p-text);
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            resize: vertical;
-            margin-bottom: 1rem;
-        }
-
-        .control-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-run { background: var(--p-primary); }
-        .btn-reset { background: var(--p-primary-dark); }
-        .btn-step { background: var(--p-primary-light); }
-
-        .visualization-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .output-display, .tape-display, .stats-display {
-            background: var(--p-background);
-            border: 1px solid var(--p-border);
-            border-radius: 0.5rem;
-            padding: 1rem;
-        }
-
-        .output-text, .stats-text {
-            font-family: 'Courier New', monospace;
-            background: rgba(0,0,0,0.3);
-            padding: 0.5rem;
-            border-radius: 0.25rem;
-            min-height: 2rem;
-        }
-
-        .tape-visualization {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            min-height: 4rem;
-            align-items: center;
-        }
-
-        .tape-cell {
-            width: 3rem;
-            height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--p-primary-dark);
-            border: 2px solid var(--p-border);
-            border-radius: 0.25rem;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .tape-cell.active {
-            background: var(--p-primary);
-            border-color: var(--p-primary-light);
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
-        }
-
-        .demo-footer {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        /* Skills Section */
-        .skills {
-            padding: 5rem 0;
-            background: var(--p-background);
+            box-shadow: var(--p-glow);
         }
 
         .skills-grid {
@@ -552,7 +473,8 @@
 
         .skill-category:hover {
             transform: translateY(-5px);
-            border-color: var(--p-primary);
+            border-color: var(--p-primary-light);
+            box-shadow: var(--p-glow);
         }
 
         .skill-category h3 {
@@ -567,42 +489,313 @@
             gap: 0.5rem;
         }
 
-        /* Contact Section */
-        .contact {
-            padding: 5rem 0;
-            background: var(--p-background-alt);
-            text-align: center;
+        /* Chat Button */
+        .chat-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--p-primary);
+            border: 2px solid var(--p-primary-light);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--p-glow);
+            animation: pulse-glow 2s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
 
-        .contact .btn {
-            margin-top: 2rem;
+        .chat-fab:hover {
+            transform: scale(1.1);
+            background: var(--p-primary-hover);
         }
 
-        /* Philosophy Section */
-        .philosophy {
-            padding: 4rem 0;
+        /* Chat Modal */
+        .chat-modal {
+            position: fixed;
+            bottom: 5rem;
+            right: 2rem;
+            width: 380px;
+            max-height: 500px;
+            background: var(--p-surface);
+            border: 2px solid var(--p-border-light);
+            border-radius: 1rem;
+            box-shadow: var(--p-glow);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            backdrop-filter: blur(20px);
+            animation: chatFadeIn 0.3s ease;
+        }
+
+        .chat-modal.open {
+            display: flex;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            border-bottom: 2px solid var(--p-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 1rem 1rem 0 0;
+        }
+
+        .chat-avatar-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--p-primary);
+            border: 2px solid var(--p-primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .chat-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .chat-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: var(--p-glow);
+        }
+
+        .chat-nickname-input {
+            background: transparent;
+            border: none;
+            color: var(--p-text);
+            font-size: 1rem;
+            font-weight: 600;
+            width: 150px;
+            outline: none;
+        }
+
+        .chat-nickname-input::placeholder {
+            color: var(--p-text-dim);
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: var(--p-text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-close:hover {
+            color: var(--p-primary-light);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 300px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 0.5rem;
+            animation: chatFadeIn 0.3s ease;
+        }
+
+        .chat-message.own {
+            flex-direction: row-reverse;
+        }
+
+        .chat-message-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .chat-message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .chat-message-bubble {
+            background: var(--btn-bg);
+            padding: 0.75rem;
+            border-radius: 1rem;
+            border: 1px solid var(--p-border);
+            max-width: 70%;
+            word-wrap: break-word;
+            color: var(--p-text);
+        }
+
+        .chat-message.own .chat-message-bubble {
+            background: var(--p-primary);
+            border-color: var(--p-primary-light);
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 2px solid var(--p-border);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
             background: var(--p-background);
-            text-align: center;
+            border: 1px solid var(--p-border);
+            border-radius: 1rem;
+            padding: 0.5rem 1rem;
+            color: var(--p-text);
+            outline: none;
+            transition: all 0.3s ease;
         }
 
-        .philosophy-main {
-            font-size: 1.4rem;
-            line-height: 1.6;
-            font-style: italic;
+        .chat-input:focus {
+            border-color: var(--p-primary-light);
+        }
+
+        .chat-send {
+            background: var(--p-primary);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .chat-send:hover {
+            background: var(--p-primary-hover);
+            transform: scale(1.1);
+        }
+
+        /* Tapeworm Demo */
+        .demo-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--p-surface);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--p-border-light);
+        }
+
+        .demo-interface {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .code-input-section textarea {
+            width: 100%;
+            background: var(--p-background);
+            border: 1px solid var(--p-border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            color: var(--p-text);
+            font-family: 'Courier New', monospace;
+            resize: vertical;
             margin-bottom: 1rem;
         }
 
-        .philosophy-details {
-            color: var(--p-text-muted);
-            font-size: 1rem;
-            line-height: 1.5;
+        .control-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .output-display, .tape-display, .stats-display {
+            background: var(--p-background);
+            border: 1px solid var(--p-border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .output-text, .stats-text {
+            font-family: 'Courier New', monospace;
+            background: rgba(0,0,0,0.3);
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            min-height: 2rem;
+            color: var(--p-text);
+        }
+
+        .tape-visualization {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            min-height: 4rem;
+            align-items: center;
+        }
+
+        .tape-cell {
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--btn-bg);
+            border: 2px solid var(--p-border);
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: var(--p-text);
+            transition: all 0.3s ease;
+        }
+
+        .tape-cell.active {
+            background: var(--p-primary);
+            border-color: var(--p-primary-light);
+            transform: scale(1.1);
+            box-shadow: var(--p-glow);
+        }
+
+        .example-btn {
+            background: var(--btn-bg);
+            color: var(--p-text);
+            border: 1px solid var(--p-border-light);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .example-btn:hover {
+            background: var(--btn-hover-bg);
         }
 
         footer {
             background: var(--p-surface);
             padding: 3rem 0;
             text-align: center;
-            border-top: 1px solid var(--p-border);
+            border-top: 1px solid var(--p-border-light);
         }
 
         .footer-text {
@@ -610,369 +803,66 @@
             margin-top: 1rem;
         }
 
-        /* English version */
-        .english {
-            display: none;
-        }
+        .english { display: none; }
 
-        /* Стили для светлой темы */
-        [data-theme="light"] {
-            --p-primary: #7C3AED;
-            --p-primary-hover: #6D28D9;
-            --p-primary-light: #5B21B6;
-            --p-primary-dark: #4C1D95;
-            --p-surface: #FFFFFF;
-            --p-background: #FEF7FF;
-            --p-background-alt: #F3E8FF;
-            --p-text: #1E1B4B;
-            --p-text-muted: #5B21B6;
-            --p-border: #DDD6FE;
-        }
-
-        [data-theme="light"] .hero {
-            background: linear-gradient(135deg, #C4B5FD, #8B5CF6) !important;
-        }
-
-        [data-theme="light"] .username {
-            background: linear-gradient(135deg, #4C1D95, #1E1B4B) !important;
-            -webkit-background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-        }
-
-        [data-theme="light"] .social-card,
-        [data-theme="light"] .project-card,
-        [data-theme="light"] .skill-category,
-        [data-theme="light"] .demo-container {
-            backdrop-filter: none !important;
-            background: rgba(255, 255, 255, 0.95) !important;
-            border: 1px solid var(--p-border) !important;
-        }
-
-        [data-theme="light"] .universal-badge {
-            background: rgba(255, 255, 255, 0.9) !important;
-            border: 1px solid var(--p-border) !important;
-            color: var(--p-primary-dark) !important;
-        }
-
-        [data-theme="light"] .lang-btn,
-        [data-theme="light"] .theme-btn {
-            background: transparent !important;
-            border: 1px solid var(--p-primary) !important;
-            color: var(--p-primary-dark) !important;
-        }
-
-        [data-theme="light"] .lang-btn:hover,
-        [data-theme="light"] .theme-btn:hover {
-            background: var(--p-primary) !important;
-            color: white !important;
-        }
-
-        [data-theme="light"] .output-text,
-        [data-theme="light"] .stats-text {
-            background: rgba(255, 255, 255, 0.8) !important;
-            color: var(--p-text) !important;
-            border: 1px solid var(--p-border) !important;
-        }
-
-        [data-theme="light"] .code-input-section textarea {
-            background: rgba(255, 255, 255, 0.9) !important;
-            border: 1px solid var(--p-border) !important;
-            color: var(--p-text) !important;
-        }
-
-        [data-theme="light"] .tape-cell {
-            background: linear-gradient(135deg, #E9D5FF, #C4B5FD) !important;
-            border: 2px solid var(--p-primary-light) !important;
-            color: var(--p-primary-dark) !important;
-        }
-
-        [data-theme="light"] .tape-cell.active {
-            background: linear-gradient(135deg, #8B5CF6, #7C3AED) !important;
-            color: white !important;
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4) !important;
-        }
-
-        [data-theme="light"] .tech-tag {
-            background: var(--p-primary-light) !important;
-            color: white !important;
-        }
-
-        [data-theme="light"] .tech-tag:hover {
-            background: var(--p-primary) !important;
-        }
-
-        [data-theme="light"] .example-btn {
-            background: var(--p-primary-light) !important;
-            color: white !important;
-        }
-
-        [data-theme="light"] .example-btn:hover {
-            background: var(--p-primary) !important;
-        }
-
-        /* Мобильная адаптивность */
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero {
-                padding-top: 80px;
-                min-height: 100vh;
-            }
-            
-            .language-switcher {
-                top: 0.5rem;
-                left: 50%;
-                transform: translateX(-50%);
-                width: auto;
-                max-width: 90%;
-            }
-            
-            .brand-header {
-                margin-top: 3rem;
-            }
-            
-            .username {
-                font-size: 2.5rem;
-                margin-top: 2rem;
-                text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            }
-            
-            [data-theme="light"] .username {
-                text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
-            }
-            
-            .tagline {
-                font-size: 1.2rem;
-            }
-            
-            .social-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.5rem;
-            }
-            
-            .project-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .container {
-                padding: 0 1rem;
-            }
-            
-            .skills-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .anime-gif-left,
-            .anime-gif-right {
-                width: 100px;
-                height: 100px;
-                opacity: 0.6;
-                z-index: 1;
-            }
-            
-            .anime-gif-left {
-                bottom: 1rem;
-                left: 1rem;
-            }
-            
-            .anime-gif-right {
-                top: 6rem;
-                right: 1rem;
-            }
-            
-            .universal-badge {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-            }
-            
-            .demo-interface {
-                grid-template-columns: 1fr;
-            }
-            
-            .example-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .example-btn {
-                width: 200px;
-            }
-            
-            .control-buttons {
+            .hero { padding-top: 100px; }
+            .username { font-size: 2.5rem; }
+            .social-grid { grid-template-columns: repeat(2, 1fr); }
+            .demo-interface { grid-template-columns: 1fr; }
+            .chat-modal { width: 90vw; right: 5vw; }
+            .theme-switcher-bar, .lang-switcher-bar { 
+                position: relative;
+                top: auto;
+                right: auto;
+                left: auto;
+                transform: none;
+                margin: 0.5rem;
                 justify-content: center;
             }
-            
-            .lang-btn, .theme-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.8rem;
-            }
-        }
-
-        /* Специальные стили для поворота телефона */
-        @media (max-width: 768px) and (orientation: landscape) {
-            .hero {
-                min-height: auto;
-                padding: 4rem 0;
-            }
-            
-            .brand-header {
-                margin-top: 2rem;
-            }
-            
-            .anime-gif-left,
-            .anime-gif-right {
-                display: block !important;
-                position: absolute;
-                width: 70px;
-                height: 70px;
-                opacity: 0.4;
-            }
-            
-            .anime-gif-left {
-                bottom: 0.5rem;
-                left: 0.5rem;
-            }
-            
-            .anime-gif-right {
-                top: 0.5rem;
-                right: 0.5rem;
-            }
-            
-            .username {
-                font-size: 1.8rem;
-                margin-top: 0.5rem;
-            }
-            
-            .tagline {
-                font-size: 0.9rem;
-                margin-bottom: 1rem;
-            }
-            
-            .social-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.3rem;
-                max-width: 90%;
-            }
-            
-            .social-card {
-                padding: 0.6rem;
-            }
-            
-            .social-icon {
-                font-size: 1.2rem;
-                margin-bottom: 0.3rem;
-            }
-            
-            .social-name {
-                font-size: 0.8rem;
-            }
-            
-            .social-handle {
-                font-size: 0.7rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .language-switcher {
-                top: 0.5rem;
-                flex-wrap: wrap;
-                justify-content: center;
-                width: 95%;
-            }
-            
-            .lang-btn, .theme-btn {
-                flex: 1;
-                min-width: 120px;
-                justify-content: center;
-            }
-            
-            .username {
-                font-size: 2rem;
-                line-height: 1.2;
-                margin-top: 3rem;
-            }
-            
-            .social-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .project-card {
-                padding: 1.5rem;
-            }
-            
-            .anime-gif-left,
-            .anime-gif-right {
-                display: block;
-                width: 80px;
-                height: 80px;
-            }
-            
-            .philosophy-main {
-                font-size: 1.2rem;
-            }
-            
-            .philosophy-details {
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Для очень маленьких экранов */
-        @media (max-width: 320px) {
-            .anime-gif-left,
-            .anime-gif-right {
-                display: none !important;
-            }
-        }
-
-        /* Большие экраны */
-        @media (min-width: 1200px) {
-            .anime-gif-left {
-                width: 220px;
-                height: 220px;
-            }
-            
-            .anime-gif-right {
-                width: 200px;
-                height: 200px;
-            }
+            .anime-gif-left, .anime-gif-right { width: 80px; height: 80px; }
+            .theme-switcher-bar { margin-top: 60px; }
         }
     </style>
 </head>
 <body>
+    <!-- Language Switcher -->
+    <div class="lang-switcher-bar">
+        <button class="lang-btn" onclick="toggleLanguage()">
+            <i class="fas fa-language"></i>
+            <span class="lang-text">English</span>
+        </button>
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher-bar">
+        <button class="theme-btn active" onclick="setTheme('default')" id="default-theme-btn">
+            <i class="fas fa-moon"></i>
+            <span>Default</span>
+        </button>
+        <button class="theme-btn p3-btn" onclick="setTheme('p3')" id="p3-theme-btn">
+            <i class="fas fa-clock"></i>
+            <span>P3</span>
+        </button>
+        <button class="theme-btn" onclick="setTheme('light')" id="light-theme-btn">
+            <i class="fas fa-sun"></i>
+            <span>Light</span>
+        </button>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
-        <div class="language-switcher">
-            <button class="lang-btn" onclick="toggleLanguage()">
-                <i class="fas fa-language"></i>
-                <span class="lang-text">English</span>
-            </button>
-            <button class="theme-btn" onclick="toggleTheme()">
-                <i class="fas fa-moon"></i>
-                <span class="theme-text">Тёмная</span>
-            </button>
-        </div>
-
-        <!-- Левая аниме-гифка -->
         <div class="anime-gif-left">
             <img src="https://99px.ru/sstorage/86/2016/10/image_862910161743391536726.gif" alt="Lain Anime" loading="lazy">
         </div>
-
-        <!-- Правая аниме-гифка - ИСПРАВЛЕНО: Рабочая гифка с 99px.ru -->
         <div class="anime-gif-right">
-            <img src="https://99px.ru/sstorage/86/2020/04/10804200835411467.gif" 
-                 alt="Lain takes off glasses" 
-                 loading="lazy"
-                 title="Serial Experiments Lain - Lain takes off glasses">
+            <img src="https://99px.ru/sstorage/86/2020/04/10804200835411467.gif" alt="Lain takes off glasses" loading="lazy">
         </div>
 
         <div class="container">
             <div class="brand-header">
                 <div class="username">OnelifeOnedeath</div>
-                
-                <!-- Russian Version -->
                 <div class="russian">
                     <div class="tagline">Универсальный инженер • Исследователь систем</div>
                     <div class="universal-badge">
@@ -980,8 +870,6 @@
                         Один никнейм — все платформы
                     </div>
                 </div>
-                
-                <!-- English Version -->
                 <div class="english">
                     <div class="tagline">Universal Engineer • Systems Researcher</div>
                     <div class="universal-badge">
@@ -996,31 +884,26 @@
                         <div class="social-name">GitHub</div>
                         <div class="social-handle">OnelifeOnedeath</div>
                     </a>
-                    
                     <a href="https://t.me/OnelifeOnedeath" class="social-card" target="_blank">
                         <div class="social-icon"><i class="fab fa-telegram"></i></div>
                         <div class="social-name">Telegram</div>
                         <div class="social-handle">@OnelifeOnedeath</div>
                     </a>
-                    
                     <a href="https://vk.com/onelifeonedeath" class="social-card" target="_blank">
                         <div class="social-icon"><i class="fab fa-vk"></i></div>
                         <div class="social-name">VK</div>
                         <div class="social-handle">onelifeonedeath</div>
                     </a>
-                    
                     <a href="https://www.youtube.com/@OnelifeOnedeath" class="social-card" target="_blank">
                         <div class="social-icon"><i class="fab fa-youtube"></i></div>
                         <div class="social-name">YouTube</div>
                         <div class="social-handle">@OnelifeOnedeath</div>
                     </a>
-
                     <a href="https://steamcommunity.com/id/OnelifeOnedeath" class="social-card" target="_blank">
                         <div class="social-icon"><i class="fab fa-steam"></i></div>
                         <div class="social-name">Steam</div>
                         <div class="social-handle">OnelifeOnedeath</div>
                     </a>
-                    
                     <a href="#" class="social-card">
                         <div class="social-icon"><i class="fab fa-discord"></i></div>
                         <div class="social-name">Discord</div>
@@ -1034,194 +917,91 @@
     <!-- Projects Section -->
     <section class="projects">
         <div class="container">
-            <!-- Russian -->
             <h2 class="section-title russian">Исследовательские проекты</h2>
-            <!-- English -->
             <h2 class="section-title english">Research Projects</h2>
-            
             <div class="project-grid">
-                
-                <!-- Tapeworm -->
                 <div class="project-card">
                     <h3 class="project-title">Tapeworm 🐛</h3>
-                    <p class="project-description russian">
-                        Визуализатор Brainfuck с анимированным "ленточным червем". Исследование эзотерических языков 
-                        через интерактивное исполнение кода.
-                    </p>
-                    <p class="project-description english">
-                        Brainfuck visualizer with an animated "tape worm". Exploring esoteric languages 
-                        through interactive code execution.
-                    </p>
+                    <p class="project-description russian">Визуализатор Brainfuck с анимированным "ленточным червем".</p>
+                    <p class="project-description english">Brainfuck visualizer with an animated "tape worm".</p>
                     <div class="project-tech">
                         <span class="tech-tag">Rust</span>
                         <span class="tech-tag">WASM</span>
-                        <span class="tech-tag russian">Визуализация</span>
-                        <span class="tech-tag english">Visualization</span>
                     </div>
                     <a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank">
-                        <i class="fab fa-github"></i>
-                        <span class="russian">Исходный код</span>
-                        <span class="english">Source Code</span>
+                        <i class="fab fa-github"></i> GitHub
                     </a>
                 </div>
-
-                <!-- Codex Mortis -->
                 <div class="project-card">
                     <h3 class="project-title">Codex Mortis</h3>
-                    <p class="project-description russian">
-                        Мультиязычный кодекс на 10+ языках. Сравнительный анализ парадигм программирования 
-                        через призму латинской терминологии.
-                    </p>
-                    <p class="project-description english">
-                        Multi-language codex in 10+ languages. Comparative analysis of programming paradigms 
-                        through the lens of Latin terminology.
-                    </p>
+                    <p class="project-description russian">Мультиязычный кодекс на 10+ языках.</p>
+                    <p class="project-description english">Multi-language codex in 10+ languages.</p>
                     <div class="project-tech">
-                        <span class="tech-tag russian">Полиглот</span>
-                        <span class="tech-tag english">Polyglot</span>
-                        <span class="tech-tag russian">Исследование</span>
-                        <span class="tech-tag english">Research</span>
+                        <span class="tech-tag">Polyglot</span>
                         <span class="tech-tag">Latin</span>
                     </div>
                     <a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank">
-                        <i class="fab fa-github"></i>
-                        <span class="russian">Исследовать</span>
-                        <span class="english">Explore</span>
+                        <i class="fab fa-github"></i> GitHub
                     </a>
                 </div>
-
-                <!-- Ubuntu Design Helper -->
                 <div class="project-card">
                     <h3 class="project-title">Ubuntu Design Helper</h3>
-                    <p class="project-description russian">
-                        Инструментарий для дизайнеров в Linux. Автоматизация рабочих процессов 
-                        и решение специфических проблем графических работников.
-                    </p>
-                    <p class="project-description english">
-                        Toolkit for designers in Linux. Workflow automation and solving specific problems 
-                        of graphics professionals.
-                    </p>
+                    <p class="project-description russian">Инструментарий для дизайнеров в Linux.</p>
+                    <p class="project-description english">Toolkit for designers in Linux.</p>
                     <div class="project-tech">
                         <span class="tech-tag">Linux</span>
-                        <span class="tech-tag russian">Автоматизация</span>
-                        <span class="tech-tag english">Automation</span>
                         <span class="tech-tag">Bash/Python</span>
                     </div>
                     <a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank">
-                        <i class="fab fa-github"></i>
-                        <span class="russian">Использовать</span>
-                        <span class="english">Use</span>
+                        <i class="fab fa-github"></i> GitHub
                     </a>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Tapeworm Demo Section -->
+    <!-- Tapeworm Demo -->
     <section class="tapeworm-demo">
         <div class="container">
-            <!-- Russian -->
-            <h2 class="section-title russian">Tapeworm 🐛 Демо</h2>
-            <!-- English -->
-            <h2 class="section-title english">Tapeworm 🐛 Demo</h2>
-            
+            <h2 class="section-title">Tapeworm 🐛 Demo</h2>
             <div class="demo-container">
-                <div class="demo-description">
-                    <p class="russian">
-                        <strong>Интерактивный Brainfuck интерпретатор</strong> с визуализацией памяти. 
-                        Смотри как "ленточный червь" ползет по твоему коду!
-                    </p>
-                    <p class="english">
-                        <strong>Interactive Brainfuck interpreter</strong> with memory visualization. 
-                        Watch the "tape worm" crawl through your code!
-                    </p>
-                    
-                    <div class="code-examples">
-                        <h4 class="russian">Примеры кода:</h4>
-                        <h4 class="english">Code examples:</h4>
-                        
-                        <div class="example-buttons">
-                            <button class="example-btn" onclick="loadExample('hello')">
-                                <span class="russian">Hello World</span>
-                                <span class="english">Hello World</span>
-                            </button>
-                            <button class="example-btn" onclick="loadExample('counter')">
-                                <span class="russian">Счетчик</span>
-                                <span class="english">Counter</span>
-                            </button>
-                            <button class="example-btn" onclick="loadExample('calculator')">
-                                <span class="russian">Калькулятор</span>
-                                <span class="english">Calculator</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
                 <div class="demo-interface">
                     <div class="code-input-section">
-                        <textarea id="bf-code" placeholder="Введите Brainfuck код здесь... / Enter Brainfuck code here..." 
-                                 rows="6">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea>
-                        
+                        <textarea id="bf-code" rows="6">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea>
                         <div class="control-buttons">
-                            <button class="btn btn-run" onclick="runBrainfuck()">
-                                <i class="fas fa-play"></i>
-                                <span class="russian">Запустить</span>
-                                <span class="english">Run</span>
-                            </button>
-                            <button class="btn btn-reset" onclick="resetBrainfuck()">
-                                <i class="fas fa-redo"></i>
-                                <span class="russian">Сбросить</span>
-                                <span class="english">Reset</span>
-                            </button>
-                            <button class="btn btn-step" onclick="stepBrainfuck()">
-                                <i class="fas fa-step-forward"></i>
-                                <span class="russian">Шаг</span>
-                                <span class="english">Step</span>
-                            </button>
+                            <button class="btn" onclick="runBrainfuck()"><i class="fas fa-play"></i> Run</button>
+                            <button class="btn" onclick="resetBrainfuck()"><i class="fas fa-redo"></i> Reset</button>
+                            <button class="btn" onclick="stepBrainfuck()"><i class="fas fa-step-forward"></i> Step</button>
                         </div>
                     </div>
-                    
                     <div class="visualization-section">
                         <div class="output-display">
-                            <h4 class="russian">Вывод:</h4>
-                            <h4 class="english">Output:</h4>
+                            <h4>Output:</h4>
                             <div id="bf-output" class="output-text"></div>
                         </div>
-                        
                         <div class="tape-display">
-                            <h4 class="russian">Лента памяти:</h4>
-                            <h4 class="english">Memory Tape:</h4>
+                            <h4>Memory Tape:</h4>
                             <div id="bf-tape" class="tape-visualization"></div>
                         </div>
-                        
                         <div class="stats-display">
-                            <h4 class="russian">Статистика:</h4>
-                            <h4 class="english">Statistics:</h4>
+                            <h4>Statistics:</h4>
                             <div id="bf-stats" class="stats-text"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="demo-footer">
-                <a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank">
-                    <i class="fab fa-github"></i>
-                    <span class="russian">Полный проект на GitHub</span>
-                    <span class="english">Full project on GitHub</span>
-                </a>
+                <div class="example-buttons" style="display:flex; gap:1rem; justify-content:center; margin:1rem 0;">
+                    <button class="example-btn" onclick="loadExample('hello')">Hello World</button>
+                    <button class="example-btn" onclick="loadExample('counter')">Counter</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- Skills -->
     <section class="skills">
         <div class="container">
-            <!-- Russian -->
             <h2 class="section-title russian">Технологии</h2>
-            <!-- English -->
             <h2 class="section-title english">Technologies</h2>
-            
             <div class="skills-grid">
                 <div class="skill-category">
                     <h3>Backend</h3>
@@ -1233,10 +1013,8 @@
                         <span class="tech-tag">Redis</span>
                     </div>
                 </div>
-                
                 <div class="skill-category">
-                    <h3 class="russian">Системное программирование</h3>
-                    <h3 class="english">System Programming</h3>
+                    <h3>System Programming</h3>
                     <div class="skill-tags">
                         <span class="tech-tag">Linux</span>
                         <span class="tech-tag">Docker</span>
@@ -1245,10 +1023,8 @@
                         <span class="tech-tag">WASM</span>
                     </div>
                 </div>
-                
                 <div class="skill-category">
-                    <h3 class="russian">Инструменты</h3>
-                    <h3 class="english">Tools</h3>
+                    <h3>Tools</h3>
                     <div class="skill-tags">
                         <span class="tech-tag">Git</span>
                         <span class="tech-tag">Docker</span>
@@ -1260,16 +1036,11 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact -->
     <section class="contact">
         <div class="container">
-            <!-- Russian -->
             <h2 class="section-title russian">Контакты</h2>
-            <p class="russian">Открыт к сотрудничеству и интересным проектам</p>
-            <!-- English -->
             <h2 class="section-title english">Contacts</h2>
-            <p class="english">Open for collaboration and interesting projects</p>
-            
             <a href="mailto:igorb9475@gmail.com" class="btn">
                 <i class="fas fa-envelope"></i>
                 <span class="russian">Написать письмо</span>
@@ -1278,86 +1049,128 @@
         </div>
     </section>
 
-    <!-- Philosophy Section -->
+    <!-- Philosophy -->
     <section class="philosophy">
         <div class="container">
-            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-                <p class="philosophy-main russian">
-                    "Одна жизнь, одна смерть — философия глубинного понимания систем."
-                </p>
-                <p class="philosophy-main english" style="display: none;">
-                    "One life, one death — a philosophy of deep system understanding."
-                </p>
-                
-                <div style="margin-top: 2rem;">
-                    <p class="philosophy-details russian">
-                        От компиляторов до P2P-сетей, от эзотерических языков до практических инструментов.<br>
-                        Не гонюсь за грейдами, а исследую суть технологий.
-                    </p>
-                    <p class="philosophy-details english" style="display: none;">
-                        From compilers to P2P networks, from esoteric languages to practical tools.<br>
-                        Not chasing grades, but exploring the essence of technology.
-                    </p>
-                </div>
-            </div>
+            <p class="philosophy-main russian">"Одна жизнь, одна смерть — философия глубинного понимания систем."</p>
+            <p class="philosophy-main english">"One life, one death — a philosophy of deep system understanding."</p>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="username" style="font-size: 2rem;">OnelifeOnedeath</div>
-            <p class="footer-text russian" style="color: var(--p-text-muted); margin: 1rem 0;">
-                Универсальный инженер • 2025
-            </p>
-            <p class="footer-text english" style="color: var(--p-text-muted); margin: 1rem 0; display: none;">
-                Universal Engineer • 2025
-            </p>
+            <div style="font-size: 2rem; font-weight: 800; color: var(--p-primary-light);">OnelifeOnedeath</div>
+            <p class="footer-text russian">Универсальный инженер • 2025</p>
+            <p class="footer-text english">Universal Engineer • 2025</p>
         </div>
     </footer>
 
+    <!-- Chat FAB -->
+    <button class="chat-fab" onclick="toggleChat()" title="Chat with me">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- Chat Modal -->
+    <div class="chat-modal" id="chat-modal">
+        <div class="chat-header">
+            <div class="chat-avatar-section">
+                <div class="chat-avatar" id="user-avatar" onclick="changeAvatar()">
+                    <i class="fas fa-user"></i>
+                </div>
+                <input type="text" class="chat-nickname-input" id="nickname-input" 
+                       placeholder="Your nickname" maxlength="20">
+            </div>
+            <button class="chat-close" onclick="toggleChat()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chat-input" 
+                   placeholder="Type a message..." onkeypress="handleChatKey(event)">
+            <button class="chat-send" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
     <script>
-        // Система тем
+        // Theme System
         const themes = {
-            dark: {
+            default: {
                 '--p-primary': '#8B5CF6',
-                '--p-primary-hover': '#7C3AED', 
+                '--p-primary-hover': '#7C3AED',
                 '--p-primary-light': '#A78BFA',
                 '--p-primary-dark': '#5B21B6',
+                '--p-highlight': '#C4B5FD',
                 '--p-surface': '#1F2937',
+                '--p-surface-hover': '#374151',
                 '--p-background': '#111827',
                 '--p-background-alt': '#0F172A',
                 '--p-text': '#F9FAFB',
                 '--p-text-muted': '#D1D5DB',
-                '--p-border': '#374151'
+                '--p-text-dim': '#9CA3AF',
+                '--p-border': '#374151',
+                '--p-border-light': '#4B5563',
+                '--p-shadow': '0 4px 6px -1px rgba(139, 92, 246, 0.1)',
+                '--p-glow': '0 0 15px rgba(139, 92, 246, 0.3)',
+                '--btn-bg': 'rgba(139, 92, 246, 0.2)',
+                '--btn-border': 'rgba(139, 92, 246, 0.5)',
+                '--btn-hover-bg': 'rgba(139, 92, 246, 0.4)',
+                '--card-bg': 'rgba(255, 255, 255, 0.05)'
             },
             light: {
                 '--p-primary': '#7C3AED',
                 '--p-primary-hover': '#6D28D9',
                 '--p-primary-light': '#5B21B6',
                 '--p-primary-dark': '#4C1D95',
+                '--p-highlight': '#A78BFA',
                 '--p-surface': '#FFFFFF',
+                '--p-surface-hover': '#F3E8FF',
                 '--p-background': '#FEF7FF',
                 '--p-background-alt': '#F3E8FF',
                 '--p-text': '#1E1B4B',
                 '--p-text-muted': '#5B21B6',
-                '--p-border': '#DDD6FE'
+                '--p-text-dim': '#7C3AED',
+                '--p-border': '#DDD6FE',
+                '--p-border-light': '#C4B5FD',
+                '--p-shadow': '0 4px 6px -1px rgba(124, 58, 237, 0.1)',
+                '--p-glow': '0 0 15px rgba(124, 58, 237, 0.2)',
+                '--btn-bg': 'rgba(124, 58, 237, 0.1)',
+                '--btn-border': 'rgba(124, 58, 237, 0.3)',
+                '--btn-hover-bg': 'rgba(124, 58, 237, 0.2)',
+                '--card-bg': 'rgba(255, 255, 255, 0.8)'
+            },
+            p3: {
+                '--p-primary': '#1a3a5c',
+                '--p-primary-hover': '#254a74',
+                '--p-primary-light': '#4a8bc2',
+                '--p-primary-dark': '#0d1f33',
+                '--p-highlight': '#5ba4e6',
+                '--p-surface': '#0d1f33',
+                '--p-surface-hover': '#1a3050',
+                '--p-background': '#0a1628',
+                '--p-background-alt': '#061020',
+                '--p-text': '#e8f0f8',
+                '--p-text-muted': '#8ab4d8',
+                '--p-text-dim': '#5a8ab5',
+                '--p-border': '#1a3a5c',
+                '--p-border-light': '#254a74',
+                '--p-shadow': '0 4px 6px -1px rgba(26, 58, 92, 0.3)',
+                '--p-glow': '0 0 20px rgba(74, 139, 194, 0.4)',
+                '--btn-bg': 'rgba(26, 58, 92, 0.3)',
+                '--btn-border': 'rgba(74, 139, 194, 0.4)',
+                '--btn-hover-bg': 'rgba(74, 139, 194, 0.3)',
+                '--card-bg': 'rgba(26, 58, 92, 0.2)'
             }
         };
-
-        let currentLanguage = 'russian';
-
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            setTheme(newTheme);
-        }
 
         function setTheme(theme) {
             const root = document.documentElement;
             const themeColors = themes[theme];
-            
-            root.style.transition = 'all 0.5s ease';
             
             Object.entries(themeColors).forEach(([property, value]) => {
                 root.style.setProperty(property, value);
@@ -1366,60 +1179,160 @@
             root.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
             
-            const icon = document.querySelector('.theme-btn i');
-            const themeText = document.querySelector('.theme-text');
-            
-            icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-            
-            if (currentLanguage === 'russian') {
-                themeText.textContent = theme === 'dark' ? 'Тёмная' : 'Светлая';
-            } else {
-                themeText.textContent = theme === 'dark' ? 'Dark' : 'Light';
-            }
+            // Update active button
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`${theme}-theme-btn`).classList.add('active');
         }
 
-        // Переключение языка
+        // Language System
+        let currentLanguage = 'russian';
+
         function toggleLanguage() {
             const russianElements = document.querySelectorAll('.russian');
             const englishElements = document.querySelectorAll('.english');
             const langText = document.querySelector('.lang-text');
-            const themeText = document.querySelector('.theme-text');
             
             if (currentLanguage === 'russian') {
                 russianElements.forEach(el => el.style.display = 'none');
                 englishElements.forEach(el => el.style.display = 'block');
                 langText.textContent = 'Русский';
                 currentLanguage = 'english';
-                
-                const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-                themeText.textContent = currentTheme === 'dark' ? 'Dark' : 'Light';
             } else {
                 russianElements.forEach(el => el.style.display = 'block');
                 englishElements.forEach(el => el.style.display = 'none');
                 langText.textContent = 'English';
                 currentLanguage = 'russian';
-                
-                const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-                themeText.textContent = currentTheme === 'dark' ? 'Тёмная' : 'Светлая';
             }
             
             localStorage.setItem('language', currentLanguage);
         }
 
-        // Анимация при скролле
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+        // Chat System
+        let chatOpen = false;
+        let messages = JSON.parse(localStorage.getItem('chat_messages') || '[]');
+        let userNickname = localStorage.getItem('chat_nickname') || '';
+        let userAvatar = localStorage.getItem('chat_avatar') || '';
+
+        function toggleChat() {
+            chatOpen = !chatOpen;
+            document.getElementById('chat-modal').classList.toggle('open', chatOpen);
+            if (chatOpen) {
+                document.getElementById('nickname-input').value = userNickname;
+                updateAvatarDisplay();
+                renderMessages();
+            }
+        }
+
+        function changeAvatar() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        userAvatar = event.target.result;
+                        localStorage.setItem('chat_avatar', userAvatar);
+                        updateAvatarDisplay();
+                    };
+                    reader.readAsDataURL(file);
                 }
-            });
-        }, { threshold: 0.1 });
+            };
+            input.click();
+        }
 
-        document.querySelectorAll('.project-card, .section-title, .skill-category').forEach(el => {
-            observer.observe(el);
-        });
+        function updateAvatarDisplay() {
+            const avatarEl = document.getElementById('user-avatar');
+            if (userAvatar) {
+                avatarEl.innerHTML = `<img src="${userAvatar}" alt="Avatar">`;
+            } else {
+                avatarEl.innerHTML = '<i class="fas fa-user"></i>';
+            }
+        }
 
-        // Brainfuck интерпретатор для демо
+        function handleChatKey(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            const nickname = document.getElementById('nickname-input').value.trim() || 'Anonymous';
+            
+            if (!message) return;
+            
+            userNickname = nickname;
+            localStorage.setItem('chat_nickname', userNickname);
+            
+            const msgObj = {
+                id: Date.now(),
+                nickname: userNickname,
+                avatar: userAvatar,
+                message: message,
+                timestamp: new Date().toISOString(),
+                isOwner: true
+            };
+            
+            messages.push(msgObj);
+            localStorage.setItem('chat_messages', JSON.stringify(messages));
+            
+            input.value = '';
+            renderMessages();
+            
+            // Auto-reply after 1 second
+            setTimeout(() => {
+                const reply = {
+                    id: Date.now() + 1,
+                    nickname: 'OnelifeOnedeath',
+                    avatar: '',
+                    message: getAutoReply(),
+                    timestamp: new Date().toISOString(),
+                    isOwner: false
+                };
+                messages.push(reply);
+                localStorage.setItem('chat_messages', JSON.stringify(messages));
+                renderMessages();
+            }, 1000);
+        }
+
+        function getAutoReply() {
+            const replies = [
+                "Thanks for reaching out! I'll get back to you soon.",
+                "Interesting! Tell me more.",
+                "I appreciate your message. Let's connect!",
+                "Great to hear from you! What's on your mind?",
+                "Noted! I'll review this and respond properly."
+            ];
+            return replies[Math.floor(Math.random() * replies.length)];
+        }
+
+        function renderMessages() {
+            const container = document.getElementById('chat-messages');
+            container.innerHTML = messages.map(msg => `
+                <div class="chat-message ${msg.isOwner ? 'own' : ''}">
+                    <div class="chat-message-avatar">
+                        ${msg.avatar ? `<img src="${msg.avatar}" alt="">` : 
+                          (msg.isOwner ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>')}
+                    </div>
+                    <div class="chat-message-bubble">
+                        <strong style="color: var(--p-primary-light);">${escapeHtml(msg.nickname)}</strong>
+                        <div>${escapeHtml(msg.message)}</div>
+                    </div>
+                </div>
+            `).join('');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Brainfuck Interpreter
         class SimpleBrainfuck {
             constructor() {
                 this.tape = new Array(30).fill(0);
@@ -1443,10 +1356,10 @@
             
             buildBracketMap() {
                 let stack = [];
+                this.bracketMap = {};
                 for (let i = 0; i < this.code.length; i++) {
-                    if (this.code[i] === '[') {
-                        stack.push(i);
-                    } else if (this.code[i] === ']') {
+                    if (this.code[i] === '[') stack.push(i);
+                    else if (this.code[i] === ']') {
                         if (stack.length === 0) throw new Error("Unmatched ]");
                         let start = stack.pop();
                         this.bracketMap[start] = i;
@@ -1458,36 +1371,21 @@
             
             step() {
                 if (this.ip >= this.code.length) return null;
-                
                 let cmd = this.code[this.ip];
                 if (cmd in this.stats) this.stats[cmd]++;
                 
-                try {
-                    switch(cmd) {
-                        case '>': this.pointer++; break;
-                        case '<': this.pointer--; break;
-                        case '+': this.tape[this.pointer] = (this.tape[this.pointer] + 1) % 256; break;
-                        case '-': this.tape[this.pointer] = (this.tape[this.pointer] - 1) % 256; break;
-                        case '.': this.output += String.fromCharCode(this.tape[this.pointer]); break;
-                        case '[': if (this.tape[this.pointer] === 0) this.ip = this.bracketMap[this.ip]; break;
-                        case ']': if (this.tape[this.pointer] !== 0) this.ip = this.bracketMap[this.ip]; break;
-                    }
-                } catch(e) {
-                    console.error('Error:', e);
-                    return null;
+                switch(cmd) {
+                    case '>': this.pointer++; break;
+                    case '<': this.pointer--; break;
+                    case '+': this.tape[this.pointer] = (this.tape[this.pointer] + 1) % 256; break;
+                    case '-': this.tape[this.pointer] = (this.tape[this.pointer] - 1 + 256) % 256; break;
+                    case '.': this.output += String.fromCharCode(this.tape[this.pointer]); break;
+                    case '[': if (this.tape[this.pointer] === 0) this.ip = this.bracketMap[this.ip]; break;
+                    case ']': if (this.tape[this.pointer] !== 0) this.ip = this.bracketMap[this.ip]; break;
                 }
                 
                 this.ip++;
                 return { tape: [...this.tape], pointer: this.pointer, output: this.output };
-            }
-            
-            getStats() {
-                let total = Object.values(this.stats).reduce((a, b) => a + b, 0);
-                let statsStr = Object.entries(this.stats)
-                    .filter(([_, count]) => count > 0)
-                    .map(([cmd, count]) => `${cmd}:${count}`)
-                    .join(' | ');
-                return `Total: ${total} | ${statsStr}`;
             }
         }
 
@@ -1496,10 +1394,8 @@
         function loadExample(type) {
             const examples = {
                 hello: '++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.',
-                counter: '++>+++[<+>-]<.',
-                calculator: '++>+++[<+>-]<.'
+                counter: '++>+++[<+>-]<.'
             };
-            
             document.getElementById('bf-code').value = examples[type];
             resetBrainfuck();
         }
@@ -1516,15 +1412,11 @@
         }
 
         function stepBrainfuck() {
-            const result = bf.step();
-            if (result) {
-                updateDisplay();
-            }
+            if (bf.step()) updateDisplay();
         }
 
         function executeSteps() {
-            const result = bf.step();
-            if (result) {
+            if (bf.step()) {
                 updateDisplay();
                 setTimeout(executeSteps, 100);
             }
@@ -1535,104 +1427,35 @@
             
             const tapeElement = document.getElementById('bf-tape');
             tapeElement.innerHTML = '';
-            
             for (let i = 0; i < Math.min(15, bf.tape.length); i++) {
                 const cell = document.createElement('div');
                 cell.className = `tape-cell ${i === bf.pointer ? 'active' : ''}`;
                 cell.textContent = bf.tape[i];
-                cell.title = `Cell ${i}: ${bf.tape[i]} ('${String.fromCharCode(bf.tape[i])}')`;
                 tapeElement.appendChild(cell);
             }
             
-            document.getElementById('bf-stats').textContent = bf.getStats();
+            const stats = bf.stats;
+            const total = Object.values(stats).reduce((a, b) => a + b, 0);
+            const statsStr = Object.entries(stats)
+                .filter(([_, count]) => count > 0)
+                .map(([cmd, count]) => `${cmd}:${count}`)
+                .join(' | ');
+            document.getElementById('bf-stats').textContent = `Total: ${total} | ${statsStr}`;
         }
 
-        // Инициализация
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             resetBrainfuck();
             
-            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const savedTheme = localStorage.getItem('theme') || 'default';
             setTheme(savedTheme);
             
             const savedLanguage = localStorage.getItem('language') || 'russian';
-            if (savedLanguage === 'english') {
-                toggleLanguage();
-            }
+            if (savedLanguage === 'english') toggleLanguage();
             
-            // Проверка устройства и ориентации
-            checkDeviceAndOrientation();
-            window.addEventListener('resize', checkDeviceAndOrientation);
-            window.addEventListener('orientationchange', checkDeviceAndOrientation);
+            if (userAvatar) updateAvatarDisplay();
+            if (userNickname) document.getElementById('nickname-input').value = userNickname;
         });
-        
-        // Функция проверки устройства и ориентации
-        function checkDeviceAndOrientation() {
-            const isMobile = window.innerWidth <= 768;
-            const isLandscape = window.innerWidth > window.innerHeight && isMobile;
-            const gifLeft = document.querySelector('.anime-gif-left');
-            const gifRight = document.querySelector('.anime-gif-right');
-            
-            if (!isMobile) {
-                if (gifLeft) {
-                    gifLeft.style.display = 'block';
-                    gifLeft.style.width = '180px';
-                    gifLeft.style.height = '180px';
-                    gifLeft.style.opacity = '0.8';
-                }
-                if (gifRight) {
-                    gifRight.style.display = 'block';
-                    gifRight.style.width = '160px';
-                    gifRight.style.height = '160px';
-                    gifRight.style.opacity = '0.9';
-                }
-            } else {
-                if (isLandscape) {
-                    if (gifLeft) {
-                        gifLeft.style.display = 'block';
-                        gifLeft.style.width = '70px';
-                        gifLeft.style.height = '70px';
-                        gifLeft.style.opacity = '0.4';
-                    }
-                    if (gifRight) {
-                        gifRight.style.display = 'block';
-                        gifRight.style.width = '70px';
-                        gifRight.style.height = '70px';
-                        gifRight.style.opacity = '0.4';
-                    }
-                } else {
-                    if (window.innerWidth <= 320) {
-                        if (gifLeft) gifLeft.style.display = 'none';
-                        if (gifRight) gifRight.style.display = 'none';
-                    } else if (window.innerWidth <= 480) {
-                        if (gifLeft) {
-                            gifLeft.style.display = 'block';
-                            gifLeft.style.width = '80px';
-                            gifLeft.style.height = '80px';
-                            gifLeft.style.opacity = '0.6';
-                        }
-                        if (gifRight) {
-                            gifRight.style.display = 'block';
-                            gifRight.style.width = '80px';
-                            gifRight.style.height = '80px';
-                            gifRight.style.opacity = '0.6';
-                        }
-                    } else {
-                        if (gifLeft) {
-                            gifLeft.style.display = 'block';
-                            gifLeft.style.width = '100px';
-                            gifLeft.style.height = '100px';
-                            gifLeft.style.opacity = '0.6';
-                        }
-                        if (gifRight) {
-                            gifRight.style.display = 'block';
-                            gifRight.style.width = '100px';
-                            gifRight.style.height = '100px';
-                            gifRight.style.opacity = '0.6';
-                        }
-                    }
-                }
-            }
-        }
     </script>
 </body>
 </html>
