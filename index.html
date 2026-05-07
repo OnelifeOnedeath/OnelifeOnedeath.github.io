@@ -52,19 +52,16 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
-        /* HERO */
         .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--p-primary-dark) 0%, var(--p-primary) 50%, var(--p-primary-light) 100%); position: relative; overflow: hidden; }
         [data-theme="p3"] .hero { background: radial-gradient(ellipse at 25% 65%, rgba(74,144,217,0.25) 0%, transparent 55%), radial-gradient(ellipse at 75% 25%, rgba(107,181,255,0.15) 0%, transparent 45%), linear-gradient(180deg, #060F18 0%, #0A1628 30%, #0D1B2A 60%, #060F18 100%); }
         [data-theme="p3"] .hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(74,144,217,0.04) 2px, rgba(74,144,217,0.04) 4px); animation: caustic-shift 20s ease-in-out infinite; pointer-events: none; z-index: 1; }
 
-        /* MAKOTO */
         .makoto-container { display: none; position: absolute; left: -3%; top: 0; bottom: 0; width: 55%; z-index: 2; pointer-events: none; }
         [data-theme="p3"] .makoto-container { display: block; }
         .makoto-figure { position: absolute; left: 0; top: 50%; transform: translateY(-50%) rotate(180deg); width: 100%; height: 100%; animation: makoto-swing 10s ease-in-out infinite; }
         .makoto-silhouette { position: absolute; inset: 0; background: url('https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/textures/makoto_ui_texture.png') no-repeat center; background-size: contain; opacity: 0.4; filter: brightness(0.4) saturate(0.2) contrast(1.5) hue-rotate(-15deg); mix-blend-mode: screen; }
         .makoto-outline { position: absolute; inset: 0; background: url('https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/textures/makoto_ui_texture.png') no-repeat center; background-size: contain; opacity: 0.2; filter: brightness(0.2) contrast(1.8); }
 
-        /* P3R MENU */
         .p3r-menu { display: none; }
         [data-theme="p3"] .p3r-menu { display: flex; position: absolute; right: 8%; top: 50%; transform: translateY(-50%); flex-direction: column; gap: clamp(0.25rem, 1vh, 0.8rem); z-index: 3; width: clamp(190px, 28vw, 420px); }
         .p3r-menu-item { display: none; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(1rem, 3vw, 2.8rem); color: rgba(74,144,217,0.7); cursor: pointer; letter-spacing: 2px; text-transform: uppercase; transform: skewX(-5deg); transition: all 0.25s ease; text-shadow: 0 0 12px rgba(74,144,217,0.2); animation: menu-item-appear 0.4s ease forwards; opacity: 0; }
@@ -72,36 +69,30 @@
         .p3r-menu-item:nth-child(1){animation-delay:0.03s}.p3r-menu-item:nth-child(2){animation-delay:0.07s}.p3r-menu-item:nth-child(3){animation-delay:0.11s}.p3r-menu-item:nth-child(4){animation-delay:0.15s}.p3r-menu-item:nth-child(5){animation-delay:0.19s}.p3r-menu-item:nth-child(6){animation-delay:0.23s}.p3r-menu-item:nth-child(7){animation-delay:0.27s}.p3r-menu-item:nth-child(8){animation-delay:0.31s}.p3r-menu-item:nth-child(9){animation-delay:0.35s}
         .p3r-menu-item:hover,.p3r-menu-item.selected{color:#FFF!important;text-shadow:0 0 30px rgba(74,144,217,0.8),0 0 60px rgba(107,181,255,0.4)!important;transform:skewX(-5deg) scale(1.07)!important}
 
-        /* CURSOR - fixed position */
         .p3r-cursor { display: none; }
-        [data-theme="p3"] .p3r-cursor { display: block; position: absolute; right: calc(8% + clamp(190px, 28vw, 420px) + 25px); top: 50%; width: 0; height: 0; border-left: 16px solid #E60012; border-top: 9px solid transparent; border-bottom: 9px solid transparent; z-index: 4; pointer-events: none; animation: cursor-twitch 1.2s ease-in-out infinite; transform: translateY(-50%); }
+        [data-theme="p3"] .p3r-cursor { display: block; position: absolute; right: calc(8% + clamp(190px, 28vw, 420px) + 25px); width: 0; height: 0; border-left: 16px solid #E60012; border-top: 9px solid transparent; border-bottom: 9px solid transparent; z-index: 4; pointer-events: none; animation: cursor-twitch 1.2s ease-in-out infinite; transition: top 0.15s ease; }
         .p3r-cursor::after { content: ''; position: absolute; left: -24px; top: -12px; width: 0; height: 0; border-left: 20px solid rgba(230,0,18,0.25); border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
 
-        /* INFO */
         .p3r-info { display: none; }
         [data-theme="p3"] .p3r-info { display: flex; position: absolute; left: 5%; bottom: 12%; z-index: 3; flex-direction: column; gap: 0; pointer-events: none; }
         .p3r-info-number { font-size: clamp(3rem, 10vw, 12rem); font-weight: 900; color: rgba(255,255,255,0.05); line-height: 0.8; letter-spacing: -6px; }
         .p3r-info-name { font-size: clamp(1.2rem, 3.5vw, 3.5rem); font-weight: 900; color: #FFF; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 20px rgba(255,255,255,0.3); transform: skewX(-3deg); }
 
-        /* WALLET */
         .p3r-wallet { display: none; }
         [data-theme="p3"] .p3r-wallet { display: flex; position: absolute; left: 5%; top: 7%; z-index: 3; background: rgba(255,255,255,0.93); border: 2px solid #000; padding: 0.5rem 1rem; flex-direction: column; gap: 0; transform: skewX(-3deg); pointer-events: none; }
-        .p3r-wallet-icon { font-size: 1.3rem; font-weight: 700; color: #000; } .p3r-wallet-amount { font-size: 1.7rem; font-weight: 900; color: #000; letter-spacing: 1px; } .p3r-wallet-label { font-size: 0.65rem; color: #666; font-weight: 600; }
+        .p3r-wallet-icon { font-size: 1.3rem; font-weight: 700; color: #000; } .p3r-wallet-amount { font-size: 1.7rem; font-weight: 900; color: #000; } .p3r-wallet-label { font-size: 0.65rem; color: #666; }
 
-        /* TOOLTIP */
         .p3r-tooltip { display: none; }
         [data-theme="p3"] .p3r-tooltip { display: block; position: absolute; right: 5%; bottom: 8%; z-index: 3; color: #FFF; text-align: right; pointer-events: none; }
         .p3r-tooltip-title { font-size: clamp(0.8rem, 1.6vw, 1.2rem); font-weight: 800; text-shadow: 0 0 12px rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 2px; }
         .p3r-tooltip-sub { font-size: clamp(0.6rem, 1.1vw, 0.9rem); font-weight: 600; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end; }
         .p3r-tooltip-line { flex: 1; height: 1px; background: rgba(255,255,255,0.3); max-width: 70px; }
 
-        /* CONFETTI */
         .p3r-confetti { display: none; }
         [data-theme="p3"] .p3r-confetti { display: block; position: absolute; inset: 0; pointer-events: none; z-index: 2; }
         .confetti-piece { position: absolute; width: 18px; height: 12px; background: linear-gradient(135deg, rgba(74,144,217,0.5), rgba(107,181,255,0.2)); clip-path: polygon(0 0, 100% 30%, 70% 100%, 10% 80%); animation: confetti-float 7s ease-in-out infinite; }
         @keyframes confetti-float { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 10% { opacity: 0.7; } 90% { opacity: 0.7; } 100% { transform: translateY(-60px) rotate(360deg); opacity: 0; } }
 
-        /* MODAL */
         .p3r-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 5000; display: none; align-items: center; justify-content: center; }
         .p3r-modal.open { display: flex; }
         .p3r-modal-content { background: var(--p-surface); border: 2px solid var(--p-border-light); border-radius: 1rem; padding: 2rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; color: var(--p-text); position: relative; }
@@ -115,48 +106,22 @@
         .calendar-display .date { font-size: 2.5rem; font-weight: 900; color: var(--p-primary-light); }
         .calendar-display .time { font-size: 1.5rem; font-weight: 700; color: var(--p-text); }
 
-        /* Add friend */
-        .add-friend-area { margin-top: 1rem; display: flex; gap: 0.5rem; }
-        .add-friend-input { flex: 1; background: var(--p-background); border: 1px solid var(--p-border); color: var(--p-text); padding: 0.5rem; border-radius: 0.5rem; font-family: 'Montserrat', sans-serif; }
-        .friend-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
-        .friend-item { display: flex; align-items: center; justify-content: space-between; background: var(--btn-bg); padding: 0.5rem 0.75rem; border-radius: 0.5rem; border: 1px solid var(--btn-border); }
-        .friend-item button { background: var(--p-primary); border: 1px solid var(--p-primary-light); color: white; padding: 0.25rem 0.75rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.75rem; }
-
         [data-theme="p3"] .anime-gif-left, [data-theme="p3"] .anime-gif-right, [data-theme="p3"] .brand-header { display: none; }
         .anime-gif-left, .anime-gif-right { position: absolute; border-radius: 50%; overflow: hidden; border: 3px solid var(--p-primary-light); z-index: 1; }
         .anime-gif-left { bottom: 2rem; left: 2rem; width: 180px; height: 180px; opacity: 0.8; animation: float 8s ease-in-out infinite; }
         .anime-gif-right { top: 2rem; right: 2rem; width: 160px; height: 160px; opacity: 0.9; animation: float 7s ease-in-out infinite reverse; }
         .anime-gif-left img, .anime-gif-right img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* ==================== P5 CHAT (ZIGZAG STYLE) ==================== */
-        .p5-chat-fab {
-            position: fixed; top: 5rem; left: 1rem; z-index: 999;
-            width: 50px; height: 50px; border-radius: 50%;
-            background: linear-gradient(135deg, #E60012, #B8000F);
-            border: 3px solid #FF4444; color: white;
-            font-size: 1.2rem; cursor: pointer;
-            box-shadow: 0 0 25px rgba(230,0,18,0.5);
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s ease;
-        }
+        /* P5 CHAT */
+        .p5-chat-fab { position: fixed; top: 5rem; left: 1rem; z-index: 999; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #E60012, #B8000F); border: 3px solid #FF4444; color: white; font-size: 1.2rem; cursor: pointer; box-shadow: 0 0 25px rgba(230,0,18,0.5); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
         .p5-chat-fab:hover { transform: scale(1.15); box-shadow: 0 0 40px rgba(230,0,18,0.7); }
-        .p5-chat-fab .badge {
-            position: absolute; top: -5px; right: -5px;
-            background: #FFD700; color: #000; border-radius: 50%;
-            width: 20px; height: 20px; font-size: 0.6rem; font-weight: 900;
-            display: flex; align-items: center; justify-content: center;
-            display: none;
-        }
+        .p5-chat-fab .badge { position: absolute; top: -5px; right: -5px; background: #FFD700; color: #000; border-radius: 50%; min-width: 20px; height: 20px; font-size: 0.6rem; font-weight: 900; display: none; align-items: center; justify-content: center; padding: 0 3px; }
         .p5-chat-fab .badge.show { display: flex; }
 
         .p5-chat-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; display: none; align-items: center; justify-content: center; }
         .p5-chat-overlay.open { display: flex; }
 
-        /* Phone with P5 style */
-        .p5-phone {
-            width: 300px; height: 450px;
-            position: relative; overflow: visible;
-        }
+        .p5-phone { width: 300px; height: 450px; position: relative; overflow: visible; }
         .p5-phone-svg { position: absolute; width: 100%; height: 100%; }
         .p5-phone-svg polygon { fill: #1a1a1a; stroke: #333; stroke-width: 2; }
         .p5-screen-border-svg { position: absolute; width: 100%; height: 100%; }
@@ -164,144 +129,53 @@
         .p5-screen-svg { position: absolute; width: 100%; height: 100%; }
         .p5-screen-svg polygon { fill: #0a0a0a; stroke: #222; stroke-width: 1; }
 
-        .p5-screen {
-            position: absolute; top: 18px; left: 28px; right: 30px; bottom: 15px;
-            background: #0a0a0a; overflow-y: auto; overflow-x: hidden; padding: 10px 5px;
-            display: flex; flex-direction: column;
-        }
+        .p5-screen { position: absolute; top: 18px; left: 28px; right: 30px; bottom: 15px; background: #0a0a0a; overflow-y: auto; overflow-x: hidden; padding: 10px 5px; display: flex; flex-direction: column; }
         .p5-screen::-webkit-scrollbar { width: 2px; }
         .p5-screen::-webkit-scrollbar-thumb { background: #E60012; }
 
-        /* SNS Header */
         .p5-sns { text-align: center; padding: 5px 0 10px; position: relative; flex-shrink: 0; }
         .p5-sns-under { font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; color: #333; position: absolute; left: 50%; transform: translateX(-50%); top: 3px; }
         .p5-sns-main { font-family: 'Luckiest Guy', cursive; font-size: 1.8rem; color: white; position: relative; z-index: 1; }
 
-        /* Zigzag decoration */
         .p5-zig-shadow, .p5-zig { position: absolute; width: 100%; height: 80px; top: 50px; left: 0; pointer-events: none; }
         .p5-zig-shadow polygon { fill: rgba(230,0,18,0.2); }
         .p5-zig polygon { fill: none; stroke: #E60012; stroke-width: 2; }
 
-        /* Contact List */
         .p5-contacts { display: flex; flex-direction: column; gap: 6px; flex: 1; overflow-y: auto; position: relative; z-index: 2; margin-top: 35px; }
-        
-        .p5-contact-item {
-            position: relative; height: 55px; cursor: pointer;
-            transition: transform 0.2s;
-        }
+        .p5-contact-item { position: relative; height: 55px; cursor: pointer; transition: transform 0.2s; }
         .p5-contact-item:hover { transform: translateX(3px); }
-        
-        .p5-contact-border, .p5-contact-outline, .p5-contact-panel {
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0;
-        }
+        .p5-contact-border, .p5-contact-outline, .p5-contact-panel { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
         .p5-contact-border polygon { fill: #E60012; }
         .p5-contact-outline polygon { fill: #0a0a0a; }
         .p5-contact-panel polygon { fill: #1a1a1a; stroke: #333; stroke-width: 1; }
         .p5-contact-panel.active polygon { fill: #E60012; }
-        
-        .p5-contact-avatar {
-            position: absolute; width: 38px; height: 38px; left: 18px; top: 8px;
-            object-fit: cover; clip-path: polygon(0 5%, 100% 0, 95% 100%, 5% 95%);
-        }
-        
-        .p5-contact-text {
-            position: absolute; left: 65px; top: 12px; right: 15px;
-            color: #ccc; font-size: 0.75rem; font-family: 'Share Tech Mono', monospace;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            transform: skewX(-10deg);
-        }
-        
-        .p5-contact-badge {
-            position: absolute; right: 10px; top: 12px;
-            font-family: 'Luckiest Guy', cursive; color: #E60012; font-size: 1rem;
-        }
+        .p5-contact-avatar { position: absolute; width: 38px; height: 38px; left: 18px; top: 8px; object-fit: cover; clip-path: polygon(0 5%, 100% 0, 95% 100%, 5% 95%); }
+        .p5-contact-text { position: absolute; left: 65px; top: 12px; right: 15px; color: #ccc; font-size: 0.7rem; font-family: 'Share Tech Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transform: skewX(-10deg); }
+        .p5-contact-badge { position: absolute; right: 10px; top: 10px; background: #E60012; color: #FFF; border-radius: 50%; min-width: 20px; height: 20px; font-size: 0.6rem; font-weight: 900; display: flex; align-items: center; justify-content: center; padding: 0 3px; }
 
-        /* Chat Messages View */
         .p5-chat-view { display: none; flex-direction: column; height: 100%; flex: 1; }
         .p5-chat-view.active { display: flex; }
-        
-        .p5-chat-header {
-            display: flex; align-items: center; gap: 8px; padding: 6px 8px;
-            border-bottom: 2px solid #E60012; flex-shrink: 0;
-        }
-        .p5-chat-back {
-            background: none; border: 2px solid #E60012; color: #E60012;
-            padding: 3px 8px; cursor: pointer; font-weight: bold;
-            font-family: 'Luckiest Guy', cursive; font-size: 0.7rem;
-        }
-        
-        .p5-chat-messages {
-            flex: 1; overflow-y: auto; padding: 8px;
-            display: flex; flex-direction: column; gap: 6px;
-        }
-        
-        /* P5 Message Bubble - ZIGZAG style */
-        .p5-msg {
-            display: flex; gap: 6px; animation: msg-pop 0.3s ease;
-            align-items: flex-start;
-        }
+        .p5-chat-header { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-bottom: 2px solid #E60012; flex-shrink: 0; }
+        .p5-chat-back { background: none; border: 2px solid #E60012; color: #E60012; padding: 3px 8px; cursor: pointer; font-weight: bold; font-family: 'Luckiest Guy', cursive; font-size: 0.7rem; }
+        .p5-chat-messages { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+        .p5-msg { display: flex; gap: 6px; animation: msg-pop 0.3s ease; align-items: flex-start; }
         .p5-msg.own { flex-direction: row-reverse; }
-        
-        .p5-msg-avatar {
-            width: 28px; height: 28px; flex-shrink: 0;
-            object-fit: cover; clip-path: polygon(0 10%, 100% 0, 90% 100%, 10% 90%);
-        }
-        
-        .p5-msg-bubble-wrap {
-            position: relative; max-width: 70%;
-        }
-        .p5-msg-bubble {
-            padding: 8px 12px; font-size: 0.72rem; line-height: 1.4;
-            font-family: 'Share Tech Mono', monospace; word-break: break-word;
-            position: relative;
-            clip-path: polygon(
-                0% 5%, 5% 0%, 95% 0%, 100% 5%,
-                100% 95%, 95% 100%, 5% 100%, 0% 95%
-            );
-        }
-        .p5-msg.received .p5-msg-bubble {
-            background: #1a1a1a; color: #ddd; border: 1px solid #333;
-        }
-        .p5-msg.own .p5-msg-bubble {
-            background: #E60012; color: #fff; border: 1px solid #FF4444;
-        }
-        
-        /* Zigzag accent on messages */
-        .p5-msg-zigzag {
-            position: absolute; top: -6px; left: 10px;
-            width: 14px; height: 8px;
-            background: #E60012;
-            clip-path: polygon(0% 100%, 25% 0%, 50% 100%, 75% 0%, 100% 100%);
-        }
+        .p5-msg-avatar { width: 28px; height: 28px; flex-shrink: 0; object-fit: cover; clip-path: polygon(0 10%, 100% 0, 90% 100%, 10% 90%); }
+        .p5-msg-bubble-wrap { position: relative; max-width: 70%; }
+        .p5-msg-bubble { padding: 8px 12px; font-size: 0.72rem; line-height: 1.4; font-family: 'Share Tech Mono', monospace; word-break: break-word; position: relative; clip-path: polygon(0% 5%, 5% 0%, 95% 0%, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0% 95%); }
+        .p5-msg.received .p5-msg-bubble { background: #1a1a1a; color: #ddd; border: 1px solid #333; }
+        .p5-msg.own .p5-msg-bubble { background: #E60012; color: #fff; border: 1px solid #FF4444; }
+        .p5-msg-zigzag { position: absolute; top: -6px; left: 10px; width: 14px; height: 8px; background: #E60012; clip-path: polygon(0% 100%, 25% 0%, 50% 100%, 75% 0%, 100% 100%); }
         .p5-msg.own .p5-msg-zigzag { left: auto; right: 10px; }
         .p5-msg.received .p5-msg-zigzag { background: #333; }
 
-        .p5-chat-input-area {
-            display: flex; gap: 4px; padding: 6px;
-            background: #0A0A0A; border-top: 2px solid #222; flex-shrink: 0;
-        }
-        .p5-chat-input {
-            flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ddd;
-            padding: 6px 10px; font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
-            outline: none; clip-path: polygon(2% 0, 100% 0, 98% 100%, 0 100%);
-        }
+        .p5-chat-input-area { display: flex; gap: 4px; padding: 6px; background: #0A0A0A; border-top: 2px solid #222; flex-shrink: 0; }
+        .p5-chat-input { flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 6px 10px; font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; outline: none; clip-path: polygon(2% 0, 100% 0, 98% 100%, 0 100%); }
         .p5-chat-input:focus { border-color: #E60012; }
-        .p5-chat-send {
-            background: #E60012; border: 2px solid #FF4444; color: white;
-            padding: 6px 12px; cursor: pointer; font-weight: bold;
-            font-family: 'Luckiest Guy', cursive; font-size: 0.65rem; letter-spacing: 1px;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-        }
+        .p5-chat-send { background: #E60012; border: 2px solid #FF4444; color: white; padding: 6px 12px; cursor: pointer; font-weight: bold; font-family: 'Luckiest Guy', cursive; font-size: 0.65rem; letter-spacing: 1px; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
         .p5-chat-send:hover { background: #FF2222; }
 
-        /* P5 Close button */
-        .p5-close-btn {
-            position: absolute; top: -35px; right: 5px;
-            background: none; border: 2px solid #E60012; color: #E60012;
-            width: 28px; height: 28px; cursor: pointer; font-size: 0.9rem;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 10;
-        }
+        .p5-close-btn { position: absolute; top: -35px; right: 5px; background: none; border: 2px solid #E60012; color: #E60012; width: 28px; height: 28px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; z-index: 10; }
 
         .top-bars { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; }
         .theme-btn, .lang-btn { background: var(--btn-bg); border: 2px solid var(--btn-border); color: var(--btn-text); padding: 0.35rem 0.7rem; border-radius: 0.75rem; cursor: pointer; font-weight: 700; font-size: 0.75rem; white-space: nowrap; display: flex; align-items: center; gap: 0.3rem; }
@@ -345,54 +219,35 @@
         @media (max-width: 1024px) { .social-grid { grid-template-columns: repeat(3, 1fr); } [data-theme="p3"] .makoto-container { width: 45%; } }
         @media (max-width: 768px) {
             .social-grid { grid-template-columns: repeat(2, 1fr); } .demo-interface { grid-template-columns: 1fr; }
-            [data-theme="p3"] .makoto-container { width: 38%; left: -6%; }
-            [data-theme="p3"] .p3r-menu { right: 3%; width: 50%; }
+            [data-theme="p3"] .makoto-container { width: 38%; left: -6%; } [data-theme="p3"] .p3r-menu { right: 3%; width: 50%; }
             [data-theme="p3"] .p3r-menu-item { font-size: clamp(0.6rem, 2vw, 1.1rem); }
             [data-theme="p3"] .p3r-cursor { border-left-width: 10px; right: calc(3% + 50% + 18px); }
             .p5-phone { width: 85vw; height: auto; max-height: 80vh; }
         }
-        @media (max-width: 480px) {
-            [data-theme="p3"] .makoto-container { width: 32%; left: -10%; opacity: 0.5; }
-            [data-theme="p3"] .p3r-cursor { display: none; }
-        }
+        @media (max-width: 480px) { [data-theme="p3"] .makoto-container { width: 32%; left: -10%; opacity: 0.5; } [data-theme="p3"] .p3r-cursor { display: none; } }
     </style>
 </head>
 <body>
-    <!-- SOUNDS -->
     <audio id="sfx-select" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/splash.wav"></audio>
     <audio id="sfx-move" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/menu1.wav"></audio>
     <audio id="sfx-cancel" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/plum_softening.wav"></audio>
     <audio id="sfx-open" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/bubbles.wav"></audio>
 
-    <!-- MAKOTO -->
     <div class="makoto-container"><div class="makoto-figure"><div class="makoto-silhouette"></div><div class="makoto-outline"></div></div></div>
-    
-    <!-- P3R CONFETTI -->
     <div class="p3r-confetti" id="p3r-confetti"></div>
-    
-    <!-- P3R MENU -->
     <div class="p3r-menu" id="p3r-menu">
-        <div class="p3r-menu-item selected" data-idx="0">SKILL</div>
-        <div class="p3r-menu-item" data-idx="1">ITEM</div>
-        <div class="p3r-menu-item" data-idx="2">EQUIP</div>
-        <div class="p3r-menu-item" data-idx="3">PERSONA</div>
-        <div class="p3r-menu-item" data-idx="4">STATS</div>
-        <div class="p3r-menu-item" data-idx="5">QUEST</div>
-        <div class="p3r-menu-item" data-idx="6">SOCIAL LINK</div>
-        <div class="p3r-menu-item" data-idx="7">CALENDAR</div>
+        <div class="p3r-menu-item selected" data-idx="0">SKILL</div><div class="p3r-menu-item" data-idx="1">ITEM</div>
+        <div class="p3r-menu-item" data-idx="2">EQUIP</div><div class="p3r-menu-item" data-idx="3">PERSONA</div>
+        <div class="p3r-menu-item" data-idx="4">STATS</div><div class="p3r-menu-item" data-idx="5">QUEST</div>
+        <div class="p3r-menu-item" data-idx="6">SOCIAL LINK</div><div class="p3r-menu-item" data-idx="7">CALENDAR</div>
         <div class="p3r-menu-item" data-idx="8">SYSTEM</div>
     </div>
     <div class="p3r-cursor" id="p3r-cursor"></div>
-    
-    <!-- P3R INFO -->
     <div class="p3r-info"><div class="p3r-info-number" id="p3r-num">1</div><div class="p3r-info-name" id="p3r-name">SKILL</div></div>
     <div class="p3r-wallet"><div class="p3r-wallet-icon">¥</div><div class="p3r-wallet-amount">999,999</div><div class="p3r-wallet-label">current wallet</div></div>
     <div class="p3r-tooltip"><div class="p3r-tooltip-title" id="p3r-tt-title">Use a Skill</div><div class="p3r-tooltip-sub"><span class="p3r-tooltip-line"></span><span id="p3r-tt-sub">Command</span></div></div>
-
-    <!-- MODAL -->
     <div class="p3r-modal" id="p3r-modal"><div class="p3r-modal-content" id="p3r-modal-content"><button class="p3r-modal-close" onclick="closeP3RModal()">✕</button></div></div>
 
-    <!-- ADMIN -->
     <div class="admin-area">
         <button class="admin-btn-small" onclick="toggleAdminModal()">🔒</button>
         <div class="admin-indicator" id="admin-indicator"><span style="width:5px;height:5px;border-radius:50%;background:#0f0;display:inline-block;"></span> ADMIN <button onclick="adminLogout()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:0.5rem;">✕</button></div>
@@ -405,7 +260,6 @@
         <div id="admin-msg" style="margin-top:0.5rem;font-size:0.8rem;"></div>
     </div>
 
-    <!-- TOP BARS -->
     <div class="top-bars">
         <button class="lang-btn" onclick="toggleLang()"><i class="fas fa-language"></i> <span class="lang-text">English</span></button>
         <button class="theme-btn active" onclick="setTheme('default')" id="dt">Default</button>
@@ -413,32 +267,30 @@
         <button class="theme-btn" onclick="setTheme('light')" id="lt"><i class="fas fa-sun"></i> Light</button>
     </div>
 
-    <!-- HERO -->
     <section class="hero">
         <div class="anime-gif-left"><img src="https://99px.ru/sstorage/86/2016/10/image_862910161743391536726.gif" alt="Lain" loading="lazy"></div>
         <div class="anime-gif-right"><img src="https://99px.ru/sstorage/86/2020/04/10804200835411467.gif" alt="Lain" loading="lazy"></div>
         <div class="container"><div class="brand-header">
             <div class="username">OnelifeOnedeath</div>
-            <div class="russian"><div class="tagline">Универсальный инженер • Исследователь систем</div><div class="universal-badge"><i class="fas fa-globe"></i> Один никнейм — все платформы</div></div>
-            <div class="english"><div class="tagline">Universal Engineer • Systems Researcher</div><div class="universal-badge"><i class="fas fa-globe"></i> One username — all platforms</div></div>
+            <div class="russian"><div class="tagline">Универсальный инженер</div><div class="universal-badge"><i class="fas fa-globe"></i> Один никнейм — все платформы</div></div>
+            <div class="english"><div class="tagline">Universal Engineer</div><div class="universal-badge"><i class="fas fa-globe"></i> One username — all platforms</div></div>
             <div class="social-grid">
-                <a href="https://github.com/OnelifeOnedeath" class="social-card github" target="_blank"><div class="social-icon"><i class="fab fa-github"></i></div><div class="social-name">GitHub</div><div class="social-handle">OnelifeOnedeath</div></a>
-                <a href="https://t.me/OnelifeOnedeath" class="social-card telegram" target="_blank"><div class="social-icon"><i class="fab fa-telegram"></i></div><div class="social-name">Telegram</div><div class="social-handle">@OnelifeOnedeath</div></a>
-                <a href="https://vk.com/onelifeonedeath" class="social-card vk" target="_blank"><div class="social-icon"><i class="fab fa-vk"></i></div><div class="social-name">VK</div><div class="social-handle">onelifeonedeath</div></a>
-                <a href="https://www.youtube.com/@OnelifeOnedeath" class="social-card youtube" target="_blank"><div class="social-icon"><i class="fab fa-youtube"></i></div><div class="social-name">YouTube</div><div class="social-handle">@OnelifeOnedeath</div></a>
-                <a href="https://steamcommunity.com/id/OnelifeOnedeath" class="social-card steam" target="_blank"><div class="social-icon"><i class="fab fa-steam"></i></div><div class="social-name">Steam</div><div class="social-handle">OnelifeOnedeath</div></a>
-                <a href="#" class="social-card discord"><div class="social-icon"><i class="fab fa-discord"></i></div><div class="social-name">Discord</div><div class="social-handle">OnelifeOnedeath</div></a>
+                <a href="https://github.com/OnelifeOnedeath" class="social-card github" target="_blank"><div class="social-icon"><i class="fab fa-github"></i></div><div class="social-name">GitHub</div></a>
+                <a href="https://t.me/OnelifeOnedeath" class="social-card telegram" target="_blank"><div class="social-icon"><i class="fab fa-telegram"></i></div><div class="social-name">Telegram</div></a>
+                <a href="https://vk.com/onelifeonedeath" class="social-card vk" target="_blank"><div class="social-icon"><i class="fab fa-vk"></i></div><div class="social-name">VK</div></a>
+                <a href="https://www.youtube.com/@OnelifeOnedeath" class="social-card youtube" target="_blank"><div class="social-icon"><i class="fab fa-youtube"></i></div><div class="social-name">YouTube</div></a>
+                <a href="https://steamcommunity.com/id/OnelifeOnedeath" class="social-card steam" target="_blank"><div class="social-icon"><i class="fab fa-steam"></i></div><div class="social-name">Steam</div></a>
+                <a href="#" class="social-card discord"><div class="social-icon"><i class="fab fa-discord"></i></div><div class="social-name">Discord</div></a>
             </div>
         </div></div>
     </section>
 
-    <!-- SECTIONS -->
     <section class="section-content"><div class="container">
         <h2 class="section-title russian">Проекты</h2><h2 class="section-title english">Projects</h2>
         <div class="project-grid">
-            <div class="project-card"><h3 style="color:var(--p-primary-light);">Tapeworm 🐛</h3><p class="russian">Визуализатор Brainfuck.</p><p class="english">Brainfuck visualizer.</p><a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
-            <div class="project-card"><h3 style="color:var(--p-primary-light);">Codex Mortis</h3><p class="russian">Мультиязычный кодекс.</p><p class="english">Multi-language codex.</p><a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
-            <div class="project-card"><h3 style="color:var(--p-primary-light);">Ubuntu Design Helper</h3><p class="russian">Инструментарий для Linux.</p><p class="english">Toolkit for Linux.</p><a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+            <div class="project-card"><h3 style="color:var(--p-primary-light);">Tapeworm 🐛</h3><p>Визуализатор Brainfuck</p><a href="https://github.com/OnelifeOnedeath/Tapeworm" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+            <div class="project-card"><h3 style="color:var(--p-primary-light);">Codex Mortis</h3><p>Мультиязычный кодекс</p><a href="https://github.com/OnelifeOnedeath/CodexMortis" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+            <div class="project-card"><h3 style="color:var(--p-primary-light);">Ubuntu Design Helper</h3><p>Инструментарий для Linux</p><a href="https://github.com/OnelifeOnedeath/UbuntuDesignHelper" class="btn" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
         </div>
     </div></section>
 
@@ -453,31 +305,21 @@
     <section class="section-content"><div class="container">
         <h2 class="section-title russian">Технологии</h2><h2 class="section-title english">Technologies</h2>
         <div class="skills-grid">
-            <div class="skill-category"><h3 style="color:var(--p-primary-light);">Backend</h3><div style="display:flex;flex-wrap:wrap;gap:0.4rem;"><span class="tech-tag">C#/.NET</span><span class="tech-tag">Rust</span><span class="tech-tag">Python</span></div></div>
-            <div class="skill-category"><h3 style="color:var(--p-primary-light);">System</h3><div style="display:flex;flex-wrap:wrap;gap:0.4rem;"><span class="tech-tag">Linux</span><span class="tech-tag">Docker</span><span class="tech-tag">WASM</span></div></div>
-            <div class="skill-category"><h3 style="color:var(--p-primary-light);">Tools</h3><div style="display:flex;flex-wrap:wrap;gap:0.4rem;"><span class="tech-tag">Git</span><span class="tech-tag">AWS</span><span class="tech-tag">CI/CD</span></div></div>
+            <div class="skill-category"><h3 style="color:var(--p-primary-light);">Backend</h3><div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span class="tech-tag">C#/.NET</span><span class="tech-tag">Rust</span><span class="tech-tag">Python</span></div></div>
+            <div class="skill-category"><h3 style="color:var(--p-primary-light);">System</h3><div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span class="tech-tag">Linux</span><span class="tech-tag">Docker</span><span class="tech-tag">WASM</span></div></div>
+            <div class="skill-category"><h3 style="color:var(--p-primary-light);">Tools</h3><div style="display:flex;gap:0.4rem;flex-wrap:wrap;"><span class="tech-tag">Git</span><span class="tech-tag">AWS</span><span class="tech-tag">CI/CD</span></div></div>
         </div>
     </div></section>
 
     <section class="section-content"><div class="container" style="text-align:center;">
         <h2 class="section-title russian">Контакты</h2><h2 class="section-title english">Contacts</h2>
-        <a href="mailto:igorb9475@gmail.com" class="btn"><i class="fas fa-envelope"></i> <span class="russian">Написать</span><span class="english">Email</span></a>
+        <a href="mailto:igorb9475@gmail.com" class="btn"><i class="fas fa-envelope"></i> Email</a>
     </div></section>
 
-    <section class="section-content"><div class="container" style="text-align:center;">
-        <p style="font-style:italic;font-size:1.2rem;" class="russian">"Одна жизнь, одна смерть — философия глубинного понимания систем."</p>
-        <p style="font-style:italic;font-size:1.2rem;" class="english">"One life, one death — a philosophy of deep system understanding."</p>
-    </div></section>
+    <footer><div class="container"><div style="font-weight:900;color:var(--p-primary-light);font-size:1.3rem;">OnelifeOnedeath</div><p style="color:var(--p-text-dim);">Универсальный инженер • 2025</p></div></footer>
 
-    <footer><div class="container"><div style="font-weight:900;color:var(--p-primary-light);font-size:1.3rem;">OnelifeOnedeath</div><p style="color:var(--p-text-dim);" class="russian">Универсальный инженер • 2025</p><p style="color:var(--p-text-dim);" class="english">Universal Engineer • 2025</p></div></footer>
+    <button class="p5-chat-fab" onclick="openP5Chat()" id="p5-fab">💬<span class="badge" id="p5-badge">0</span></button>
 
-    <!-- P5 CHAT FAB -->
-    <button class="p5-chat-fab" onclick="openP5Chat()" id="p5-fab">
-        💬
-        <span class="badge" id="p5-badge">0</span>
-    </button>
-
-    <!-- P5 CHAT OVERLAY -->
     <div class="p5-chat-overlay" id="p5-overlay">
         <div style="position:relative;">
             <button class="p5-close-btn" onclick="closeP5Chat()">✕</button>
@@ -486,20 +328,16 @@
                 <svg class="p5-screen-border-svg"><polygon points="20,10 280,10 270,300 270,440 10,440"/></svg>
                 <svg class="p5-screen-svg"><polygon points="25,14 270,18 265,437 18,432"/></svg>
                 <div class="p5-screen" id="p5-screen">
-                    <!-- Contacts View -->
                     <div id="p5-contacts-view" style="display:flex;flex-direction:column;height:100%;">
-                        <div class="p5-sns">
-                            <span class="p5-sns-under">SNS</span>
-                            <span class="p5-sns-main"><span style="color:#E60012;">S</span>NS</span>
-                        </div>
+                        <div class="p5-sns"><span class="p5-sns-under">SNS</span><span class="p5-sns-main"><span style="color:#E60012;">S</span>NS</span></div>
                         <svg class="p5-zig-shadow"><polygon points="70,70 80,70 60,150 110,210 80,270 50,270 70,205 30,150"/></svg>
                         <svg class="p5-zig"><polygon points="70,60 80,60 60,140 110,200 80,260 50,260 70,195 30,140"/></svg>
                         <div class="p5-contacts" id="p5-contacts-list"></div>
-                        <div style="padding:5px;text-align:center;flex-shrink:0;">
+                        <div style="padding:5px;text-align:center;flex-shrink:0;border-top:1px solid #222;">
                             <button class="p5-chat-send" onclick="addFriend()" style="font-size:0.6rem;padding:4px 10px;clip-path:none;border-radius:4px;">+ ADD FRIEND</button>
+                            <div id="p5-my-nick" style="color:#666;font-size:0.55rem;margin-top:3px;font-family:'Share Tech Mono',monospace;"></div>
                         </div>
                     </div>
-                    <!-- Chat View -->
                     <div class="p5-chat-view" id="p5-chat-view">
                         <div class="p5-chat-header">
                             <button class="p5-chat-back" onclick="backToContacts()">← BACK</button>
@@ -517,10 +355,8 @@
     </div>
 
     <script>
-        // ==================== SOUNDS ====================
         function playSfx(id) { const el = document.getElementById('sfx-' + id); if (el) { el.currentTime = 0; el.play().catch(() => {}); } }
 
-        // ==================== ADMIN ====================
         const SK = 'NyxsAvatarsP3R!';
         let isAdmin = false;
         function fp() { const d = navigator.userAgent + navigator.language + screen.width + screen.height + new Date().getTimezoneOffset(); let h = 0; for (let i = 0; i < d.length; i++) { h = ((h << 5) - h) + d.charCodeAt(i); h |= 0; } return Math.abs(h).toString(36); }
@@ -530,7 +366,6 @@
         function adminLogin() { const k = document.getElementById('admin-key').value, msg = document.getElementById('admin-msg'); if (k === SK) { const f = fp(); localStorage.setItem('kh', btoa(k + f)); localStorage.setItem('kf', f); isAdmin = true; updateAdminUI(); msg.textContent = '✅ Welcome!'; msg.style.color = '#0f0'; setTimeout(toggleAdminModal, 800); } else { msg.textContent = '❌ Denied'; msg.style.color = '#f33'; } }
         function adminLogout() { localStorage.removeItem('kh'); localStorage.removeItem('kf'); isAdmin = false; updateAdminUI(); }
 
-        // ==================== THEME ====================
         const themes = {
             default: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#A78BFA','--p-primary-dark':'#5B21B6','--p-highlight':'#C4B5FD','--p-surface':'#1F2937','--p-surface-hover':'#374151','--p-background':'#111827','--p-background-alt':'#0F172A','--p-text':'#F9FAFB','--p-text-muted':'#D1D5DB','--p-text-dim':'#9CA3AF','--p-border':'#374151','--p-border-light':'#4B5563','--btn-bg':'rgba(139,92,246,0.25)','--btn-border':'rgba(139,92,246,0.6)','--btn-hover-bg':'rgba(139,92,246,0.45)','--btn-text':'#FFFFFF','--card-bg':'rgba(255,255,255,0.07)'},
             light: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#6D28D9','--p-primary-dark':'#5B21B6','--p-highlight':'#A78BFA','--p-surface':'#FFFFFF','--p-surface-hover':'#F5F3FF','--p-background':'#FEF7FF','--p-background-alt':'#F3E8FF','--p-text':'#1E1B4B','--p-text-muted':'#4C1D95','--p-text-dim':'#7C3AED','--p-border':'#DDD6FE','--p-border-light':'#C4B5FD','--btn-bg':'rgba(139,92,246,0.12)','--btn-border':'rgba(139,92,246,0.4)','--btn-hover-bg':'rgba(139,92,246,0.25)','--btn-text':'#1E1B4B','--card-bg':'rgba(255,255,255,0.9)'},
@@ -544,19 +379,18 @@
             document.getElementById(bid)?.classList.add('active');
             if (t === 'p3') { genConfetti(); initP3RMenu(); playSfx('open'); }
         }
-        function genConfetti() { const c = document.getElementById('p3r-confetti'); if (!c) return; c.innerHTML = ''; for (let i = 0; i < 15; i++) { const p = document.createElement('div'); p.className = 'confetti-piece'; p.style.cssText = `left:${Math.random()*90}%;top:${Math.random()*90}%;animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*4}s;width:${8+Math.random()*20}px;height:${6+Math.random()*12}px;`; c.appendChild(p); } }
+        function genConfetti() { const c = document.getElementById('p3r-confetti'); if (!c) return; c.innerHTML = ''; for (let i = 0; i < 12; i++) { const p = document.createElement('div'); p.className = 'confetti-piece'; p.style.cssText = `left:${Math.random()*90}%;top:${Math.random()*90}%;animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*4}s;`; c.appendChild(p); } }
 
-        // ==================== P3R MENU ====================
         const p3rData = [
-            { n:'SKILL', t:'Use a Skill', s:'Command', a: ()=>openModal('SKILL','Combat abilities') },
-            { n:'ITEM', t:'View / Use Items', s:'Inventory', a: ()=>openModal('ITEMS','Your inventory') },
-            { n:'EQUIP', t:'View / Change Equipment', s:'Equipment', a: ()=>openModal('EQUIP','Gear and weapons') },
-            { n:'PERSONA', t:'View / Change Personas', s:'Persona', a: showPersona },
-            { n:'STATS', t:'View Stats', s:'Status', a: ()=>openModal('STATS','Character statistics') },
-            { n:'QUEST', t:'View Requests', s:'Requests', a: ()=>openModal('QUESTS','Active requests') },
-            { n:'SOCIAL LINK', t:'View Social Links', s:'Community', a: showSocialLinks },
-            { n:'CALENDAR', t:'View Calendar', s:'Schedule', a: showCalendar },
-            { n:'SYSTEM', t:'View Settings', s:'Config', a: showSystem }
+            { n:'SKILL', t:'Use a Skill', s:'Command', a: ()=>openModal('SKILL','Combat menu') },
+            { n:'ITEM', t:'View Items', s:'Inventory', a: ()=>openModal('ITEMS','Inventory') },
+            { n:'EQUIP', t:'Change Equipment', s:'Equipment', a: ()=>openModal('EQUIP','Equipment') },
+            { n:'PERSONA', t:'View Personas', s:'Persona', a: showPersona },
+            { n:'STATS', t:'View Stats', s:'Status', a: ()=>openModal('STATS','Statistics') },
+            { n:'QUEST', t:'View Requests', s:'Requests', a: ()=>openModal('QUESTS','Requests') },
+            { n:'SOCIAL LINK', t:'Social Links', s:'Community', a: showSocialLinks },
+            { n:'CALENDAR', t:'Calendar', s:'Schedule', a: showCalendar },
+            { n:'SYSTEM', t:'Settings', s:'Config', a: showSystem }
         ];
         let p3rIdx = 0;
         function initP3RMenu() {
@@ -575,210 +409,101 @@
         function selectP3R(i) {
             p3rIdx = i;
             document.querySelectorAll('.p3r-menu-item').forEach((el, j) => el.classList.toggle('selected', j === i));
-            const item = document.querySelectorAll('.p3r-menu-item')[i], menu = document.getElementById('p3r-menu');
-            document.getElementById('p3r-num').textContent = i + 1;
-            document.getElementById('p3r-name').textContent = p3rData[i].n;
-            document.getElementById('p3r-tt-title').textContent = p3rData[i].t;
-            document.getElementById('p3r-tt-sub').textContent = p3rData[i].s;
+            const item = document.querySelectorAll('.p3r-menu-item')[i], menu = document.getElementById('p3r-menu'), cursor = document.getElementById('p3r-cursor');
+            if (item && menu && cursor) { const mr = menu.getBoundingClientRect(), ir = item.getBoundingClientRect(); cursor.style.top = (ir.top - mr.top + ir.height / 2) + 'px'; }
+            document.getElementById('p3r-num').textContent = i + 1; document.getElementById('p3r-name').textContent = p3rData[i].n;
+            document.getElementById('p3r-tt-title').textContent = p3rData[i].t; document.getElementById('p3r-tt-sub').textContent = p3rData[i].s;
         }
         function openModal(title, content) { const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);margin-bottom:1rem;">${title}</h2><p>${content}</p>`; m.classList.add('open'); }
         function closeP3RModal() { document.getElementById('p3r-modal').classList.remove('open'); playSfx('cancel'); }
 
-        const allPersonas = [
-            { name: 'Arsène', img: 'https://megatenwiki.com/images/0/0e/P5X_Ars%C3%A8ne_Artwork.png', desc: 'The gentleman thief' },
-            { name: 'Izanagi', img: 'https://preview.redd.it/i-hope-they-keep-izanagi-relevant-throughout-the-game-in-v0-l0zll2z0qnif1.jpeg?width=640&crop=smart&auto=webp&s=44601bd0c2bf9410fc851f36cd1a2a8506f7bdde', desc: 'The god who created Japan' },
-            { name: 'Messiah', img: 'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest', desc: 'The ultimate Persona' },
-            { name: 'Orpheus', img: 'https://static.wikia.nocookie.net/megamitensei/images/3/3a/Orpheus_P3R.png', desc: 'The poet of Greek myth' },
+        const personas = [
+            { name:'Arsène', img:'https://megatenwiki.com/images/0/0e/P5X_Ars%C3%A8ne_Artwork.png', desc:'The gentleman thief' },
+            { name:'Izanagi', img:'https://preview.redd.it/i-hope-they-keep-izanagi-relevant-throughout-the-game-in-v0-l0zll2z0qnif1.jpeg?width=640&crop=smart&auto=webp&s=44601bd0c2bf9410fc851f36cd1a2a8506f7bdde', desc:'God who created Japan' },
+            { name:'Messiah', img:'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest', desc:'The ultimate Persona' },
+            { name:'Orpheus', img:'https://static.wikia.nocookie.net/megamitensei/images/3/3a/Orpheus_P3R.png', desc:'Poet of Greek myth' },
         ];
         function getPersona() {
-            if (isAdmin) return { name: 'Messiah', img: 'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest', desc: 'Creator\'s ultimate Persona' };
+            if (isAdmin) return { name:'Messiah', img:'https://static.wikia.nocookie.net/megamitensei/images/e/e2/Messiah_Render.png/revision/latest', desc:'Creator\'s ultimate Persona' };
             const s = localStorage.getItem('up'); if (s) try { return JSON.parse(s); } catch(e) {}
-            const p = allPersonas[Math.floor(Math.random() * allPersonas.length)]; localStorage.setItem('up', JSON.stringify(p)); return p;
+            const p = personas[Math.floor(Math.random()*personas.length)]; localStorage.setItem('up', JSON.stringify(p)); return p;
         }
-        function showPersona() { const p = getPersona(), m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><div class="persona-card"><img src="${p.img}" alt="${p.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%231B3A5C%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2260%22 text-anchor=%22middle%22 fill=%22%236BB5FF%22 font-size=%2214%22>${p.name}</text></svg>'"><h3 style="color:var(--p-primary-light);">${p.name}</h3><p>${p.desc}</p>${isAdmin?'<p style="color:#E60012;font-weight:bold;">⚡ Creator Persona</p>':''}</div>`; m.classList.add('open'); }
-        function showSocialLinks() { const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">SOCIAL LINKS</h2><div class="social-links-grid">${['GitHub','Telegram','VK','YouTube','Steam','Discord'].map(n => `<a href="#" class="social-link-card"><i class="fab fa-${n.toLowerCase()}"></i><div>${n}</div></a>`).join('')}</div>`; m.classList.add('open'); }
-        function showCalendar() { const n = new Date(), tz = Intl.DateTimeFormat().resolvedOptions().timeZone, m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">CALENDAR</h2><div class="calendar-display"><div class="date">${n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})}</div><div class="time" id="cal-time">${n.toLocaleTimeString()}</div><div style="color:var(--p-text-dim);">${tz}</div></div>`; m.classList.add('open'); const tmr = setInterval(() => { if (!m.classList.contains('open')) { clearInterval(tmr); return; } const t = document.getElementById('cal-time'); if (t) t.textContent = new Date().toLocaleTimeString(); }, 1000); }
-        function showSystem() { const ua = navigator.userAgent, m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">SYSTEM</h2><p>Browser: ${ua.includes('Chrome')?'Chrome':ua.includes('Firefox')?'Firefox':'Other'}</p><p>Screen: ${screen.width}×${screen.height}</p>${isAdmin?`<p style="color:#E60012;">Key: ${SK}</p>`:''}`; m.classList.add('open'); }
+        function showPersona() { const p = getPersona(), m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><div class="persona-card"><img src="${p.img}" alt="${p.name}" onerror="this.style.display='none'"><h3 style="color:var(--p-primary-light);">${p.name}</h3><p>${p.desc}</p>${isAdmin?'<p style="color:#E60012;">⚡ Creator</p>':''}</div>`; m.classList.add('open'); }
+        function showSocialLinks() { const m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">SOCIAL LINKS</h2><div class="social-links-grid">${['github','telegram','vk','youtube','steam','discord'].map(n=>`<a href="#" class="social-link-card"><i class="fab fa-${n}"></i><div>${n}</div></a>`).join('')}</div>`; m.classList.add('open'); }
+        function showCalendar() { const n = new Date(), tz = Intl.DateTimeFormat().resolvedOptions().timeZone, m = document.getElementById('p3r-modal'), c = document.getElementById('p3r-modal-content'); c.innerHTML = `<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">CALENDAR</h2><div class="calendar-display"><div class="date">${n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})}</div><div class="time" id="cal-time">${n.toLocaleTimeString()}</div><div>${tz}</div></div>`; m.classList.add('open'); const tmr=setInterval(()=>{if(!m.classList.contains('open')){clearInterval(tmr);return}const t=document.getElementById('cal-time');if(t)t.textContent=new Date().toLocaleTimeString()},1000); }
+        function showSystem() { const m=document.getElementById('p3r-modal'),c=document.getElementById('p3r-modal-content'); c.innerHTML=`<button class="p3r-modal-close" onclick="closeP3RModal()">✕</button><h2 style="color:var(--p-primary-light);">SYSTEM</h2><p>Browser: ${navigator.userAgent.includes('Chrome')?'Chrome':'Other'}</p><p>Screen: ${screen.width}×${screen.height}</p>${isAdmin?`<p style="color:#E60012;">Key: ${SK}</p>`:''}`; m.classList.add('open'); }
 
-        // ==================== LANGUAGE ====================
-        let cl = 'russian';
-        function toggleLang() { document.querySelectorAll('.russian').forEach(e => e.style.display = cl === 'russian' ? 'none' : 'block'); document.querySelectorAll('.english').forEach(e => e.style.display = cl === 'russian' ? 'block' : 'none'); document.querySelector('.lang-text').textContent = cl === 'russian' ? 'Русский' : 'English'; cl = cl === 'russian' ? 'english' : 'russian'; localStorage.setItem('lang', cl); }
+        let cl='russian';
+        function toggleLang(){document.querySelectorAll('.russian').forEach(e=>e.style.display=cl==='russian'?'none':'block');document.querySelectorAll('.english').forEach(e=>e.style.display=cl==='russian'?'block':'none');document.querySelector('.lang-text').textContent=cl==='russian'?'Русский':'English';cl=cl==='russian'?'english':'russian';localStorage.setItem('lang',cl)}
 
-        // ==================== P5 CHAT (MESSENGER) ====================
-        let friends = JSON.parse(localStorage.getItem('p5friends') || '[]');
-        let chats = JSON.parse(localStorage.getItem('p5chats') || '{}');
-        let currentChatId = null;
-
-        function openP5Chat() { document.getElementById('p5-overlay').classList.add('open'); showContacts(); updateBadge(); }
-        function closeP5Chat() { document.getElementById('p5-overlay').classList.remove('open'); }
-
-        function showContacts() {
-            document.getElementById('p5-contacts-view').style.display = 'flex';
-            document.getElementById('p5-chat-view').classList.remove('active');
-            currentChatId = null;
-            renderContacts();
-        }
-        function backToContacts() { showContacts(); }
-
-        function gc(id) { if (!chats[id]) chats[id] = { avatar: '', msgs: [] }; return chats[id]; }
-
-        function renderContacts() {
-            const container = document.getElementById('p5-contacts-list');
-            let html = '';
-            
-            friends.forEach((friend, i) => {
-                const chat = gc(friend.id);
-                const lastMsg = chat.msgs.length > 0 ? chat.msgs[chat.msgs.length-1].text.slice(0, 18) : 'No messages';
-                const unread = chat.msgs.filter(m => m.from === friend.id && !m.read).length;
-                
-                html += `
-                <div class="p5-contact-item" onclick="openChat('${friend.id}')">
-                    <svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg>
-                    <svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg>
-                    <svg class="p5-contact-panel ${i === 0 ? 'active' : ''}"><polygon points="12,11 56,5 64,26 20,42"/></svg>
-                    <img class="p5-contact-avatar" src="${friend.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'">
-                    <div class="p5-contact-text">${esc(lastMsg)}</div>
-                    ${unread > 0 ? `<div class="p5-contact-badge">!</div>` : ''}
-                </div>`;
+        // CHAT
+        let userNick=localStorage.getItem('p5nick')||'',friends=JSON.parse(localStorage.getItem('p5friends')||'[]'),chats=JSON.parse(localStorage.getItem('p5chats')||'{}'),cc=null;
+        function ensureNick(){if(!userNick){userNick=prompt('Your nickname:')||('User_'+Math.random().toString(36).slice(2,6));localStorage.setItem('p5nick',userNick)}if(document.getElementById('p5-my-nick'))document.getElementById('p5-my-nick').textContent='You: '+esc(userNick)+' [change]';}
+        function openP5Chat(){ensureNick();document.getElementById('p5-overlay').classList.add('open');showContacts();updB();}
+        function closeP5Chat(){document.getElementById('p5-overlay').classList.remove('open')}
+        function showContacts(){document.getElementById('p5-contacts-view').style.display='flex';document.getElementById('p5-chat-view').classList.remove('active');cc=null;renderContacts();document.getElementById('p5-my-nick').textContent='You: '+esc(userNick)+' ';document.getElementById('p5-my-nick').onclick=changeNick;}
+        function backToContacts(){showContacts()}
+        function gc(id){if(!chats[id])chats[id]={av:'',msgs:[]};return chats[id]}
+        function changeNick(){const n=prompt('New nickname:',userNick);if(n&&n.trim()){userNick=n.trim();localStorage.setItem('p5nick',userNick);renderContacts()}}
+        function renderContacts(){
+            const c=document.getElementById('p5-contacts-list');
+            let h='';
+            friends.forEach((f,i)=>{
+                const ch=gc(f.id),last=ch.msgs.length>0?ch.msgs[ch.msgs.length-1].text.slice(0,16):'No msgs';
+                const unread=ch.msgs.filter(m=>m.from===f.id&&!m.read).length;
+                h+=`<div class="p5-contact-item" onclick="openChat('${f.id}')"><svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg><svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg><svg class="p5-contact-panel${i===0?' active':''}"><polygon points="12,11 56,5 64,26 20,42"/></svg><img class="p5-contact-avatar" src="${f.av||'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}"><div class="p5-contact-text">${esc(f.nick)}: ${esc(last)}</div>${unread>0?`<div class="p5-contact-badge">${unread}</div>`:''}</div>`;
             });
-            
-            html += `
-            <div class="p5-contact-item" onclick="addFriend()" style="opacity:0.6;">
-                <svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg>
-                <svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg>
-                <svg class="p5-contact-panel"><polygon points="12,11 56,5 64,26 20,42"/></svg>
-                <img class="p5-contact-avatar" src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23E60012%22 font-size=%2250%22>+</text></svg>">
-                <div class="p5-contact-text">Add Friend</div>
-            </div>`;
-            
-            container.innerHTML = html;
+            h+=`<div class="p5-contact-item" onclick="addFriend()" style="opacity:0.5;"><svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg><svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg><svg class="p5-contact-panel"><polygon points="12,11 56,5 64,26 20,42"/></svg><img class="p5-contact-avatar" src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23E60012%22 font-size=%2250%22>+</text></svg>"><div class="p5-contact-text">Add Friend</div></div>`;
+            c.innerHTML=h;
         }
-
-        function addFriend() {
-            const nickname = prompt('Enter friend nickname to add:');
-            if (!nickname || !nickname.trim()) return;
-            
-            const avatar = prompt('Friend avatar URL (optional):');
-            const friendId = 'f_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
-            
-            friends.push({
-                id: friendId,
-                nickname: nickname.trim(),
-                avatar: avatar && avatar.trim() ? avatar.trim() : ''
-            });
-            
-            gc(friendId); // create chat
-            saveFriends();
-            saveChats();
-            showContacts();
+        function addFriend(){
+            const n=prompt('Friend nickname:');if(!n||!n.trim())return;
+            if(friends.find(f=>f.nick.toLowerCase()===n.trim().toLowerCase())){alert('Already added!');return}
+            const av=prompt('Avatar URL (optional):'),id='f'+Date.now();
+            friends.push({id,nick:n.trim(),av:av&&av.trim()?av.trim():''});gc(id);saveF();saveC();showContacts();
         }
-
-        function openChat(friendId) {
-            currentChatId = friendId;
-            const friend = friends.find(f => f.id === friendId);
-            const chat = gc(friendId);
-            
-            document.getElementById('p5-contacts-view').style.display = 'none';
-            document.getElementById('p5-chat-view').classList.add('active');
-            
-            const avEl = document.getElementById('p5-chat-avatar');
-            if (friend && friend.avatar) {
-                avEl.src = friend.avatar;
-                avEl.style.display = 'block';
-            } else {
-                avEl.style.display = 'none';
-            }
-            
-            // Mark as read
-            chat.msgs.forEach(m => { if (m.from === friendId) m.read = true; });
-            saveChats();
-            renderMessages();
-            updateBadge();
+        function openChat(id){
+            cc=id;const f=friends.find(x=>x.id===id),ch=gc(id);
+            document.getElementById('p5-contacts-view').style.display='none';document.getElementById('p5-chat-view').classList.add('active');
+            const a=document.getElementById('p5-chat-avatar');if(f&&f.av){a.src=f.av;a.style.display='block'}else{a.style.display='none'}
+            ch.msgs.forEach(m=>{if(m.from===id)m.read=true});saveC();renderMsgs();updB();
         }
-
-        function sendMsg() {
-            const input = document.getElementById('p5-chat-input');
-            const text = input.value.trim();
-            if (!text || !currentChatId) return;
-            
-            const chat = gc(currentChatId);
-            chat.msgs.push({
-                from: isAdmin ? 'admin' : 'user',
-                text,
-                time: Date.now(),
-                read: isAdmin
-            });
-            
-            saveChats();
-            input.value = '';
-            renderMessages();
-            playSfx('select');
+        function sendMsg(){
+            const inp=document.getElementById('p5-chat-input'),text=inp.value.trim();
+            if(!text||!cc)return;const ch=gc(cc);
+            ch.msgs.push({from:isAdmin?'admin':'user',text,time:Date.now(),read:isAdmin});saveC();inp.value='';renderMsgs();
         }
-
-        function renderMessages() {
-            if (!currentChatId) return;
-            const chat = gc(currentChatId);
-            const container = document.getElementById('p5-chat-messages');
-            const friend = friends.find(f => f.id === currentChatId);
-            
-            container.innerHTML = chat.msgs.map((m, i) => {
-                const isOwn = (isAdmin && m.from === 'admin') || (!isAdmin && m.from === 'user');
-                const showZigzag = (i === 0) || (i > 0 && chat.msgs[i-1].from !== m.from);
-                
-                return `
-                <div class="p5-msg ${isOwn ? 'own' : 'received'}">
-                    <img class="p5-msg-avatar" src="${isOwn ? (friend?.avatar || '') : 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'">
-                    <div class="p5-msg-bubble-wrap">
-                        ${showZigzag ? '<div class="p5-msg-zigzag"></div>' : ''}
-                        <div class="p5-msg-bubble">${esc(m.text)}</div>
-                    </div>
-                </div>`;
+        function renderMsgs(){
+            if(!cc)return;const ch=gc(cc),c=document.getElementById('p5-chat-messages'),f=friends.find(x=>x.id===cc);
+            c.innerHTML=ch.msgs.map((m,i)=>{
+                const own=(isAdmin&&m.from==='admin')||(!isAdmin&&m.from==='user');
+                const zig=i===0||(i>0&&ch.msgs[i-1].from!==m.from);
+                return `<div class="p5-msg ${own?'own':'received'}"><img class="p5-msg-avatar" src="${own?(f?.av||''):'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}"><div class="p5-msg-bubble-wrap">${zig?'<div class="p5-msg-zigzag"></div>':''}<div class="p5-msg-bubble">${esc(m.text)}</div></div></div>`;
             }).join('');
-            
-            container.scrollTop = container.scrollHeight;
+            c.scrollTop=c.scrollHeight;
         }
-
-        function updateBadge() {
-            const badge = document.getElementById('p5-badge');
-            let total = 0;
-            
-            friends.forEach(f => {
-                const chat = gc(f.id);
-                total += chat.msgs.filter(m => m.from === f.id && !m.read).length;
-            });
-            
-            if (total > 0) {
-                badge.textContent = total > 99 ? '99+' : total;
-                badge.classList.add('show');
-            } else {
-                badge.classList.remove('show');
-            }
+        function updB(){
+            const b=document.getElementById('p5-badge');let t=0;
+            friends.forEach(f=>{const ch=gc(f.id);t+=ch.msgs.filter(m=>m.from===f.id&&!m.read).length});
+            if(t>0){b.textContent=t>99?'99+':t;b.classList.add('show')}else{b.classList.remove('show')}
         }
+        function saveF(){localStorage.setItem('p5friends',JSON.stringify(friends))}
+        function saveC(){localStorage.setItem('p5chats',JSON.stringify(chats))}
+        function esc(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
 
-        function saveFriends() { localStorage.setItem('p5friends', JSON.stringify(friends)); }
-        function saveChats() { localStorage.setItem('p5chats', JSON.stringify(chats)); }
-        function esc(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+        class BF{constructor(){this.t=new Array(30).fill(0);this.p=0;this.c='';this.i=0;this.o='';this.b={}}load(c){this.c=c;this.o='';this.p=0;this.i=0;this.t=new Array(30).fill(0);this._b()}_b(){let s=[];this.b={};for(let i=0;i<this.c.length;i++){if(this.c[i]==='[')s.push(i);else if(this.c[i]===']'){let st=s.pop();this.b[st]=i;this.b[i]=st}}}step(){if(this.i>=this.c.length)return null;let c=this.c[this.i];switch(c){case'>':this.p++;break;case'<':this.p--;break;case'+':this.t[this.p]=(this.t[this.p]+1)%256;break;case'-':this.t[this.p]=(this.t[this.p]-1+256)%256;break;case'.':this.o+=String.fromCharCode(this.t[this.p]);break;case'[':if(this.t[this.p]===0)this.i=this.b[this.i];break;case']':if(this.t[this.p]!==0)this.i=this.b[this.i];break}this.i++;return true}}
+        let bf=new BF();
+        function resetBF(){bf.load(document.getElementById('bf-code').value);updBF()}
+        function runBF(){resetBF();execBF()}
+        function stepBF(){if(bf.step())updBF()}
+        function execBF(){if(bf.step()){updBF();setTimeout(execBF,50)}}
+        function updBF(){document.getElementById('bf-out').textContent=bf.o;const tape=document.getElementById('bf-tape');tape.innerHTML='';for(let i=0;i<12;i++){const cell=document.createElement('div');cell.className=`tape-cell ${i===bf.p?'active':''}`;cell.textContent=bf.t[i];tape.appendChild(cell)}}
 
-        // ==================== BRAINFUCK ====================
-        class BF { constructor() { this.t = new Array(30).fill(0); this.p = 0; this.c = ''; this.i = 0; this.o = ''; this.b = {}; } load(c) { this.c = c; this.o = ''; this.p = 0; this.i = 0; this.t = new Array(30).fill(0); this._b(); } _b() { let s = []; this.b = {}; for (let i = 0; i < this.c.length; i++) { if (this.c[i] === '[') s.push(i); else if (this.c[i] === ']') { let st = s.pop(); this.b[st] = i; this.b[i] = st; } } } step() { if (this.i >= this.c.length) return null; let c = this.c[this.i]; switch (c) { case '>': this.p++; break; case '<': this.p--; break; case '+': this.t[this.p] = (this.t[this.p] + 1) % 256; break; case '-': this.t[this.p] = (this.t[this.p] - 1 + 256) % 256; break; case '.': this.o += String.fromCharCode(this.t[this.p]); break; case '[': if (this.t[this.p] === 0) this.i = this.b[this.i]; break; case ']': if (this.t[this.p] !== 0) this.i = this.b[this.i]; break; } this.i++; return true; } }
-        let bf = new BF();
-        function resetBF() { bf.load(document.getElementById('bf-code').value); updBF(); }
-        function runBF() { resetBF(); execBF(); }
-        function stepBF() { if (bf.step()) updBF(); }
-        function execBF() { if (bf.step()) { updBF(); setTimeout(execBF, 60); } }
-        function updBF() { document.getElementById('bf-out').textContent = bf.o; const tape = document.getElementById('bf-tape'); tape.innerHTML = ''; for (let i = 0; i < 12; i++) { const cell = document.createElement('div'); cell.className = `tape-cell ${i === bf.p ? 'active' : ''}`; cell.textContent = bf.t[i]; tape.appendChild(cell); } }
-
-        // ==================== INIT ====================
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded',()=>{
             resetBF();
-            const st = localStorage.getItem('theme') || 'default';
-            setTheme(st);
-            if (localStorage.getItem('lang') === 'english') toggleLang();
-            chk();
-            updateBadge();
-            
-            // Poll for new messages
-            setInterval(updateBadge, 3000);
+            const st=localStorage.getItem('theme')||'default';setTheme(st);
+            if(localStorage.getItem('lang')==='english')toggleLang();
+            chk();ensureNick();updB();setInterval(updB,3000);
         });
     </script>
 </body>
