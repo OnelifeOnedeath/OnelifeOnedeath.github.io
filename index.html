@@ -7,6 +7,11 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Share+Tech+Mono&family=Luckiest+Guy&display=swap" rel="stylesheet">
+    
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    
     <style>
         :root {
             --p-primary: #8B5CF6; --p-primary-hover: #7C3AED; --p-primary-light: #A78BFA;
@@ -113,7 +118,7 @@
         .anime-gif-right { top: 2rem; right: 2rem; width: 160px; height: 160px; opacity: 0.9; animation: float 7s ease-in-out infinite reverse; }
         .anime-gif-left img, .anime-gif-right img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* P5 CHAT - ZIGZAG STYLE */
+        /* P5 CHAT */
         .p5-chat-fab { position: fixed; top: 5rem; left: 1rem; z-index: 999; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #E60012, #B8000F); border: 3px solid #FF4444; color: white; font-size: 1.2rem; cursor: pointer; box-shadow: 0 0 25px rgba(230,0,18,0.5); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
         .p5-chat-fab:hover { transform: scale(1.15); box-shadow: 0 0 40px rgba(230,0,18,0.7); }
         .p5-chat-fab .badge { position: absolute; top: -5px; right: -5px; background: #FFD700; color: #000; border-radius: 50%; min-width: 20px; height: 20px; font-size: 0.6rem; font-weight: 900; display: none; align-items: center; justify-content: center; padding: 0 3px; }
@@ -160,29 +165,16 @@
         .p5-chat-back { background: none; border: 2px solid #E60012; color: #E60012; padding: 3px 8px; cursor: pointer; font-weight: bold; font-family: 'Luckiest Guy', cursive; font-size: 0.7rem; }
         .p5-chat-messages { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
         
-        /* P5 MESSAGE BUBBLES - ZIGZAG LIKE IN PERSONA 5 */
         .p5-msg { display: flex; gap: 6px; animation: msg-pop 0.3s ease; align-items: flex-start; }
         .p5-msg.own { flex-direction: row-reverse; }
         .p5-msg-avatar { width: 28px; height: 28px; flex-shrink: 0; object-fit: cover; clip-path: polygon(5% 0, 100% 5%, 95% 100%, 0% 95%); }
         .p5-msg-bubble-wrap { position: relative; max-width: 70%; }
-        .p5-msg-bubble { 
-            padding: 8px 12px; font-size: 0.72rem; line-height: 1.4; 
-            font-family: 'Share Tech Mono', monospace; word-break: break-word; position: relative; 
-            /* Characteristic P5 zigzag shape */
-            clip-path: polygon(0% 8%, 8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%);
-        }
+        .p5-msg-bubble { padding: 8px 12px; font-size: 0.72rem; line-height: 1.4; font-family: 'Share Tech Mono', monospace; word-break: break-word; position: relative; clip-path: polygon(0% 8%, 8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%); }
         .p5-msg.received .p5-msg-bubble { background: #1a1a1a; color: #ddd; border: 1px solid #333; }
         .p5-msg.own .p5-msg-bubble { background: #E60012; color: #fff; border: 1px solid #FF4444; }
-        
-        /* Zigzag accent above first message in group */
-        .p5-msg-zigzag {
-            position: absolute; top: -8px;
-            width: 16px; height: 10px;
-            background: #E60012;
-            clip-path: polygon(0% 100%, 25% 0%, 50% 100%, 75% 0%, 100% 100%);
-        }
-        .p5-msg.received .p5-msg-zigzag { left: 12px; background: #333; }
-        .p5-msg.own .p5-msg-zigzag { right: 12px; left: auto; background: #E60012; }
+        .p5-msg-zigzag { position: absolute; top: -6px; width: 14px; height: 8px; clip-path: polygon(0% 100%, 25% 0%, 50% 100%, 75% 0%, 100% 100%); }
+        .p5-msg.received .p5-msg-zigzag { left: 10px; background: #333; }
+        .p5-msg.own .p5-msg-zigzag { right: 10px; left: auto; background: #E60012; }
 
         .p5-chat-input-area { display: flex; gap: 4px; padding: 6px; background: #0A0A0A; border-top: 2px solid #222; flex-shrink: 0; }
         .p5-chat-input { flex: 1; background: #1a1a1a; border: 1px solid #333; color: #ddd; padding: 6px 10px; font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; outline: none; clip-path: polygon(2% 0, 100% 0, 98% 100%, 0 100%); }
@@ -243,12 +235,16 @@
     </style>
 </head>
 <body>
+    <!-- ЗВУКИ -->
     <audio id="sfx-select" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/splash.wav"></audio>
     <audio id="sfx-move" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/menu1.wav"></audio>
     <audio id="sfx-cancel" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/plum_softening.wav"></audio>
     <audio id="sfx-open" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/bubbles.wav"></audio>
 
+    <!-- MAKOTO -->
     <div class="makoto-container"><div class="makoto-figure"><div class="makoto-silhouette"></div><div class="makoto-outline"></div></div></div>
+    
+    <!-- P3R ЭЛЕМЕНТЫ -->
     <div class="p3r-confetti" id="p3r-confetti"></div>
     <div class="p3r-menu" id="p3r-menu">
         <div class="p3r-menu-item selected" data-idx="0">SKILL</div><div class="p3r-menu-item" data-idx="1">ITEM</div>
@@ -263,6 +259,7 @@
     <div class="p3r-tooltip"><div class="p3r-tooltip-title" id="p3r-tt-title">Use a Skill</div><div class="p3r-tooltip-sub"><span class="p3r-tooltip-line"></span><span id="p3r-tt-sub">Command</span></div></div>
     <div class="p3r-modal" id="p3r-modal"><div class="p3r-modal-content" id="p3r-modal-content"><button class="p3r-modal-close" onclick="closeP3RModal()">✕</button></div></div>
 
+    <!-- ADMIN -->
     <div class="admin-area">
         <button class="admin-btn-small" onclick="toggleAdminModal()">🔒</button>
         <div class="admin-indicator" id="admin-indicator"><span style="width:5px;height:5px;border-radius:50%;background:#0f0;display:inline-block;"></span> ADMIN <button onclick="adminLogout()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:0.5rem;">✕</button></div>
@@ -275,6 +272,7 @@
         <div id="admin-msg" style="margin-top:0.5rem;font-size:0.8rem;"></div>
     </div>
 
+    <!-- TOP BARS -->
     <div class="top-bars">
         <button class="lang-btn" onclick="toggleLang()"><i class="fas fa-language"></i> <span class="lang-text">English</span></button>
         <button class="theme-btn active" onclick="setTheme('default')" id="dt">Default</button>
@@ -282,6 +280,7 @@
         <button class="theme-btn" onclick="setTheme('light')" id="lt"><i class="fas fa-sun"></i> Light</button>
     </div>
 
+    <!-- HERO -->
     <section class="hero">
         <div class="anime-gif-left"><img src="https://99px.ru/sstorage/86/2016/10/image_862910161743391536726.gif" alt="Lain"></div>
         <div class="anime-gif-right"><img src="https://99px.ru/sstorage/86/2020/04/10804200835411467.gif" alt="Lain"></div>
@@ -333,8 +332,10 @@
 
     <footer><div class="container"><div style="font-weight:900;color:var(--p-primary-light);font-size:1.3rem;">OnelifeOnedeath</div><p style="color:var(--p-text-dim);">Универсальный инженер • 2025</p></div></footer>
 
+    <!-- P5 CHAT FAB -->
     <button class="p5-chat-fab" onclick="openP5Chat()" id="p5-fab">💬<span class="badge" id="p5-badge">0</span></button>
 
+    <!-- P5 CHAT OVERLAY -->
     <div class="p5-chat-overlay" id="p5-overlay">
         <div style="position:relative;">
             <button class="p5-close-btn" onclick="closeP5Chat()">✕</button>
@@ -349,7 +350,7 @@
                         <svg class="p5-zig"><polygon points="70,60 80,60 60,140 110,200 80,260 50,260 70,195 30,140"/></svg>
                         <div class="p5-contacts" id="p5-contacts-list"></div>
                         <div style="padding:5px;text-align:center;flex-shrink:0;border-top:1px solid #222;">
-                            <button class="p5-chat-send" onclick="addFriend()" style="font-size:0.6rem;padding:4px 10px;clip-path:none;border-radius:4px;">+ ADD FRIEND</button>
+                            <button class="p5-chat-send" onclick="findUser()" style="font-size:0.6rem;padding:4px 10px;clip-path:none;border-radius:4px;">+ FIND USER</button>
                             <div id="p5-my-nick" style="color:#666;font-size:0.55rem;margin-top:3px;font-family:'Share Tech Mono',monospace;"></div>
                         </div>
                     </div>
@@ -370,8 +371,23 @@
     </div>
 
     <script>
+        // ==================== FIREBASE ====================
+        const firebaseConfig = {
+            apiKey: "AIzaSyAWoeMopkw1Mc9YEO5XhiCsH6oiHwVVDfg",
+            authDomain: "persona-chat-63dc3.firebaseapp.com",
+            projectId: "persona-chat-63dc3",
+            storageBucket: "persona-chat-63dc3.firebasestorage.app",
+            messagingSenderId: "378037428868",
+            appId: "1:378037428868:web:50fa33400dc6820e14d8d1",
+            databaseURL: "https://persona-chat-63dc3-default-rtdb.firebaseio.com/"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // ==================== SOUNDS ====================
         function playSfx(id) { const el = document.getElementById('sfx-' + id); if (el) { el.currentTime = 0; el.play().catch(() => {}); } }
 
+        // ==================== ADMIN ====================
         const SK = 'NyxsAvatarsP3R!';
         let isAdmin = false;
         function fp() { const d = navigator.userAgent + navigator.language + screen.width + screen.height + new Date().getTimezoneOffset(); let h = 0; for (let i = 0; i < d.length; i++) { h = ((h << 5) - h) + d.charCodeAt(i); h |= 0; } return Math.abs(h).toString(36); }
@@ -381,6 +397,7 @@
         function adminLogin() { const k = document.getElementById('admin-key').value, msg = document.getElementById('admin-msg'); if (k === SK) { const f = fp(); localStorage.setItem('kh', btoa(k + f)); localStorage.setItem('kf', f); isAdmin = true; updateAdminUI(); msg.textContent = '✅ Welcome!'; msg.style.color = '#0f0'; setTimeout(toggleAdminModal, 800); } else { msg.textContent = '❌ Denied'; msg.style.color = '#f33'; } }
         function adminLogout() { localStorage.removeItem('kh'); localStorage.removeItem('kf'); isAdmin = false; updateAdminUI(); }
 
+        // ==================== THEME ====================
         const themes = {
             default: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#A78BFA','--p-primary-dark':'#5B21B6','--p-highlight':'#C4B5FD','--p-surface':'#1F2937','--p-surface-hover':'#374151','--p-background':'#111827','--p-background-alt':'#0F172A','--p-text':'#F9FAFB','--p-text-muted':'#D1D5DB','--p-text-dim':'#9CA3AF','--p-border':'#374151','--p-border-light':'#4B5563','--btn-bg':'rgba(139,92,246,0.25)','--btn-border':'rgba(139,92,246,0.6)','--btn-hover-bg':'rgba(139,92,246,0.45)','--btn-text':'#FFFFFF','--card-bg':'rgba(255,255,255,0.07)'},
             light: {'--p-primary':'#8B5CF6','--p-primary-hover':'#7C3AED','--p-primary-light':'#6D28D9','--p-primary-dark':'#5B21B6','--p-highlight':'#A78BFA','--p-surface':'#FFFFFF','--p-surface-hover':'#F5F3FF','--p-background':'#FEF7FF','--p-background-alt':'#F3E8FF','--p-text':'#1E1B4B','--p-text-muted':'#4C1D95','--p-text-dim':'#7C3AED','--p-border':'#DDD6FE','--p-border-light':'#C4B5FD','--btn-bg':'rgba(139,92,246,0.12)','--btn-border':'rgba(139,92,246,0.4)','--btn-hover-bg':'rgba(139,92,246,0.25)','--btn-text':'#1E1B4B','--card-bg':'rgba(255,255,255,0.9)'},
@@ -396,6 +413,7 @@
         }
         function genConfetti() { const c = document.getElementById('p3r-confetti'); if (!c) return; c.innerHTML = ''; for (let i = 0; i < 12; i++) { const p = document.createElement('div'); p.className = 'confetti-piece'; p.style.cssText = `left:${Math.random()*90}%;top:${Math.random()*90}%;animation-duration:${4+Math.random()*5}s;animation-delay:${Math.random()*4}s;`; c.appendChild(p); } }
 
+        // ==================== P3R MENU ====================
         const p3rData = [
             { n:'SKILL', t:'Use a Skill', s:'Command', a: ()=>openModal('SKILL','Combat menu') },
             { n:'ITEM', t:'View Items', s:'Inventory', a: ()=>openModal('ITEMS','Inventory') },
@@ -425,7 +443,7 @@
             p3rIdx = i;
             document.querySelectorAll('.p3r-menu-item').forEach((el, j) => el.classList.toggle('selected', j === i));
             const item = document.querySelectorAll('.p3r-menu-item')[i], menu = document.getElementById('p3r-menu'), cursor = document.getElementById('p3r-cursor');
-            if (item && menu && cursor) { const mr = menu.getBoundingClientRect(), ir = item.getBoundingClientRect(); cursor.style.top = (ir.top - mr.top + ir.height / 2) + 'px'; }
+            if (item && menu && cursor) { const mr = menu.getBoundingClientRect(), ir = item.getBoundingClientRect(); cursor.style.top = (ir.top - mr.top + ir.height / 2 - 9) + 'px'; }
             document.getElementById('p3r-num').textContent = i + 1; document.getElementById('p3r-name').textContent = p3rData[i].n;
             document.getElementById('p3r-tt-title').textContent = p3rData[i].t; document.getElementById('p3r-tt-sub').textContent = p3rData[i].s;
         }
@@ -451,55 +469,98 @@
         let cl='russian';
         function toggleLang(){document.querySelectorAll('.russian').forEach(e=>e.style.display=cl==='russian'?'none':'block');document.querySelectorAll('.english').forEach(e=>e.style.display=cl==='russian'?'block':'none');document.querySelector('.lang-text').textContent=cl==='russian'?'Русский':'English';cl=cl==='russian'?'english':'russian';localStorage.setItem('lang',cl)}
 
-        // ==================== P5 CHAT - ZIGZAG STYLE ====================
-        let userNick = localStorage.getItem('p5nick') || '';
-        let userAvatar = localStorage.getItem('p5av') || '';
-        let friends = JSON.parse(localStorage.getItem('p5friends') || '[]');
-        let chats = JSON.parse(localStorage.getItem('p5chats') || '{}');
-        let cc = null;
+        // ==================== FIREBASE CHAT ====================
+        const MY_ID = localStorage.getItem('p5_uid') || (() => { const id = 'u_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7); localStorage.setItem('p5_uid', id); return id; })();
+        let myNick = localStorage.getItem('p5_nick') || '';
+        let myAvatar = localStorage.getItem('p5_av') || '';
+        let currentChatId = null;
+        let knownUsers = {};
 
-        function ensureNick() { if (!userNick) { userNick = prompt('Your messenger nickname:') || ('User_'+Math.random().toString(36).slice(2,6)); localStorage.setItem('p5nick', userNick); } updateMyInfo(); }
-        function updateMyInfo() { const el = document.getElementById('p5-my-nick'); if (el) el.innerHTML = `You: <span style="color:#E60012;">${esc(userNick)}</span> <button onclick="changeNick()" style="background:none;border:none;color:#888;cursor:pointer;font-size:0.5rem;">[nick]</button> <button onclick="changeAvatar()" style="background:none;border:none;color:#888;cursor:pointer;font-size:0.5rem;">[ava]</button>`; }
-        function changeAvatar() { const inp = document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.onchange=(e)=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=(ev)=>{userAvatar=ev.target.result;localStorage.setItem('p5av',userAvatar);showContacts();};r.readAsDataURL(f);};inp.click(); }
-        function changeNick() { const n = prompt('New nickname:', userNick); if (n && n.trim()) { userNick = n.trim(); localStorage.setItem('p5nick', userNick); updateMyInfo(); renderContacts(); } }
-        function openP5Chat() { ensureNick(); document.getElementById('p5-overlay').classList.add('open'); showContacts(); updB(); }
+        function saveProfile() { db.ref('users/' + MY_ID).set({ nick: myNick || 'Anonymous', avatar: myAvatar || '', lastSeen: firebase.database.ServerValue.TIMESTAMP }); }
+
+        function ensureNick() {
+            if (!myNick) { myNick = prompt('Your messenger nickname:') || 'User_' + Math.random().toString(36).slice(2, 6); localStorage.setItem('p5_nick', myNick); saveProfile(); }
+            updateMyInfo();
+        }
+        function updateMyInfo() {
+            const el = document.getElementById('p5-my-nick');
+            if (el) el.innerHTML = `You: <span style="color:#E60012;">${esc(myNick)}</span> <button onclick="changeNick()" style="background:none;border:none;color:#888;cursor:pointer;font-size:0.5rem;">[nick]</button> <button onclick="changeAvatar()" style="background:none;border:none;color:#888;cursor:pointer;font-size:0.5rem;">[ava]</button>`;
+        }
+        function changeNick() { const n = prompt('New nickname:', myNick); if (n && n.trim()) { myNick = n.trim(); localStorage.setItem('p5_nick', myNick); saveProfile(); updateMyInfo(); renderContacts(); } }
+        function changeAvatar() { const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*'; inp.onchange = (e) => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = (ev) => { myAvatar = ev.target.result; localStorage.setItem('p5_av', myAvatar); saveProfile(); renderContacts(); }; r.readAsDataURL(f); }; inp.click(); }
+
+        function openP5Chat() { ensureNick(); saveProfile(); document.getElementById('p5-overlay').classList.add('open'); showContacts(); loadUsers(); }
         function closeP5Chat() { document.getElementById('p5-overlay').classList.remove('open'); }
-        function showContacts() { document.getElementById('p5-contacts-view').style.display='flex'; document.getElementById('p5-chat-view').classList.remove('active'); cc=null; renderContacts(); updateMyInfo(); }
+        function showContacts() { document.getElementById('p5-contacts-view').style.display = 'flex'; document.getElementById('p5-chat-view').classList.remove('active'); currentChatId = null; renderContacts(); updateMyInfo(); }
         function backToContacts() { showContacts(); }
-        function gc(id) { if (!chats[id]) chats[id] = { msgs: [] }; return chats[id]; }
+
+        function loadUsers() { db.ref('users').on('value', (snap) => { knownUsers = snap.val() || {}; renderContacts(); }); }
+        function getContacts() { return JSON.parse(localStorage.getItem('p5_contacts') || '[]'); }
+        function addContact(uid) { let c = getContacts(); if (!c.includes(uid)) { c.push(uid); localStorage.setItem('p5_contacts', JSON.stringify(c)); } }
 
         function renderContacts() {
-            const c = document.getElementById('p5-contacts-list'); let h = '';
-            friends.forEach((f, i) => {
-                const ch = gc(f.id), last = ch.msgs.length > 0 ? ch.msgs[ch.msgs.length-1].text.slice(0, 16) : 'No messages';
-                const unread = ch.msgs.filter(m => m.from === f.id && !m.read).length;
-                h += `<div class="p5-contact-item" onclick="openChat('${f.id}')"><svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg><svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg><svg class="p5-contact-panel${i===0?' active':''}"><polygon points="12,11 56,5 64,26 20,42"/></svg><img class="p5-contact-avatar" src="${f.av || userAvatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-contact-text">${esc(f.nick)}: ${esc(last)}</div>${unread>0?`<div class="p5-contact-badge">${unread}</div>`:''}</div>`;
+            const container = document.getElementById('p5-contacts-list');
+            const contacts = getContacts();
+            let html = '';
+            contacts.forEach(uid => {
+                const user = knownUsers[uid];
+                if (!user) return;
+                html += `<div class="p5-contact-item" onclick="openChat('${uid}')"><svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg><svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg><svg class="p5-contact-panel active"><polygon points="12,11 56,5 64,26 20,42"/></svg><img class="p5-contact-avatar" src="${user.avatar || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-contact-text">${esc(user.nick || 'Unknown')}</div></div>`;
             });
-            h += `<div class="p5-contact-item" onclick="addFriend()" style="opacity:0.5;"><svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg><svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg><svg class="p5-contact-panel"><polygon points="12,11 56,5 64,26 20,42"/></svg><img class="p5-contact-avatar" src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23E60012%22 font-size=%2250%22>+</text></svg>"><div class="p5-contact-text">Add Friend by Nickname</div></div>`;
-            c.innerHTML = h;
+            html += `<div class="p5-contact-item" onclick="findUser()" style="opacity:0.5;"><svg class="p5-contact-border"><polygon points="0,5 60,0 70,30 10,55"/></svg><svg class="p5-contact-outline"><polygon points="8,7 58,2 67,28 18,48"/></svg><svg class="p5-contact-panel"><polygon points="12,11 56,5 64,26 20,42"/></svg><img class="p5-contact-avatar" src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 fill=%22%23E60012%22 font-size=%2250%22>+</text></svg>"><div class="p5-contact-text">Find User by Nickname</div></div>`;
+            container.innerHTML = html;
         }
 
-        function addFriend() { const n = prompt('Friend nickname to add:'); if (!n || !n.trim()) return; if (friends.find(f => f.nick.toLowerCase() === n.trim().toLowerCase())) { alert('Already added!'); return; } const id = 'f_'+Date.now(); friends.push({ id, nick: n.trim(), av: '' }); gc(id); saveF(); saveC(); showContacts(); }
-        function openChat(id) { cc = id; const f = friends.find(x => x.id === id), ch = gc(id); document.getElementById('p5-contacts-view').style.display='none'; document.getElementById('p5-chat-view').classList.add('active'); const a = document.getElementById('p5-chat-avatar'); if (f && f.av) { a.src = f.av; a.style.display='block'; } else if (userAvatar) { a.src = userAvatar; a.style.display='block'; } else { a.style.display='none'; } ch.msgs.forEach(m => { if (m.from === id) m.read = true; }); saveC(); renderMsgs(); updB(); }
-        
-        function sendMsg() { const inp = document.getElementById('p5-chat-input'), text = inp.value.trim(); if (!text || !cc) return; const ch = gc(cc); ch.msgs.push({ from: isAdmin ? 'admin' : 'user', text, time: Date.now(), read: isAdmin }); saveC(); inp.value = ''; renderMsgs(); playSfx('select'); }
-
-        function renderMsgs() {
-            if (!cc) return; const ch = gc(cc), c = document.getElementById('p5-chat-messages'), f = friends.find(x => x.id === cc);
-            c.innerHTML = ch.msgs.map((m, i) => {
-                const own = (isAdmin && m.from === 'admin') || (!isAdmin && m.from === 'user');
-                const zig = i === 0 || (i > 0 && ch.msgs[i-1].from !== m.from);
-                const av = own ? (f?.av || userAvatar) : (f?.av || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg');
-                return `<div class="p5-msg ${own ? 'own' : 'received'}"><img class="p5-msg-avatar" src="${av}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-msg-bubble-wrap">${zig ? '<div class="p5-msg-zigzag"></div>' : ''}<div class="p5-msg-bubble">${esc(m.text)}</div></div></div>`;
-            }).join('');
-            c.scrollTop = c.scrollHeight;
+        function findUser() {
+            const search = prompt('Enter nickname to find:');
+            if (!search || !search.trim()) return;
+            let found = false;
+            Object.entries(knownUsers).forEach(([uid, data]) => {
+                if (data.nick && data.nick.toLowerCase() === search.trim().toLowerCase()) {
+                    if (uid === MY_ID) { alert('This is you!'); found = true; return; }
+                    addContact(uid); renderContacts(); openChat(uid); found = true;
+                }
+            });
+            if (!found) alert('User not found. They need to set their nickname first.');
         }
 
-        function updB() { const b = document.getElementById('p5-badge'); let t = 0; friends.forEach(f => { const ch = gc(f.id); t += ch.msgs.filter(m => m.from === f.id && !m.read).length; }); if (t > 0) { b.textContent = t > 99 ? '99+' : t; b.classList.add('show'); } else { b.classList.remove('show'); } }
-        function saveF() { localStorage.setItem('p5friends', JSON.stringify(friends)); }
-        function saveC() { localStorage.setItem('p5chats', JSON.stringify(chats)); }
+        function getChatId(a, b) { return [a, b].sort().join('___'); }
+
+        function openChat(uid) {
+            currentChatId = uid;
+            document.getElementById('p5-contacts-view').style.display = 'none';
+            document.getElementById('p5-chat-view').classList.add('active');
+            const user = knownUsers[uid];
+            const av = document.getElementById('p5-chat-avatar');
+            if (user && user.avatar) { av.src = user.avatar; av.style.display = 'block'; } else { av.style.display = 'none'; }
+            const chatId = getChatId(MY_ID, uid);
+            const msgContainer = document.getElementById('p5-chat-messages');
+            msgContainer.innerHTML = '';
+            db.ref('messages/' + chatId).off();
+            db.ref('messages/' + chatId).on('child_added', (snap) => {
+                const msg = snap.val();
+                const isOwn = msg.from === MY_ID;
+                const avSrc = isOwn ? (myAvatar || '') : (user?.avatar || '');
+                const div = document.createElement('div');
+                div.className = `p5-msg ${isOwn ? 'own' : 'received'}`;
+                div.innerHTML = `<img class="p5-msg-avatar" src="${avSrc || 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'}" onerror="this.src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/932431/Male_head_silhouette.svg'"><div class="p5-msg-bubble-wrap"><div class="p5-msg-zigzag"></div><div class="p5-msg-bubble">${esc(msg.text)}</div></div>`;
+                msgContainer.appendChild(div);
+                msgContainer.scrollTop = msgContainer.scrollHeight;
+            });
+        }
+
+        function sendMsg() {
+            const inp = document.getElementById('p5-chat-input');
+            const text = inp.value.trim();
+            if (!text || !currentChatId) return;
+            const chatId = getChatId(MY_ID, currentChatId);
+            db.ref('messages/' + chatId).push({ from: MY_ID, text, timestamp: firebase.database.ServerValue.TIMESTAMP });
+            inp.value = '';
+        }
+
         function esc(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
+        // ==================== BRAINFUCK ====================
         class BF { constructor() { this.t = new Array(30).fill(0); this.p = 0; this.c = ''; this.i = 0; this.o = ''; this.b = {}; } load(c) { this.c = c; this.o = ''; this.p = 0; this.i = 0; this.t = new Array(30).fill(0); this._b(); } _b() { let s = []; this.b = {}; for (let i = 0; i < this.c.length; i++) { if (this.c[i] === '[') s.push(i); else if (this.c[i] === ']') { let st = s.pop(); this.b[st] = i; this.b[i] = st; } } } step() { if (this.i >= this.c.length) return null; let c = this.c[this.i]; switch (c) { case '>': this.p++; break; case '<': this.p--; break; case '+': this.t[this.p] = (this.t[this.p] + 1) % 256; break; case '-': this.t[this.p] = (this.t[this.p] - 1 + 256) % 256; break; case '.': this.o += String.fromCharCode(this.t[this.p]); break; case '[': if (this.t[this.p] === 0) this.i = this.b[this.i]; break; case ']': if (this.t[this.p] !== 0) this.i = this.b[this.i]; break; } this.i++; return true; } }
         let bf = new BF();
         function resetBF() { bf.load(document.getElementById('bf-code').value); updBF(); }
@@ -508,11 +569,12 @@
         function execBF() { if (bf.step()) { updBF(); setTimeout(execBF, 50); } }
         function updBF() { document.getElementById('bf-out').textContent = bf.o; const tape = document.getElementById('bf-tape'); tape.innerHTML = ''; for (let i = 0; i < 12; i++) { const cell = document.createElement('div'); cell.className = `tape-cell ${i === bf.p ? 'active' : ''}`; cell.textContent = bf.t[i]; tape.appendChild(cell); } }
 
+        // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
             resetBF();
-            const st = localStorage.getItem('theme') || 'default'; setTheme(st);
+            setTheme(localStorage.getItem('theme') || 'default');
             if (localStorage.getItem('lang') === 'english') toggleLang();
-            chk(); ensureNick(); updB(); setInterval(updB, 3000);
+            chk();
         });
     </script>
 </body>
