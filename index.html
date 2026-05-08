@@ -10,25 +10,28 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <style>
-        :root { --p-primary:#8B5CF6;--p-primary-hover:#7C3AED;--p-primary-light:#A78BFA;--p-primary-dark:#5B21B6;--p-highlight:#C4B5FD;--p-surface:#1F2937;--p-background:#111827;--p-background-alt:#0F172A;--p-text:#F9FAFB;--p-text-dim:#9CA3AF;--p-border:#374151;--btn-bg:rgba(139,92,246,0.25);--btn-border:rgba(139,92,246,0.6);--btn-text:#FFFFFF;--card-bg:rgba(255,255,255,0.07);--chat-bg:#0D0D0D;--chat-sidebar:#0A0A0A;--chat-header:#111;--chat-bubble-other:#1A1A1A;--chat-bubble-mine:#E60012;--chat-text:#DDD;--chat-accent:#E60012;--chat-font:'Share Tech Mono',monospace; }
+        /* P5 FONT */
+        @font-face {
+            font-family: 'P5Menu';
+            src: url('https://raw.githubusercontent.com/OnelifeOnedeath/OnelifeOnedeath.github.io/main/Persona5MenuFontPrototype-Regular.otf') format('opentype');
+            font-weight: normal; font-style: normal;
+        }
+        
+        :root { --p-primary:#8B5CF6;--p-primary-hover:#7C3AED;--p-primary-light:#A78BFA;--p-primary-dark:#5B21B6;--p-highlight:#C4B5FD;--p-surface:#1F2937;--p-background:#111827;--p-background-alt:#0F172A;--p-text:#F9FAFB;--p-text-dim:#9CA3AF;--p-border:#374151;--btn-bg:rgba(139,92,246,0.25);--btn-border:rgba(139,92,246,0.6);--btn-text:#FFFFFF;--card-bg:rgba(255,255,255,0.07);--chat-bg:#0D0D0D;--chat-sidebar:#0A0A0A;--chat-header:#111;--chat-bubble-other:#1A1A1A;--chat-bubble-mine:#E60012;--chat-text:#DDD;--chat-accent:#E60012;--chat-font:'Share Tech Mono',monospace;--chat-font-size:0.85rem; }
         [data-theme="p3"] { --p-primary:#0D1B2A;--p-primary-hover:#1B3A5C;--p-primary-light:#4A90D9;--p-primary-dark:#060F18;--p-highlight:#6BB5FF;--p-surface:#0F1F33;--p-background:#0A1628;--p-background-alt:#060F18;--p-text:#E8F0F8;--p-text-dim:#5A8AB5;--p-border:#1B3A5C;--btn-bg:rgba(74,144,217,0.2);--btn-border:rgba(74,144,217,0.5);--btn-text:#E8F0F8;--card-bg:rgba(15,31,51,0.7); }
         [data-theme="light"] { --p-primary:#8B5CF6;--p-primary-hover:#7C3AED;--p-primary-light:#6D28D9;--p-primary-dark:#5B21B6;--p-highlight:#A78BFA;--p-surface:#FFFFFF;--p-background:#FEF7FF;--p-background-alt:#F3E8FF;--p-text:#1E1B4B;--p-text-dim:#7C3AED;--p-border:#DDD6FE;--btn-bg:rgba(139,92,246,0.12);--btn-border:rgba(139,92,246,0.4);--btn-text:#1E1B4B;--card-bg:rgba(255,255,255,0.9); }
         
-        /* CHAT THEMES */
         .chat-theme-p5 { --chat-bg:#0D0D0D;--chat-sidebar:#0A0A0A;--chat-header:#111;--chat-bubble-other:#1A1A1A;--chat-bubble-mine:#E60012;--chat-text:#DDD;--chat-accent:#E60012;--chat-font:'Share Tech Mono',monospace;--chat-font-size:0.85rem; }
-        .chat-theme-p5royal { --chat-bg:#0A0A0A;--chat-sidebar:#050505;--chat-header:#0F0F0F;--chat-bubble-other:#1E1E1E;--chat-bubble-mine:#D40000;--chat-text:#E0E0E0;--chat-accent:#FF1A1A;--chat-font:'Press Start 2P',cursive;--chat-font-size:0.5rem; }
+        .chat-theme-p5royal { --chat-bg:#0A0A0A;--chat-sidebar:#050505;--chat-header:#0F0F0F;--chat-bubble-other:#1E1E1E;--chat-bubble-mine:#D40000;--chat-text:#E0E0E0;--chat-accent:#FF1A1A;--chat-font:'P5Menu','Press Start 2P',cursive;--chat-font-size:0.55rem; }
         .chat-theme-p3 { --chat-bg:#0A1628;--chat-sidebar:#060F18;--chat-header:#0D1B2A;--chat-bubble-other:#0F1F33;--chat-bubble-mine:#4A90D9;--chat-text:#E8F0F8;--chat-accent:#6BB5FF;--chat-font:'Share Tech Mono',monospace;--chat-font-size:0.85rem; }
         .chat-theme-noir { --chat-bg:#1a1a1a;--chat-sidebar:#0f0f0f;--chat-header:#1a1a1a;--chat-bubble-other:#2a2a2a;--chat-bubble-mine:#FFD700;--chat-text:#EEE;--chat-accent:#FFD700;--chat-font:'Share Tech Mono',monospace;--chat-font-size:0.85rem; }
 
         * { margin:0;padding:0;box-sizing:border-box; } 
         body { font-family:'Montserrat',sans-serif;background:var(--p-background);color:var(--p-text);line-height:1.6;min-height:100vh;font-weight:600; }
-        .russian { font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:0.5px; }
-        .english { font-family:'Montserrat',sans-serif;font-weight:600; }
         
         @keyframes float { 0%,100%{transform:translateY(0px);} 50%{transform:translateY(-10px);} }
         @keyframes caustic { 0%{background-position:0% 0%;} 100%{background-position:100% 100%;} }
         @keyframes cursor-twitch { 0%,100%{transform:translateY(0px);} 50%{transform:translateY(-5px);} }
-        @keyframes homeReturn { 0%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(0.95);} 100%{opacity:1;transform:scale(1);} }
         
         .container { max-width:1200px;margin:0 auto;padding:0 1.5rem; }
         .hero { min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--p-primary-dark),var(--p-primary));position:relative;overflow:hidden; }
@@ -41,14 +44,15 @@
         .anime-gif-left { bottom:2rem;left:2rem;width:180px;height:180px;opacity:0.8; } .anime-gif-right { top:2rem;right:2rem;width:160px;height:160px;opacity:0.9;animation-direction:reverse; }
         .anime-gif-left img,.anime-gif-right img { width:100%;height:100%;object-fit:cover; }
         
-        .p3r-menu { display:none; } [data-theme="p3"] .p3r-menu { display:flex;position:absolute;right:8%;top:50%;transform:translateY(-50%);flex-direction:column;gap:0.5rem;z-index:3;width:clamp(190px,28vw,400px); }
-        .p3r-menu-item { display:none;font-weight:800;font-size:clamp(1rem,3vw,2.5rem);color:rgba(74,144,217,0.7);cursor:pointer;letter-spacing:2px;text-transform:uppercase;transform:skewX(-5deg); } [data-theme="p3"] .p3r-menu-item { display:block; }
+        /* P3R MENU */
+        .p3r-menu { display:none; } [data-theme="p3"] .p3r-menu { display:flex;position:absolute;right:8%;top:50%;transform:translateY(-50%);flex-direction:column;gap:clamp(0.2rem,0.8vh,0.6rem);z-index:3;width:clamp(180px,26vw,380px); }
+        .p3r-menu-item { display:none;font-weight:800;font-size:clamp(1rem,3vw,2.5rem);color:rgba(74,144,217,0.7);cursor:pointer;letter-spacing:2px;text-transform:uppercase;transform:skewX(-5deg);line-height:1.2; } [data-theme="p3"] .p3r-menu-item { display:block; }
         .p3r-menu-item:hover,.p3r-menu-item.selected { color:#FFF!important;text-shadow:0 0 30px rgba(74,144,217,0.8)!important; }
-        .p3r-cursor { display:none; } [data-theme="p3"] .p3r-cursor { display:block;position:absolute;right:calc(8% + clamp(190px,28vw,400px) + 25px);width:0;height:0;border-left:16px solid #E60012;border-top:10px solid transparent;border-bottom:10px solid transparent;z-index:4;pointer-events:none;transition:top 0.15s ease;animation:cursor-twitch 1s infinite; }
-        .p3r-info { display:none; } [data-theme="p3"] .p3r-info { display:flex;position:absolute;left:5%;bottom:12%;z-index:3;flex-direction:column;pointer-events:none; }
+        .p3r-cursor { display:none; } [data-theme="p3"] .p3r-cursor { display:block;position:absolute;right:calc(8% + clamp(180px,26vw,380px) + 30px);width:0;height:0;border-left:18px solid #E60012;border-top:10px solid transparent;border-bottom:10px solid transparent;z-index:4;pointer-events:none;transition:top 0.12s ease;animation:cursor-twitch 0.8s infinite; }
+        .p3r-info { display:none; } [data-theme="p3"] .p3r-info { display:flex;position:absolute;left:5%;bottom:10%;z-index:3;flex-direction:column;pointer-events:none; }
         .p3r-info-number { font-size:clamp(4rem,12vw,14rem);font-weight:900;color:rgba(255,255,255,0.04);line-height:0.8;letter-spacing:-8px; }
         .p3r-info-name { font-size:clamp(1.5rem,4vw,4rem);font-weight:900;color:#FFF;text-transform:uppercase;letter-spacing:4px;transform:skewX(-3deg); }
-        .p3r-wallet { display:none; } [data-theme="p3"] .p3r-wallet { display:flex;position:absolute;left:5%;top:7%;z-index:3;background:rgba(255,255,255,0.93);border:2px solid #000;padding:0.6rem 1.2rem;transform:skewX(-3deg);color:#000;font-weight:700; }
+        .p3r-wallet { display:none; } [data-theme="p3"] .p3r-wallet { display:flex;position:absolute;left:5%;top:7%;z-index:3;background:rgba(255,255,255,0.93);border:2px solid #000;padding:0.6rem 1.2rem;transform:skewX(-3deg);color:#000;font-weight:700;flex-direction:column; }
         .p3r-tooltip { display:none; } [data-theme="p3"] .p3r-tooltip { display:block;position:absolute;right:5%;bottom:8%;z-index:3;color:#FFF;text-align:right;pointer-events:none;font-size:0.9rem; }
         .p3r-modal { position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:5000;display:none;align-items:center;justify-content:center; } .p3r-modal.open { display:flex; }
         .p3r-modal-content { background:var(--p-surface);border:2px solid var(--p-primary-light);border-radius:1rem;padding:2rem;max-width:500px;width:90%;color:var(--p-text);position:relative; }
@@ -62,7 +66,7 @@
         .section-content { padding:4rem 0; } .section-title { font-size:clamp(1.8rem,4vw,2.5rem);text-align:center;margin-bottom:2rem;font-weight:900;letter-spacing:1px; }
         .project-grid { display:grid;gap:1.5rem;max-width:800px;margin:0 auto; }
         .project-card { background:var(--p-surface);border-radius:1rem;padding:1.5rem;border:1px solid var(--p-border);font-weight:600; } .project-card h3 { color:var(--p-primary-light);font-weight:800; }
-        .btn { display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 1.5rem;background:var(--p-primary);color:white!important;text-decoration:none;border-radius:0.5rem;font-weight:700;cursor:pointer;margin-top:0.5rem;letter-spacing:0.5px; }
+        .btn { display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 1.5rem;background:var(--p-primary);color:white!important;text-decoration:none;border-radius:0.5rem;font-weight:700;cursor:pointer;margin-top:0.5rem; }
         .demo-container { max-width:1000px;margin:0 auto;background:var(--p-surface);border-radius:1rem;padding:1.5rem; }
         .demo-interface { display:grid;grid-template-columns:1fr 1fr;gap:1.5rem; }
         textarea { width:100%;background:var(--p-background);border:1px solid var(--p-border);color:var(--p-text);padding:0.5rem;font-family:'Share Tech Mono',monospace; }
@@ -71,10 +75,14 @@
         .skill-category { background:var(--p-surface);border-radius:1rem;padding:1.5rem;border:1px solid var(--p-border);font-weight:600; } .skill-category h3 { color:var(--p-primary-light);font-weight:800; }
         .tech-tag { background:var(--btn-bg);color:var(--btn-text);padding:0.25rem 0.7rem;border-radius:1rem;font-size:0.8rem;border:1px solid var(--btn-border);margin:0.2rem;display:inline-block;font-weight:600; }
 
-        /* ==================== CHAT ==================== */
+        /* CHAT */
         .p5-chat-fab { position:fixed;top:5rem;left:1rem;z-index:999;width:55px;height:55px;border-radius:50%;background:#E60012;border:3px solid #FF4444;color:white;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(230,0,18,0.5); }
         .p5-chat-overlay { position:fixed;inset:0;background:#000;z-index:2000;display:none;flex-direction:row; }
         .p5-chat-overlay.open { display:flex; }
+        .p5-chat-overlay.phone-mode { align-items:center;justify-content:center;background:rgba(0,0,0,0.92); }
+        .p5-chat-overlay.phone-mode .p5-sidebar { display:none; }
+        .p5-chat-overlay.phone-mode .p5-main { max-width:380px;max-height:650px;border-radius:20px;border:3px solid var(--chat-accent);overflow:hidden; }
+        
         .p5-sidebar { width:320px;background:var(--chat-sidebar);border-right:3px solid var(--chat-accent);display:flex;flex-direction:column; }
         .p5-sidebar-header { padding:1rem;background:var(--chat-header);border-bottom:2px solid var(--chat-accent);text-align:center; }
         .p5-sidebar-title { font-family:'Luckiest Guy',cursive;font-size:2rem;color:#FFF; } .p5-sidebar-title span { color:var(--chat-accent); }
@@ -82,7 +90,7 @@
         .p5-contact-card { display:flex;align-items:center;gap:10px;padding:10px;margin:2px 0;cursor:pointer;border:1px solid transparent;background:rgba(255,255,255,0.03);transform:skewX(-3deg); } .p5-contact-card.active { border-color:var(--chat-accent);background:rgba(230,0,18,0.15); }
         .p5-contact-avatar { width:44px;height:44px;object-fit:cover;border:2px solid #333; } .p5-contact-name { font-family:var(--chat-font);font-size:0.8rem;color:var(--chat-accent);font-weight:bold; }
         .p5-sidebar-footer { padding:0.75rem;border-top:2px solid #222; } .p5-add-btn { width:100%;background:none;border:2px dashed var(--chat-accent);color:var(--chat-accent);padding:0.5rem;cursor:pointer;font-family:'Luckiest Guy',cursive;font-size:0.7rem;transform:skewX(-5deg); }
-        .p5-theme-switch { display:flex;gap:6px;margin-bottom:0.5rem;justify-content:center; } .p5-theme-dot { width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid #333;transition:all 0.2s; } .p5-theme-dot:hover { border-color:#FFF; } .p5-theme-dot.active { border-color:#FFF;box-shadow:0 0 10px rgba(255,255,255,0.5); }
+        .p5-theme-switch { display:flex;gap:6px;margin-bottom:0.5rem;justify-content:center; } .p5-theme-dot { width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid #333;transition:all 0.2s; } .p5-theme-dot.active { border-color:#FFF;box-shadow:0 0 10px rgba(255,255,255,0.5); }
 
         .p5-main { flex:1;display:grid;grid-template-rows:auto 1fr auto auto;grid-template-columns:1fr;background:var(--chat-bg);min-height:0; }
         .p5-main-header { padding:0.75rem 1rem;background:var(--chat-header);border-bottom:2px solid var(--chat-accent);display:none;align-items:center;gap:10px; }
@@ -97,7 +105,7 @@
         .p5-msg-bubble img,.p5-msg-bubble video { max-width:280px;max-height:250px;border-radius:6px; } .p5-msg-bubble audio { max-width:260px;display:block; }
         .p5-msg.received .p5-msg-bubble { background:var(--chat-bubble-other);color:var(--chat-text);border:1px solid #333; } .p5-msg.own .p5-msg-bubble { background:var(--chat-bubble-mine);color:#FFF; }
 
-        .p5-msg-toolbar { padding:6px 1rem;background:var(--chat-header);border-top:1px solid #222;display:flex!important;gap:4px; }
+        .p5-msg-toolbar { padding:6px 1rem;background:var(--chat-header);border-top:1px solid #222;display:flex!important;gap:4px;align-items:center; }
         .p5-tool-btn { background:#1A1A1A;border:1px solid #333;color:#DDD;padding:6px 10px;cursor:pointer;font-size:0.9rem;border-radius:4px; }
         .p5-input-area { padding:0.75rem 1rem;background:var(--chat-header);border-top:2px solid #222;display:flex!important;gap:6px;position:relative; }
         .p5-chat-input { flex:1;background:#1A1A1A;border:1px solid #333;color:#DDD;padding:10px 14px;font-family:var(--chat-font);font-size:0.8rem;outline:none;border-radius:4px; }
@@ -119,7 +127,6 @@
     <audio id="sfx-move" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/menu1.wav"></audio>
     <audio id="sfx-cancel" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/plum_softening.wav"></audio>
     <audio id="sfx-open" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/bubbles.wav"></audio>
-    <audio id="sfx-home" preload="auto" src="https://raw.githubusercontent.com/Ultipuk/persona_3_reload_pause_menu/main/assets/sounds/ui/plum_softening.wav"></audio>
 
     <div class="makoto-container"><div class="makoto-figure"><div class="makoto-silhouette"></div></div></div>
     <div class="p3r-menu" id="p3r-menu">
@@ -199,7 +206,7 @@
                 <div class="p5-theme-switch">
                     <div class="p5-theme-dot active" style="background:#E60012;" onclick="setChatTheme('p5')" title="P5 Classic"></div>
                     <div class="p5-theme-dot" style="background:#D40000;" onclick="setChatTheme('p5royal')" title="P5 Royal"></div>
-                    <div class="p5-theme-dot" style="background:#4A90D9;" onclick="setChatTheme('p3')" title="Persona 3"></div>
+                    <div class="p5-theme-dot" style="background:#4A90D9;" onclick="setChatTheme('p3')" title="P3"></div>
                     <div class="p5-theme-dot" style="background:#FFD700;" onclick="setChatTheme('noir')" title="Noir"></div>
                 </div>
                 <button class="p5-add-btn" onclick="findUser()">+ ADD FRIEND</button>
@@ -222,10 +229,11 @@
                 <button class="p5-tool-btn" onclick="sendVideo()">🎬</button>
                 <button class="p5-tool-btn" onclick="sendAudio()">🎵</button>
                 <button class="p5-tool-btn" onclick="sendFile()">📎</button>
+                <button class="p5-tool-btn" onclick="startVoice()">🎤</button>
             </div>
             <div class="p5-input-area">
                 <div class="emoji-panel" id="emoji-panel"></div>
-                <input type="text" class="p5-chat-input" id="p5-chat-input" placeholder="Message..." onkeypress="if(event.key==='Enter')sendMsg()">
+                <input type="text" class="p5-chat-input" id="p5-chat-input" placeholder="Message... (Enter to send)" onkeydown="handleKeyDown(event)">
                 <button class="p5-send-btn" onclick="sendMsg()">SEND</button>
             </div>
         </div>
@@ -276,7 +284,12 @@
         function selectP3R(i){
             p3rIdx=i;document.querySelectorAll('.p3r-menu-item').forEach((el,j)=>el.classList.toggle('selected',j===i));
             const items=document.querySelectorAll('.p3r-menu-item'),cursor=document.getElementById('p3r-cursor'),menu=document.getElementById('p3r-menu');
-            if(items[i]&&cursor&&menu){const mr=menu.getBoundingClientRect(),ir=items[i].getBoundingClientRect();cursor.style.top=(ir.top-mr.top+ir.height/2-10)+'px';}
+            if(items[i]&&cursor&&menu){
+                const mr=menu.getBoundingClientRect(),ir=items[i].getBoundingClientRect();
+                // ТОЧНЫЙ РАСЧЁТ ПОЗИЦИИ КУРСОРА
+                const itemCenter=ir.top-mr.top+(ir.height/2);
+                cursor.style.top=(itemCenter-10)+'px';
+            }
             document.getElementById('p3r-num').textContent=i+1;document.getElementById('p3r-name').textContent=p3rData[i].n;
             document.getElementById('p3r-tt-title').textContent=p3rData[i].t;document.getElementById('p3r-tt-sub').textContent=p3rData[i].s;
         }
@@ -290,12 +303,13 @@
         let cl='russian';
         function toggleLang(){document.querySelectorAll('.russian').forEach(e=>e.style.display=cl==='russian'?'none':'block');document.querySelectorAll('.english').forEach(e=>e.style.display=cl==='russian'?'block':'none');document.querySelector('.lang-text').textContent=cl==='russian'?'Русский':'English';cl=cl==='russian'?'english':'russian';localStorage.setItem('lang',cl);}
 
-        // CHAT
+        // ==================== CHAT ====================
         const MY_ID = localStorage.getItem('p5_uid') || (()=>{const id='u_'+Date.now();localStorage.setItem('p5_uid',id);return id;})();
         let myNick = localStorage.getItem('p5_nick') || '';
         let currentChatId = null;
         let knownUsers = {};
         let phoneMode = false;
+        let lastSentMsgKey = null; // для редактирования
 
         function ensureNick(){if(!myNick){myNick=prompt('Your nickname:')||'User_'+Math.random().toString(36).slice(2,6);localStorage.setItem('p5_nick',myNick);}updateMyInfo();}
         function updateMyInfo(){const el=document.getElementById('p5-my-nick');if(el)el.innerHTML=`<span style="color:var(--chat-accent);">${esc(myNick)}</span> <button onclick="changeNick()" style="background:none;border:none;color:#888;cursor:pointer;">[nick]</button>`;}
@@ -308,16 +322,16 @@
             document.getElementById('p5-main-header').style.display='none';
             document.getElementById('p5-msg-area').innerHTML='';document.getElementById('p5-no-chat').style.display='flex';
             document.getElementById('p5-chat-input').value='';document.getElementById('emoji-panel').style.display='none';
-            // REMOVE phone-mode на всякий
             document.getElementById('p5-overlay').classList.remove('phone-mode');phoneMode=false;
         }
         function closeCurrentChat(){
             currentChatId=null;document.getElementById('p5-main-header').style.display='none';
             document.getElementById('p5-msg-area').innerHTML='';document.getElementById('p5-no-chat').style.display='flex';
             document.getElementById('p5-chat-input').value='';document.getElementById('emoji-panel').style.display='none';
+            if(phoneMode&&window.innerWidth<=768)document.getElementById('p5-sidebar').classList.remove('collapsed');
             renderContacts();
         }
-        function returnToHome(){playSfx('home');const hero=document.getElementById('hero-section');hero.style.animation='homeReturn 0.6s ease';setTimeout(()=>{hero.style.animation='';},600);closeP5Chat();window.scrollTo({top:0,behavior:'smooth'});}
+        function returnToHome(){playSfx('home');closeP5Chat();window.scrollTo({top:0,behavior:'smooth'});}
         function togglePhoneMode(){
             phoneMode=!phoneMode;const overlay=document.getElementById('p5-overlay');
             if(phoneMode){overlay.classList.add('phone-mode');}else{overlay.classList.remove('phone-mode');}
@@ -343,52 +357,109 @@
             const inputEl=document.getElementById('p5-chat-input');inputEl.disabled=false;inputEl.value='';inputEl.focus();
             const chatId=getChatId(MY_ID,uid);const msgArea=document.getElementById('p5-msg-area');msgArea.innerHTML='';
             db.ref('messages/'+chatId).off();
-            db.ref('messages/'+chatId).once('value',(snap)=>{const msgs=snap.val();if(msgs)Object.values(msgs).forEach(msg=>addMsg(msg));msgArea.scrollTop=msgArea.scrollHeight;});
-            db.ref('messages/'+chatId).on('child_added',(snap)=>{addMsg(snap.val());msgArea.scrollTop=msgArea.scrollHeight;});
+            db.ref('messages/'+chatId).once('value',(snap)=>{const msgs=snap.val();if(msgs)Object.entries(msgs).forEach(([key,msg])=>addMsg(key,msg));msgArea.scrollTop=msgArea.scrollHeight;});
+            db.ref('messages/'+chatId).on('child_added',(snap)=>{addMsg(snap.key,snap.val());msgArea.scrollTop=msgArea.scrollHeight;});
             renderContacts();
         }
-        function addMsg(msg){
+        function addMsg(key,msg){
             const msgArea=document.getElementById('p5-msg-area'),div=document.createElement('div');
-            div.className=`p5-msg ${msg.from===MY_ID?'own':'received'}`;
+            div.className=`p5-msg ${msg.from===MY_ID?'own':'received'}`;div.dataset.key=key;
             let c='';if(msg.type==='image'||msg.type==='gif')c=`<img src="${msg.text}" style="max-width:260px;border-radius:6px;">`;
             else if(msg.type==='video')c=`<video controls style="max-width:260px;"><source src="${msg.text}"></video>`;
             else if(msg.type==='audio')c=`<audio controls style="max-width:240px;"><source src="${msg.text}"></audio>`;
             else c=esc(msg.text);
-            div.innerHTML=`<div class="p5-msg-content"><div class="p5-msg-bubble">${c}</div></div>`;msgArea.appendChild(div);
+            div.innerHTML=`<div class="p5-msg-content"><div class="p5-msg-bubble">${c}</div></div>`;
+            msgArea.appendChild(div);
         }
-        function sendMsg(){const inp=document.getElementById('p5-chat-input'),text=inp.value.trim();if(!text||!currentChatId)return;const chatId=getChatId(MY_ID,currentChatId);db.ref('messages/'+chatId).push({from:MY_ID,text:text,type:'text',timestamp:firebase.database.ServerValue.TIMESTAMP});inp.value='';inp.focus();setTimeout(()=>{document.getElementById('p5-msg-area').scrollTop=document.getElementById('p5-msg-area').scrollHeight;},100);}
+        // KEY HANDLER: Enter=send, Shift+Enter=new line, ArrowUp=edit last
+        function handleKeyDown(e){
+            if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}
+            else if(e.key==='ArrowUp'&&document.getElementById('p5-chat-input').value===''){
+                e.preventDefault();
+                const myMsgs=document.querySelectorAll('.p5-msg.own');
+                if(myMsgs.length>0){
+                    const lastMsg=myMsgs[myMsgs.length-1];
+                    const bubble=lastMsg.querySelector('.p5-msg-bubble');
+                    if(bubble&&!bubble.querySelector('img')&&!bubble.querySelector('video')&&!bubble.querySelector('audio')){
+                        document.getElementById('p5-chat-input').value=bubble.textContent;
+                        lastSentMsgKey=lastMsg.dataset.key;
+                        document.getElementById('p5-chat-input').focus();
+                        document.getElementById('p5-chat-input').setSelectionRange(999,999);
+                    }
+                }
+            }else if(e.key==='Escape'){
+                closeCurrentChat();
+            }
+        }
+        function sendMsg(){
+            const inp=document.getElementById('p5-chat-input'),text=inp.value.trim();
+            if(!text||!currentChatId)return;
+            const chatId=getChatId(MY_ID,currentChatId);
+            if(lastSentMsgKey){
+                // Edit existing message
+                db.ref('messages/'+chatId+'/'+lastSentMsgKey).update({text:text});
+                lastSentMsgKey=null;
+            }else{
+                db.ref('messages/'+chatId).push({from:MY_ID,text:text,type:'text',timestamp:firebase.database.ServerValue.TIMESTAMP});
+            }
+            inp.value='';inp.focus();
+            setTimeout(()=>{document.getElementById('p5-msg-area').scrollTop=document.getElementById('p5-msg-area').scrollHeight;},100);
+        }
         function pickAndSend(type,accept){const inp=document.createElement('input');inp.type='file';inp.accept=accept;inp.onchange=(e)=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=(ev)=>{const chatId=getChatId(MY_ID,currentChatId);db.ref('messages/'+chatId).push({from:MY_ID,text:ev.target.result,type:type,fileName:f.name,timestamp:firebase.database.ServerValue.TIMESTAMP});};r.readAsDataURL(f);};inp.click();}
         function sendImage(){pickAndSend('image','image/*');}
         function sendVideo(){pickAndSend('video','video/*');}
         function sendAudio(){pickAndSend('audio','audio/*');}
         function sendFile(){pickAndSend('file','*/*');}
 
-        function buildEmojiPanel(){const panel=document.getElementById('emoji-panel');if(!panel)return;const emojis=['😀','😂','😍','😎','🤔','😢','😡','👍','👎','🔥','❤️','💔','🎮','⚡','🌟','💀','🎵','📷','🎬','💬','🕒','💰','🔑','🌙','☀️','🎉','👻','🤖','🐱','🐶','🦊','🐼','🐨','🍕','🍔','🎂','⚽','🏀','🎯','💻','📱','🎸','🎹'];panel.innerHTML=emojis.map(e=>`<button class="emoji-item" onclick="insertEmoji('${e}')">${e}</button>`).join('');}
+        // VOICE MESSAGE
+        let mediaRecorder;let audioChunks=[];
+        async function startVoice(){
+            if(mediaRecorder&&mediaRecorder.state==='recording'){mediaRecorder.stop();return;}
+            try{
+                const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+                mediaRecorder=new MediaRecorder(stream);audioChunks=[];
+                mediaRecorder.ondataavailable=(e)=>audioChunks.push(e.data);
+                mediaRecorder.onstop=()=>{
+                    const audioBlob=new Blob(audioChunks,{type:'audio/webm'});
+                    const reader=new FileReader();
+                    reader.onload=(ev)=>{
+                        const chatId=getChatId(MY_ID,currentChatId);
+                        db.ref('messages/'+chatId).push({from:MY_ID,text:ev.target.result,type:'audio',fileName:'voice.webm',timestamp:firebase.database.ServerValue.TIMESTAMP});
+                    };
+                    reader.readAsDataURL(audioBlob);
+                    stream.getTracks().forEach(t=>t.stop());
+                };
+                mediaRecorder.start();
+                document.querySelector('.p5-tool-btn:last-child').textContent='🔴';
+                setTimeout(()=>{if(mediaRecorder.state==='recording'){mediaRecorder.stop();document.querySelector('.p5-tool-btn:last-child').textContent='🎤';}},10000);
+            }catch(e){alert('Microphone not available');}
+        }
+
+        function buildEmojiPanel(){const panel=document.getElementById('emoji-panel');if(!panel)return;const emojis=['😀','😂','😍','😎','🤔','😢','😡','👍','👎','🔥','❤️','💔','🎮','⚡','🌟','💀','🎵','📷','🎬','💬','🕒','💰','🔑','🌙','☀️','🎉','👻','🤖','🐱','🐶','🦊','🐼','🐨','🍕','🍔','🎂','⚽','🏀','🎯','💻','📱'];panel.innerHTML=emojis.map(e=>`<button class="emoji-item" onclick="insertEmoji('${e}')">${e}</button>`).join('');}
         function insertEmoji(emoji){const inp=document.getElementById('p5-chat-input');inp.value+=emoji;inp.focus();}
-        function toggleEmojiPanel(){const panel=document.getElementById('emoji-panel');panel.style.display=panel.style.display==='flex'?'none':'flex';}
+        function toggleEmojiPanel(){
+            const panel=document.getElementById('emoji-panel');
+            if(panel.style.display==='flex'){panel.style.display='none';}else{panel.style.display='flex';}
+        }
+        // Закрыть эмодзи при клике вне
+        document.addEventListener('click',function(e){if(!e.target.closest('.p5-tool-btn')&&!e.target.closest('.emoji-panel')){document.getElementById('emoji-panel').style.display='none';}});
 
         function setChatTheme(theme){
             const overlay=document.getElementById('p5-overlay');
             overlay.classList.remove('chat-theme-p5','chat-theme-p5royal','chat-theme-p3','chat-theme-noir');
             overlay.classList.add('chat-theme-'+theme);
-            document.querySelectorAll('.p5-theme-dot').forEach((d,i)=>{d.classList.remove('active');
+            document.querySelectorAll('.p5-theme-dot').forEach((d,i)=>{
+                d.classList.remove('active');
                 const themes=['p5','p5royal','p3','noir'];if(themes[i]===theme)d.classList.add('active');
             });
             localStorage.setItem('chat_theme',theme);
-            
-            // UPDATE CSS VARIABLES
-            const root=document.getElementById('p5-overlay');
-            const chatThemes = {
-                p5:{'--chat-bg':'#0D0D0D','--chat-sidebar':'#0A0A0A','--chat-header':'#111','--chat-bubble-other':'#1A1A1A','--chat-bubble-mine':'#E60012','--chat-text':'#DDD','--chat-accent':'#E60012','--chat-font-size':'0.85rem'},
-                p5royal:{'--chat-bg':'#0A0A0A','--chat-sidebar':'#050505','--chat-header':'#0F0F0F','--chat-bubble-other':'#1E1E1E','--chat-bubble-mine':'#D40000','--chat-text':'#E0E0E0','--chat-accent':'#FF1A1A','--chat-font-size':'0.55rem'},
-                p3:{'--chat-bg':'#0A1628','--chat-sidebar':'#060F18','--chat-header':'#0D1B2A','--chat-bubble-other':'#0F1F33','--chat-bubble-mine':'#4A90D9','--chat-text':'#E8F0F8','--chat-accent':'#6BB5FF','--chat-font-size':'0.85rem'},
-                noir:{'--chat-bg':'#1a1a1a','--chat-sidebar':'#0f0f0f','--chat-header':'#1a1a1a','--chat-bubble-other':'#2a2a2a','--chat-bubble-mine':'#FFD700','--chat-text':'#EEE','--chat-accent':'#FFD700','--chat-font-size':'0.85rem'}
+            const chatThemes={
+                p5:{'--chat-bg':'#0D0D0D','--chat-sidebar':'#0A0A0A','--chat-header':'#111','--chat-bubble-other':'#1A1A1A','--chat-bubble-mine':'#E60012','--chat-text':'#DDD','--chat-accent':'#E60012','--chat-font-size':'0.85rem','--chat-font':"'Share Tech Mono',monospace"},
+                p5royal:{'--chat-bg':'#0A0A0A','--chat-sidebar':'#050505','--chat-header':'#0F0F0F','--chat-bubble-other':'#1E1E1E','--chat-bubble-mine':'#D40000','--chat-text':'#E0E0E0','--chat-accent':'#FF1A1A','--chat-font-size':'0.55rem','--chat-font':"'P5Menu','Press Start 2P',cursive"},
+                p3:{'--chat-bg':'#0A1628','--chat-sidebar':'#060F18','--chat-header':'#0D1B2A','--chat-bubble-other':'#0F1F33','--chat-bubble-mine':'#4A90D9','--chat-text':'#E8F0F8','--chat-accent':'#6BB5FF','--chat-font-size':'0.85rem','--chat-font':"'Share Tech Mono',monospace"},
+                noir:{'--chat-bg':'#1a1a1a','--chat-sidebar':'#0f0f0f','--chat-header':'#1a1a1a','--chat-bubble-other':'#2a2a2a','--chat-bubble-mine':'#FFD700','--chat-text':'#EEE','--chat-accent':'#FFD700','--chat-font-size':'0.85rem','--chat-font':"'Share Tech Mono',monospace"}
             };
-            const t = chatThemes[theme];
-            if(t){Object.entries(t).forEach(([k,v])=>root.style.setProperty(k,v));}
-            // Update font
-            const fontMap = {p5:'Share Tech Mono',p5royal:'Press Start 2P',p3:'Share Tech Mono',noir:'Share Tech Mono'};
-            root.style.setProperty('--chat-font',`'${fontMap[theme]}',monospace`);
+            const t=chatThemes[theme];if(t){Object.entries(t).forEach(([k,v])=>overlay.style.setProperty(k,v));}
         }
 
         class BF{constructor(){this.t=new Array(30).fill(0);this.p=0;this.c='';this.i=0;this.o='';this.b={};}load(c){this.c=c;this.o='';this.p=0;this.i=0;this.t=new Array(30).fill(0);this._b();}_b(){let s=[];this.b={};for(let i=0;i<this.c.length;i++){if(this.c[i]==='[')s.push(i);else if(this.c[i]===']'){let st=s.pop();this.b[st]=i;this.b[i]=st;}}}step(){if(this.i>=this.c.length)return null;let c=this.c[this.i];switch(c){case'>':this.p++;break;case'<':this.p--;break;case'+':this.t[this.p]=(this.t[this.p]+1)%256;break;case'-':this.t[this.p]=(this.t[this.p]-1+256)%256;break;case'.':this.o+=String.fromCharCode(this.t[this.p]);break;case'[':if(this.t[this.p]===0)this.i=this.b[this.i];break;case']':if(this.t[this.p]!==0)this.i=this.b[this.i];break}this.i++;return true;}}
@@ -397,8 +468,7 @@
         document.addEventListener('DOMContentLoaded',()=>{
             resetBF();setTheme(localStorage.getItem('theme')||'default');
             if(localStorage.getItem('lang')==='english')toggleLang();
-            const savedTheme=localStorage.getItem('chat_theme')||'p5';
-            setChatTheme(savedTheme);
+            setChatTheme(localStorage.getItem('chat_theme')||'p5');
         });
     </script>
 </body>
